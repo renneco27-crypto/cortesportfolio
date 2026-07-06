@@ -713,19 +713,19 @@ export default function HomePage() {
 
             <div className="achv-grid">
               <div className="achv-card reveal">
-                <div className="num">+30%</div>
+                <div className="num">+<AnimatedCounter targetValue={30} suffix="%" durationMs={2000} startFrom={1} /></div>
                 <div className="label">Retrieval efficiency</div>
               </div>
               <div className="achv-card reveal">
-                <div className="num">+20%</div>
+                <div className="num">+<AnimatedCounter targetValue={20} suffix="%" durationMs={2000} startFrom={1} /></div>
                 <div className="label">Workflow turnaround</div>
               </div>
               <div className="achv-card reveal">
-                <div className="num">-25%</div>
+                <div className="num">&minus;<AnimatedCounter targetValue={25} suffix="%" durationMs={2000} startFrom={1} /></div>
                 <div className="label">Onboarding time</div>
               </div>
               <div className="achv-card reveal">
-                <div className="num">0</div>
+                <div className="num"><AnimatedCounter targetValue={0} suffix="" durationMs={2000} startFrom={0} /></div>
                 <div className="label">Compliance errors</div>
               </div>
             </div>
