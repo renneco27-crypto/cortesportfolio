@@ -12,11 +12,29 @@ export default function MatrixRain() {
 
     const isDark = () => document.documentElement.classList.contains("dark");
 
-    const applyCanvasOpacity = () => {
-      // Light mode: boost opacity so matrix is clearly visible on the lavender bg
-      canvas.style.opacity = isDark() ? "0.10" : "0.72";
+    const updateOpacity = () => {
+      const aboutEl = document.getElementById("about");
+      const skillsEl = document.getElementById("skills");
+      if (!aboutEl || !skillsEl) return;
+
+      const aboutBottom = aboutEl.getBoundingClientRect().bottom;
+      const skillsTop = skillsEl.getBoundingClientRect().top;
+      const sectionDistance = skillsTop - aboutBottom;
+
+      let progress = 0;
+      if (sectionDistance > 0) {
+        progress = Math.max(0, Math.min(1, -aboutBottom / sectionDistance));
+      }
+
+      const dark = isDark();
+      const minOpacity = dark ? 0.10 : 0.30;
+      const maxOpacity = dark ? 0.25 : 0.72;
+
+      canvas.style.opacity = String(maxOpacity - (maxOpacity - minOpacity) * progress);
     };
-    applyCanvasOpacity();
+
+    updateOpacity();
+    window.addEventListener("scroll", updateOpacity, { passive: true });
 
     const resize = () => {
       canvas.width  = window.innerWidth;
@@ -25,8 +43,7 @@ export default function MatrixRain() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Watch for theme toggle
-    const observer = new MutationObserver(() => applyCanvasOpacity());
+    const observer = new MutationObserver(() => updateOpacity());
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],
@@ -51,13 +68,9 @@ export default function MatrixRain() {
     const draw = () => {
       const dark = isDark();
 
-      // ── Trail-fade fill ──────────────────────────────────────
-      // Dark mode : near-black fade
-      // Light mode: soft lavender fade — keeps the trail visible
-      //             without washing out the dark violet characters
       ctx.fillStyle = dark
         ? "rgba(10,10,15,0.06)"
-        : "rgba(237,233,254,0.07)";   // violet-100 tinted fade
+        : "rgba(237,233,254,0.07)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       drops.forEach((y, i) => {
@@ -70,23 +83,18 @@ export default function MatrixRain() {
           return;
         }
 
-        // ── Head character ──────────────────────────────────────
-        // Dark mode  → bright violet-300 (light chars on dark bg)
-        // Light mode → deep indigo-600 (dark chars on lavender bg) — very readable + vibrant
         const headAlpha = Math.random() > 0.95 ? 1 : 0.9;
         ctx.fillStyle = dark
-          ? `rgba(167,139,250,${headAlpha})`       // violet-300
-          : `rgba(79,70,229,${headAlpha})`;         // indigo-600 — punchy on lavender
+          ? `rgba(167,139,250,${headAlpha})`
+          : `rgba(79,70,229,${headAlpha})`;
 
         ctx.font = `${Math.random() > 0.9 ? 15 : 13}px 'JetBrains Mono', monospace`;
         ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, pxY);
 
-        // ── Trail character ─────────────────────────────────────
-        // Light mode trail: vivid violet-500 — contrasts clearly
         const trailAlpha = 0.22 + Math.random() * 0.35;
         ctx.fillStyle = dark
           ? `rgba(124,58,237,${trailAlpha})`
-          : `rgba(139,92,246,${trailAlpha + 0.2})`; // violet-500 bold trail
+          : `rgba(139,92,246,${trailAlpha + 0.2})`;
 
         ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, pxY - 20);
 
@@ -102,6 +110,7 @@ export default function MatrixRain() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", updateOpacity);
       observer.disconnect();
     };
   }, []);
@@ -114,7 +123,7 @@ export default function MatrixRain() {
         inset:         0,
         zIndex:        0,
         pointerEvents: "none",
-        opacity:       0.55, // overwritten immediately by applyCanvasOpacity()
+        opacity:       0,
       }}
     />
   );
