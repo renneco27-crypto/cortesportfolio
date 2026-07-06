@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     "internship ready 2025",
     "CORTES Engineering Portfolio",
   ],
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
   openGraph: {
     title: "Lawrence Cortes — Software Developer",
     description:
