@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: lawrence-portfolio-chatbot
+    env: node
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm start
+    envVars:
+      - key: NVIDIA_API_KEY
+        sync: false
