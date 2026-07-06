@@ -10,11 +10,11 @@ export default function MatrixRain() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // ── helpers ──────────────────────────────────────────────
     const isDark = () => document.documentElement.classList.contains("dark");
 
     const applyCanvasOpacity = () => {
-      canvas.style.opacity = isDark() ? "0.55" : "0.35";
+      // Light mode: boost opacity so matrix is clearly visible on the lavender bg
+      canvas.style.opacity = isDark() ? "0.55" : "0.72";
     };
     applyCanvasOpacity();
 
@@ -25,16 +25,13 @@ export default function MatrixRain() {
     resize();
     window.addEventListener("resize", resize);
 
-    // ── theme observer ────────────────────────────────────────
-    const observer = new MutationObserver(() => {
-      applyCanvasOpacity();
-    });
+    // Watch for theme toggle
+    const observer = new MutationObserver(() => applyCanvasOpacity());
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],
     });
 
-    // ── matrix setup ──────────────────────────────────────────
     const cols = Math.floor(canvas.width / 20);
     const drops: number[] = Array(cols).fill(1);
 
@@ -54,11 +51,13 @@ export default function MatrixRain() {
     const draw = () => {
       const dark = isDark();
 
-      // ── trail-fade fill: match the page background ──────────
-      // Dark mode → dark overlay; Light mode → light overlay
+      // ── Trail-fade fill ──────────────────────────────────────
+      // Dark mode : near-black fade
+      // Light mode: soft lavender fade — keeps the trail visible
+      //             without washing out the dark violet characters
       ctx.fillStyle = dark
         ? "rgba(10,10,15,0.06)"
-        : "rgba(248,250,252,0.08)";
+        : "rgba(237,233,254,0.07)";   // violet-100 tinted fade
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       drops.forEach((y, i) => {
@@ -71,20 +70,24 @@ export default function MatrixRain() {
           return;
         }
 
-        // ── Head character ─────────────────────────────────────
-        // Dark mode → bright violet-300; Light mode → deep violet-700 (readable on white)
-        const headAlpha = Math.random() > 0.95 ? 1 : 0.85;
+        // ── Head character ──────────────────────────────────────
+        // Dark mode  → bright violet-300 (light chars on dark bg)
+        // Light mode → deep indigo-600 (dark chars on lavender bg) — very readable + vibrant
+        const headAlpha = Math.random() > 0.95 ? 1 : 0.9;
         ctx.fillStyle = dark
-          ? `rgba(167,139,250,${headAlpha})`
-          : `rgba(109,40,217,${headAlpha})`;          // violet-700
+          ? `rgba(167,139,250,${headAlpha})`       // violet-300
+          : `rgba(79,70,229,${headAlpha})`;         // indigo-600 — punchy on lavender
+
         ctx.font = `${Math.random() > 0.9 ? 15 : 13}px 'JetBrains Mono', monospace`;
         ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, pxY);
 
-        // ── Trail character ────────────────────────────────────
-        const trailAlpha = 0.18 + Math.random() * 0.28;
+        // ── Trail character ─────────────────────────────────────
+        // Light mode trail: vivid violet-500 — contrasts clearly
+        const trailAlpha = 0.22 + Math.random() * 0.35;
         ctx.fillStyle = dark
           ? `rgba(124,58,237,${trailAlpha})`
-          : `rgba(139,92,246,${trailAlpha + 0.15})`; // slightly stronger trail in light mode
+          : `rgba(139,92,246,${trailAlpha + 0.2})`; // violet-500 bold trail
+
         ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, pxY - 20);
 
         if (pxY > canvas.height && Math.random() > 0.975) drops[i] = 0;
@@ -111,7 +114,7 @@ export default function MatrixRain() {
         inset:         0,
         zIndex:        0,
         pointerEvents: "none",
-        opacity:       0.55,           // overwritten immediately by applyCanvasOpacity()
+        opacity:       0.55, // overwritten immediately by applyCanvasOpacity()
       }}
     />
   );

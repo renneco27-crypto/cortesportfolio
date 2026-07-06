@@ -3,7 +3,7 @@
   --font-inter:"Inter",ui-sans-serif,system-ui,sans-serif;
   --font-mono:"JetBrains Mono",ui-monospace,monospace;
 
-   --bg:#f8fafc;
+   --bg:#ede9fe;
   --fg:#0a0a0f;
 
   --violet-300:#c4b5fd;
@@ -556,8 +556,10 @@ html.dark {
 
 /* Light mode text colors — darker for readability */
 html:not(.dark) {
-  --zinc-200: #1e293b;
-  --zinc-300: #334155;
-  --zinc-400: #475569;
-  --zinc-500: #64748b;
+  --bg:        #ede9fe;
+  --fg:        #1e1b4b;
+  --zinc-200:  #1e1b4b;
+  --zinc-300:  #2d2467;
+  --zinc-400:  #4c3d9e;
+  --zinc-500:  #6d5db3;
 }
