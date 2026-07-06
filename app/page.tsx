@@ -66,6 +66,7 @@ export default function HomePage() {
   const [isTyping, setIsTyping] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const devRef = useRef<HTMLDivElement>(null);
 
   // Auto scroll messages to the bottom
   useEffect(() => {
@@ -227,6 +228,27 @@ export default function HomePage() {
         io.disconnect();
       }
     };
+  }, []);
+
+  // Doors transition effect
+  useEffect(() => {
+    const devEl = devRef.current;
+    if (!devEl) return;
+    const heroGrid = document.querySelector(".hero-grid");
+    if (!heroGrid) return;
+    let triggered = false;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !triggered) {
+          triggered = true;
+          heroGrid.classList.add("doors-open");
+          obs.unobserve(devEl);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    obs.observe(devEl);
+    return () => obs.disconnect();
   }, []);
 
   // ==========================================
@@ -469,7 +491,9 @@ export default function HomePage() {
         </ZoomSection>
 
         {/* DEVELOPER */}
-        <DeveloperSection />
+        <div ref={devRef}>
+          <DeveloperSection />
+        </div>
 
         {/* SKILLS */}
         <ZoomSection>
