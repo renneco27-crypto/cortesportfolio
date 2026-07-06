@@ -97,7 +97,7 @@ header{
   border-bottom:1px solid rgba(255,255,255,.07);
 }
 .nav{display:flex;align-items:center;justify-content:space-between;height:4.5rem;}
-.logo{font-family:var(--font-space);font-weight:700;font-size:1.15rem;letter-spacing:-.01em;color:var(--fg);}
+.logo{font-family:var(--font-space);font-weight:700;font-size:1.15rem;letter-spacing:-.01em;color:#f8fafc;}
 .logo span{color:var(--violet-400);}
 
 .nav-links{display:none;align-items:center;gap:2rem;}

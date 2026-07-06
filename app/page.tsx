@@ -230,22 +230,21 @@ export default function HomePage() {
     };
   }, []);
 
-  // Doors transition effect
+  // Doors transition effect — reversible
   useEffect(() => {
     const devEl = devRef.current;
     if (!devEl) return;
     const heroGrid = document.querySelector(".hero-grid");
     if (!heroGrid) return;
-    let triggered = false;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !triggered) {
-          triggered = true;
+        if (entry.isIntersecting) {
           heroGrid.classList.add("doors-open");
-          obs.unobserve(devEl);
+        } else {
+          heroGrid.classList.remove("doors-open");
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
     obs.observe(devEl);
     return () => obs.disconnect();
