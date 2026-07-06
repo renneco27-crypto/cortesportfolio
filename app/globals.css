@@ -88,8 +88,8 @@ html:not(.dark) .mobile-panel {
 }
 
 /* ── Tailwind bg overrides ───────────────────────────────────── */
-html:not(.dark) .bg-zinc-950,
-html:not(.dark) .bg-zinc-900 { background-color: #ede9fe !important; }
+html:not(.dark) .bg-zinc-950 { background-color: #ede9fe !important; }
+html:not(.dark) .bg-zinc-900 { background-color: #d1c9e0 !important; }
 html:not(.dark) .bg-zinc-800 { background-color: #e0d9f7 !important; }
 html:not(.dark) .bg-zinc-950\/80 { background-color: rgba(237,233,254,0.88) !important; }
 
@@ -205,7 +205,7 @@ html:not(.dark) .badge-live {
 html:not(.dark) .field label { color: #4c3d9e; }
 html:not(.dark) .field input,
 html:not(.dark) .field textarea {
-  background: rgba(255,255,255,0.7) !important;
+  background: #d1c9e0 !important;
   border-color: rgba(109,40,217,.25) !important;
   color: #1e1b4b !important;
   box-shadow: 0 2px 8px rgba(109,40,217,.08);
@@ -221,7 +221,7 @@ html:not(.dark) .field textarea:focus {
 
 /* ── Chat widget ─────────────────────────────────────────────── */
 html:not(.dark) .chat-input {
-  background: rgba(255,255,255,0.7) !important;
+  background: #d1c9e0 !important;
   color: #1e1b4b !important;
   border-color: rgba(109,40,217,.25) !important;
 }

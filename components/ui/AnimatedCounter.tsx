@@ -17,27 +17,44 @@ export default function AnimatedCounter({
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(startFrom);
   const { ref, isInView } = useAnimateOnViewHook<HTMLSpanElement>();
-  const hasAnimated = useRef(false);
+  const prevInView = useRef(false);
+  const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!isInView || hasAnimated.current) return;
-    hasAnimated.current = true;
-    const steps = 60;
-    const range = targetValue - startFrom;
-    const increment = range / steps;
-    const interval = durationMs / steps;
-    let current = startFrom;
-    const timer = window.setInterval(() => {
-      current += increment;
-      if (current >= targetValue) {
-        setCount(targetValue);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
+    if (!prevInView.current && isInView) {
+      setCount(startFrom);
+      const steps = 60;
+      const range = targetValue - startFrom;
+      const increment = range / steps;
+      const interval = durationMs / steps;
+      let current = startFrom;
+      timerRef.current = window.setInterval(() => {
+        current += increment;
+        if (current >= targetValue) {
+          setCount(targetValue);
+          if (timerRef.current !== null) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+          }
+        } else {
+          setCount(Math.floor(current));
+        }
+      }, interval);
+    } else if (prevInView.current && !isInView) {
+      setCount(startFrom);
+      if (timerRef.current !== null) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
       }
-    }, interval);
-    return () => window.clearInterval(timer);
-  }, [isInView, targetValue, durationMs]);
+    }
+    prevInView.current = isInView;
+    return () => {
+      if (timerRef.current !== null) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [isInView, targetValue, durationMs, startFrom]);
 
   return (
     <span ref={ref}>

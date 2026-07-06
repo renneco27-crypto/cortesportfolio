@@ -10,10 +10,7 @@ export function useAnimateOnViewHook<T extends Element>() {
     if (!ref.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
+        setIsInView(entry.isIntersecting);
       },
       { threshold: 0.2 }
     );
