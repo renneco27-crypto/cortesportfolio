@@ -101,7 +101,8 @@ html:not(.dark) header {
   border-bottom:1px solid rgba(0,0,0,.08);
 }
 .nav{display:flex;align-items:center;justify-content:space-between;height:4.5rem;}
-.logo{font-family:var(--font-space);font-weight:700;font-size:1.15rem;letter-spacing:-.01em;color:#f8fafc;}
+.logo{font-family:var(--font-space);font-weight:700;font-size:1.15rem;letter-spacing:-.01em;color:var(--fg);}
+.logo:hover{color:var(--fg);}
 .logo span{color:var(--violet-400);}
 
 .nav-links{display:none;align-items:center;gap:2rem;}
@@ -109,7 +110,7 @@ html:not(.dark) header {
   font-size:.9rem;color:var(--zinc-300);font-weight:500;
   position:relative;transition:color .2s var(--ease);
 }
-.nav-links a:hover{color:var(--violet-300);}
+.nav-links a:hover{color:var(--fg);}
 .nav-links a::after{
   content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;
   background:var(--violet-500);transition:width .3s ease;
@@ -161,7 +162,7 @@ html:not(.dark) header {
   background:var(--violet-500);transition:width .3s ease;
 }
 .mobile-panel a:hover::after{width:100%;}
-.mobile-panel a:hover{color:var(--violet-300);}
+.mobile-panel a:hover{color:var(--fg);}
 
 /* ---------- HERO / ABOUT ---------- */
 .hero{padding-block:4rem 5.5rem;}

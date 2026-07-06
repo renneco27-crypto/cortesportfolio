@@ -5,7 +5,7 @@
 :root {
   --font-space: "Space Grotesk", sans-serif;
   --font-inter: "Inter", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-mono:  "JetBrains Mono", monospace;
 }
 
 html {
@@ -24,26 +24,20 @@ html:not(.dark) body {
   color: #0f172a;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-space);
-}
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-space); }
+code, pre, .font-mono    { font-family: var(--font-mono); }
 
-code, pre, .font-mono {
-  font-family: var(--font-mono);
-}
-
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0a0a0f; }
-html:not(.dark) ::-webkit-scrollbar-track { background: #e2e8f0; }
-::-webkit-scrollbar-thumb { background: #3f3f5c; border-radius: 2px; }
-html:not(.dark) ::-webkit-scrollbar-thumb { background: #94a3b8; }
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: #0a0a0f; }
+html:not(.dark) ::-webkit-scrollbar-track  { background: #e2e8f0; }
+::-webkit-scrollbar-thumb  { background: #3f3f5c; border-radius: 2px; }
+html:not(.dark) ::-webkit-scrollbar-thumb  { background: #94a3b8; }
 ::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
 html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
 
-@media (pointer: fine) {
-  * { cursor: none !important; }
-}
-
+/* ── Custom cursor ─────────────────────────────────────────── */
+@media (pointer: fine) { * { cursor: none !important; } }
 .cursor-dot {
   position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
   width: 18px; height: 18px; border-radius: 50%;
@@ -58,50 +52,130 @@ html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
   border-color: rgba(124,58,237,1);
 }
 
-::selection {
-  background: rgba(124, 58, 237, 0.3);
-  color: #f8fafc;
-}
-html:not(.dark) ::selection {
-  background: rgba(124, 58, 237, 0.22);
-  color: #0f172a;
-}
+/* ── Selection ─────────────────────────────────────────────── */
+::selection { background: rgba(124,58,237,.3); color: #f8fafc; }
+html:not(.dark) ::selection { background: rgba(124,58,237,.22); color: #0f172a; }
 
-/* Light mode overrides — applies when .dark class is NOT present */
-html:not(.dark) .bg-zinc-950 { background-color: #f8fafc; }
-html:not(.dark) .bg-zinc-900 { background-color: #f8fafc; }
-html:not(.dark) .bg-zinc-800 { background-color: #eef2ff; }
-html:not(.dark) .text-zinc-100,
-html:not(.dark) .text-white { color: #0f172a; }
-html:not(.dark) .text-zinc-200 { color: #1e293b; }
-html:not(.dark) .text-zinc-300 { color: #334155; }
-html:not(.dark) .text-zinc-400,
-html:not(.dark) .text-zinc-500,
-html:not(.dark) .text-zinc-600 { color: #64748b; }
+/* ── Light mode: Tailwind background overrides ─────────────── */
+html:not(.dark) .bg-zinc-950,
+html:not(.dark) .bg-zinc-900   { background-color: #f8fafc !important; }
+html:not(.dark) .bg-zinc-800   { background-color: #eef2ff !important; }
+html:not(.dark) .bg-zinc-950\/80 { background-color: rgba(255,255,255,0.85) !important; }
+
+/* ── Light mode: Tailwind text overrides ───────────────────── */
+html:not(.dark) .text-white,
+html:not(.dark) .text-zinc-100 { color: #0f172a !important; }
+html:not(.dark) .text-zinc-200 { color: #1e293b !important; }
+html:not(.dark) .text-zinc-300 { color: #334155 !important; }
+html:not(.dark) .text-zinc-400 { color: #475569 !important; }
+html:not(.dark) .text-zinc-500 { color: #64748b !important; }
+html:not(.dark) .text-zinc-600 { color: #475569 !important; }
+
+/* ── Light mode: border overrides ─────────────────────────── */
 html:not(.dark) .border-zinc-800,
 html:not(.dark) .border-zinc-700,
 html:not(.dark) .border-zinc-800\/50,
-html:not(.dark) .border-zinc-700\/40 { border-color: #e2e8f0; }
-html:not(.dark) .bg-zinc-950\/80 { background-color: rgba(255, 255, 255, 0.8); }
+html:not(.dark) .border-zinc-700\/40 { border-color: #e2e8f0 !important; }
 
+/* ── Light mode: form fields ───────────────────────────────── */
+html:not(.dark) .field input,
+html:not(.dark) .field textarea {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+html:not(.dark) .field input::placeholder,
+html:not(.dark) .field textarea::placeholder { color: #94a3b8 !important; }
+
+html:not(.dark) .chat-input {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* ── Light mode: terminal card ─────────────────────────────── */
+/* Keep the terminal dark — it's a UI element, not a page section */
+html:not(.dark) .term {
+  background: linear-gradient(160deg, #0f0f17, #080810);
+  border-color: rgba(255,255,255,.12);
+}
+
+/* ── Light mode: skill tags ────────────────────────────────── */
+/* Tags have hardcoded dark bg in portfolio-styles.css — keep them, they look intentional */
+
+/* ── Light mode: section borders ──────────────────────────── */
+html:not(.dark) .section { border-top-color: rgba(0,0,0,.07); }
+
+/* ── Light mode: stat / skill / exp / cert cards ───────────── */
+html:not(.dark) .stat-card,
+html:not(.dark) .skill-card,
+html:not(.dark) .exp-card,
+html:not(.dark) .achv-card,
+html:not(.dark) .proj-card,
+html:not(.dark) .cert-row,
+html:not(.dark) .card {
+  background: rgba(255,255,255,0.7) !important;
+  border-color: rgba(0,0,0,.09) !important;
+  backdrop-filter: blur(4px);
+}
+html:not(.dark) .proj-card:hover {
+  border-color: rgba(109,40,217,.3) !important;
+}
+html:not(.dark) .proj-card.proj-cta {
+  background: rgba(139,92,246,.06) !important;
+  border-color: rgba(109,40,217,.3) !important;
+}
+
+/* ── Light mode: ghost button ──────────────────────────────── */
+html:not(.dark) .btn-ghost {
+  border-color: rgba(0,0,0,.18);
+  color: #1e293b;
+}
+html:not(.dark) .btn-ghost:hover {
+  background: rgba(0,0,0,.05);
+  border-color: rgba(0,0,0,.28);
+}
+
+/* ── Light mode: icon buttons in navbar ────────────────────── */
+html:not(.dark) .icon-btn:hover {
+  background: rgba(0,0,0,.06);
+  color: #0f172a;
+}
+
+/* ── Light mode: info-list divider ────────────────────────── */
+html:not(.dark) .info-list { border-top-color: rgba(0,0,0,.07); }
+
+/* ── Light mode: footer ────────────────────────────────────── */
+html:not(.dark) footer { border-top-color: rgba(0,0,0,.07); }
+
+/* ── Light mode: mobile panel ──────────────────────────────── */
+html:not(.dark) .mobile-panel { border-bottom-color: rgba(0,0,0,.07); }
+
+/* ── Light mode: chat panel ────────────────────────────────── */
+html:not(.dark) .chat-panel {
+  background: #ffffff;
+  border-color: rgba(0,0,0,.1);
+}
+html:not(.dark) .chat-header { border-bottom-color: rgba(0,0,0,.08); }
+html:not(.dark) .chat-message.assistant {
+  background: rgba(0,0,0,.05);
+  color: #1e293b;
+}
+
+/* ── Zoom reveal animation ─────────────────────────────────── */
 .zoom-reveal {
   opacity: 0;
   transform: scale(0.93) translateY(36px);
-  transition: opacity .7s ease, transform .75s cubic-bezier(.22, 1, .36, 1);
+  transition: opacity .7s ease, transform .75s cubic-bezier(.22,1,.36,1);
   will-change: transform, opacity;
 }
-.zoom-reveal.zoom-in-view {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
+.zoom-reveal.zoom-in-view { opacity: 1; transform: scale(1) translateY(0); }
 @media (prefers-reduced-motion: reduce) {
   .zoom-reveal { opacity: 1; transform: none; }
 }
 
+/* ── Marquee ───────────────────────────────────────────────── */
 @keyframes marquee {
-  0% { transform: translateX(0%); }
+  0%   { transform: translateX(0%); }
   100% { transform: translateX(-50%); }
 }
-.animate-marquee {
-  animation: marquee 20s linear infinite;
-}
+.animate-marquee { animation: marquee 20s linear infinite; }
