@@ -14,7 +14,7 @@ export default function MatrixRain() {
 
     const applyCanvasOpacity = () => {
       // Light mode: boost opacity so matrix is clearly visible on the lavender bg
-      canvas.style.opacity = isDark() ? "0.55" : "0.72";
+      canvas.style.opacity = isDark() ? "0.10" : "0.72";
     };
     applyCanvasOpacity();
 
