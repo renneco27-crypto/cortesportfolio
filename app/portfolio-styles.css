@@ -96,6 +96,10 @@ header{
   -webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid rgba(255,255,255,.07);
 }
+html:not(.dark) header {
+  background: rgba(248,250,252,.85);
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
 .nav{display:flex;align-items:center;justify-content:space-between;height:4.5rem;}
 .logo{font-family:var(--font-space);font-weight:700;font-size:1.15rem;letter-spacing:-.01em;color:#f8fafc;}
 .logo span{color:var(--violet-400);}
@@ -547,4 +551,12 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding-block:2.5rem;}
 html.dark {
   --bg: #0a0a0f;
   --fg: #f8fafc;
+}
+
+/* Light mode text colors — darker for readability */
+html:not(.dark) {
+  --zinc-200: #1e293b;
+  --zinc-300: #334155;
+  --zinc-400: #475569;
+  --zinc-500: #64748b;
 }
