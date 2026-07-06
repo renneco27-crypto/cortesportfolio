@@ -958,9 +958,9 @@ export default function HomePage() {
                 <div className="proj-top">
                   <span className="proj-num">07</span>
                 </div>
-                <h3>Attendance Maker (ACLC Ormoc)</h3>
+                <h3>School Attendance Maker</h3>
                 <p>
-                  A secure, specialized web application built for the ACLC College Ormoc — College of Computer Studies
+                  A secure, specialized web application built for academic institutions and colleges of computer studies
                   that streamlines classroom attendance tracking through a synchronized portal for instructors and
                   students, utilizing anti-cheating protocols and automated reporting. Features include dual-interface
                   portal (Teacher Panel + Student Portal), Anti-Cheat &ldquo;Double QR&rdquo; Technology, Biometric
