@@ -1163,25 +1163,7 @@ export default function HomePage() {
                   <p>TESDA</p>
                 </div>
               </div>
-              <div className="cert-row reveal">
-                <span className="ico">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="8" r="5" />
-                    <path d="M9 13 5 22l7-3 7 3-4-9" />
-                  </svg>
-                </span>
-                <div>
-                  <h4>Perfect Timely Execution</h4>
-                  <p>100% on-time delivery, zero compliance errors — internship record</p>
-                </div>
-              </div>
+
             </div>
           </div>
         </section>
