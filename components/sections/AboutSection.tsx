@@ -48,19 +48,30 @@ export default function AboutSection() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {[
-              { value: 4, suffix: "+", label: "Projects shipped" },
-              { value: 150, suffix: "+", label: "Leads captured" },
-              { value: 3, suffix: "", label: "Tech categories" },
-              { value: 30, suffix: "%", label: "CPA reduction" },
-            ].map((stat) => (
-              <div key={stat.label} className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
-                <p className="font-mono text-4xl font-bold text-violet-400">
-                  <AnimatedCounter targetValue={stat.value} suffix={stat.suffix} />
-                </p>
-                <p className="mt-1 text-sm text-zinc-500">{stat.label}</p>
-              </div>
-            ))}
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
+              <p className="font-mono text-4xl font-bold text-violet-400">
+                <AnimatedCounter targetValue={30} suffix="%" />
+              </p>
+              <p className="mt-1 text-sm text-zinc-500">Retrieval efficiency</p>
+            </div>
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
+              <p className="font-mono text-4xl font-bold text-violet-400">
+                +<AnimatedCounter targetValue={20} suffix="%" />
+              </p>
+              <p className="mt-1 text-sm text-zinc-500">Workflow turnaround</p>
+            </div>
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
+              <p className="font-mono text-4xl font-bold text-violet-400">
+                &minus;<AnimatedCounter targetValue={25} suffix="%" />
+              </p>
+              <p className="mt-1 text-sm text-zinc-500">Onboarding time</p>
+            </div>
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
+              <p className="font-mono text-4xl font-bold text-violet-400">
+                <AnimatedCounter targetValue={0} suffix="" startFrom={0} />
+              </p>
+              <p className="mt-1 text-sm text-zinc-500">Compliance errors</p>
+            </div>
           </div>
         </div>
       </div>

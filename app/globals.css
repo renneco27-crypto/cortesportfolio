@@ -90,7 +90,7 @@ html:not(.dark) .mobile-panel {
 /* ── Tailwind bg overrides ───────────────────────────────────── */
 html:not(.dark) .bg-zinc-950 { background-color: #ede9fe !important; }
 html:not(.dark) .bg-zinc-900 { background-color: #d1c9e0 !important; }
-html:not(.dark) .bg-zinc-800 { background-color: #e0d9f7 !important; }
+html:not(.dark) .bg-zinc-800 { background-color: #d1c9e0 !important; }
 html:not(.dark) .bg-zinc-950\/80 { background-color: rgba(237,233,254,0.88) !important; }
 
 /* ── Tailwind text overrides ────────────────────────────────── */
