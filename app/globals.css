@@ -192,6 +192,13 @@ html:not(.dark) .term {
               0 0 0 1px rgba(139,92,246,.1) inset;
 }
 
+/* ── Terminal text — always light on its dark bg ──────────── */
+html:not(.dark) .term-body,
+html:not(.dark) .term-body .out,
+html:not(.dark) .term-body .dim {
+  color: #e4e4e7 !important;
+}
+
 /* ── Badge live ─────────────────────────────────────────────── */
 html:not(.dark) .badge-live {
   background: rgba(52,211,153,.12);
