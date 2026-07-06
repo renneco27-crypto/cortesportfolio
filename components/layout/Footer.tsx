@@ -18,8 +18,10 @@ export default function FooterComponent() {
             <GitFork size={18} />
           </a>
           <a
-            href="mailto:renneco27@gmail.com"
-            aria-label="Email"
+            href="https://www.facebook.com/Rennejay.Dev.21"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
             className="text-zinc-500 hover:text-violet-400 transition-colors"
           >
             <Mail size={18} />

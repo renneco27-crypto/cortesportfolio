@@ -15,7 +15,7 @@ export function useThemeHook(): UseThemeReturn {
   useEffect(() => {
     const stored = window.localStorage.getItem("lc-theme") as Theme | null;
     const preferred = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    const initial = stored === "light" || stored === "dark" ? stored : preferred;
+    const initial = stored === "light" || stored === "dark" ? stored : "dark";
 
     setThemeState(initial);
     document.documentElement.classList.toggle("dark", initial === "dark");

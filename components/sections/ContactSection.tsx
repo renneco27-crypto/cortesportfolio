@@ -91,9 +91,9 @@ export default function ContactSection() {
                   <p className="text-zinc-600 text-xs font-mono">github.com/corteslawrence027-art</p>
                 </div>
               </a>
-              <a href="mailto:renneco27@gmail.com" className="flex items-center gap-3 text-sm text-zinc-400 hover:text-violet-400 transition-colors">
+              <a href="https://www.facebook.com/Rennejay.Dev.21" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-zinc-400 hover:text-violet-400 transition-colors">
                 <Mail size={16} />
-                renneco27@gmail.com
+                facebook.com/Rennejay.Dev.21
               </a>
             </div>
 

@@ -99,9 +99,9 @@ export default function HomePage() {
       );
     }
 
-    // restore saved theme and show correct icon
+    // restore saved theme — default dark
     const savedTheme = localStorage.getItem("theme");
-    const isDark = savedTheme === "dark";
+    const isDark = savedTheme ? savedTheme === "dark" : true;
     if (isDark) {
       document.documentElement.classList.add("dark");
     } else {
@@ -215,7 +215,7 @@ export default function HomePage() {
         const message = (document.getElementById("cf-message") as HTMLTextAreaElement).value.trim();
         const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
         const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-        window.location.href = `mailto:renneco27@gmail.com?subject=${subject}&body=${body}`;
+        window.open("https://www.facebook.com/Rennejay.Dev.21", "_blank");
         note.textContent = "Open your email app…";
       });
     }
@@ -284,7 +284,7 @@ export default function HomePage() {
         ...prev,
         {
           role: "system",
-          content: "AI service unavailable. Please try again later or email Lawrence at renneco27@gmail.com.",
+           content: "AI service unavailable. Please try again later or message Lawrence on Facebook at facebook.com/Rennejay.Dev.21.",
         },
       ]);
     } finally {
@@ -1245,8 +1245,8 @@ export default function HomePage() {
                       </svg>
                     </span>
                     <div>
-                      <div className="t1">Email</div>
-                      <div className="t2">renneco27@gmail.com</div>
+                      <div className="t1">Facebook</div>
+                      <div className="t2">facebook.com/Rennejay.Dev.21</div>
                     </div>
                   </div>
                   <div className="info-row">
@@ -1377,7 +1377,7 @@ export default function HomePage() {
                 <circle cx="4" cy="4" r="2" />
               </svg>
             </a>
-            <a href="mailto:renneco27@gmail.com" aria-label="Email">
+            <a href="https://www.facebook.com/Rennejay.Dev.21" target="_blank" rel="noopener" aria-label="Facebook">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"

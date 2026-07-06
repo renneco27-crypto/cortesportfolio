@@ -39,9 +39,9 @@ export default function DeveloperSection() {
             </p>
             <p style={{ marginTop: "1rem" }}>
               If you&rsquo;d like to talk shop, ask about an internship, or just say hi,
-              email me directly at{" "}
-              <a href="mailto:renneco27@gmail.com" className="dev-email-link">
-                renneco27@gmail.com
+              message me on Facebook at{" "}
+              <a href="https://www.facebook.com/Rennejay.Dev.21" target="_blank" rel="noopener noreferrer" className="dev-email-link">
+                facebook.com/Rennejay.Dev.21
               </a>{" "}
               and let&rsquo;s chat one-on-one.
             </p>
