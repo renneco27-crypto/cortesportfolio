@@ -53,7 +53,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="light" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body>
         <MatrixRain />
         <CustomCursor />

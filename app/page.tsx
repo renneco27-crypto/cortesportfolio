@@ -99,20 +99,12 @@ export default function HomePage() {
       );
     }
 
-    // theme toggle (light/dark)
-    const themeToggle = document.getElementById("themeToggle");
-    if (themeToggle) {
-      themeToggle.addEventListener("click", () => {
-        document.documentElement.classList.toggle("light");
-        const root = document.documentElement.style;
-        if (document.documentElement.classList.contains("light")) {
-          root.setProperty("--bg", "#f8fafc");
-          root.setProperty("--fg", "#0a0a0f");
-        } else {
-          root.setProperty("--bg", "#0a0a0f");
-          root.setProperty("--fg", "#f8fafc");
-        }
-      });
+    // restore saved theme from localStorage
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else if (savedTheme === "light") {
+      document.documentElement.classList.remove("dark");
     }
 
     // resume buttons — pointing to the local resume PDF
@@ -327,15 +319,13 @@ export default function HomePage() {
   id="themeToggle" 
   aria-label="Toggle theme"
   onClick={() => {
-    // 1. Check current theme by looking for the light-mode class on document element
-    const isLight = document.documentElement.classList.contains("light-mode");
-    
-    if (isLight) {
-      document.documentElement.classList.remove("light-mode");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.add("light-mode");
+    const isDark = document.documentElement.classList.contains("dark");
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     }
   }}
 >
