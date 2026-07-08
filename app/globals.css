@@ -95,12 +95,12 @@ html:not(.dark) .bg-zinc-950\/80 { background-color: rgba(237,233,254,0.88) !imp
 
 /* ── Tailwind text overrides ────────────────────────────────── */
 html:not(.dark) .text-white,
-html:not(.dark) .text-zinc-100 { color: #1e1b4b !important; }
-html:not(.dark) .text-zinc-200 { color: #1e1b4b !important; }
-html:not(.dark) .text-zinc-300 { color: #2d2467 !important; }
-html:not(.dark) .text-zinc-400 { color: #4c3d9e !important; }
-html:not(.dark) .text-zinc-500 { color: #6d5db3 !important; }
-html:not(.dark) .text-zinc-600 { color: #4c3d9e !important; }
+html:not(.dark) .text-zinc-100,
+html:not(.dark) .text-zinc-200,
+html:not(.dark) .text-zinc-300,
+html:not(.dark) .text-zinc-400,
+html:not(.dark) .text-zinc-500,
+html:not(.dark) .text-zinc-600 { color: #000000 !important; }
 
 /* ── Borders ─────────────────────────────────────────────────── */
 html:not(.dark) .border-zinc-800,

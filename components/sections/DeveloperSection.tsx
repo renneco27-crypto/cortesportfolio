@@ -27,23 +27,26 @@ export default function DeveloperSection() {
           <div className="dev-info reveal">
             <span className="eyebrow">Developer</span>
             <h2>Who I Am</h2>
+            <p>Hey, I&rsquo;m Lawrence Cortes</p>
+            <p className="subtitle">BS Information Technology · Ormoc City, Leyte, Philippines</p>
             <p>
-              I&rsquo;m Lawrence Cortes, a BS Information Technology student based in Ormoc City, Leyte,
-              Philippines. I pair full-stack development &mdash; React, Next.js, Node.js, REST APIs &mdash; with
-              the documentation discipline I built supporting a government accounting office: precise, organized,
-              and built to hold up under process.
+              I build full-stack apps that actually work &mdash;<br />
+              Next.js · TypeScript · Node.js · PostgreSQL
             </p>
-            <p style={{ marginTop: "1rem" }}>
-              Currently pursuing internship opportunities where I can apply full-stack development, cloud
-              fundamentals, and steady, detail-first execution to a real product team.
+            <p>API integrations, debugging, responsive design &mdash; clean code is my love language.</p>
+            <p>
+              I write software that scales, not just runs.<br />
+              I&rsquo;m obsessed with secure, maintainable, and thoughtful solutions.
             </p>
-            <p style={{ marginTop: "1rem" }}>
-              If you&rsquo;d like to talk shop, ask about an internship, or just say hi,
-              message me on Facebook at{" "}
+            <p>Looking for an internship where I can join a product team, solve real problems, and ship code I&rsquo;m proud of.</p>
+            <p>
+              Wanna talk shop? Geek out over a stack? Or just say hi?<br />
+              Hit me up on Facebook:{" "}
               <a href="https://www.facebook.com/Rennejay.Dev.21" target="_blank" rel="noopener noreferrer" className="dev-email-link">
                 facebook.com/Rennejay.Dev.21
-              </a>{" "}
-              and let&rsquo;s chat one-on-one.
+              </a>
+              <br />
+              Let&rsquo;s chat one-on-one.
             </p>
 
             <div className="tag-row" style={{ marginTop: "1.5rem" }}>
