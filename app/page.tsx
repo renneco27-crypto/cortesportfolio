@@ -554,13 +554,10 @@ export default function HomePage() {
                   <span className="tag">React</span>
                   <span className="tag">Next.js</span>
                   <span className="tag">Node.js</span>
-                  <span className="tag">Express</span>
                   <span className="tag">HTML</span>
                   <span className="tag">CSS</span>
                   <span className="tag">Java</span>
                   <span className="tag">Python</span>
-                  <span className="tag">Go</span>
-                  <span className="tag">Rust</span>
                 </div>
               </div>
 
@@ -586,7 +583,6 @@ export default function HomePage() {
                   <span className="tag">PostgreSQL</span>
                   <span className="tag">MongoDB</span>
                   <span className="tag">Spring Boot</span>
-                  <span className="tag">Hibernate/JPA</span>
                   <span className="tag">Maven/Gradle</span>
                   <span className="tag">REST APIs</span>
                 </div>
@@ -611,11 +607,8 @@ export default function HomePage() {
                 <div className="tag-row">
                   <span className="tag">Azure</span>
                   <span className="tag">Google Cloud</span>
-                  <span className="tag">BigQuery</span>
                   <span className="tag">Docker</span>
-                  <span className="tag">Kubernetes</span>
                   <span className="tag">Git</span>
-                  <span className="tag">Power BI</span>
                 </div>
               </div>
 
