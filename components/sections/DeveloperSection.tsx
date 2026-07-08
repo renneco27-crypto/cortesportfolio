@@ -1,5 +1,7 @@
 "use client";
 
+import GitHubGraph from "@/components/ui/GitHubGraph";
+
 const TECH_STACK = [
   "HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js",
   "Node.js", "Express", "PostgreSQL", "MongoDB", "Git", "Docker",
@@ -22,6 +24,7 @@ export default function DeveloperSection() {
               height={320}
               className="dev-photo"
             />
+            <GitHubGraph username="renneco27-crypto" />
           </div>
 
           <div className="dev-info reveal">
