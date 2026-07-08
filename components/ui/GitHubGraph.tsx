@@ -74,10 +74,7 @@ const TEXT = "#c9d1d9";
 
 export default function GitHubGraph({ username = "renneco27-crypto" }) {
   const [weeks, setWeeks] = useState<WeekData[]>([]);
-  const [total, setTotal] = useState(0);
   const [status, setStatus] = useState("Loading contribution data…");
-  const [fetchedAt, setFetchedAt] = useState<number | null>(null);
-  const [fromCache, setFromCache] = useState(false);
   const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
 
   useEffect(() => {
@@ -87,8 +84,6 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
       const cacheKey = CACHE_KEY_PREFIX + username.toLowerCase();
       const cached = localStorage.getItem(cacheKey);
       let data: any = null;
-      let fc = false;
-      let fa = Date.now();
 
       if (cached) {
         try {
@@ -96,8 +91,6 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
           const age = Date.now() - parsed.fetchedAt;
           if (age < REFRESH_INTERVAL_MS) {
             data = parsed.data;
-            fc = true;
-            fa = parsed.fetchedAt;
           }
         } catch (_) {}
       }
@@ -111,7 +104,6 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
           data = await res.json();
           if (!data || !data.contributions) throw new Error("Unexpected response format");
           localStorage.setItem(cacheKey, JSON.stringify({ data, fetchedAt: Date.now() }));
-          fa = Date.now();
         } catch (err: any) {
           if (!cancelled) setStatus(err.message);
           return;
@@ -120,13 +112,7 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
 
       if (cancelled) return;
 
-      const w = buildWeeks(data.contributions);
-      const tc = data.contributions.reduce((sum: number, c: any) => sum + c.count, 0);
-
-      setWeeks(w);
-      setTotal(tc);
-      setFetchedAt(fa);
-      setFromCache(fc);
+      setWeeks(buildWeeks(data.contributions));
       setStatus("");
     }
 
@@ -138,21 +124,9 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
 
   return (
     <div style={{ marginTop: 32 }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline",
-          marginBottom: 8,
-          flexWrap: "wrap",
-          gap: 8,
-        }}
-      >
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: TEXT }}>
-          GitHub contributions
-        </h3>
-        <span style={{ fontSize: 11, color: MUTED }}>{username}</span>
-      </div>
+      <h3 style={{ margin: "0 0 8px 0", fontSize: 14, fontWeight: 600, color: TEXT }}>
+        GitHub contributions
+      </h3>
 
       {status ? (
         <div
@@ -167,7 +141,7 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
           {status}
         </div>
       ) : (
-        <div style={{ overflowX: "auto" }}>
+        <div style={{ overflowX: "auto", display: "flex", justifyContent: "center" }}>
           <div style={{ display: "flex", fontSize: 11, color: MUTED, marginLeft: 30, marginBottom: 4 }}>
             {months.map((m, idx) => {
               const nextIdx = idx < months.length - 1 ? months[idx + 1].index : weeks.length;
@@ -226,24 +200,6 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
           </div>
         </div>
       )}
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginTop: 10,
-          fontSize: 11,
-          color: MUTED,
-        }}
-      >
-        <span>
-          {fetchedAt
-            ? `Updated ${new Date(fetchedAt).toLocaleString()}${fromCache ? " (cached)" : " (live)"}`
-            : ""}
-        </span>
-        {total > 0 && <span>{total} contributions in the last year</span>}
-      </div>
 
       {tooltip && (
         <div
