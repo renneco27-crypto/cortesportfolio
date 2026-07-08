@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
-import { GitFork, Menu, X, FileDown } from "lucide-react";
+import { GitFork, Menu, X, FileDown, Sun, Moon } from "lucide-react";
 import { useState } from "react";
+import { useThemeHook } from "@/hooks/useTheme";
 import type { NavLink } from "@/types";
 
 interface NavbarProps {
@@ -11,6 +12,7 @@ interface NavbarProps {
 
 export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useThemeHook();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-200/60 bg-white/80 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-950/80">
@@ -42,6 +44,13 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
           >
             <GitFork size={20} />
           </a>
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle dark mode"
+            className="text-zinc-600 hover:text-zinc-900 transition-colors duration-200 dark:text-zinc-400 dark:hover:text-white"
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
           <a
             href={resumeDownloadUrl}
             download
