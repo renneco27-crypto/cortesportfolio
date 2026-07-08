@@ -141,7 +141,7 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
           {status}
         </div>
       ) : (
-        <div style={{ overflowX: "auto", display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <div style={{ display: "flex", fontSize: 11, color: MUTED, marginLeft: 30, marginBottom: 4 }}>
             {months.map((m, idx) => {
               const nextIdx = idx < months.length - 1 ? months[idx + 1].index : weeks.length;
