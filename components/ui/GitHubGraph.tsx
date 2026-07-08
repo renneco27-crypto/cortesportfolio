@@ -51,7 +51,7 @@ function buildWeeks(contributions: { date: string; count: number }[]) {
   return weeks;
 }
 
-function monthLabelsForWeeks(weeks: WeekData) {
+function monthLabelsForWeeks(weeks: WeekData[]) {
   const labels: { index: number; text: string }[] = [];
   let lastMonth = -1;
   weeks.forEach((week, i) => {
@@ -120,7 +120,7 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
 
       if (cancelled) return;
 
-      const w = buildWeeks(data.contributions) as unknown as WeekData[];
+      const w = buildWeeks(data.contributions);
       const tc = data.contributions.reduce((sum: number, c: any) => sum + c.count, 0);
 
       setWeeks(w);
