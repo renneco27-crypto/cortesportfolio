@@ -30,27 +30,23 @@ export default function DeveloperSection() {
             <p className="greeting">Hey, I&rsquo;m Lawrence Cortes</p>
             <p className="subtitle">BS Information Technology · Ormoc City, Leyte, Philippines</p>
             <p>
-              I build full-stack applications that solve real problems &mdash; from polished frontends with React
-              and Next.js to robust backends powered by Node.js and PostgreSQL. Clean architecture, maintainable
-              code, and user experience that actually feels good to use.
+              I build full-stack apps with Next.js, Node.js, and PostgreSQL &mdash; nothing fancy, just code
+              that actually runs. An accounting office once told me that&rsquo;s what matters, and I&rsquo;ve
+              carried that with me ever since.
             </p>
             <p>
-              My background in a government accounting office taught me something most dev schools don&rsquo;t:
-              how to work with precision, process, and patience &mdash; because when every number matters, you
-              double-check everything. I bring that same discipline to every project I touch.
+              I&rsquo;m obsessed with secure, maintainable, and thoughtful solutions.<br />
+              Looking for an internship where I can join a product team, solve real problems, and ship code
+              I&rsquo;m proud of.
             </p>
             <p>
-              Right now, I&rsquo;m looking for an internship where I can join a real product team, contribute
-              meaningfully, and keep growing. I thrive on thoughtful feedback, messy problems, and the kind of
-              work that makes you better just by showing up.
-            </p>
-            <p>
-              Want to talk tech, exchange ideas, or just see if we vibe?<br />
-              Reach out on Facebook:{" "}
+              Wanna talk shop? Geek out over a stack? Or just say hi?<br />
+              Hit me up on Facebook:{" "}
               <a href="https://www.facebook.com/Rennejay.Dev.21" target="_blank" rel="noopener noreferrer" className="dev-email-link">
                 facebook.com/Rennejay.Dev.21
               </a>
-              &nbsp;&mdash; I&rsquo;d love to hear from you.
+              <br />
+              Let&rsquo;s chat one-on-one.
             </p>
 
             <div className="tag-row" style={{ marginTop: "1.5rem" }}>
