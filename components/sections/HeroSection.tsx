@@ -117,7 +117,7 @@ export default function HeroSection({
 
           <motion.div custom={5} variants={fadeUp} initial="hidden" animate="visible" className="flex flex-wrap gap-3">
             <a
-              href="https://github.com/corteslawrence027-art/CORTES-Engineering-Portfolio"
+              href="https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-full border border-violet-500/30 bg-zinc-900 px-3 py-1.5 text-xs text-zinc-400 hover:text-violet-400 hover:border-violet-400 transition-colors"

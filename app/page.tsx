@@ -312,7 +312,7 @@ export default function HomePage() {
           <div className="nav-actions">
             <a
               className="icon-btn"
-              href="https://github.com/corteslawrence027-art"
+              href="https://github.com/renneco27-crypto"
               target="_blank"
               rel="noopener"
               aria-label="GitHub profile"
@@ -460,7 +460,7 @@ export default function HomePage() {
                       Get in touch
                     </a>
                     <a
-                      href="https://github.com/corteslawrence027-art"
+                      href="https://github.com/renneco27-crypto"
                       target="_blank"
                       rel="noopener"
                       className="btn btn-ghost"
@@ -935,7 +935,7 @@ export default function HomePage() {
                 </p>
                 <a
                   className="proj-link"
-                  href="https://github.com/corteslawrence027-art/FortheBlind_BIngExtensionBlind"
+                  href="https://github.com/renneco27-crypto/FortheBlind_BIngExtensionBlind"
                   target="_blank"
                   rel="noopener"
                 >
@@ -1033,11 +1033,11 @@ export default function HomePage() {
                 <p>New builds land here first. Browse everything currently in progress.</p>
                 <a
                   className="proj-link"
-                  href="https://github.com/corteslawrence027-art"
+                  href="https://github.com/renneco27-crypto"
                   target="_blank"
                   rel="noopener"
                 >
-                  github.com/corteslawrence027-art
+                  github.com/renneco27-crypto
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -1209,7 +1209,7 @@ export default function HomePage() {
                     </span>
                     <div>
                       <div className="t1">CORTES Engineering Portfolio</div>
-                      <div className="t2">github.com/corteslawrence027-art</div>
+                      <div className="t2">github.com/renneco27-crypto</div>
                     </div>
                   </div>
                   <div className="info-row">
@@ -1331,7 +1331,7 @@ export default function HomePage() {
           </p>
           <div className="footer-links">
             <a
-              href="https://github.com/corteslawrence027-art"
+              href="https://github.com/renneco27-crypto"
               target="_blank"
               rel="noopener"
               aria-label="GitHub"

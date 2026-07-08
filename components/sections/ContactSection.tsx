@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { GitFork, Mail, Send } from "lucide-react";
 
 const currentYear = new Date().getFullYear();
-const GITHUB_URL = "https://github.com/corteslawrence027-art/CORTES-Engineering-Portfolio";
+const GITHUB_URL = "https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio";
 
 export default function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -88,7 +88,7 @@ export default function ContactSection() {
                 <GitFork size={16} className="text-violet-400" />
                 <div>
                   <p className="text-white text-xs font-medium group-hover:text-violet-300">CORTES Engineering Portfolio</p>
-                  <p className="text-zinc-600 text-xs font-mono">github.com/corteslawrence027-art</p>
+                  <p className="text-zinc-600 text-xs font-mono">github.com/renneco27-crypto</p>
                 </div>
               </a>
               <a href="https://www.facebook.com/Rennejay.Dev.21" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-zinc-400 hover:text-violet-400 transition-colors">

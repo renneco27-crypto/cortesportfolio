@@ -35,7 +35,7 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
 
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="https://github.com/corteslawrence027-art/CORTES-Engineering-Portfolio"
+            href="https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
@@ -76,7 +76,7 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
             </Link>
           ))}
           <a
-            href="https://github.com/corteslawrence027-art/CORTES-Engineering-Portfolio"
+            href="https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-sm text-zinc-600 hover:text-violet-400 dark:text-zinc-400"

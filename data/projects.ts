@@ -1,6 +1,6 @@
 import type { Project } from "@/types";
 
-const GITHUB_URL = "https://github.com/corteslawrence027-art/CORTES-Engineering-Portfolio";
+const GITHUB_URL = "https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio";
 
 export const projectsData: Project[] = [
   {

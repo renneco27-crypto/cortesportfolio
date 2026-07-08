@@ -9,7 +9,7 @@ export default function FooterComponent() {
         </p>
         <div className="flex items-center gap-5">
           <a
-            href="https://github.com/corteslawrence027-art/CORTES-Engineering-Portfolio"
+            href="https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"

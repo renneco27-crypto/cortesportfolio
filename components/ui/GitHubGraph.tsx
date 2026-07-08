@@ -169,9 +169,12 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
       ) : (
         <div style={{ overflowX: "auto" }}>
           <div style={{ display: "flex", fontSize: 11, color: MUTED, marginLeft: 30, marginBottom: 4 }}>
-            {months.map((m) => (
-              <span key={m.index} style={{ width: 14, flexShrink: 0 }}>{m.text}</span>
-            ))}
+            {months.map((m, idx) => {
+              const nextIdx = idx < months.length - 1 ? months[idx + 1].index : weeks.length;
+              const numWeeks = nextIdx - m.index;
+              const width = numWeeks * 14 - 3;
+              return <span key={m.index} style={{ width: Math.max(width, 28), flexShrink: 0 }}>{m.text}</span>;
+            })}
           </div>
           <div style={{ display: "flex" }}>
             <div
