@@ -4,10 +4,9 @@ import GitHubGraph from "@/components/ui/GitHubGraph";
 
 const TECH_STACK = [
   "HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js",
-  "Node.js", "Express", "PostgreSQL", "MongoDB", "Git", "Docker",
-  "REST APIs", "Java", "Spring Boot", "Hibernate/JPA", "Maven/Gradle",
-  "Python", "Go", "Rust", "Azure", "Google Cloud", "BigQuery",
-  "Kubernetes", "Power BI",
+  "Node.js", "PostgreSQL", "MongoDB", "Git", "Docker",
+  "REST APIs", "Java", "Spring Boot", "Maven/Gradle",
+  "Python", "Azure", "Google Cloud",
 ];
 
 export default function DeveloperSection() {
