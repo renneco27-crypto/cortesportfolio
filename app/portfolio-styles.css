@@ -3,8 +3,8 @@
   --font-inter:"Inter",ui-sans-serif,system-ui,sans-serif;
   --font-mono:"JetBrains Mono",ui-monospace,monospace;
 
-  --bg:#0a0a0f;
-  --fg:#f8fafc;
+   --bg:#ede9fe;
+  --fg:#0a0a0f;
 
   --violet-300:#c4b5fd;
   --violet-400:#a78bfa;
@@ -24,11 +24,6 @@
   --zinc-800:#27272a;
   --zinc-900:#18181b;
   --zinc-950:#09090b;
-
-  --card-bg:rgba(255,255,255,.025);
-  --card-border:rgba(255,255,255,.07);
-  --hairline:rgba(255,255,255,.06);
-  --icon-color:var(--zinc-400);
 
   --emerald-400:#34d399;
   --red-400:#f87171;
@@ -550,24 +545,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding-block:2.5rem;}
   overflow: hidden;
 }
 
-/* ── Light mode — vibrant slate-based, no purple ──────────── */
-html:not(.dark) {
-  --bg:        #f8fafc;
-  --fg:        #0f172a;
-  --zinc-200:  #1e293b;
-  --zinc-300:  #334155;
-  --zinc-400:  #475569;
-  --zinc-500:  #64748b;
-  --zinc-800:  #e2e8f0;
-  --zinc-900:  #f1f5f9;
-  --zinc-950:  #f8fafc;
-  --card-bg:   #e2e8f0;
-  --card-border: rgba(0,0,0,.12);
-  --hairline:  rgba(0,0,0,.08);
-  --icon-color: #475569;
-}
-html:not(.dark) header {
-  background: rgba(248,250,252,.88) !important;
-  border-bottom-color: rgba(0,0,0,.08) !important;
+html.dark {
+  --bg: #0a0a0f;
+  --fg: #f8fafc;
 }
 
