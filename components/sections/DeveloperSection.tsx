@@ -24,7 +24,6 @@ export default function DeveloperSection() {
               height={320}
               className="dev-photo"
             />
-            <GitHubGraph username="renneco27-crypto" />
           </div>
 
           <div className="dev-info reveal">
@@ -61,6 +60,7 @@ export default function DeveloperSection() {
             </div>
           </div>
         </div>
+        <GitHubGraph username="renneco27-crypto" />
       </div>
     </section>
   );

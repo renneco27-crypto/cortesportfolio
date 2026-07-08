@@ -137,21 +137,13 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
   const months = weeks.length > 0 ? monthLabelsForWeeks(weeks) : [];
 
   return (
-    <div
-      style={{
-        background: "#161b22",
-        border: "1px solid #30363d",
-        borderRadius: 8,
-        padding: 16,
-        marginTop: 16,
-      }}
-    >
+    <div style={{ marginTop: 32 }}>
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "baseline",
-          marginBottom: 10,
+          marginBottom: 8,
           flexWrap: "wrap",
           gap: 8,
         }}
