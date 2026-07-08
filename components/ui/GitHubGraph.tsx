@@ -68,9 +68,9 @@ function monthLabelsForWeeks(weeks: WeekData[]) {
   return labels;
 }
 
-const LEVEL_COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
-const MUTED = "#8b949e";
-const TEXT = "#c9d1d9";
+const LEVEL_COLORS = ["var(--zinc-800)", "#0e4429", "#006d32", "#26a641", "#39d353"];
+const MUTED = "var(--zinc-400)";
+const TEXT = "var(--zinc-200)";
 
 export default function GitHubGraph({ username = "renneco27-crypto" }) {
   const [weeks, setWeeks] = useState<WeekData[]>([]);
@@ -188,7 +188,7 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
                           height: 11,
                           borderRadius: 2,
                           background: LEVEL_COLORS[level],
-                          outline: "1px solid rgba(255,255,255,0.04)",
+                          outline: "1px solid var(--hairline)",
                           flexShrink: 0,
                         }}
                       />
@@ -207,9 +207,9 @@ export default function GitHubGraph({ username = "renneco27-crypto" }) {
             position: "fixed",
             left: tooltip.x,
             top: tooltip.y,
-            background: "#1c2128",
-            border: "1px solid #30363d",
-            color: TEXT,
+            background: "var(--zinc-900)",
+            border: "1px solid var(--card-border)",
+            color: "var(--fg)",
             fontSize: 12,
             padding: "6px 8px",
             borderRadius: 6,
