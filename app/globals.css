@@ -13,8 +13,8 @@ html { scroll-behavior: smooth; }
 /* ── Base body (dark default) ───────────────────────────────── */
 body {
   font-family: var(--font-inter);
-  background-color: var(--bg);
-  color: var(--fg);
+  background-color: #0a0a0f;
+  color: #f8fafc;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
