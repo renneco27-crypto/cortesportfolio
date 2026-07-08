@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { GitFork, Menu, X, FileDown } from "lucide-react";
 import { useState } from "react";
-import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
 import type { NavLink } from "@/types";
 
 interface NavbarProps {
@@ -43,7 +42,6 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
           >
             <GitFork size={20} />
           </a>
-          <DarkModeToggle />
           <a
             href={resumeDownloadUrl}
             download
