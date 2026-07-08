@@ -14,12 +14,12 @@ export default function MatrixRain() {
 
     const updateOpacity = () => {
       const aboutEl = document.getElementById("about");
-      const skillsEl = document.getElementById("skills");
-      if (!aboutEl || !skillsEl) return;
+      const devEl = document.getElementById("developer");
+      if (!aboutEl || !devEl) return;
 
       const aboutBottom = aboutEl.getBoundingClientRect().bottom;
-      const skillsTop = skillsEl.getBoundingClientRect().top;
-      const sectionDistance = skillsTop - aboutBottom;
+      const devTop = devEl.getBoundingClientRect().top;
+      const sectionDistance = devTop - aboutBottom;
 
       let progress = 0;
       if (sectionDistance > 0) {
