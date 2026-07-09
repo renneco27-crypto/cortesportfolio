@@ -558,6 +558,11 @@ export default function HomePage() {
                   <span className="tag">CSS</span>
                   <span className="tag">Java</span>
                   <span className="tag">Python</span>
+                  <span className="tag">C#</span>
+                  <span className="tag">C++</span>
+                  <span className="tag">Go</span>
+                  <span className="tag">Rust</span>
+                  <span className="tag">Kotlin</span>
                 </div>
               </div>
 
