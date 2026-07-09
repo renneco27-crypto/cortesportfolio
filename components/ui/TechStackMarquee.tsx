@@ -86,12 +86,14 @@ export default function TechStackMarquee() {
         .marquee-track2 { animation-duration: 28s; animation-direction: reverse; margin-top: 10px; }
         @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
       `}</style>
-      <div className="marquee-wrap">
-        <div className="marquee-track">
-          {[...ROW1, ...ROW1].map((t, i) => <Tag key={i} label={t.label} color={t.color} />)}
-        </div>
-        <div className="marquee-track marquee-track2">
-          {[...ROW2, ...ROW2].map((t, i) => <Tag key={i} label={t.label} color={t.color} />)}
+      <div style={{ width: "100vw", marginLeft: "calc(-50vw + 50%)", overflow: "hidden" }}>
+        <div className="marquee-wrap">
+          <div className="marquee-track">
+            {[...ROW1, ...ROW1].map((t, i) => <Tag key={i} label={t.label} color={t.color} />)}
+          </div>
+          <div className="marquee-track marquee-track2">
+            {[...ROW2, ...ROW2].map((t, i) => <Tag key={i} label={t.label} color={t.color} />)}
+          </div>
         </div>
       </div>
     </div>

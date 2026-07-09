@@ -522,6 +522,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding-block:2.5rem;}
 @media(min-width:900px){.dev-photo{width:20rem;height:20rem;}}
 .dev-photo:hover{transform:scale(1.02);box-shadow:0 28px 56px -12px rgba(124,58,237,.45);}
 
+.dev-info{overflow:hidden;}
 .dev-info h2{font-size:clamp(1.75rem,4vw,2.5rem);margin-top:.75rem;}
 .dev-info p{color:var(--zinc-400);font-size:1.05rem;margin-top:1rem;max-width:34rem;line-height:1.7;}
 .dev-email-link{color:var(--violet-400);font-weight:600;transition:color .2s;}
