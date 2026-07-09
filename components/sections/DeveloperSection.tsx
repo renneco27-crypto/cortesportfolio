@@ -1,13 +1,7 @@
 "use client";
 
 import GitHubGraph from "@/components/ui/GitHubGraph";
-
-const TECH_STACK = [
-  "HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js",
-  "Node.js", "PostgreSQL", "MongoDB", "Git", "Docker",
-  "REST APIs", "Java", "Spring Boot", "Maven/Gradle",
-  "Python", "Azure", "Google Cloud",
-];
+import TechStackMarquee from "@/components/ui/TechStackMarquee";
 
 export default function DeveloperSection() {
   return (
@@ -50,13 +44,7 @@ export default function DeveloperSection() {
               Let&rsquo;s chat one-on-one.
             </p>
 
-            <div className="tag-row" style={{ marginTop: "1.5rem" }}>
-              {TECH_STACK.map((tech) => (
-                <span key={tech} className="tag">
-                  {tech}
-                </span>
-              ))}
-            </div>
+            <TechStackMarquee />
           </div>
         </div>
         <GitHubGraph username="renneco27-crypto" />
