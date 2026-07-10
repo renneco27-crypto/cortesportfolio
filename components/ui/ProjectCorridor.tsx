@@ -179,7 +179,7 @@ export default function ProjectCorridor() {
         #corridor-root .cc-links{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.4rem}
         #corridor-root .cc-card.cc-cta{background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.35)}
         #corridor-root #corridor-track{width:100%;position:relative}
-        #corridor-root #corridor-sticky{position:sticky;top:0;width:100%;height:100vh;overflow:hidden;background:#04060c}
+        #corridor-root #corridor-sticky{position:sticky;top:0;width:100%;height:100vh;overflow:hidden}
         #corridor-root #corridor-cards-layer{position:absolute;inset:0;pointer-events:none}
         #corridor-root #corridor-bar{position:absolute;bottom:0;left:0;height:2px;background:rgba(139,92,246,.7);z-index:20}
         #corridor-root #corridor-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em;pointer-events:none;white-space:nowrap;transition:opacity .3s}
