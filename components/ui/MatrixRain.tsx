@@ -10,8 +10,6 @@ export default function MatrixRain() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const isDark = () => document.documentElement.classList.contains("dark");
-
     const updateOpacity = () => {
       const aboutEl = document.getElementById("about");
       const devEl = document.getElementById("developer");
@@ -26,9 +24,8 @@ export default function MatrixRain() {
         progress = Math.max(0, Math.min(1, -aboutBottom / sectionDistance));
       }
 
-      const dark = isDark();
-      const minOpacity = dark ? 0.10 : 0.30;
-      const maxOpacity = dark ? 0.25 : 0.72;
+      const minOpacity = 0.10;
+      const maxOpacity = 0.25;
 
       canvas.style.opacity = String(maxOpacity - (maxOpacity - minOpacity) * progress);
     };
@@ -42,12 +39,6 @@ export default function MatrixRain() {
     };
     resize();
     window.addEventListener("resize", resize);
-
-    const observer = new MutationObserver(() => updateOpacity());
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
 
     const cols = Math.floor(canvas.width / 20);
     const drops: number[] = Array(cols).fill(1);
@@ -66,11 +57,7 @@ export default function MatrixRain() {
 
     let raf: number;
     const draw = () => {
-      const dark = isDark();
-
-      ctx.fillStyle = dark
-        ? "rgba(10,10,15,0.06)"
-        : "rgba(237,233,254,0.07)";
+      ctx.fillStyle = "rgba(10,10,15,0.06)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       drops.forEach((y, i) => {
@@ -84,17 +71,13 @@ export default function MatrixRain() {
         }
 
         const headAlpha = Math.random() > 0.95 ? 1 : 0.9;
-        ctx.fillStyle = dark
-          ? `rgba(167,139,250,${headAlpha})`
-          : `rgba(79,70,229,${headAlpha})`;
+        ctx.fillStyle = `rgba(167,139,250,${headAlpha})`;
 
         ctx.font = `${Math.random() > 0.9 ? 15 : 13}px 'JetBrains Mono', monospace`;
         ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, pxY);
 
         const trailAlpha = 0.22 + Math.random() * 0.35;
-        ctx.fillStyle = dark
-          ? `rgba(124,58,237,${trailAlpha})`
-          : `rgba(139,92,246,${trailAlpha + 0.2})`;
+        ctx.fillStyle = `rgba(124,58,237,${trailAlpha})`;
 
         ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, pxY - 20);
 
@@ -111,7 +94,7 @@ export default function MatrixRain() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", updateOpacity);
-      observer.disconnect();
+
     };
   }, []);
 

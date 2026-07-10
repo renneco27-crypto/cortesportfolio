@@ -13,7 +13,7 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-200/60 bg-white/80 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-950/80">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="font-mono text-sm font-semibold text-violet-400 tracking-widest uppercase">
           LC.dev
@@ -24,7 +24,7 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors duration-200 dark:text-zinc-400 dark:hover:text-white"
+                className="text-sm text-zinc-400 hover:text-white transition-colors duration-200"
               >
                 {link.label}
               </Link>
@@ -38,7 +38,7 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="text-zinc-600 hover:text-violet-400 transition-colors duration-200 dark:text-zinc-400 dark:hover:text-violet-400"
+            className="text-zinc-400 hover:text-violet-400 transition-colors duration-200"
           >
             <GitFork size={20} />
           </a>
@@ -53,7 +53,7 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
         </div>
 
         <button
-          className="md:hidden text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
+          className="md:hidden text-zinc-400 hover:text-white"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -62,13 +62,13 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
       </nav>
 
       {menuOpen && (
-        <div className="md:hidden border-t border-zinc-200 bg-white px-6 py-4 flex flex-col gap-4 dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="md:hidden border-t border-zinc-800 bg-zinc-950 px-6 py-4 flex flex-col gap-4">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="text-sm text-zinc-700 hover:text-violet-400 transition-colors dark:text-zinc-300"
+              className="text-sm text-zinc-300 hover:text-violet-400 transition-colors"
             >
               {link.label}
             </Link>
@@ -77,7 +77,7 @@ export default function NavbarComponent({ links, resumeDownloadUrl }: NavbarProp
             href="https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm text-zinc-600 hover:text-violet-400 dark:text-zinc-400"
+            className="flex items-center gap-2 text-sm text-zinc-400 hover:text-violet-400"
           >
             <GitFork size={16} /> GitHub
           </a>
