@@ -14,24 +14,40 @@ interface Panel {
 }
 
 const PANELS: Panel[] = [
-  { side: "L", num: "01", title: "CORTES Engineering Portfolio", body: "This site. A dark, component-driven portfolio built to present projects, skills, and certifications in one place — and to keep getting rebuilt as the stack improves.", links: [{ label: "View live site", href: "https://cortes-engineering-portfolio.onrender.com" }] },
-  { side: "R", num: "02", title: "StudyUp", body: "StitchAI turns structured CSV data into interactive study notes and quizzes — flashcards, multiple-choice, fill-in-the-blank, true/false, and list enumeration with progress tracking.", links: [{ label: "Try the app", href: "https://median.co/share/nmpwama#androidphone" }, { label: "Telegram Bot", href: "https://t.me/+iBqel2uwqGA0NzRl" }] },
-  { side: "L", num: "03", title: "AutoCertification AI", body: "An AI-powered certificate generation platform that automatically inserts recipient names into custom templates — for schools, organizations, and event coordinators generating large batches.", links: [{ label: "View live site", href: "https://autocertificationai.onrender.com/" }] },
-  { side: "R", num: "04", title: "Telegram Reminder Bot", body: "A Telegram bot that automates reminders and follow-ups — ideal for students and professionals who want simple task and deadline management directly from Telegram.", links: [{ label: "View Telegram link", href: "https://web.telegram.org/a/#8905888956" }] },
-  { side: "L", num: "05", title: "Trash4Cash Barcode System", body: "A barcode-based recycling rewards platform where students earn canteen credits by returning recyclable waste.", links: [{ label: "View repository", href: "https://github.com/crisantohcortes1-commits/-Trash4CashBarcode" }] },
-  { side: "R", num: "06", title: "For the Blind — Keyboard Touches", body: "A browser extension for blind and visually impaired users that provides fast speech feedback, keyboard navigation, and screen exploration tools.", links: [{ label: "View repository", href: "https://github.com/renneco27-crypto/FortheBlind_BIngExtensionBlind" }] },
-  { side: "L", num: "07", title: "School Attendance Maker", body: "A secure web application for academic institutions that streamlines classroom attendance tracking through a synchronized portal for instructors and students.", links: [{ label: "Download APK", href: "https://www.mediafire.com/file/e5mltyozkd9goji/ACLC_QR.apk/file" }, { label: "Main Gateway", href: "https://attendancemaker-tsjz.onrender.com" }, { label: "Teacher Interface", href: "https://teachesinterfaceattendanceaclc.onrender.com/" }] },
-  { side: "R", num: "08", title: "More on GitHub", body: "New builds land here first. Browse everything currently in progress.", links: [{ label: "github.com/renneco27-crypto", href: "https://github.com/renneco27-crypto" }], cta: true },
+  { side: "L", num: "01", title: "CORTES Engineering Portfolio",
+    body: "This site. A dark, component-driven portfolio built to present projects, skills, and certifications in one place — and to keep getting rebuilt as the stack improves.",
+    links: [{ label: "View live site", href: "https://cortes-engineering-portfolio.onrender.com" }] },
+  { side: "R", num: "02", title: "StudyUp",
+    body: "StitchAI is a study tool designed to turn structured CSV data into comprehensive, interactive study notes and quizzes. By importing formatted CSV files, the app instantly populates a customized dashboard with diverse learning modules including flashcards, 4-option multiple-choice quizzes, fill-in-the-blank identification, true/false questions, and list enumeration allowing users to seamlessly track their progress and review streaks.",
+    links: [{ label: "Try the app", href: "https://median.co/share/nmpwama#androidphone" }, { label: "Telegram Bot", href: "https://t.me/+iBqel2uwqGA0NzRl" }] },
+  { side: "L", num: "03", title: "AutoCertification AI",
+    body: "An AI-powered certificate generation platform that automatically inserts recipient names into custom certificate templates, eliminating repetitive manual editing. Designed to help schools, organizations, and event coordinators generate large batches of personalized certificates quickly, accurately, and efficiently.",
+    links: [{ label: "View live site", href: "https://autocertificationai.onrender.com/" }] },
+  { side: "R", num: "04", title: "Telegram Reminder Bot",
+    body: "A Telegram bot that helps users stay organized by automating reminders and follow-ups. Ideal for students, professionals, and busy individuals who want a simple way to manage tasks, deadlines, and daily responsibilities directly from Telegram.",
+    links: [{ label: "View Telegram link", href: "https://web.telegram.org/a/#8905888956" }] },
+  { side: "L", num: "05", title: "Trash4Cash Barcode System",
+    body: "A barcode-based recycling rewards platform where students earn canteen credits by returning recyclable waste. The system promotes proper waste management, encourages environmental responsibility, and provides schools with an engaging way to incentivize sustainable behavior.",
+    links: [{ label: "View repository", href: "https://github.com/crisantohcortes1-commits/-Trash4CashBarcode" }] },
+  { side: "R", num: "06", title: "For the Blind — Keyboard Touches",
+    body: "A browser extension designed for blind and visually impaired users that provides fast speech feedback, keyboard navigation, and screen exploration tools. Features include speech feedback while navigating web pages, text/link/button/heading reading, caret tracking, selected text reading, element labels announced before their role, Navigator Mode with Alt + C shortcut, and Escape key support for exiting navigation states.",
+    links: [{ label: "View repository", href: "https://github.com/renneco27-crypto/FortheBlind_BIngExtensionBlind" }] },
+  { side: "L", num: "07", title: "School Attendance Maker",
+    body: "A secure, specialized web application built for academic institutions and colleges of computer studies that streamlines classroom attendance tracking through a synchronized portal for instructors and students, utilizing anti-cheating protocols and automated reporting. Features include dual-interface portal (Teacher Panel + Student Portal), Anti-Cheat &ldquo;Double QR&rdquo; Technology, Biometric Verification (Google Face Recognition &amp; Nodding System), Device Integrity Protection (Anti-Developer Options), and Seamless Reporting &amp; Excel Export.",
+    links: [{ label: "Download APK", href: "https://www.mediafire.com/file/e5mltyozkd9goji/ACLC_QR.apk/file" }, { label: "Main Gateway", href: "https://attendancemaker-tsjz.onrender.com" }, { label: "Teacher Interface", href: "https://teachesinterfaceattendanceaclc.onrender.com/" }] },
+  { side: "R", num: "08", title: "More on GitHub",
+    body: "New builds land here first. Browse everything currently in progress.",
+    links: [{ label: "github.com/renneco27-crypto", href: "https://github.com/renneco27-crypto" }], cta: true },
 ];
 
 const N = PANELS.length;
-const CARD_W = 316, CARD_H = 210;
+const CARD_W = 400, CARD_H = 280;
 const ARRIVE = 0.25, DEPART = 0.75;
-const T_PAUSE = 0.38;
+const T_PAUSE = 0.18;
 const EASE_EXP = 1.2;
 const TITLE_HOLD = 0.06;
 const TITLE_FADE = 0.05;
-const VH_PER_CARD = 0.55;
+const VH_PER_CARD = 0.65;
 
 function easeOut(t: number) { return 1 - Math.pow(1 - t, EASE_EXP); }
 function easeIn(t: number) { return Math.pow(t, EASE_EXP); }
@@ -43,7 +59,6 @@ export default function ProjectCorridor() {
   const barRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const lockRef = useRef<HTMLDivElement>(null);
   const progRef = useRef(0);
 
   useEffect(() => {
@@ -52,8 +67,7 @@ export default function ProjectCorridor() {
     const bar = barRef.current;
     const hint = hintRef.current;
     const titleEl = titleRef.current;
-    const lockEl = lockRef.current;
-    if (!track || !layer || !bar || !hint || !titleEl || !lockEl) return;
+    if (!track || !layer || !bar || !hint || !titleEl) return;
 
     const cardEls = PANELS.map((p) => {
       const d = document.createElement("div");
@@ -79,7 +93,7 @@ export default function ProjectCorridor() {
       W = window.innerWidth;
       H = window.innerHeight;
       VPX = W / 2;
-      VPY = H * 0.42;
+      VPY = H * 0.30;
       EDGE_Y = H * 0.78;
       LINE_L = { x1: VPX, y1: VPY, x2: 0, y2: EDGE_Y };
       LINE_R = { x1: VPX, y1: VPY, x2: W, y2: EDGE_Y };
@@ -92,7 +106,7 @@ export default function ProjectCorridor() {
     }
 
     function render() {
-      if (!bar || !hint || !titleEl || !lockEl) return;
+      if (!bar || !hint || !titleEl) return;
       const prog = progRef.current;
 
       const titleAlpha = prog < TITLE_HOLD ? 1 : clamp(1 - (prog - TITLE_HOLD) / TITLE_FADE, 0, 1);
@@ -112,7 +126,7 @@ export default function ProjectCorridor() {
         let t: number, scale: number, alpha: number;
         if (lc < ARRIVE) {
           const pp = lc / ARRIVE, ep = easeOut(pp);
-          scale = 0.3 + ep * 0.7; t = ep * T_PAUSE; alpha = pp < 0.1 ? pp / 0.1 : 1;
+          scale = 0.25 + ep * 0.75; t = ep * T_PAUSE; alpha = pp < 0.1 ? pp / 0.1 : 1;
         } else if (lc <= DEPART) {
           scale = 1; t = T_PAUSE; alpha = 1;
         } else {
@@ -128,14 +142,10 @@ export default function ProjectCorridor() {
 
       bar.style.width = (prog * 100) + "%";
       hint.style.opacity = (prog > 0.015 && prog < 0.98) ? "0" : (prog <= 0.015 ? "1" : "0");
-
-      const isLocked = prog > 0 && prog < 1;
-      lockEl.textContent = isLocked ? "camera: locked on \"what i've shipped\"" : "camera: free";
-      lockEl.className = isLocked ? "locked" : "";
     }
 
     function onScroll() {
-      if (!track || !bar || !hint || !titleEl || !lockEl) return;
+      if (!track || !bar || !hint || !titleEl) return;
       const trackTop = track.getBoundingClientRect().top + window.scrollY;
       const range = Math.max(1, TOTAL - H);
       progRef.current = clamp((window.scrollY - trackTop) / range, 0, 1);
@@ -163,18 +173,18 @@ export default function ProjectCorridor() {
     <div id="corridor-root" style={{ width: "100%", position: "relative", fontFamily: "system-ui,-apple-system,sans-serif" }}>
       <style>{`
         #corridor-root .cc-card{
-          position:absolute;width:316px;background:rgba(255,255,255,.025);
-          border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:29px;
+          position:absolute;width:400px;background:rgba(255,255,255,.025);
+          border:1px solid rgba(255,255,255,.07);border-radius:24px;padding:32px;
           display:flex;flex-direction:column;pointer-events:auto;will-change:transform,opacity;
-          backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+          backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
           font-family:system-ui,-apple-system,sans-serif;
         }
         #corridor-root .cc-card:hover{border-color:rgba(139,92,246,.35)}
-        #corridor-root .cc-num{font-family:ui-monospace,monospace;font-size:.74rem;color:#a78bfa;line-height:1}
-        #corridor-root .cc-card h3{font-size:1.15rem;font-weight:600;margin-top:.9rem;color:#fff;line-height:1.3}
-        #corridor-root .cc-card p{color:rgba(161,161,170,1);font-size:.92rem;margin-top:.6rem;line-height:1.55;flex:1}
-        #corridor-root .cc-link{margin-top:1.4rem;display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:600;color:#c4b5fd;text-decoration:none}
-        #corridor-root .cc-link svg{width:.85rem;height:.85rem;flex-shrink:0;transition:transform .2s}
+        #corridor-root .cc-num{font-family:ui-monospace,monospace;font-size:.8rem;color:#a78bfa;line-height:1}
+        #corridor-root .cc-card h3{font-size:1.25rem;font-weight:600;margin-top:1rem;color:#fff;line-height:1.3}
+        #corridor-root .cc-card p{color:rgba(161,161,170,1);font-size:.95rem;margin-top:.7rem;line-height:1.55;flex:1}
+        #corridor-root .cc-link{margin-top:1.4rem;display:inline-flex;align-items:center;gap:.4rem;font-size:.88rem;font-weight:600;color:#c4b5fd;text-decoration:none}
+        #corridor-root .cc-link svg{width:.9rem;height:.9rem;flex-shrink:0;transition:transform .2s}
         #corridor-root .cc-card:hover .cc-link svg{transform:translate(2px,-2px)}
         #corridor-root .cc-links{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.4rem}
         #corridor-root .cc-card.cc-cta{background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.35)}
@@ -190,17 +200,9 @@ export default function ProjectCorridor() {
         #corridor-root #corridor-title .eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#a78bfa;margin-bottom:.9rem}
         #corridor-root #corridor-title h2{font-size:clamp(1.75rem,4vw,2.6rem);font-weight:700;color:#fff;line-height:1.15}
         #corridor-root #corridor-title p{color:#a1a1aa;margin-top:.8rem;font-size:1rem;max-width:480px}
-        #corridor-root #corridor-lock{
-          position:absolute;top:22px;left:50%;transform:translateX(-50%);
-          font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.08em;
-          padding:.4rem .9rem;border-radius:999px;border:1px solid rgba(255,255,255,.1);
-          color:rgba(255,255,255,.4);transition:all .2s;pointer-events:none;z-index:15;
-        }
-        #corridor-root #corridor-lock.locked{color:#c4b5fd;border-color:rgba(139,92,246,.5);background:rgba(139,92,246,.08)}
       `}</style>
       <div ref={trackRef} id="corridor-track">
         <div id="corridor-sticky">
-          <div ref={lockRef} id="corridor-lock">camera: free</div>
           <div ref={titleRef} id="corridor-title">
             <span className="eyebrow">Projects</span>
             <h2>What I've shipped</h2>
