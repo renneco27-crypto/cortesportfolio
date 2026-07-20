@@ -41,12 +41,14 @@ const PANELS: Panel[] = [
 ];
 
 const N = PANELS.length;
+const CARD_W = 400, CARD_H = 280;
 const ARRIVE = 0.25, DEPART = 0.75;
 const T_PAUSE = 0.18;
 const EASE_EXP = 1.2;
 const TITLE_HOLD = 0.06;
 const TITLE_FADE = 0.05;
-const VH_PER_CARD = 0.65;
+const VH_PER_CARD_DESKTOP = 0.65;
+const VH_PER_CARD_MOBILE = 0.85;
 
 function easeOut(t: number) { return 1 - Math.pow(1 - t, EASE_EXP); }
 function easeIn(t: number) { return Math.pow(t, EASE_EXP); }
@@ -83,7 +85,7 @@ export default function ProjectCorridor() {
       return d;
     });
 
-    let CARD_W = 400, CARD_H = 280;
+    let isMobile: boolean, cw: number, ch: number;
     let W: number, H: number, VPX: number, VPY: number, EDGE_Y: number, TOTAL: number;
     let LINE_L: { x1: number; y1: number; x2: number; y2: number };
     let LINE_R: { x1: number; y1: number; x2: number; y2: number };
@@ -92,14 +94,15 @@ export default function ProjectCorridor() {
       if (!track) return;
       W = window.innerWidth;
       H = window.innerHeight;
-      CARD_W = Math.min(400, W - 32);
-      CARD_H = Math.min(280, H * 0.4);
+      isMobile = W <= 768;
+      cw = isMobile ? Math.min(400, W - 32) : CARD_W;
+      ch = isMobile ? Math.min(280, H * 0.4) : CARD_H;
       VPX = W / 2;
       VPY = H * 0.30;
       EDGE_Y = H * 0.78;
       LINE_L = { x1: VPX, y1: VPY, x2: 0, y2: EDGE_Y };
       LINE_R = { x1: VPX, y1: VPY, x2: W, y2: EDGE_Y };
-      TOTAL = Math.round(N * H * VH_PER_CARD);
+      TOTAL = Math.round(N * H * (isMobile ? VH_PER_CARD_MOBILE : VH_PER_CARD_DESKTOP));
       track.style.height = TOTAL + "px";
     }
 
@@ -136,8 +139,8 @@ export default function ProjectCorridor() {
           scale = 1; t = T_PAUSE + (1 - T_PAUSE + 0.38) * ep; alpha = pp > 0.55 ? 1 - (pp - 0.55) / 0.45 : 1;
         }
         const pt = lp(line, t);
-        const tx = pt.x - CARD_W / 2, ty = pt.y - CARD_H / 2;
-        el.style.width = CARD_W + "px";
+        const tx = pt.x - cw / 2, ty = pt.y - ch / 2;
+        el.style.width = cw + "px";
         el.style.opacity = String(Math.max(0, alpha));
         el.style.pointerEvents = alpha > 0.5 ? "auto" : "none";
         el.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
@@ -175,15 +178,14 @@ export default function ProjectCorridor() {
   return (
     <div id="corridor-root" style={{ width: "100%", position: "relative", fontFamily: "system-ui,-apple-system,sans-serif" }}>
       <style>{`
-        #corridor-root{overflow:hidden;}
         #corridor-root .cc-card{
-          position:absolute;background:rgba(255,255,255,.025);
+          position:absolute;width:400px;background:rgba(255,255,255,.025);
           border:1px solid rgba(255,255,255,.07);border-radius:24px;padding:32px;
           display:flex;flex-direction:column;pointer-events:auto;will-change:transform,opacity;
           backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
           font-family:system-ui,-apple-system,sans-serif;
-          max-width:calc(100vw - 32px);
         }
+        @media(max-width:768px){#corridor-root .cc-card{width:auto;max-width:calc(100vw - 32px);}}
         #corridor-root .cc-card:hover{border-color:rgba(139,92,246,.35)}
         #corridor-root .cc-num{font-family:ui-monospace,monospace;font-size:.8rem;color:#a78bfa;line-height:1}
         #corridor-root .cc-card h3{font-size:1.25rem;font-weight:600;margin-top:1rem;color:#fff;line-height:1.3}
@@ -193,6 +195,7 @@ export default function ProjectCorridor() {
         #corridor-root .cc-card:hover .cc-link svg{transform:translate(2px,-2px)}
         #corridor-root .cc-links{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.4rem}
         #corridor-root .cc-card.cc-cta{background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.35)}
+        #corridor-root{overflow:hidden;}
         #corridor-root #corridor-track{width:100%;position:relative}
         #corridor-root #corridor-sticky{position:sticky;top:0;width:100%;height:100vh;overflow:hidden}
         #corridor-root #corridor-cards-layer{position:absolute;inset:0;pointer-events:none}
