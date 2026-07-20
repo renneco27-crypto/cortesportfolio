@@ -195,7 +195,6 @@ export default function ProjectCorridor() {
         #corridor-root .cc-card:hover .cc-link svg{transform:translate(2px,-2px)}
         #corridor-root .cc-links{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.4rem}
         #corridor-root .cc-card.cc-cta{background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.35)}
-        #corridor-root{overflow:hidden;}
         #corridor-root #corridor-track{width:100%;position:relative}
         #corridor-root #corridor-sticky{position:sticky;top:0;width:100%;height:100vh;overflow:hidden}
         #corridor-root #corridor-cards-layer{position:absolute;inset:0;pointer-events:none}
