@@ -82,6 +82,19 @@ export default function HomePage() {
       .catch(console.error);
   }, []);
 
+  // Reveal dynamically added .reveal elements that the IntersectionObserver missed
+  useEffect(() => {
+    if (credentials.length === 0) return;
+    requestAnimationFrame(() => {
+      document.querySelectorAll(".reveal:not(.in)").forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 1.2) {
+          el.classList.add("in");
+        }
+      });
+    });
+  }, [credentials]);
+
   // Fetch dynamic resume URL on mount
   useEffect(() => {
     fetch("/api/resume")
