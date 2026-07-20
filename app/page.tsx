@@ -5,6 +5,7 @@ import DeveloperSection from "@/components/sections/DeveloperSection";
 import ZoomSection from "@/components/ui/ZoomSection";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import ProjectCorridor from "@/components/ui/ProjectCorridor";
+import type { PortfolioCredential } from "@/types";
 
 const currentYear = new Date().getFullYear();
 
@@ -69,6 +70,78 @@ export default function HomePage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const devRef = useRef<HTMLDivElement>(null);
 
+  const [chatSleeping, setChatSleeping] = useState(false);
+  const [resumeUrl, setResumeUrl] = useState("/resume/lawrence-cortes-resume.pdf");
+  const [credentials, setCredentials] = useState<PortfolioCredential[]>([]);
+
+  // Fetch dynamic credentials on mount
+  useEffect(() => {
+    fetch("/api/credentials")
+      .then((r) => r.json())
+      .then(setCredentials)
+      .catch(console.error);
+  }, []);
+
+  // Fetch dynamic resume URL on mount
+  useEffect(() => {
+    fetch("/api/resume")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && data.url) {
+          setResumeUrl(data.url);
+        }
+      })
+      .catch((err) => console.error("Error fetching dynamic resume URL:", err));
+  }, []);
+
+  // Sleepy Chatbot timeout logic
+  useEffect(() => {
+    const IDLE_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
+    let inactivityTimer: NodeJS.Timeout;
+
+    function putChatbotToSleep() {
+      setChatSleeping(true);
+    }
+
+    function resetTimer() {
+      setChatSleeping(false);
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(putChatbotToSleep, IDLE_TIMEOUT_MS);
+    }
+
+    // Initialize timer
+    resetTimer();
+
+    // Listen for active screen usage
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    window.addEventListener("mousemove", handleActivity);
+    window.addEventListener("keypress", handleActivity);
+    window.addEventListener("touchstart", handleActivity);
+    window.addEventListener("scroll", handleActivity);
+
+    // Instantly catch when tab changes or phone locks
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        putChatbotToSleep();
+      } else {
+        resetTimer();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      window.removeEventListener("mousemove", handleActivity);
+      window.removeEventListener("keypress", handleActivity);
+      window.removeEventListener("touchstart", handleActivity);
+      window.removeEventListener("scroll", handleActivity);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
   // Auto scroll messages to the bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -100,14 +173,7 @@ export default function HomePage() {
       );
     }
 
-    // resume buttons — pointing to the local resume PDF
-    const resumeHref = "/resume/lawrence-cortes-resume.pdf";
-    document.querySelectorAll("#resumeBtn, #resumeBtn2").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        window.open(resumeHref, "_blank");
-      });
-    });
+
 
     // terminal typing effect
     const lines = [
@@ -240,6 +306,7 @@ export default function HomePage() {
   // ==========================================
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (chatSleeping) return;
     const userMessage = inputVal.trim();
     if (!userMessage) return;
 
@@ -308,7 +375,7 @@ export default function HomePage() {
               </svg>
             </a>
 
-            <a className="btn btn-primary" href="#resume" id="resumeBtn">
+            <a className="btn btn-primary" href={resumeUrl} target="_blank" rel="noopener noreferrer" id="resumeBtn">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -686,104 +753,43 @@ export default function HomePage() {
             </div>
 
             <div className="cert-grid">
-              <div className="cert-row reveal">
-                <span className="ico">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 2 2 7l10 5 10-5-10-5Z" />
-                    <path d="M2 17l10 5 10-5" />
-                    <path d="M2 12l10 5 10-5" />
-                  </svg>
-                </span>
-                <div>
-                  <h4>Microsoft Applied Skills / Azure Fundamentals</h4>
-                  <p>Microsoft</p>
+              {credentials.map((cert) => (
+                <div key={cert.id} className="cert-row reveal">
+                  <span className="ico">
+                    {cert.badge_icon === "shield" ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="11" width="18" height="10" rx="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                      </svg>
+                    ) : cert.badge_icon === "check" ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+                        <path d="m8.5 14 -1.5 6 5-2 5 2-1.5-6" />
+                      </svg>
+                    ) : cert.badge_icon === "graduation" ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5Z" />
+                        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2 2 7l10 5 10-5-10-5Z" />
+                        <path d="M2 17l10 5 10-5" />
+                        <path d="M2 12l10 5 10-5" />
+                      </svg>
+                    )}
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <h4 style={{ margin: 0 }}>{cert.label}</h4>
+                      <span className={`text-xs font-mono px-2 py-0.5 rounded-full ${cert.status === "earned" ? "bg-emerald-400/10 text-emerald-400" : "bg-yellow-400/10 text-yellow-400"}`}>
+                        {cert.status === "earned" ? "Earned" : "Pending"}
+                      </span>
+                    </div>
+                    <p style={{ marginTop: "0.25rem" }}>{cert.issuing_body}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="cert-row reveal">
-                <span className="ico">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 2 2 7l10 5 10-5-10-5Z" />
-                    <path d="M2 17l10 5 10-5" />
-                    <path d="M2 12l10 5 10-5" />
-                  </svg>
-                </span>
-                <div>
-                  <h4>Cloud Skill Badges &amp; Career Certificate</h4>
-                  <p>Google Cloud</p>
-                </div>
-              </div>
-              <div className="cert-row reveal">
-                <span className="ico">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="3" y="11" width="18" height="10" rx="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                </span>
-                <div>
-                  <h4>Intro to Cybersecurity · Networking Basics · Python Essentials</h4>
-                  <p>Cisco Networking Academy</p>
-                </div>
-              </div>
-              <div className="cert-row reveal">
-                <span className="ico">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
-                    <path d="m8.5 14 -1.5 6 5-2 5 2-1.5-6" />
-                  </svg>
-                </span>
-                <div>
-                  <h4>Civil Service Exam Passer</h4>
-                  <p>Civil Service Commission</p>
-                </div>
-              </div>
-              <div className="cert-row reveal">
-                <span className="ico">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="m9 11 3 3L22 4" />
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                  </svg>
-                </span>
-                <div>
-                  <h4>CSS NC II Training Certificate</h4>
-                  <p>TESDA</p>
-                </div>
-              </div>
-
+              ))}
             </div>
           </div>
         </section>
@@ -873,7 +879,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <a href="#resume" className="btn btn-ghost btn-block" id="resumeBtn2" style={{ marginTop: "1.5rem" }}>
+                <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-block" id="resumeBtn2" style={{ marginTop: "1.5rem" }}>
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -1027,22 +1033,31 @@ export default function HomePage() {
               <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={handleSendMessage} className="chat-form">
-              <input
-                type="text"
-                className="chat-input"
-                placeholder="Ask me anything..."
-                value={inputVal}
-                onChange={(e) => setInputVal(e.target.value)}
-                disabled={isTyping}
-              />
-              <button type="submit" className="chat-send-btn" disabled={isTyping} aria-label="Send message">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
-                  <line x1="22" y1="2" x2="11" y2="13" />
-                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                </svg>
-              </button>
-            </form>
+            {chatSleeping ? (
+              <div 
+                className="chat-status-sleep" 
+                onClick={() => setChatSleeping(false)}
+              >
+                Chat disconnected due to inactivity. <span style={{ color: "var(--violet-400)", textDecoration: "underline", fontWeight: "600" }}>Click to reconnect</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSendMessage} className="chat-form">
+                <input
+                  type="text"
+                  className="chat-input"
+                  placeholder="Ask me anything..."
+                  value={inputVal}
+                  onChange={(e) => setInputVal(e.target.value)}
+                  disabled={isTyping}
+                />
+                <button type="submit" className="chat-send-btn" disabled={isTyping || chatSleeping} aria-label="Send message">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                </button>
+              </form>
+            )}
           </div>
         </div>
 

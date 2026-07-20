@@ -57,6 +57,16 @@ export interface Certification {
   notes?: string;
 }
 
+export interface PortfolioCredential {
+  id: string;
+  label: string;
+  issuing_body: string;
+  status: "pending" | "earned";
+  badge_icon: string;
+  sort_order: number;
+  notes?: string;
+}
+
 export type CertStatus =
   | "earned"
   | "in-progress"

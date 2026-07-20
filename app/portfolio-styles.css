@@ -551,3 +551,27 @@ html.dark {
   --fg: #f8fafc;
 }
 
+/* Sleepy Chatbot status style */
+.chat-status-sleep {
+  text-align: center;
+  font-size: .8rem;
+  color: var(--zinc-400);
+  background: rgba(39, 39, 42, 0.4);
+  border: 1.5px dashed rgba(124, 58, 237, 0.3);
+  border-radius: var(--radius-lg);
+  padding: .6rem;
+  cursor: pointer;
+  transition: all .2s ease;
+  user-select: none;
+  animation: pulse-border 2s infinite ease-in-out;
+}
+.chat-status-sleep:hover {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: var(--violet-500);
+  color: var(--zinc-200);
+}
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(124, 58, 237, 0.3); box-shadow: 0 0 0 rgba(124, 58, 237, 0); }
+  50% { border-color: rgba(124, 58, 237, 0.7); box-shadow: 0 0 8px rgba(124, 58, 237, 0.2); }
+}
+
