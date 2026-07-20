@@ -7,6 +7,22 @@ import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import ProjectCorridor from "@/components/ui/ProjectCorridor";
 import type { PortfolioCredential } from "@/types";
 
+function Reveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setShow(true); return;
+    }
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setShow(true); io.unobserve(el); } }, { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return <div ref={ref} className={`${className}${show ? " in" : ""}`}>{children}</div>;
+}
+
 const currentYear = new Date().getFullYear();
 
 export default function HomePage() {
@@ -81,19 +97,6 @@ export default function HomePage() {
       .then(setCredentials)
       .catch(console.error);
   }, []);
-
-  // Reveal dynamically added .reveal elements that the IntersectionObserver missed
-  useEffect(() => {
-    if (credentials.length === 0) return;
-    requestAnimationFrame(() => {
-      document.querySelectorAll(".reveal:not(.in)").forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 1.2) {
-          el.classList.add("in");
-        }
-      });
-    });
-  }, [credentials]);
 
   // Fetch dynamic resume URL on mount
   useEffect(() => {
@@ -759,15 +762,15 @@ export default function HomePage() {
         {/* CERTIFICATIONS */}
         <section className="section" id="certifications">
           <div className="container">
-            <div className="section-head reveal">
+            <Reveal className="section-head">
               <span className="eyebrow">Certifications</span>
               <h2>Credentials on record</h2>
               <p>Cloud fundamentals, security basics, and the civil-service track record behind the resume.</p>
-            </div>
+            </Reveal>
 
             <div className="cert-grid">
               {credentials.map((cert) => (
-                <div key={cert.id} className="cert-row reveal">
+                <Reveal key={cert.id} className="cert-row">
                   <span className="ico">
                     {cert.badge_icon === "shield" ? (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -801,7 +804,7 @@ export default function HomePage() {
                     </div>
                     <p style={{ marginTop: "0.25rem" }}>{cert.issuing_body}</p>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
