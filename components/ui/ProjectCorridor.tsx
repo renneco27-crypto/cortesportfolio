@@ -41,7 +41,6 @@ const PANELS: Panel[] = [
 ];
 
 const N = PANELS.length;
-const CARD_W = 400, CARD_H = 280;
 const ARRIVE = 0.25, DEPART = 0.75;
 const T_PAUSE = 0.18;
 const EASE_EXP = 1.2;
@@ -84,6 +83,7 @@ export default function ProjectCorridor() {
       return d;
     });
 
+    let CARD_W = 400, CARD_H = 280;
     let W: number, H: number, VPX: number, VPY: number, EDGE_Y: number, TOTAL: number;
     let LINE_L: { x1: number; y1: number; x2: number; y2: number };
     let LINE_R: { x1: number; y1: number; x2: number; y2: number };
@@ -92,6 +92,8 @@ export default function ProjectCorridor() {
       if (!track) return;
       W = window.innerWidth;
       H = window.innerHeight;
+      CARD_W = Math.min(400, W - 32);
+      CARD_H = Math.min(280, H * 0.4);
       VPX = W / 2;
       VPY = H * 0.30;
       EDGE_Y = H * 0.78;
@@ -135,6 +137,7 @@ export default function ProjectCorridor() {
         }
         const pt = lp(line, t);
         const tx = pt.x - CARD_W / 2, ty = pt.y - CARD_H / 2;
+        el.style.width = CARD_W + "px";
         el.style.opacity = String(Math.max(0, alpha));
         el.style.pointerEvents = alpha > 0.5 ? "auto" : "none";
         el.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
@@ -172,12 +175,14 @@ export default function ProjectCorridor() {
   return (
     <div id="corridor-root" style={{ width: "100%", position: "relative", fontFamily: "system-ui,-apple-system,sans-serif" }}>
       <style>{`
+        #corridor-root{overflow:hidden;}
         #corridor-root .cc-card{
-          position:absolute;width:400px;background:rgba(255,255,255,.025);
+          position:absolute;background:rgba(255,255,255,.025);
           border:1px solid rgba(255,255,255,.07);border-radius:24px;padding:32px;
           display:flex;flex-direction:column;pointer-events:auto;will-change:transform,opacity;
           backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
           font-family:system-ui,-apple-system,sans-serif;
+          max-width:calc(100vw - 32px);
         }
         #corridor-root .cc-card:hover{border-color:rgba(139,92,246,.35)}
         #corridor-root .cc-num{font-family:ui-monospace,monospace;font-size:.8rem;color:#a78bfa;line-height:1}

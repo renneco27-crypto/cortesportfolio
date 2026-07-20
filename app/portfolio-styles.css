@@ -306,8 +306,13 @@ header{
   display:flex;align-items:center;justify-content:center;
 }
 .cert-row .ico svg{width:1.15rem;height:1.15rem;}
-.cert-row h4{font-size:.95rem;}
+.cert-row h4{font-size:.95rem;word-break:break-word;overflow-wrap:break-word;}
 .cert-row p{font-size:.8rem;color:var(--zinc-500);margin-top:.2rem;}
+.cert-row .text-xs{white-space:nowrap;flex-shrink:0;}
+@media(max-width:480px){
+  .cert-row{padding:.85rem .9rem;gap:.75rem;}
+  .cert-grid{gap:.75rem;}
+}
 
 /* ---------- CONTACT ---------- */
 .contact-grid{display:grid;gap:2rem;grid-template-columns:1fr;}
@@ -550,6 +555,11 @@ html.dark {
   --bg: #0a0a0f;
   --fg: #f8fafc;
 }
+
+/* GitHub contribution graph — prevent overflow on mobile */
+.gh-graph-wrap{overflow-x:auto;max-width:100%;padding-bottom:.5rem;}
+.gh-graph-wrap::-webkit-scrollbar{height:4px;}
+.gh-graph-wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px;}
 
 /* Sleepy Chatbot status style */
 .chat-status-sleep {

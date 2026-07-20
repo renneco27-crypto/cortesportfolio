@@ -47,7 +47,7 @@ export default function DeveloperSection() {
             <TechStackMarquee />
           </div>
         </div>
-        <GitHubGraph username="renneco27-crypto" />
+        <div className="gh-graph-wrap"><GitHubGraph username="renneco27-crypto" /></div>
       </div>
     </section>
   );
