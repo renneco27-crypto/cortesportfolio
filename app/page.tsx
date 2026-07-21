@@ -834,7 +834,7 @@ export default function HomePage() {
                 </span>
 
                 <div className="info-list">
-                  <div className="info-row">
+                  <a href="https://github.com/renneco27-crypto" target="_blank" rel="noopener noreferrer" className="info-row" style={{ textDecoration: 'none', color: 'inherit' }}>
                     <span className="ico">
                       <svg
                         viewBox="0 0 24 24"
@@ -853,8 +853,8 @@ export default function HomePage() {
                       <div className="t1">CORTES Engineering Portfolio</div>
                       <div className="t2">github.com/renneco27-crypto</div>
                     </div>
-                  </div>
-                  <div className="info-row">
+                  </a>
+                  <a href="https://www.facebook.com/Rennejay.Dev.21" target="_blank" rel="noopener noreferrer" className="info-row" style={{ textDecoration: 'none', color: 'inherit' }}>
                     <span className="ico">
                       <svg
                         viewBox="0 0 24 24"
@@ -872,8 +872,8 @@ export default function HomePage() {
                       <div className="t1">Facebook</div>
                       <div className="t2">facebook.com/Rennejay.Dev.21</div>
                     </div>
-                  </div>
-                  <div className="info-row">
+                  </a>
+                  <a href="https://www.linkedin.com/in/lawrence-cortes-788101408" target="_blank" rel="noopener noreferrer" className="info-row" style={{ textDecoration: 'none', color: 'inherit' }}>
                     <span className="ico">
                       <svg
                         viewBox="0 0 24 24"
@@ -892,7 +892,7 @@ export default function HomePage() {
                       <div className="t1">LinkedIn</div>
                       <div className="t2">linkedin.com/in/lawrence-cortes-788101408</div>
                     </div>
-                  </div>
+                  </a>
                 </div>
 
                 <a href="/api/resume/download" target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-block" id="resumeBtn2" style={{ marginTop: "1.5rem" }}>
