@@ -391,7 +391,7 @@ export default function HomePage() {
               </svg>
             </a>
 
-            <a className="btn btn-primary" href={resumeUrl} target="_blank" rel="noopener noreferrer" id="resumeBtn">
+            <a className="btn btn-primary" href="/api/resume/download" target="_blank" rel="noopener noreferrer" id="resumeBtn">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -895,7 +895,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-block" id="resumeBtn2" style={{ marginTop: "1.5rem" }}>
+                <a href="/api/resume/download" target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-block" id="resumeBtn2" style={{ marginTop: "1.5rem" }}>
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"

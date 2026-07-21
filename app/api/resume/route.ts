@@ -1,5 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
 
+const redis = Redis.fromEnv();
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
@@ -41,7 +43,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     if (!ADMIN_PASSWORD) {
       return NextResponse.json(
@@ -50,13 +52,34 @@ export async function POST(request: Request) {
       );
     }
 
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      "127.0.0.1";
+
+    const rateKey = `admin_login_${ip}`;
+    const attempts = await redis.get<number>(rateKey) ?? 0;
+
+    if (attempts > 0) {
+      const blockSeconds = 20 + (attempts - 1) * 10;
+      return NextResponse.json(
+        { error: `Too many failed attempts. Try again in ${blockSeconds} seconds.` },
+        { status: 429 }
+      );
+    }
+
     const formData = await request.formData();
     const password = formData.get("password") as string;
     const file = formData.get("file") as File | null;
 
     if (password !== ADMIN_PASSWORD) {
+      const newAttempts = attempts + 1;
+      const blockSeconds = 20 + (newAttempts - 1) * 10;
+      await redis.set(rateKey, newAttempts, { ex: blockSeconds });
       return NextResponse.json({ error: "Unauthorized: Invalid password" }, { status: 401 });
     }
+
+    await redis.del(rateKey);
 
     if (!file) {
       return NextResponse.json({ error: "Bad Request: No file provided" }, { status: 400 });

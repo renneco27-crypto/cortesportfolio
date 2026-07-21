@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-
-function sanitize(str: string): string {
-  return str.replace(/<[^>]*>/g, "").trim().slice(0, 2000);
-}
+import { sanitize } from "@/lib/sanitize";
 
 export async function POST(req: Request) {
   try {

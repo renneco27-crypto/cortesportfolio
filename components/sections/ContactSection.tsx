@@ -9,6 +9,15 @@ export default function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
   const [form, setForm] = useState({ senderName: "", senderEmail: "", messageBody: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+  emailjs.init({
+    publicKey,
+    limitRate: {
+      id: "contact_form",
+      throttle: 60000,
+    },
+  });
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; text: string }>({
     type: "success",
     text: "",
@@ -22,7 +31,6 @@ export default function ContactSection() {
     const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
     const contactTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CONTACT!;
     const autoreplyTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_AUTOREPLY!;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
     try {
       await emailjs.send(

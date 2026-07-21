@@ -1,11 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+import { sanitize } from "@/lib/sanitize";
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, "60 s"),
+  analytics: true,
+});
 
 function apiError(msg: string, status: number) {
   return NextResponse.json({ success: false, message: msg }, { status });
-}
-
-function sanitize(str: string): string {
-  return str.replace(/<[^>]*>/g, "").trim().slice(0, 2000);
 }
 
 const LAWRENCE_CONTEXT_TERMS = [
@@ -133,8 +138,29 @@ Rules:
 - Lawrence enjoys connecting directly — when relevant, invite the visitor to email him for a 1-on-1 chat
 `;
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("x-real-ip") ||
+      "127.0.0.1";
+
+    const { success, limit, remaining, reset } = await ratelimit.limit(`ai_chat_${ip}`);
+
+    if (!success) {
+      return NextResponse.json(
+        { success: false, message: "Too many messages sent. Please wait a minute before trying again." },
+        {
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": limit.toString(),
+            "X-RateLimit-Remaining": remaining.toString(),
+            "X-RateLimit-Reset": reset.toString(),
+          },
+        }
+      );
+    }
+
     const body = await req.json();
     const userMessage = sanitize(body.message || "");
 
