@@ -145,6 +145,8 @@ export async function POST(request: NextRequest) {
       throw new Error(`Database settings upsert failed: ${dbRes.status} - ${dbError}`);
     }
 
+    await redis.del("resume_pdf_url");
+
     return NextResponse.json({ success: true, url: publicUrl });
   } catch (err: any) {
     console.error("Resume upload error:", err);

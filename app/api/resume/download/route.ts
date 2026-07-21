@@ -1,16 +1,20 @@
 import { NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
 import { readFile } from "fs/promises";
 import { join } from "path";
 
+const redis = Redis.fromEnv();
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 const DEFAULT_RESUME_PATH = "public/resume/lawrence-cortes-resume.pdf";
+const CACHE_KEY = "resume_pdf_url";
+const CACHE_TTL = 3600;
 
 export async function GET() {
   try {
-    let pdfUrl: string | null = null;
+    let pdfUrl: string | null = await redis.get<string>(CACHE_KEY);
 
-    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+    if (!pdfUrl && SUPABASE_URL && SUPABASE_ANON_KEY) {
       const res = await fetch(
         `${SUPABASE_URL}/rest/v1/portfolio_settings?key=eq.resume_url&select=value`,
         {
@@ -26,6 +30,7 @@ export async function GET() {
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0 && data[0].value) {
           pdfUrl = data[0].value;
+          await redis.set(CACHE_KEY, pdfUrl, { ex: CACHE_TTL });
         }
       }
     }
@@ -38,7 +43,7 @@ export async function GET() {
           headers: {
             "Content-Type": "application/pdf",
             "Content-Disposition": 'inline; filename="Lawrence-Cortes-Resume.pdf"',
-            "Cache-Control": "no-cache",
+            "Cache-Control": "public, max-age=3600",
           },
         });
       }
@@ -50,6 +55,7 @@ export async function GET() {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": 'inline; filename="Lawrence-Cortes-Resume.pdf"',
+        "Cache-Control": "public, max-age=3600",
       },
     });
   } catch (err) {
