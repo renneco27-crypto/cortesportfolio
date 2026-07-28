@@ -34,39 +34,101 @@ export default function HomePage() {
   const [form, setForm] = useState({ senderName: "", senderEmail: "", messageBody: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState({ type: "success", text: "" });
+  const [contactTurnstileToken, setContactTurnstileToken] = useState<string | null>(null);
+  const contactWidgetId = useRef<string | null>(null);
+  const [contactSubmissionsLeft, setContactSubmissionsLeft] = useState<number | null>(null);
+
+  // Fetch remaining contact submissions on mount
+  useEffect(() => {
+    fetch("/api/contact")
+      .then((r) => r.json())
+      .then((data) => {
+        if (typeof data.submissionsLeft === "number") {
+          setContactSubmissionsLeft(data.submissionsLeft);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // Expose contact-form Turnstile callbacks (separate from chat widget)
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).onContactTurnstileSuccess = (token: string) => {
+      setContactTurnstileToken(token);
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).onContactTurnstileExpired = () => {
+      setContactTurnstileToken(null);
+    };
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any).onContactTurnstileSuccess;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any).onContactTurnstileExpired;
+    };
+  }, []);
+
+  function resetContactTurnstile() {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const w = (window as any).turnstile;
+      if (w && contactWidgetId.current) w.reset(contactWidgetId.current);
+      else if (w) w.reset();
+    } catch { /* ignore */ }
+    setContactTurnstileToken(null);
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!contactTurnstileToken) {
+      setFeedback({ type: "error", text: "Please wait for human verification to complete." });
+      return;
+    }
     setStatus("sending");
     setFeedback({ type: "success", text: "" });
 
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
-    const contactTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CONTACT!;
-    const autoreplyTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_AUTOREPLY!;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+    // Capture + clear token immediately so it can't be reused
+    const tokenToSend = contactTurnstileToken;
+    resetContactTurnstile();
 
     try {
-      await emailjs.send(serviceId, contactTemplateId, {
-        name: form.senderName,
-        from_email: form.senderEmail,
-        title: form.messageBody.slice(0, 60),
-        message: form.messageBody,
-      }, publicKey);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          senderName:     form.senderName,
+          senderEmail:    form.senderEmail,
+          messageBody:    form.messageBody,
+          turnstileToken: tokenToSend,
+        }),
+      });
 
-      await emailjs.send(serviceId, autoreplyTemplateId, {
-        name: form.senderName,
-        from_email: form.senderEmail,
-        title: form.messageBody.slice(0, 60),
-        message: form.messageBody,
-      }, publicKey);
+      const data = await res.json();
+
+      if (typeof data.submissionsLeft === "number") {
+        setContactSubmissionsLeft(data.submissionsLeft);
+      }
+
+      if (data.limitReached) {
+        setContactSubmissionsLeft(0);
+        setStatus("error");
+        setFeedback({ type: "error", text: data.message ?? "Daily limit reached." });
+        return;
+      }
+
+      if (!res.ok || !data.success) {
+        setStatus("error");
+        setFeedback({ type: "error", text: data.message ?? "Failed to send message." });
+        return;
+      }
 
       setStatus("success");
-      setFeedback({ type: "success", text: "Message sent!" });
+      setFeedback({ type: "success", text: data.message ?? "Message sent! 🙌" });
       setForm({ senderName: "", senderEmail: "", messageBody: "" });
     } catch (err) {
       console.error(err);
       setStatus("error");
-      setFeedback({ type: "error", text: "Failed to send message." });
+      setFeedback({ type: "error", text: "Failed to send. Please try again or reach out on LinkedIn." });
     }
   }
 
@@ -1005,28 +1067,50 @@ export default function HomePage() {
               <div className="card reveal">
                 <h3 style={{ fontSize: "1.05rem", marginBottom: "1.3rem" }}>Send a message</h3>
                <form ref={formRef} onSubmit={handleSubmit} id="contactForm">
+  {/* Turnstile widget for contact form — separate from chat widget */}
+  <div
+    className="cf-turnstile"
+    data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
+    data-callback="onContactTurnstileSuccess"
+    data-expired-callback="onContactTurnstileExpired"
+    data-theme="dark"
+    data-size="invisible"
+    ref={(el) => {
+      if (el && !contactWidgetId.current) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const w = (window as any).turnstile;
+        if (w) {
+          const id = w.getWidgetId?.(el);
+          if (id) contactWidgetId.current = id;
+        }
+      }
+    }}
+    style={{ display: "none" }}
+  />
   <div className="field">
     <label htmlFor="cf-name">Your name</label>
-    <input 
-      id="cf-name" 
-      name="name" 
-      type="text" 
-      placeholder="Jane Doe" 
+    <input
+      id="cf-name"
+      name="name"
+      type="text"
+      placeholder="Jane Doe"
       value={form.senderName}
       onChange={(e) => setForm({ ...form, senderName: e.target.value })}
-      required 
+      maxLength={100}
+      required
     />
   </div>
   <div className="field">
     <label htmlFor="cf-email">Your email</label>
-    <input 
-      id="cf-email" 
-      name="email" 
-      type="email" 
-      placeholder="jane@company.com" 
+    <input
+      id="cf-email"
+      name="email"
+      type="email"
+      placeholder="jane@company.com"
       value={form.senderEmail}
       onChange={(e) => setForm({ ...form, senderEmail: e.target.value })}
-      required 
+      maxLength={150}
+      required
     />
   </div>
   <div className="field">
@@ -1038,12 +1122,35 @@ export default function HomePage() {
       placeholder="Tell me about the role or project…"
       value={form.messageBody}
       onChange={(e) => setForm({ ...form, messageBody: e.target.value })}
+      maxLength={2000}
       required
     ></textarea>
   </div>
-  <button type="submit" className="btn btn-primary" disabled={status === "sending"}>
-    {status === "sending" ? "Sending..." : "Send Message"}
+  <button
+    type="submit"
+    className="btn btn-primary"
+    disabled={status === "sending" || !contactTurnstileToken || contactSubmissionsLeft === 0}
+    title={
+      !contactTurnstileToken
+        ? "Waiting for human verification…"
+        : contactSubmissionsLeft === 0
+        ? "Daily limit reached"
+        : undefined
+    }
+  >
+    {status === "sending"
+      ? "Sending..."
+      : !contactTurnstileToken
+      ? "Verifying…"
+      : contactSubmissionsLeft === 0
+      ? "Limit reached"
+      : "Send Message"}
   </button>
+  {contactSubmissionsLeft !== null && contactSubmissionsLeft > 0 && (
+    <p style={{ marginTop: "0.4rem", fontSize: "0.68rem", fontFamily: "monospace", color: "var(--zinc-500, #71717a)" }}>
+      {contactSubmissionsLeft} / 3 submissions left today
+    </p>
+  )}
   {feedback.text && (
     <p style={{ marginTop: "0.5rem", color: feedback.type === "success" ? "#4ade80" : "#f87171" }}>
       {feedback.text}
