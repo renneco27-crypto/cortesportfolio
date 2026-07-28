@@ -38,7 +38,6 @@ async function getDailyCount(ip: string): Promise<number> {
 async function incrementDailyCount(ip: string): Promise<number> {
   const key = `chat_daily_${ip}`;
   const newCount = await redis.incr(key);
-  // Only set TTL on first message so it resets 24 h after the first one
   if (newCount === 1) {
     await redis.expire(key, DAILY_LIMIT_TTL);
   }
@@ -154,7 +153,8 @@ function detectJailbreak(text: string): boolean {
 }
 
 // ─────────────────────────────────────────────
-// MULTI-QUESTION DETECTION
+// MULTI-QUESTION & MULTI-TOPIC DETECTION
+// Blocks prompts that ask multiple questions or request multiple topics at once
 // ─────────────────────────────────────────────
 function detectMultipleQuestions(text: string): boolean {
   // More than one question mark = multiple questions
@@ -168,6 +168,14 @@ function detectMultipleQuestions(text: string): boolean {
   // Bullet/dash list: "- ... - ..."
   const bulletList = (text.match(/^\s*[-•*]\s+\S/gm) ?? []).length;
   if (bulletList > 1) return true;
+
+  // Multiple possessive / pronoun topic requests (e.g., "his age his job his skills", "your background your project your email")
+  const possessiveTopicMatches = (text.match(/\b(his|her|your|the)\s+(age|job|work|ethic|skills|project|experience|background|education|role|contact|email|phone)\b/gi) ?? []).length;
+  if (possessiveTopicMatches > 1) return true;
+
+  // Listing 3+ comma-separated topics in one request (e.g. "age, job, work ethic, skills")
+  const commaSeparatedTopics = (text.match(/\b(age|job|work ethic|skills|projects|experience|education|contact)\b\s*,\s*\b(age|job|work ethic|skills|projects|experience|education|contact)\b/gi) ?? []).length;
+  if (commaSeparatedTopics >= 1) return true;
 
   // Connector phrases that signal a second question
   const multiPatterns = [
@@ -193,7 +201,6 @@ function detectMultipleQuestions(text: string): boolean {
 function sanitizeInput(text: string): string | null {
   if (!text || typeof text !== "string") return null;
 
-  // Run through the existing HTML/null-byte sanitizer first
   const sanitized = sanitize(text, MAX_INPUT_CHARS);
 
   if (sanitized.length === 0) return null;
@@ -202,14 +209,14 @@ function sanitizeInput(text: string): string | null {
   // Block jailbreak attempts
   if (detectJailbreak(sanitized)) return null;
 
-  // Block multiple questions in one prompt
+  // Block multiple questions or multi-topic prompts
   if (detectMultipleQuestions(sanitized)) return "MULTI_QUESTION";
 
   return sanitized;
 }
 
 // ─────────────────────────────────────────────
-// RELEVANCE CHECK (kept from original)
+// RELEVANCE CHECK
 // ─────────────────────────────────────────────
 const LAWRENCE_CONTEXT_TERMS = [
   "lawrence", "rence", "skill", "skills", "project", "projects", "intern",
@@ -217,7 +224,7 @@ const LAWRENCE_CONTEXT_TERMS = [
   "portfolio", "experience", "tech", "coding", "web", "developer", "work",
   "job", "hire", "study", "school", "aclc", "it", "support", "helpdesk",
   "testing", "remote", "graduate", "location", "from", "background",
-  "resume", "education", "degree", "phone", "career", "goal",
+  "resume", "education", "degree", "phone", "career", "goal", "age", "ethic",
 ];
 
 function isRelevant(message: string): boolean {
@@ -243,7 +250,7 @@ function getFallbackReply(userMessage: string): string {
 }
 
 // ─────────────────────────────────────────────
-// HELPER
+// HELPERS
 // ─────────────────────────────────────────────
 function apiError(msg: string, status: number) {
   return NextResponse.json({ success: false, message: msg }, { status });
@@ -259,21 +266,18 @@ function getClientIP(req: NextRequest): string {
 
 // ─────────────────────────────────────────────
 // CLOUDFLARE TURNSTILE VERIFICATION
-// Verifies the one-time token sent from the
-// frontend widget before any API call goes through.
 // ─────────────────────────────────────────────
 async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET;
   if (!secret) {
-    // If secret is not configured, skip verification in dev but warn loudly
-    console.warn("⚠️  TURNSTILE_SECRET is not set — skipping bot check (dev mode only)");
+    console.warn("⚠️ TURNSTILE_SECRET is not set — skipping bot check (dev mode only)");
     return true;
   }
 
   const formData = new URLSearchParams();
   formData.append("secret", secret);
   formData.append("response", token);
-  formData.append("remoteip", ip); // optional but recommended by Cloudflare
+  formData.append("remoteip", ip);
 
   const res = await fetch(TURNSTILE_VERIFY_URL, {
     method: "POST",
@@ -303,37 +307,55 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const ip = getClientIP(req);
-
-    // ── 0. CLOUDFLARE TURNSTILE BOT CHECK ───
-    // Must be verified before any rate-limit or NVIDIA call.
-    // Tokens are one-time — replays are rejected by Cloudflare.
     const body = await req.json();
-    const turnstileToken: string = body.turnstileToken ?? "";
 
-    if (!turnstileToken) {
+    // ── 1. INPUT SANITIZATION & MULTI-QUESTION / JAILBREAK CHECK (FIRST!) ──
+    // Check message rules BEFORE Turnstile or rate limits so users get instant
+    // feedback on multi-questions without wasting quota or Turnstile verification.
+    const rawMessage: string = body.message ?? "";
+    const clean = sanitizeInput(rawMessage);
+
+    if (!clean) {
       return NextResponse.json(
-        { success: false, reply: "Human verification required. Please complete the challenge." },
+        { success: false, reply: "I can only help with questions about Lawrence and his work." },
         { status: 400 }
       );
     }
 
-    try {
-      const isHuman = await verifyTurnstile(turnstileToken, ip);
-      if (!isHuman) {
-        return NextResponse.json(
-          { success: false, reply: "Human verification failed. Please try again." },
-          { status: 403 }
-        );
-      }
-    } catch (turnstileErr) {
-      console.error("Turnstile verification error:", turnstileErr);
+    if (clean === "MULTI_QUESTION") {
       return NextResponse.json(
-        { success: false, reply: "Verification service unavailable. Please try again shortly." },
-        { status: 503 }
+        {
+          success: false,
+          reply: "Please ask one question at a time! I'll do my best to give you a great answer.",
+          multiQuestion: true,
+        },
+        { status: 400 }
       );
     }
 
-    // ── 1. PER-MINUTE BURST RATE LIMIT ──────
+    // ── 2. RELEVANCE GATE ────────────────────
+    if (!isRelevant(clean)) {
+      return NextResponse.json({
+        success: true,
+        reply: "I can only answer questions about Lawrence's skills, projects, and internship availability. Try asking something like: 'What are Lawrence's skills?' or 'Is Lawrence available for internship?'",
+      });
+    }
+
+    // ── 3. DAILY IP LIMIT CHECK ──────────────
+    const currentCount = await getDailyCount(ip);
+    if (currentCount >= IP_MESSAGE_LIMIT) {
+      return NextResponse.json(
+        {
+          success: false,
+          reply: "You've reached the 10-message daily limit. Feel free to contact Lawrence directly through the site!",
+          limitReached: true,
+          messagesLeft: 0,
+        },
+        { status: 429 }
+      );
+    }
+
+    // ── 4. PER-MINUTE BURST RATE LIMIT ──────
     const { success: underLimit, limit, remaining, reset } = await ratelimit.limit(`ai_chat_${ip}`);
     if (!underLimit) {
       return NextResponse.json(
@@ -349,59 +371,40 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── 2. DAILY IP LIMIT CHECK (before sanitizing — no credit wasted) ──
-    const currentCount = await getDailyCount(ip);
-    if (currentCount >= IP_MESSAGE_LIMIT) {
+    // ── 5. CLOUDFLARE TURNSTILE BOT CHECK ───
+    // Verified after input validation so invalid prompts never trigger bot errors
+    const turnstileToken: string = body.turnstileToken ?? "";
+    if (process.env.TURNSTILE_SECRET && !turnstileToken) {
       return NextResponse.json(
-        {
-          success: false,
-          reply: "You've reached the 10-message daily limit. Feel free to contact Lawrence directly through the site!",
-          limitReached: true,
-          messagesLeft: 0,
-        },
-        { status: 429 }
-      );
-    }
-
-    // ── 3. SANITIZE INPUT ────────────────────
-    // Note: body was already parsed above for the Turnstile token
-    const rawMessage: string = body.message ?? "";
-    const clean = sanitizeInput(rawMessage);
-
-    if (!clean) {
-      // Jailbreak attempt or empty — don't count as a valid message
-      return NextResponse.json(
-        { success: false, reply: "I can only help with questions about Lawrence and his work." },
+        { success: false, reply: "Human verification required. Please complete the challenge." },
         { status: 400 }
       );
     }
 
-    if (clean === "MULTI_QUESTION") {
-      // Don't charge an IP credit for a blocked multi-question
-      return NextResponse.json(
-        {
-          success: false,
-          reply: "Please ask one question at a time! I'll do my best to give you a great answer.",
-          multiQuestion: true,
-        },
-        { status: 400 }
-      );
+    if (turnstileToken) {
+      try {
+        const isHuman = await verifyTurnstile(turnstileToken, ip);
+        if (!isHuman) {
+          return NextResponse.json(
+            { success: false, reply: "Human verification failed. Please try again." },
+            { status: 403 }
+          );
+        }
+      } catch (turnstileErr) {
+        console.error("Turnstile verification error:", turnstileErr);
+        return NextResponse.json(
+          { success: false, reply: "Verification service unavailable. Please try again shortly." },
+          { status: 503 }
+        );
+      }
     }
 
-    // ── 4. RELEVANCE GATE ────────────────────
-    if (!isRelevant(clean)) {
-      return NextResponse.json({
-        success: true,
-        reply: "I can only answer questions about Lawrence's skills, projects, and internship availability. Try asking something like: 'What are Lawrence's skills?' or 'Is Lawrence available for internship?'",
-      });
-    }
-
-    // ── 5. INCREMENT DAILY COUNTER ──────────
-    // Only after all validation passes — valid messages only cost 1 credit
+    // ── 6. INCREMENT DAILY COUNTER ──────────
+    // Only after all validation and verification passes
     const newCount = await incrementDailyCount(ip);
     const messagesLeft = Math.max(0, IP_MESSAGE_LIMIT - newCount);
 
-    // ── 6. CALL NVIDIA API ───────────────────
+    // ── 7. CALL NVIDIA API ───────────────────
     const apiKey = process.env.NVIDIA_API_KEY;
     if (!apiKey) return apiError("AI service unavailable", 503);
 
@@ -426,7 +429,6 @@ export async function POST(req: NextRequest) {
           max_tokens: MAX_OUTPUT_TOKENS, // 🔒 hard cap — prevents token drain
           temperature: 0.5,
           messages: [
-            // Only system prompt + current message — NO history to prevent multi-turn manipulation
             { role: "system", content: SYSTEM_PROMPT },
             { role: "user", content: clean },
           ],
