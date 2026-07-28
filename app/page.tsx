@@ -441,8 +441,23 @@ export default function HomePage() {
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setIsTyping(true);
 
-    // Capture and immediately clear the token so it can't be reused
-    const tokenToSend = turnstileToken;
+    // Capture pre-fetched token (or wait up to 1s if user clicked super fast)
+    let tokenToSend = turnstileToken;
+    if (!tokenToSend) {
+      // Wait up to 1000ms in 100ms polling intervals for pre-fetch token to land
+      for (let i = 0; i < 10; i++) {
+        await new Promise((r) => setTimeout(r, 100));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const t = (window as any).turnstile;
+        if (t && turnstileWidgetId.current) {
+          const resp = t.getResponse?.(turnstileWidgetId.current);
+          if (resp) {
+            tokenToSend = resp;
+            break;
+          }
+        }
+      }
+    }
     resetTurnstile();
 
     try {
@@ -1216,6 +1231,26 @@ export default function HomePage() {
         </div>
       </footer>
 
+      {/* Global Turnstile Pre-fetch Containers (Background Solvers) */}
+      <div
+        className="cf-turnstile"
+        data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
+        data-callback="onTurnstileSuccess"
+        data-expired-callback="onTurnstileExpired"
+        data-theme="dark"
+        data-size="invisible"
+        ref={(el) => {
+          if (el && !turnstileWidgetId.current) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const w = (window as any).turnstile;
+            if (w) {
+              const id = w.getWidgetId?.(el);
+              if (id) turnstileWidgetId.current = id;
+            }
+          }
+        }}
+        style={{ display: "none" }}
+      />
       {/* CHAT WIDGET */}
       <div className="chat-dock">
         <div className={`poke ${pokeHidden ? "hidden" : ""}`} id="poke">
@@ -1274,42 +1309,22 @@ export default function HomePage() {
               </div>
             ) : (
               <form onSubmit={handleSendMessage} className="chat-form">
-                {/* Turnstile challenge widget — auto-renders when chat opens */}
-                <div
-                  className="cf-turnstile"
-                  data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
-                  data-callback="onTurnstileSuccess"
-                  data-expired-callback="onTurnstileExpired"
-                  data-theme="dark"
-                  data-size="invisible"
-                  ref={(el) => {
-                    // Capture the widget ID once rendered for targeted resets
-                    if (el && !turnstileWidgetId.current) {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      const w = (window as any).turnstile;
-                      if (w) {
-                        const id = w.getWidgetId?.(el);
-                        if (id) turnstileWidgetId.current = id;
-                      }
-                    }
-                  }}
-                  style={{ display: "none" }}
-                />
+                {/* Chat form controls */}
                 <input
                   type="text"
                   className="chat-input"
-                  placeholder={turnstileToken ? "Ask me anything..." : "Verifying you're human…"}
+                  placeholder="Ask me anything..."
                   value={inputVal}
                   onChange={(e) => setInputVal(e.target.value)}
-                  disabled={isTyping || !turnstileToken}
+                  disabled={isTyping}
                   maxLength={300}
                 />
                 <button
                   type="submit"
                   className="chat-send-btn"
-                  disabled={isTyping || chatSleeping || !turnstileToken}
+                  disabled={isTyping || chatSleeping}
                   aria-label="Send message"
-                  title={!turnstileToken ? "Waiting for human verification…" : "Send"}
+                  title="Send"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
                     <line x1="22" y1="2" x2="11" y2="13" />
