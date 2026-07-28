@@ -1,6 +1,7 @@
 "use client";
 import emailjs from "@emailjs/browser";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
+import Script from "next/script";
 import DeveloperSection from "@/components/sections/DeveloperSection";
 import ZoomSection from "@/components/ui/ZoomSection";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
@@ -82,6 +83,42 @@ export default function HomePage() {
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
+  const [messagesLeft, setMessagesLeft] = useState<number | null>(null);
+  // Turnstile bot-verification state
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileWidgetId = useRef<string | null>(null);
+
+  // Expose callback that Cloudflare Turnstile calls once the challenge is solved
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).onTurnstileSuccess = (token: string) => {
+      setTurnstileToken(token);
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).onTurnstileExpired = () => {
+      setTurnstileToken(null);
+    };
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any).onTurnstileSuccess;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any).onTurnstileExpired;
+    };
+  }, []);
+
+  // Helper to reset the Turnstile widget after each send
+  const resetTurnstile = useCallback(() => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const w = (window as any).turnstile;
+      if (w && turnstileWidgetId.current) {
+        w.reset(turnstileWidgetId.current);
+      } else if (w) {
+        w.reset();
+      }
+    } catch { /* ignore */ }
+    setTurnstileToken(null);
+  }, []);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const devRef = useRef<HTMLDivElement>(null);
@@ -96,6 +133,18 @@ export default function HomePage() {
       .then((r) => r.json())
       .then(setCredentials)
       .catch(console.error);
+  }, []);
+
+  // Fetch remaining daily message count on mount
+  useEffect(() => {
+    fetch("/api/chat")
+      .then((r) => r.json())
+      .then((data) => {
+        if (typeof data.messagesLeft === "number") {
+          setMessagesLeft(data.messagesLeft);
+        }
+      })
+      .catch(() => {}); // silently ignore — counter is non-critical
   }, []);
 
   // Fetch dynamic resume URL on mount
@@ -330,18 +379,55 @@ export default function HomePage() {
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setIsTyping(true);
 
+    // Capture and immediately clear the token so it can't be reused
+    const tokenToSend = turnstileToken;
+    resetTurnstile();
+
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({
+          message: userMessage,
+          turnstileToken: tokenToSend ?? "", // send token to backend
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error("Chat request failed");
+      const data = await response.json();
+
+      // Update remaining message counter whenever the API tells us
+      if (typeof data.messagesLeft === "number") {
+        setMessagesLeft(data.messagesLeft);
       }
 
-      const data = await response.json();
+      if (data.limitReached) {
+        // Daily limit hit — show the API's reply and lock input
+        setMessagesLeft(0);
+        setMessages((prev) => [
+          ...prev,
+          { role: "system", content: data.reply ?? "You've reached the daily message limit. Contact Lawrence directly!" },
+        ]);
+        return;
+      }
+
+      if (data.multiQuestion) {
+        // Multi-question blocked — show friendly nudge, don't count as error
+        setMessages((prev) => [
+          ...prev,
+          { role: "system", content: data.reply ?? "Please ask one question at a time!" },
+        ]);
+        return;
+      }
+
+      if (!response.ok) {
+        // Other API error (jailbreak block, validation, etc.)
+        setMessages((prev) => [
+          ...prev,
+          { role: "system", content: data.reply ?? data.message ?? "Something went wrong." },
+        ]);
+        return;
+      }
+
       if (data.success && data.reply) {
         setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
       } else {
@@ -353,7 +439,7 @@ export default function HomePage() {
         ...prev,
         {
           role: "system",
-           content: "AI service unavailable. Please try again later or message Lawrence on Facebook at facebook.com/Rennejay.Dev.21.",
+          content: "AI service unavailable. Please try again later or message Lawrence on Facebook at facebook.com/Rennejay.Dev.21.",
         },
       ]);
     } finally {
@@ -362,6 +448,11 @@ export default function HomePage() {
   };
   return (
     <>
+      {/* Cloudflare Turnstile script — loaded once, globally */}
+      <Script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        strategy="lazyOnload"
+      />
       <header>
         <div className="container nav">
           <a href="#top" className="logo">
@@ -1033,6 +1124,20 @@ export default function HomePage() {
           <div className="chat-panel-container">
             <div className="chat-header">
               <h4>Lawrence's AI Assistant 👋</h4>
+              {messagesLeft !== null && (
+                <span
+                  className="chat-limit-badge"
+                  title="Daily message limit"
+                  style={{
+                    fontSize: "0.65rem",
+                    fontFamily: "monospace",
+                    color: messagesLeft === 0 ? "var(--red-400, #f87171)" : "var(--zinc-400, #a1a1aa)",
+                    marginTop: "0.1rem",
+                  }}
+                >
+                  {messagesLeft === 0 ? "Limit reached" : `${messagesLeft} / 10 messages left today`}
+                </span>
+              )}
             </div>
             
             <div className="chat-messages">
@@ -1056,17 +1161,49 @@ export default function HomePage() {
               >
                 Chat disconnected due to inactivity. <span style={{ color: "var(--violet-400)", textDecoration: "underline", fontWeight: "600" }}>Click to reconnect</span>
               </div>
+            ) : messagesLeft === 0 ? (
+              <div className="chat-status-sleep">
+                Daily limit reached. <a href="#contact" style={{ color: "var(--violet-400)", textDecoration: "underline", fontWeight: "600" }}>Contact Lawrence directly ↗</a>
+              </div>
             ) : (
               <form onSubmit={handleSendMessage} className="chat-form">
+                {/* Turnstile challenge widget — auto-renders when chat opens */}
+                <div
+                  className="cf-turnstile"
+                  data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
+                  data-callback="onTurnstileSuccess"
+                  data-expired-callback="onTurnstileExpired"
+                  data-theme="dark"
+                  data-size="invisible"
+                  ref={(el) => {
+                    // Capture the widget ID once rendered for targeted resets
+                    if (el && !turnstileWidgetId.current) {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      const w = (window as any).turnstile;
+                      if (w) {
+                        const id = w.getWidgetId?.(el);
+                        if (id) turnstileWidgetId.current = id;
+                      }
+                    }
+                  }}
+                  style={{ display: "none" }}
+                />
                 <input
                   type="text"
                   className="chat-input"
-                  placeholder="Ask me anything..."
+                  placeholder={turnstileToken ? "Ask me anything..." : "Verifying you're human…"}
                   value={inputVal}
                   onChange={(e) => setInputVal(e.target.value)}
-                  disabled={isTyping}
+                  disabled={isTyping || !turnstileToken}
+                  maxLength={300}
                 />
-                <button type="submit" className="chat-send-btn" disabled={isTyping || chatSleeping} aria-label="Send message">
+                <button
+                  type="submit"
+                  className="chat-send-btn"
+                  disabled={isTyping || chatSleeping || !turnstileToken}
+                  aria-label="Send message"
+                  title={!turnstileToken ? "Waiting for human verification…" : "Send"}
+                >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
                     <line x1="22" y1="2" x2="11" y2="13" />
                     <polygon points="22 2 15 22 11 13 2 9 22 2" />
