@@ -1,0 +1,95 @@
+"use client";
+
+import React, { useEffect, useRef } from "react";
+
+interface PixelTransitionProps {
+  id?: string;
+  columns?: number;
+  rows?: number;
+  reverse?: boolean;
+  text?: string;
+  className?: string;
+}
+
+export default function PixelTransition({
+  id = "pixel-transition",
+  columns = 24,
+  rows = 16,
+  reverse = false,
+  text,
+  className = "",
+}: PixelTransitionProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Clear any previous blocks
+    const existingBlocks = container.querySelectorAll(".pixel-block");
+    existingBlocks.forEach((el) => el.remove());
+
+    const blocks: { element: HTMLDivElement; threshold: number }[] = [];
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < columns; col++) {
+        const block = document.createElement("div");
+        block.classList.add("pixel-block");
+        block.style.position = "absolute";
+        block.style.backgroundColor = "#ffffff";
+        block.style.opacity = "0";
+        block.style.boxSizing = "border-box";
+        block.style.width = `calc(${100 / columns}% + 1px)`;
+        block.style.height = `calc(${100 / rows}% + 1px)`;
+        block.style.left = `${col * (100 / columns)}%`;
+        block.style.top = `${row * (100 / rows)}%`;
+
+        const distFromCenter = Math.abs(columns / 2 - col);
+        const distFromBottom = reverse ? row : rows - 1 - row;
+
+        let threshold = (distFromBottom / rows) * 0.5;
+        threshold += (distFromCenter / (columns / 2)) * 0.25;
+        threshold += Math.random() * 0.1 - 0.03;
+        threshold = Math.min(threshold, 0.92);
+        threshold = Math.max(threshold, 0);
+
+        container.appendChild(block);
+        blocks.push({ element: block, threshold });
+      }
+    }
+
+    const handleScroll = () => {
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const startPoint = window.innerHeight;
+      const endPoint = window.innerHeight * 0.05;
+      let progress = (startPoint - rect.top) / (startPoint - endPoint);
+      progress = Math.max(0, Math.min(1, progress));
+
+      blocks.forEach((b) => {
+        b.element.style.opacity = progress > b.threshold ? "1" : "0";
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [columns, rows, reverse]);
+
+  return (
+    <div
+      id={id}
+      ref={containerRef}
+      className={`relative w-full h-[380px] md:h-[420px] mb-[-1px] overflow-hidden pointer-events-none ${className}`}
+    >
+      {text && (
+        <div className="absolute top-8 left-0 w-full text-center text-3xl md:text-5xl font-light tracking-tighter text-[#050505] z-20 select-none">
+          {text}
+        </div>
+      )}
+    </div>
+  );
+}
