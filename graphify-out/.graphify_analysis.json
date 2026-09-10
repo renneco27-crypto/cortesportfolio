@@ -1,0 +1,541 @@
+{
+  "communities": {
+    "0": [
+      "autoprefixer",
+      "enhanced_resolve",
+      "eslint",
+      "eslint_config_next",
+      "package",
+      "package_devdependencies",
+      "package_devdependencies_autoprefixer",
+      "package_devdependencies_enhanced_resolve",
+      "package_devdependencies_eslint",
+      "package_devdependencies_eslint_config_next",
+      "package_devdependencies_postcss",
+      "package_devdependencies_sharp",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_postcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_types_three",
+      "package_devdependencies_typescript",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_dev_3001",
+      "package_scripts_dev_clean",
+      "package_scripts_lint",
+      "package_scripts_precheck",
+      "package_scripts_start",
+      "package_scripts_type_check",
+      "package_version",
+      "postcss",
+      "sharp",
+      "tailwindcss",
+      "tailwindcss_postcss",
+      "types_node",
+      "types_react",
+      "types_react_dom",
+      "types_three",
+      "typescript"
+    ],
+    "1": [
+      "ai",
+      "ai_sdk_anthropic",
+      "ai_sdk_openai",
+      "emailjs_browser",
+      "framer_motion",
+      "lucide_react",
+      "marsidev_react_turnstile",
+      "neondatabase_serverless",
+      "next",
+      "package_dependencies",
+      "package_dependencies_ai",
+      "package_dependencies_ai_sdk_anthropic",
+      "package_dependencies_ai_sdk_openai",
+      "package_dependencies_emailjs_browser",
+      "package_dependencies_framer_motion",
+      "package_dependencies_lucide_react",
+      "package_dependencies_marsidev_react_turnstile",
+      "package_dependencies_neondatabase_serverless",
+      "package_dependencies_next",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_react_three_drei",
+      "package_dependencies_react_three_fiber",
+      "package_dependencies_resend",
+      "package_dependencies_three",
+      "package_dependencies_upstash_ratelimit",
+      "package_dependencies_upstash_redis",
+      "package_dependencies_vercel_analytics",
+      "react",
+      "react_dom",
+      "react_three_drei",
+      "react_three_fiber",
+      "resend",
+      "three",
+      "upstash_ratelimit",
+      "upstash_redis",
+      "vercel_analytics"
+    ],
+    "2": [
+      "app_page",
+      "app_page_editorialpage",
+      "app_projects_page",
+      "app_projects_page_categories",
+      "app_projects_page_dedicatedprojectspage",
+      "app_projects_page_githubicon",
+      "components_layout_swissnavbar",
+      "components_layout_swissnavbar_githubicon",
+      "components_layout_swissnavbar_swissnavbar",
+      "components_sections_editorialabout",
+      "components_sections_editorialabout_credentials",
+      "components_sections_editorialabout_editorialabout",
+      "components_sections_editorialcontact",
+      "components_sections_editorialcontact_editorialcontact",
+      "components_sections_editorialcontact_githubicon",
+      "components_sections_editorialcontact_linkedinicon",
+      "components_sections_editorialgithub",
+      "components_sections_editorialgithub_contributionday",
+      "components_sections_editorialgithub_editorialgithub",
+      "components_sections_editorialgithub_weekday",
+      "components_sections_editorialhero",
+      "components_sections_editorialhero_editorialhero",
+      "components_ui_editorialchatwidget",
+      "components_ui_editorialchatwidget_editorialchatwidget",
+      "components_ui_editorialchatwidget_message",
+      "components_ui_nodecanvas",
+      "components_ui_nodecanvas_nodecanvas",
+      "components_ui_nodecanvas_nodecanvasprops",
+      "components_ui_pixeltransition",
+      "components_ui_pixeltransition_pixeltransition",
+      "components_ui_pixeltransition_pixeltransitionprops",
+      "components_ui_projectcard",
+      "components_ui_projectcard_projectcard",
+      "components_ui_projectcard_projectcardprops",
+      "data_projects",
+      "data_projects_projectsdata",
+      "types_index_project"
+    ],
+    "3": [
+      "components_layout_navbar",
+      "components_layout_navbar_navbarcomponent",
+      "components_layout_navbar_navbarprops",
+      "components_sections_certificationssection",
+      "components_sections_certificationssection_certificationssection",
+      "components_sections_skillssection",
+      "components_sections_skillssection_categories",
+      "components_sections_skillssection_skillssection",
+      "components_ui_certbadge",
+      "components_ui_certbadge_certbadge",
+      "components_ui_certbadge_certbadgeprops",
+      "components_ui_certbadge_statusconfig",
+      "components_ui_skillcard",
+      "components_ui_skillcard_proficiencycolors",
+      "components_ui_skillcard_skillcard",
+      "components_ui_skillcard_skillcardprops",
+      "data_certifications",
+      "data_certifications_certificationsdata",
+      "data_skills",
+      "data_skills_skillsdata",
+      "types_index",
+      "types_index_certification",
+      "types_index_certstatus",
+      "types_index_chatmessage",
+      "types_index_contactformpayload",
+      "types_index_navlink",
+      "types_index_portfoliocredential",
+      "types_index_proficiencylevel",
+      "types_index_projectcategory",
+      "types_index_skill",
+      "types_index_skillcategory"
+    ],
+    "4": [
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_esnext",
+      "ref_mts",
+      "ref_next_dev_types_ts",
+      "ref_next_env_d_ts",
+      "ref_next_types_ts",
+      "ref_node_modules",
+      "ref_ts",
+      "ref_tsx",
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include"
+    ],
+    "5": [
+      "app_api_contact_route",
+      "app_api_contact_route_detectspam",
+      "app_api_contact_route_err",
+      "app_api_contact_route_get",
+      "app_api_contact_route_getclientip",
+      "app_api_contact_route_getcontactcount",
+      "app_api_contact_route_incrementcontactcount",
+      "app_api_contact_route_isvalidemail",
+      "app_api_contact_route_post",
+      "app_api_contact_route_ratelimit",
+      "app_api_contact_route_redis",
+      "app_api_contact_route_sendemailjs",
+      "app_api_contact_route_spam_patterns",
+      "app_api_contact_route_verifyturnstile",
+      "app_api_credentials_route",
+      "app_api_credentials_route_get",
+      "app_api_resume_download_route",
+      "app_api_resume_download_route_get",
+      "app_api_resume_download_route_redis",
+      "app_api_resume_route",
+      "app_api_resume_route_get",
+      "app_api_resume_route_post",
+      "app_api_resume_route_redis"
+    ],
+    "6": [
+      "app_api_chat_route",
+      "app_api_chat_route_apierror",
+      "app_api_chat_route_detectjailbreak",
+      "app_api_chat_route_detectmultiplequestions",
+      "app_api_chat_route_get",
+      "app_api_chat_route_getclientip",
+      "app_api_chat_route_getdailycount",
+      "app_api_chat_route_getfallbackreply",
+      "app_api_chat_route_incrementdailycount",
+      "app_api_chat_route_isrelevant",
+      "app_api_chat_route_jailbreak_patterns",
+      "app_api_chat_route_lawrence_context_terms",
+      "app_api_chat_route_post",
+      "app_api_chat_route_ratelimit",
+      "app_api_chat_route_redis",
+      "app_api_chat_route_sanitizeinput",
+      "app_api_chat_route_system_prompt",
+      "app_api_chat_route_verifyturnstile",
+      "lib_sanitize",
+      "lib_sanitize_sanitize"
+    ],
+    "7": [
+      "app_layout",
+      "app_layout_metadata",
+      "app_layout_rootlayout",
+      "components_tiktokpixelinit",
+      "components_tiktokpixelinit_tiktokpixelinit",
+      "components_ui_customcursor",
+      "components_ui_customcursor_customcursor",
+      "components_ui_matrixrain",
+      "components_ui_matrixrain_matrixrain",
+      "lib_tiktok_pixel",
+      "lib_tiktok_pixel_gettiktokwindow",
+      "lib_tiktok_pixel_inittiktokpixel",
+      "lib_tiktok_pixel_tiktokpixelhelper",
+      "lib_tiktok_pixel_tiktokwindow",
+      "lib_tiktok_pixel_tracktiktokevent"
+    ],
+    "8": [
+      "components_sections_developersection",
+      "components_sections_developersection_developersection",
+      "components_ui_githubgraph",
+      "components_ui_githubgraph_buildweeks",
+      "components_ui_githubgraph_daydata",
+      "components_ui_githubgraph_githubgraph",
+      "components_ui_githubgraph_level_colors",
+      "components_ui_githubgraph_levelforcount",
+      "components_ui_githubgraph_monthlabelsforweeks",
+      "components_ui_githubgraph_weekdata",
+      "components_ui_techstackmarquee",
+      "components_ui_techstackmarquee_row1",
+      "components_ui_techstackmarquee_row2",
+      "components_ui_techstackmarquee_tag",
+      "components_ui_techstackmarquee_techstackmarquee"
+    ],
+    "9": [
+      "components_sections_aboutsection",
+      "components_sections_aboutsection_aboutsection",
+      "components_sections_tiktokfunnelsection",
+      "components_sections_tiktokfunnelsection_funnelsteps",
+      "components_sections_tiktokfunnelsection_tiktokfunnelsection",
+      "components_ui_animatedcounter",
+      "components_ui_animatedcounter_animatedcounter",
+      "components_ui_animatedcounter_animatedcounterprops",
+      "hooks_useanimateonview",
+      "hooks_useanimateonview_useanimateonviewhook"
+    ],
+    "10": [
+      "components_ui_projectcorridor",
+      "components_ui_projectcorridor_clamp",
+      "components_ui_projectcorridor_easein",
+      "components_ui_projectcorridor_easeout",
+      "components_ui_projectcorridor_link",
+      "components_ui_projectcorridor_panel",
+      "components_ui_projectcorridor_panels",
+      "components_ui_projectcorridor_projectcorridor"
+    ],
+    "11": [
+      "lib_ai_instructions",
+      "lib_ai_instructions_buildsysteminstructions",
+      "lib_ai_mode",
+      "lib_ai_mode_ai_modes",
+      "lib_ai_mode_aimode",
+      "lib_ai_mode_default_ai_mode"
+    ],
+    "12": [
+      "components_sections_editorialprojects",
+      "components_sections_editorialprojects_editorialprojects",
+      "components_sections_editorialprojects_githubicon",
+      "components_sections_editorialprojects_projectdata",
+      "components_sections_editorialprojects_projectitem"
+    ],
+    "13": [
+      "components_sections_herosection",
+      "components_sections_herosection_fadeup",
+      "components_sections_herosection_herocanvas",
+      "components_sections_herosection_herosection",
+      "components_sections_herosection_herosectionprops"
+    ],
+    "14": [
+      "app_api_github_contributions_route",
+      "app_api_github_contributions_route_contributionday",
+      "app_api_github_contributions_route_get",
+      "app_api_github_contributions_route_revalidate"
+    ],
+    "15": [
+      "components_sections_mistralslidesection",
+      "components_sections_mistralslidesection_mistralslidesection",
+      "components_sections_mistralslidesection_slidedata",
+      "components_sections_mistralslidesection_slides"
+    ],
+    "16": [
+      "components_sections_projectssection",
+      "components_sections_projectssection_card",
+      "components_sections_projectssection_cards",
+      "components_sections_projectssection_projectssection"
+    ],
+    "17": [
+      "components_three_floatingcube",
+      "components_three_floatingcube_floatingcube",
+      "components_three_herocanvas",
+      "components_three_herocanvas_herocanvas"
+    ],
+    "18": [
+      "components_ui_chatwidget",
+      "components_ui_chatwidget_chatwidget",
+      "components_ui_chatwidget_chatwidgetprops",
+      "components_ui_chatwidget_message"
+    ],
+    "19": [
+      "components_sections_contactsection",
+      "components_sections_contactsection_contactsection",
+      "components_sections_contactsection_currentyear"
+    ],
+    "20": [
+      "components_sections_githubsection",
+      "components_sections_githubsection_githubsection",
+      "components_sections_githubsection_terminallines"
+    ],
+    "21": [
+      "app_admin_page",
+      "app_admin_page_adminpage"
+    ],
+    "22": [
+      "components_layout_footer",
+      "components_layout_footer_footercomponent"
+    ],
+    "23": [
+      "components_ui_zoomsection",
+      "components_ui_zoomsection_zoomsection"
+    ],
+    "24": [
+      "eslint_config",
+      "eslint_config_eslintconfig"
+    ],
+    "25": [
+      "lib_db",
+      "lib_db_neondbclient"
+    ],
+    "26": [
+      "next_config",
+      "next_config_nextconfig"
+    ],
+    "27": [
+      "postcss_config_config",
+      "postcss_config_mjs_postcss_config"
+    ],
+    "28": [
+      "tailwind_config",
+      "tailwind_config_config"
+    ],
+    "29": [
+      "githubsection"
+    ],
+    "30": [
+      "postcss_config_js_postcss_config"
+    ],
+    "31": [
+      "start_dev"
+    ]
+  },
+  "cohesion": {
+    "0": 0.05,
+    "1": 0.05405405405405406,
+    "2": 0.07807807807807808,
+    "3": 0.0989247311827957,
+    "4": 0.06896551724137931,
+    "5": 0.13438735177865613,
+    "6": 0.18421052631578946,
+    "7": 0.17142857142857143,
+    "8": 0.17142857142857143,
+    "9": 0.28888888888888886,
+    "10": 0.25,
+    "11": 0.4,
+    "12": 0.4,
+    "13": 0.4,
+    "14": 0.5,
+    "15": 0.5,
+    "16": 0.5,
+    "17": 0.6666666666666666,
+    "18": 0.5,
+    "19": 0.6666666666666666,
+    "20": 0.6666666666666666,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0,
+    "31": 1.0
+  },
+  "gods": [
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "app_api_chat_route_post",
+      "label": "POST()",
+      "degree": 10
+    },
+    {
+      "id": "app_api_contact_route_post",
+      "label": "POST()",
+      "degree": 10
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 9
+    },
+    {
+      "id": "app_api_contact_route_err",
+      "label": "err()",
+      "degree": 7
+    },
+    {
+      "id": "tsconfig_include",
+      "label": "include",
+      "degree": 7
+    },
+    {
+      "id": "app_api_chat_route_sanitizeinput",
+      "label": "sanitizeInput()",
+      "degree": 5
+    },
+    {
+      "id": "lib_sanitize_sanitize",
+      "label": "sanitize()",
+      "degree": 5
+    },
+    {
+      "id": "types_index_project",
+      "label": "Project",
+      "degree": 5
+    },
+    {
+      "id": "components_ui_animatedcounter_animatedcounter",
+      "label": "AnimatedCounter()",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "POST()",
+      "target": "sanitize()",
+      "source_files": [
+        "app/api/contact/route.ts",
+        "lib/sanitize.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "ProjectCardProps",
+      "target": "Project",
+      "source_files": [
+        "components/ui/ProjectCard.tsx",
+        "types/index.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; peripheral node `ProjectCardProps` unexpectedly reaches hub `Project`"
+    },
+    {
+      "source": "sanitizeInput()",
+      "target": "sanitize()",
+      "source_files": [
+        "app/api/chat/route.ts",
+        "lib/sanitize.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "POST()",
+      "target": "err()",
+      "source_files": [
+        "app/api/chat/route.ts",
+        "app/api/contact/route.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "GET()",
+      "target": "err()",
+      "source_files": [
+        "app/api/credentials/route.ts",
+        "app/api/contact/route.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; peripheral node `GET()` unexpectedly reaches hub `err()`"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}
