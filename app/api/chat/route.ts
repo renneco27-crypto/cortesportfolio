@@ -224,7 +224,8 @@ const LAWRENCE_CONTEXT_TERMS = [
   "portfolio", "experience", "tech", "coding", "web", "developer", "work",
   "job", "hire", "study", "school", "aclc", "it", "support", "helpdesk",
   "testing", "remote", "graduate", "location", "from", "background",
-  "resume", "education", "degree", "phone", "career", "goal", "age", "ethic",
+  "resume", "education", "degree", "phone", "number", "mobile", "cellphone",
+  "call", "telephone", "reach", "sms", "whatsapp", "career", "goal", "age", "ethic",
 ];
 
 function isRelevant(message: string): boolean {
@@ -238,6 +239,8 @@ function isRelevant(message: string): boolean {
 // ─────────────────────────────────────────────
 function getFallbackReply(userMessage: string): string {
   const msg = userMessage.toLowerCase();
+  if (/(phone|number|mobile|contact|call|cellphone|reach|whatsapp|sms)/.test(msg))
+    return "Lawrence's contact number is +63 960 885 7457 and his email is renneco27@gmail.com.";
   if (/(where|from|location|origin|born|based)/.test(msg))
     return "Lawrence is from Ormoc City, Leyte, Philippines.";
   if (/(skill|skills|tech|stack|next\.js|typescript|tailwind|vercel|neon|postgres)/.test(msg))
@@ -246,7 +249,7 @@ function getFallbackReply(userMessage: string): string {
     return "His notable projects include the AI Portfolio Chatbot and a Telegram AI chatbot integration.";
   if (/(intern|internship|available|availability|opportunity)/.test(msg))
     return "Lawrence is currently open to internship opportunities.";
-  return "I'm Lawrence's AI assistant and I can answer questions about his skills, projects, and internship availability.";
+  return "I'm Lawrence's AI assistant and I can answer questions about his skills, projects, contact details (+63 960 885 7457), and internship availability.";
 }
 
 // ─────────────────────────────────────────────
