@@ -35,9 +35,9 @@ export default function EditorialPage() {
             <div className="max-w-6xl mx-auto">
               <div className="p-8 md:p-12 bg-[#090909] border border-[#222] rounded-[2px] flex flex-col md:flex-row justify-between items-start md:items-center gap-8 hover:border-[#444] transition-all">
                 <div className="space-y-3">
-<div className="font-mono text-xs tracking-widest text-[#e63946] uppercase">
-                      [ 02 // ARCHITECTURAL SCHEMATICS & WORKS ]
-                    </div>
+                  <div className="font-mono text-xs tracking-widest text-[#e63946] uppercase">
+                    [ 02 // ARCHITECTURAL SCHEMATICS &amp; WORKS ]
+                  </div>
                   <h2 className="text-3xl md:text-5xl font-light tracking-tight uppercase text-white">
                     Selected Engineering Works
                   </h2>
