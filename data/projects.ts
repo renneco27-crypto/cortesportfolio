@@ -2,6 +2,82 @@ import type { Project } from "@/types";
 
 export const projectsData: Project[] = [
   {
+    id: "lex-memoria",
+    title: "Lex Memoria — The Digital Codal Review App for Philippine Law Students",
+    slug: "lex-memoria",
+    badge: "LEGALTECH / ACTIVE RECALL",
+    shortDescription:
+      "A digital codal study and review system designed specifically for Philippine law students with article drills, bar exam mnemonics, and retention tracking.",
+    description:
+      "Lex Memoria provides interactive active-recall drills, codal provisions indexing, quiz modes for Bar examinations, and structured review roadmaps across Civil Law, Criminal Law, and Political Law.",
+    problemStatement:
+      "Philippine law students struggle to memorize thousands of statutory provisions and articles using traditional heavy physical codals.",
+    solutionSummary:
+      "Built a digital active-recall platform with indexed codals, spaced-repetition article drills, and real-time retention telemetry.",
+    results: [
+      "Full digital codal database with instant cross-referencing",
+      "Spaced repetition active-recall drills for Bar reviewees",
+      "Sub-second article lookup and mnemonic indexing",
+    ],
+    techStack: ["Next.js 16", "TypeScript", "Tailwind CSS", "PostgreSQL", "Vercel"],
+    thumbnailSrc: "/images/projects/lex-memoria.png",
+    liveDemoUrl: "https://lawrence.cloud-ip.cc/",
+    githubUrl: "https://github.com/renneco27-crypto/cortesportfolio",
+    category: "edtech",
+    featured: true,
+    color: "#e63946",
+  },
+  {
+    id: "stylepeek-by-rence",
+    title: "StylePeek by Rence",
+    slug: "stylepeek",
+    badge: "DEVTOOLS / CSS ENGINE",
+    shortDescription:
+      "A developer inspection tool for extracting, analyzing, and experimenting with real-time CSS design tokens, computed layouts, and design systems.",
+    description:
+      "StylePeek empowers frontend engineers and designers to inspect computed styling properties, detect design system inconsistencies, and export clean Tailwind CSS snippets on the fly.",
+    problemStatement:
+      "Inspecting complex CSS stylesheets in default devtools is slow and cluttered with vendor prefixes and irrelevant browser styles.",
+    solutionSummary:
+      "Created a streamlined inspection utility that isolates key visual styling, font hierarchies, color palettes, and margin/padding geometry.",
+    results: [
+      "Instant design token extraction and palette mapping",
+      "One-click Tailwind CSS class generator",
+      "Lightweight extension and web interface",
+    ],
+    techStack: ["JavaScript", "TypeScript", "CSS3 / AST Parser", "Browser Extension APIs"],
+    thumbnailSrc: "/images/projects/stylepeek.png",
+    githubUrl: "https://github.com/renneco27-crypto/StylePeek-by-Rence",
+    category: "web",
+    featured: true,
+    color: "#f4a261",
+  },
+  {
+    id: "naturalvoice-edgescreenreader",
+    title: "NaturalVoice — Edge Neural Screen Reader",
+    slug: "naturalvoice",
+    badge: "ACCESSIBILITY / NEURAL TTS",
+    shortDescription:
+      "A high-performance assistive screen reader using Microsoft Edge neural text-to-speech voices for natural-sounding reading.",
+    description:
+      "NaturalVoice provides accessible, fluid web narration using high-fidelity Edge neural speech synthesis. Features smart paragraph navigation, adjustable speeds, and keyboard-first accessibility shortcuts.",
+    problemStatement:
+      "Built-in robotic screen readers cause listening fatigue and lack natural prosody and intonation for long-form reading.",
+    solutionSummary:
+      "Integrated low-latency neural TTS synthesis with DOM traversal hooks and accessibility shortcuts.",
+    results: [
+      "Human-like neural speech synthesis with zero robotic artifacting",
+      "Keyboard-only navigation and shortcut listeners",
+      "Sub-50ms playback initialization",
+    ],
+    techStack: ["JavaScript", "Edge TTS API", "Web Speech API", "Browser Extension"],
+    thumbnailSrc: "/images/projects/naturalvoice.png",
+    githubUrl: "https://github.com/renneco27-crypto/NaturalVoice_EdgeScreenReader_Renne",
+    category: "accessibility",
+    featured: true,
+    color: "#3a86ff",
+  },
+  {
     id: "ai-chatbot",
     title: "AI Portfolio Chatbot",
     slug: "ai-chatbot",
@@ -79,31 +155,6 @@ export const projectsData: Project[] = [
     color: "#e63946",
   },
   {
-    id: "student-grading",
-    title: "Student Grading & Projection App",
-    slug: "student-grading",
-    badge: "EDTECH / ANALYTICS",
-    shortDescription:
-      "A self-assessment and academic performance forecasting engine for engineering cohorts.",
-    description:
-      "Interactive data analytics system analyzing weighted coursework components to project final grade outcomes, allowing students to simulate score requirements for academic honors.",
-    problemStatement:
-      "Students lack visibility into how upcoming exams impact their cumulative GPA and honors eligibility.",
-    solutionSummary:
-      "Created a weighted grade simulator with instant threshold projection and visual score analytics.",
-    results: [
-      "Real-time predictive grade trajectory modeling",
-      "Interactive weighted GPA calculators",
-      "Instant scenario simulation for exam targets",
-    ],
-    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Data Analytics"],
-    thumbnailSrc: "/images/projects/Student-Performance-Dashboard.png",
-    githubUrl: "https://github.com/crisantohcortes1-commits/studentself_gradingapp",
-    category: "edtech",
-    featured: true,
-    color: "#9b2226",
-  },
-  {
     id: "studyup-stitchcsv",
     title: "StudyUp (StitchCSV AI Study Tool)",
     slug: "studyup-stitchcsv",
@@ -130,31 +181,6 @@ export const projectsData: Project[] = [
     color: "#8b5cf6",
   },
   {
-    id: "fortheblind-extension",
-    title: "For the Blind — Desktop Extension",
-    slug: "fortheblind-extension",
-    badge: "ACCESSIBILITY / SPEECH",
-    shortDescription:
-      "A browser and desktop extension for blind and visually impaired users that provides fast speech feedback and keyboard navigation.",
-    description:
-      "Features speech feedback while navigating web pages, text/link/button/heading reading, caret tracking, selected text reading, element labels announced before their role, and Navigator Mode with Alt + C shortcuts.",
-    problemStatement:
-      "Standard web screen readers are often sluggish, complex to configure, and fail on dynamic SPA interfaces.",
-    solutionSummary:
-      "Engineered lightweight, low-latency text-to-speech hooks and key-driven exploration shortcuts.",
-    results: [
-      "Sub-50ms speech feedback latency",
-      "Keyboard-only navigation without mouse dependency",
-      "Custom hotkey mode for fast web browsing",
-    ],
-    techStack: ["JavaScript", "Web Speech API", "Browser Extension APIs"],
-    thumbnailSrc: "/images/projects/brand-identity.png",
-    githubUrl: "https://github.com/renneco27-crypto/ForTheBlind_DesktopExtention",
-    category: "accessibility",
-    featured: false,
-    color: "#3b82f6",
-  },
-  {
     id: "school-attendance-maker",
     title: "School Attendance Maker",
     slug: "school-attendance-maker",
@@ -179,30 +205,5 @@ export const projectsData: Project[] = [
     category: "web",
     featured: false,
     color: "#10b981",
-  },
-  {
-    id: "tiktok-lead-funnel",
-    title: "TikTok Lead Funnel & CRM",
-    slug: "tiktok-lead-funnel",
-    badge: "MARKETING TECH / CRM",
-    shortDescription:
-      "Short-form content lead capture strategy with TikTok Pixel and real-time CRM attribution.",
-    description:
-      "Integrated TikTok Pixel and Events API with a custom Next.js landing page to track user funnel stages and pass validated leads into a client CRM dashboard.",
-    problemStatement:
-      "Local business could not track return on ad spend or attribute sales to short-form video campaigns.",
-    solutionSummary:
-      "Set up TikTok Pixel, Server Events API, and connected conversion tracking to a live reporting dashboard.",
-    results: [
-      "CPA reduced by 30% in first month",
-      "150+ high-intent leads captured in 2 weeks",
-      "Full funnel event attribution",
-    ],
-    techStack: ["TikTok Pixel API", "Events API", "Next.js", "Tailwind CSS"],
-    thumbnailSrc: "/images/projects/tiktok-funnel.png",
-    githubUrl: "https://github.com/renneco27-crypto/cortesportfolio",
-    category: "marketing",
-    featured: false,
-    color: "#ec4899",
   },
 ];

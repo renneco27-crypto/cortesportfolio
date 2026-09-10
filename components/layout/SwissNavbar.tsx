@@ -15,24 +15,27 @@ function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
 
 export default function SwissNavbar() {
   return (
-    <header className="fixed top-0 left-0 w-full h-[60px] z-50 flex justify-between items-center px-6 md:px-12 bg-[#050505]/90 backdrop-blur-md border-b border-[#1a1a1a] select-none">
+    <header className="fixed top-0 left-0 w-full h-[60px] z-50 flex justify-between items-center px-6 md:px-10 bg-[#050505]/90 backdrop-blur-[14px] border-b border-[#1a1a1a] select-none">
       {/* Brand / Logo */}
       <Link
         href="/"
-        className="font-mono text-xs md:text-sm font-bold tracking-widest text-white flex items-center gap-2 hover:opacity-80 transition-opacity"
+        className="font-mono text-xs md:text-sm font-bold tracking-[2px] text-white flex items-center gap-2 hover:opacity-90 transition-opacity"
       >
         <span>LAWRENCE MANZO CORTES</span>
-        <span className="text-[#e63946] font-normal text-[0.75rem]">[ENG.2026]</span>
+        <span className="text-[#e63946] font-normal text-xs tracking-wider">/ PORTFOLIO</span>
       </Link>
 
       {/* Navigation Links */}
-      <nav className="hidden md:flex items-center gap-7 text-[0.8rem] uppercase tracking-[1.8px] text-[#888888]">
+      <nav className="hidden md:flex items-center gap-7 text-[0.8rem] uppercase tracking-[1.5px] text-[#888888]">
         <Link href="/#about" className="hover:text-white transition-colors duration-200">
           About
         </Link>
-        <Link href="/projects" className="text-white hover:text-[#e63946] font-medium transition-colors duration-200 flex items-center gap-1">
+        <Link href="/#stack" className="hover:text-white transition-colors duration-200">
+          Architecture
+        </Link>
+        <Link href="/projects" className="text-white hover:text-[#e63946] font-medium transition-colors duration-200 flex items-center gap-1.5">
           <span>Projects</span>
-          <span className="text-[0.65rem] text-[#e63946] font-mono">[NEW]</span>
+          <span className="text-[0.68rem] text-[#e63946] font-mono">[SYS]</span>
         </Link>
         <Link href="/#contact" className="hover:text-white transition-colors duration-200">
           Contact
@@ -45,18 +48,18 @@ export default function SwissNavbar() {
           href="/resume/lawrence-cortes-resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-mono text-[0.75rem] tracking-wider uppercase text-white bg-[#141414] hover:bg-white hover:text-black border border-[#333] hover:border-white px-3.5 py-1.5 rounded-[2px] transition-all duration-200 inline-flex items-center gap-1.5"
+          className="btn-cta"
         >
           <FileText className="w-3.5 h-3.5" />
           <span>Resume</span>
-          <ArrowUpRight className="w-3 h-3 opacity-60" />
+          <ArrowUpRight className="w-3 h-3 opacity-70" />
         </a>
 
         <a
           href="https://github.com/renneco27-crypto"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-8 h-8 rounded-[2px] border border-[#222] bg-[#111] hover:border-[#555] hover:bg-[#1a1a1a] text-[#aaa] hover:text-white flex items-center justify-center transition-all duration-200"
+          className="w-8 h-8 rounded-[2px] border border-[#222] bg-[#161616] hover:border-white hover:bg-white hover:text-black text-[#aaa] flex items-center justify-center transition-all duration-200"
           aria-label="GitHub Profile"
         >
           <GithubIcon className="w-4 h-4" />

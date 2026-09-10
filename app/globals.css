@@ -3,16 +3,32 @@
 
 :root {
   --font-space: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono:  "JetBrains Mono", "Courier New", monospace;
+  --font-inter: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono:  "Courier New", "JetBrains Mono", monospace;
+  
+  --bg-pitch: #050505;
+  --bg-banner: #090909;
+  --bg-body: #0d0d0d;
+  --bg-panel: #121212;
+  --bg-card: #161616;
+  
+  --border-subtle: #1a1a1a;
+  --border-medium: #222222;
+  --border-card: #282828;
+  --border-active: #333333;
+  
+  --accent-red: #e63946;
+  --accent-orange: #f4a261;
+  --accent-darkred: #9b2226;
 }
 
 html {
   scroll-behavior: smooth;
   background-color: #050505;
+  color: #ffffff;
 }
 
-/* ── Base body (Deep Void Black & Swiss Editorial Typography) ─────────────────── */
+/* ── Base body ─────────────────── */
 body {
   font-family: var(--font-inter);
   background-color: #050505;
@@ -23,7 +39,6 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-space);
   letter-spacing: -0.03em;
 }
 
@@ -33,7 +48,7 @@ code, pre, .font-mono {
 
 /* ── Scrollbar ──────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -41,7 +56,7 @@ code, pre, .font-mono {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #262626;
+  background: #222222;
   border-radius: 1px;
 }
 
@@ -55,7 +70,125 @@ code, pre, .font-mono {
   color: #ffffff;
 }
 
-/* ── Pixel teeth transition styles ─────────────────────────── */
+/* ── Pixel Transition Styles ────────────────────────────────── */
 .pixel-block {
   transition: opacity 0.05s linear;
+}
+
+/* ── Color Matrix & Mistral Blocks ───────────────────────────── */
+.color-matrix {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.block {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+
+.block:hover {
+  transform: scale(0.98);
+  filter: brightness(1.15);
+}
+
+.b-red {
+  background-color: #e63946;
+}
+
+.b-orange {
+  background-color: #f4a261;
+}
+
+.b-darkred {
+  background-color: #9b2226;
+}
+
+/* ── Tag Pills & Clause Cards from tos.html ─────────────────── */
+.tag-pill {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #1c1c1c;
+  border: 1px solid #2e2e2e;
+  padding: 5px 11px;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.tag-pill:hover {
+  border-color: #555555;
+  background: #252525;
+}
+
+.clause-card {
+  background: #0d0d0d;
+  border: 1px solid #1e1e1e;
+  border-radius: 2px;
+  padding: 1.2rem 1.4rem;
+  transition: border-color 0.2s ease;
+}
+
+.clause-card:hover {
+  border-color: #333333;
+}
+
+.clause-card .clause-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #f4a261;
+  margin-bottom: 0.5rem;
+}
+
+/* ── Alert Callout Box from tos.html ────────────────────────── */
+.alert-box {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: rgba(230, 57, 70, 0.07);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  border-radius: 4px;
+  padding: 1.2rem 1.5rem;
+}
+
+.alert-box p {
+  font-size: 0.88rem !important;
+  color: #cc7777 !important;
+  line-height: 1.7 !important;
+  margin: 0 !important;
+}
+
+/* ── CTA Button from tos.html ───────────────────────────────── */
+.btn-cta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #161616;
+  border: 1px solid #333333;
+  padding: 6px 14px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-cta:hover {
+  background: #ffffff;
+  color: #050505;
+  border-color: #ffffff;
 }

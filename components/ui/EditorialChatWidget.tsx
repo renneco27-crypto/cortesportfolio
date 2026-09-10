@@ -58,7 +58,7 @@ export default function EditorialChatWidget() {
   if (!hasMounted) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div className="fixed bottom-6 right-6 z-[70] flex flex-col items-end">
       {/* Flat Editorial Panel */}
       <div 
         className={`transition-all duration-300 ease-in-out overflow-hidden bg-[#050505] border border-[#222] shadow-2xl origin-bottom-right

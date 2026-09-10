@@ -180,7 +180,7 @@ export default function DedicatedProjectsPage() {
                       {project.techStack.map((tech) => (
                         <span
                           key={tech}
-                          className="font-mono text-[0.68rem] uppercase tracking-wider text-[#bbb] bg-[#141414] border border-[#282828] px-2.5 py-1"
+                          className="tag-pill text-[0.68rem] px-2 py-0.5"
                         >
                           {tech}
                         </span>
@@ -188,16 +188,16 @@ export default function DedicatedProjectsPage() {
                     </div>
 
                     {/* Action Links */}
-                    <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-[#1a1a1a]">
+                    <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-[#1a1a1a]">
                       {project.githubUrl && (
                         <a
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-mono text-xs uppercase tracking-wider text-white hover:text-[#e63946] flex items-center gap-1.5 transition-colors"
+                          className="btn-cta text-[0.72rem] px-3 py-1"
                         >
-                          <GithubIcon className="w-4 h-4" />
-                          <span>Source Code</span>
+                          <GithubIcon className="w-3.5 h-3.5" />
+                          <span>Code</span>
                         </a>
                       )}
 
@@ -206,10 +206,10 @@ export default function DedicatedProjectsPage() {
                           href={project.liveDemoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-mono text-xs uppercase tracking-wider text-[#a78bfa] hover:text-white flex items-center gap-1.5 transition-colors"
+                          className="btn-cta text-[0.72rem] px-3 py-1 bg-[#202020] border-[#444]"
                         >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          <span>Live Site</span>
+                          <ExternalLink className="w-3 h-3 text-[#f4a261]" />
+                          <span>Live</span>
                         </a>
                       )}
 
@@ -217,7 +217,7 @@ export default function DedicatedProjectsPage() {
                         onClick={() => setSelectedProject(project)}
                         className="font-mono text-xs uppercase tracking-wider text-[#888] hover:text-white ml-auto transition-colors cursor-pointer"
                       >
-                        Detailed Blueprint &rarr;
+                        Blueprint &rarr;
                       </button>
                     </div>
                   </div>
@@ -306,7 +306,7 @@ export default function DedicatedProjectsPage() {
                   {selectedProject.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="font-mono text-xs uppercase text-white bg-[#1a1a1a] border border-[#333] px-3 py-1"
+                      className="tag-pill text-xs"
                     >
                       {tech}
                     </span>
@@ -322,7 +322,7 @@ export default function DedicatedProjectsPage() {
                     href={selectedProject.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-xs uppercase tracking-wider bg-white text-black font-bold px-5 py-2.5 hover:bg-[#ccc] transition-colors inline-flex items-center gap-2"
+                    className="btn-cta"
                   >
                     <GithubIcon className="w-4 h-4" />
                     <span>View Repository</span>
@@ -335,9 +335,9 @@ export default function DedicatedProjectsPage() {
                     href={selectedProject.liveDemoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-xs uppercase tracking-wider bg-[#141414] text-white border border-[#333] hover:border-white px-5 py-2.5 transition-colors inline-flex items-center gap-2"
+                    className="btn-cta bg-[#202020] border-[#444]"
                   >
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#f4a261]" />
                     <span>Live Demo</span>
                   </a>
                 )}

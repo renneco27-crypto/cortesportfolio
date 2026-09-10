@@ -8,6 +8,7 @@ interface PixelTransitionProps {
   rows?: number;
   reverse?: boolean;
   text?: string;
+  imageSrc?: string;
   className?: string;
 }
 
@@ -17,6 +18,7 @@ export default function PixelTransition({
   rows = 16,
   reverse = false,
   text,
+  imageSrc = "/images/bg-image.jpg",
   className = "",
 }: PixelTransitionProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -36,13 +38,24 @@ export default function PixelTransition({
         const block = document.createElement("div");
         block.classList.add("pixel-block");
         block.style.position = "absolute";
-        block.style.backgroundColor = "#ffffff";
-        block.style.opacity = "0";
         block.style.boxSizing = "border-box";
         block.style.width = `calc(${100 / columns}% + 1px)`;
         block.style.height = `calc(${100 / rows}% + 1px)`;
         block.style.left = `${col * (100 / columns)}%`;
         block.style.top = `${row * (100 / rows)}%`;
+        block.style.opacity = "0";
+
+        // Slice bg-image across grid blocks
+        if (imageSrc) {
+          block.style.backgroundImage = `url('${imageSrc}')`;
+          block.style.backgroundSize = `${columns * 100}% ${rows * 100}%`;
+          const posX = columns > 1 ? (col / (columns - 1)) * 100 : 0;
+          const posY = rows > 1 ? (row / (rows - 1)) * 100 : 0;
+          block.style.backgroundPosition = `${posX}% ${posY}%`;
+          block.style.backgroundRepeat = "no-repeat";
+        } else {
+          block.style.backgroundColor = "#ffffff";
+        }
 
         const distFromCenter = Math.abs(columns / 2 - col);
         const distFromBottom = reverse ? row : rows - 1 - row;
@@ -77,16 +90,16 @@ export default function PixelTransition({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [columns, rows, reverse]);
+  }, [columns, rows, reverse, imageSrc]);
 
   return (
     <div
       id={id}
       ref={containerRef}
-      className={`relative w-full h-[380px] md:h-[420px] mb-[-1px] overflow-hidden pointer-events-none ${className}`}
+      className={`pixel-transition relative w-full h-[360px] md:h-[420px] mb-[-1px] overflow-hidden pointer-events-none ${className}`}
     >
       {text && (
-        <div className="absolute top-8 left-0 w-full text-center text-3xl md:text-5xl font-light tracking-tighter text-[#050505] z-20 select-none">
+        <div className="pixel-text absolute top-10 left-0 w-full text-center text-3xl md:text-5xl font-light tracking-tight text-white z-20 select-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
           {text}
         </div>
       )}

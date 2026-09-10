@@ -170,7 +170,7 @@ export default function EditorialGitHub({ username = "renneco27-crypto" }: { use
   ];
 
   return (
-    <section className="w-full bg-[#050505] pt-12 pb-24 border-t border-[#1a1a1a] select-none overflow-hidden">
+    <section className="w-full bg-[#050505]/75 backdrop-blur-sm pt-12 pb-24 border-t border-[#1a1a1a] select-none overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         {/* GitHub Graph Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6">
