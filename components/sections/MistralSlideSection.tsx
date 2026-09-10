@@ -414,16 +414,11 @@ export default function SectionWipeTransitions() {
         0.8
       );
 
-      // Phase 3: Wipe 2 holds and then exits upward
+      // Phase 3: Initiate Contact panel stays locked in place until the end of the page (no upward clip exit)
       masterTl.to(
-        leftOv,
-        { clipPath: "inset(0% 0 100% 0)", ease: "power3.inOut", duration: 0.45, onComplete: () => { gsap.set(leftOv, { pointerEvents: "none" }); } },
-        1.5
-      );
-      masterTl.to(
-        rightOv,
-        { clipPath: "inset(0% 0 100% 0)", ease: "power3.inOut", duration: 0.45, onComplete: () => { gsap.set(rightOv, { pointerEvents: "none" }); } },
-        1.5
+        [leftOv, rightOv],
+        { clipPath: "inset(0% 0 0% 0)", opacity: 1, duration: 0.5 },
+        1.3
       );
 
       triggers.push(masterTl.scrollTrigger!);
