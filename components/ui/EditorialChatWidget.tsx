@@ -1,0 +1,167 @@
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
+import { Turnstile } from "@marsidev/react-turnstile";
+
+type Message = { id: string; role: 'user' | 'assistant'; content: string };
+
+export default function EditorialChatWidget() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isOpen]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userMessage: Message = { id: Date.now().toString(), role: 'user', content: input };
+    setMessages(prev => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMessage.content, turnstileToken }),
+      });
+      const data = await res.json();
+      
+      const assistantMessage: Message = { 
+        id: (Date.now() + 1).toString(), 
+        role: 'assistant', 
+        content: data.reply || "Connection terminated. Neural link lost." 
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (err) {
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "Error connecting to systems." }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!hasMounted) return null;
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+      {/* Flat Editorial Panel */}
+      <div 
+        className={`transition-all duration-300 ease-in-out overflow-hidden bg-[#050505] border border-[#222] shadow-2xl origin-bottom-right
+        ${isOpen ? 'w-[320px] sm:w-[380px] h-[480px] opacity-100 scale-100 mb-4' : 'w-[320px] h-0 opacity-0 scale-95 mb-0 border-transparent'}`}
+      >
+        <div className="flex flex-col h-full w-full">
+          {/* Header */}
+          <div className="flex justify-between items-center px-5 py-4 border-b border-[#1c1c1c] bg-[#080808]">
+            <div className="font-mono text-xs text-[#e63946] uppercase tracking-widest flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-[#e63946] rounded-full animate-pulse"></span>
+              SYSTEM.AI_NODE
+            </div>
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="text-[#666] hover:text-white transition-colors text-xl leading-none"
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Messages Area */}
+          <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-4 bg-[#050505] scrollbar-hide font-mono text-[0.8rem] leading-relaxed">
+            {messages.length === 0 && (
+              <div className="text-[#555] uppercase tracking-wide">
+                $ init neural-link...<br />
+                &gt; ready. ask me about my experience or projects.
+              </div>
+            )}
+            
+            {messages.map((m) => (
+              <div key={m.id} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
+                <span className="text-[0.6rem] text-[#444] uppercase mb-1">
+                  {m.role === 'user' ? 'USER_INPUT' : 'SYS_RESPONSE'}
+                </span>
+                <div className={`p-3 max-w-[85%] ${m.role === 'user' ? 'bg-[#111] text-[#ccc] border border-[#222]' : 'bg-transparent text-white border-l-2 border-[#e63946]'}`}>
+                  {m.content}
+                </div>
+              </div>
+            ))}
+            
+            {isLoading && (
+              <div className="flex flex-col items-start">
+                <span className="text-[0.6rem] text-[#444] uppercase mb-1">SYS_PROCESSING</span>
+                <div className="p-3 bg-transparent text-[#666] border-l-2 border-[#e63946] flex gap-1">
+                  <span className="w-1.5 h-1.5 bg-[#666] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                  <span className="w-1.5 h-1.5 bg-[#666] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                  <span className="w-1.5 h-1.5 bg-[#666] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Area */}
+          <div className="p-4 border-t border-[#1c1c1c] bg-[#080808]">
+            {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+              <div className="hidden">
+                <Turnstile
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                  onSuccess={(token) => setTurnstileToken(token)}
+                />
+              </div>
+            )}
+            <form onSubmit={handleSubmit} className="flex relative items-center">
+              <span className="absolute left-3 text-[#555] font-mono text-sm">$</span>
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="type command..."
+                className="w-full bg-[#111] border border-[#222] text-white font-mono text-xs pl-8 pr-10 py-3 focus:outline-none focus:border-[#555] transition-colors rounded-none placeholder:text-[#444]"
+              />
+              <button 
+                type="submit" 
+                disabled={isLoading || !input.trim()}
+                className="absolute right-3 text-[#888] hover:text-white disabled:opacity-50 transition-colors"
+              >
+                ↵
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* Toggle Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="group flex items-center gap-3 bg-[#0a0a0a] border border-[#222] hover:border-[#555] text-white px-5 py-3 rounded-none shadow-xl transition-all duration-300"
+      >
+        <span className="font-mono text-xs uppercase tracking-widest text-[#888] group-hover:text-white transition-colors">
+          [ INTERACT ]
+        </span>
+        <div className={`w-2 h-2 rounded-full ${isOpen ? 'bg-[#e63946]' : 'bg-white'} shadow-[0_0_8px_rgba(255,255,255,0.4)]`}></div>
+      </button>
+
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+    </div>
+  );
+}

@@ -42,8 +42,7 @@ const projectData: ProjectItem[] = [
       "Contextual multi-agent routing for portfolio knowledge",
     ],
     techStack: ["Next.js 16", "Vercel AI SDK", "TypeScript", "Tailwind CSS"],
-    githubUrl:
-      "https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio/tree/main/AI%20Portfolio%20Chatbot",
+    githubUrl: "https://github.com/renneco27-crypto/cortesportfolio",
     featured: true,
     color: "#e63946",
   },
@@ -62,8 +61,7 @@ const projectData: ProjectItem[] = [
       "Incentivized peer recycling economy",
     ],
     techStack: ["React Native", "Firebase", "Node.js", "QR Verification"],
-    githubUrl:
-      "https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio/tree/main/CampusTrash4Cash",
+    githubUrl: "https://github.com/crisantohcortes1-commits/-Trash4CashBarcode",
     color: "#f4a261",
   },
   {
@@ -81,8 +79,7 @@ const projectData: ProjectItem[] = [
       "Bulk parallel PDF/image rendering engine",
     ],
     techStack: ["Python", "OpenCV", "PIL", "Batch Queues"],
-    githubUrl:
-      "https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio/tree/main/AutoCertificationAi",
+    githubUrl: "https://github.com/renneco27-crypto/AutoCertificationAI",
     color: "#e63946",
   },
   {
@@ -100,8 +97,7 @@ const projectData: ProjectItem[] = [
       "Instant scenario simulation for exam targets",
     ],
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Chart Engines"],
-    githubUrl:
-      "https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio/tree/main/Student_Grading_App",
+    githubUrl: "https://github.com/crisantohcortes1-commits/studentself_gradingapp",
     color: "#9b2226",
   },
 ];

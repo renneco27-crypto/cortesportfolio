@@ -27,9 +27,11 @@ export interface Project {
   id: string;
   title: string;
   slug: string;
+  badge?: string;
   description: string;
-  problemStatement: string;
-  solutionSummary: string;
+  shortDescription?: string;
+  problemStatement?: string;
+  solutionSummary?: string;
   results: string[];
   techStack: string[];
   thumbnailSrc: string;
@@ -37,14 +39,20 @@ export interface Project {
   githubUrl?: string;
   category: ProjectCategory;
   featured: boolean;
+  color?: string;
 }
 
 export type ProjectCategory =
+  | "all"
   | "web"
   | "design"
   | "security"
   | "ai"
-  | "marketing";
+  | "marketing"
+  | "automation"
+  | "sustainability"
+  | "edtech"
+  | "accessibility";
 
 export interface Certification {
   id: string;

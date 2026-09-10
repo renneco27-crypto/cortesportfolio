@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GitFork } from "lucide-react";
 
-const GITHUB_URL = "https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio";
+const GITHUB_URL = "https://github.com/renneco27-crypto/cortesportfolio";
 
 const terminalLines = [
   { cmd: "$ whoami", out: "> lawrence cortes — software developer, cebu ph" },

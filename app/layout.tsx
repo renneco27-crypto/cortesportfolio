@@ -49,7 +49,7 @@ export default function RootLayout({
     jobTitle: "Software Developer & Brand Designer",
     url: "https://lawrencecortes.dev",
     sameAs: [
-      "https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio",
+      "https://github.com/renneco27-crypto/cortesportfolio",
     ],
     description:
       "Software developer, brand designer, and AI builder based in Ormoc City, Leyte, Philippines.",

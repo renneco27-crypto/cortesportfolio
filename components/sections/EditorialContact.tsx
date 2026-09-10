@@ -22,23 +22,18 @@ function LinkedinIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-interface EditorialContactProps {
-  contactTurnstileToken: string | null;
-  setContactTurnstileToken: (token: string | null) => void;
-  contactSubmissionsLeft: number | null;
-}
+import { Turnstile } from "@marsidev/react-turnstile";
 
-export default function EditorialContact({
-  contactTurnstileToken,
-  setContactTurnstileToken,
-  contactSubmissionsLeft,
-}: EditorialContactProps) {
+export default function EditorialContact() {
   const [form, setForm] = useState({ senderName: "", senderEmail: "", messageBody: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; text: string }>({
     type: "success",
     text: "",
   });
+  
+  const [contactTurnstileToken, setContactTurnstileToken] = useState<string | null>(null);
+  const [contactSubmissionsLeft, setContactSubmissionsLeft] = useState<number | null>(null);
 
   const turnstileContainerRef = useRef<HTMLDivElement>(null);
 
@@ -220,14 +215,14 @@ export default function EditorialContact({
 
             {/* Cloudflare Turnstile human verification container */}
             <div className="pt-2">
-              <div
-                ref={turnstileContainerRef}
-                className="cf-turnstile"
-                data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "1x00000000000000000000AA"}
-                data-callback="onContactTurnstileSuccess"
-                data-expired-callback="onContactTurnstileExpired"
-                data-theme="dark"
-              />
+              {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                <Turnstile
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                  onSuccess={(token) => setContactTurnstileToken(token)}
+                  onExpire={() => setContactTurnstileToken(null)}
+                  options={{ theme: 'dark' }}
+                />
+              )}
             </div>
 
             {/* Feedback Message */}

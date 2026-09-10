@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { GitFork, Mail, Send } from "lucide-react";
 
 const currentYear = new Date().getFullYear();
-const GITHUB_URL = "https://github.com/renneco27-crypto/CORTES-Engineering-Portfolio";
+const GITHUB_URL = "https://github.com/renneco27-crypto/cortesportfolio";
 
 export default function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);

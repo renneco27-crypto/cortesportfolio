@@ -10,7 +10,7 @@ export default function AboutSection() {
           <span className="font-mono text-xs uppercase tracking-widest text-violet-400">About</span>
 
           <div className="order-2 md:order-none">
-            <h2 className="text-4xl font-bold text-white">Developer by code, designer by eye.</h2>
+            <h2 className="text-4xl font-bold text-white">Developer by code. Designer by eye.</h2>
           </div>
 
           <div className="order-1 md:hidden">

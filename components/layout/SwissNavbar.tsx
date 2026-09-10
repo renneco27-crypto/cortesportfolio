@@ -18,7 +18,7 @@ export default function SwissNavbar() {
     <header className="fixed top-0 left-0 w-full h-[60px] z-50 flex justify-between items-center px-6 md:px-12 bg-[#050505]/90 backdrop-blur-md border-b border-[#1a1a1a] select-none">
       {/* Brand / Logo */}
       <Link
-        href="#"
+        href="/"
         className="font-mono text-xs md:text-sm font-bold tracking-widest text-white flex items-center gap-2 hover:opacity-80 transition-opacity"
       >
         <span>LAWRENCE MANZO CORTES</span>
@@ -27,16 +27,14 @@ export default function SwissNavbar() {
 
       {/* Navigation Links */}
       <nav className="hidden md:flex items-center gap-7 text-[0.8rem] uppercase tracking-[1.8px] text-[#888888]">
-        <Link href="#about" className="hover:text-white transition-colors duration-200">
+        <Link href="/#about" className="hover:text-white transition-colors duration-200">
           About
         </Link>
-        <Link href="#stack" className="hover:text-white transition-colors duration-200">
-          Manifesto
+        <Link href="/projects" className="text-white hover:text-[#e63946] font-medium transition-colors duration-200 flex items-center gap-1">
+          <span>Projects</span>
+          <span className="text-[0.65rem] text-[#e63946] font-mono">[NEW]</span>
         </Link>
-        <Link href="#projects" className="hover:text-white transition-colors duration-200">
-          Projects
-        </Link>
-        <Link href="#contact" className="hover:text-white transition-colors duration-200">
+        <Link href="/#contact" className="hover:text-white transition-colors duration-200">
           Contact
         </Link>
       </nav>
@@ -44,7 +42,7 @@ export default function SwissNavbar() {
       {/* Action Buttons */}
       <div className="flex items-center gap-3">
         <a
-          href="/resume.pdf"
+          href="/resume/lawrence-cortes-resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="font-mono text-[0.75rem] tracking-wider uppercase text-white bg-[#141414] hover:bg-white hover:text-black border border-[#333] hover:border-white px-3.5 py-1.5 rounded-[2px] transition-all duration-200 inline-flex items-center gap-1.5"
