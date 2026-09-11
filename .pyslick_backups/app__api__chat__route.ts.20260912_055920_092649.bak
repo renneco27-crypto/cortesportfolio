@@ -249,7 +249,7 @@ function getFallbackReply(userMessage: string): string {
     return "His notable projects include the AI Portfolio Chatbot and a Telegram AI chatbot integration.";
   if (/(intern|internship|available|availability|opportunity)/.test(msg))
     return "Lawrence is currently open to internship opportunities.";
-  return "I'm Lawrence's AI assistant. I can answer questions about his skills, projects, and internship availability. For direct contact, visit his portfolio or Facebook page.";
+  return "I'm Lawrence's AI assistant and I can answer questions about his skills, projects, contact details (+63 960 885 7457), and internship availability.";
 }
 
 // ─────────────────────────────────────────────
