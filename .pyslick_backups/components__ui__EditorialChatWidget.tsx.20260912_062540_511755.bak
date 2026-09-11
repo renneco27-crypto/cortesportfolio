@@ -123,7 +123,6 @@ export default function EditorialChatWidget() {
             {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
               <div className="hidden">
                 <Turnstile
-                  ref={turnstileRef}
                   siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
                   onSuccess={(token) => setTurnstileToken(token)}
                 />
