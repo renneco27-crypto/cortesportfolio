@@ -139,7 +139,7 @@ export default function EditorialChatWidget() {
               />
               <button 
                 type="submit" 
-                disabled={isLoading || !input.trim()}
+                disabled={isLoading || !input.trim() || (!!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !turnstileToken)}
                 className="absolute right-3 text-[#888] hover:text-white disabled:opacity-50 transition-colors"
               >
                 ↵
