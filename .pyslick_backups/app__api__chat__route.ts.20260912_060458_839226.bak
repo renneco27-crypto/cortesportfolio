@@ -242,7 +242,7 @@ function getFallbackReply(userMessage: string): string {
   if (/(who is|about|introduce|tell me|describe|background)/.test(msg))
     return "Lawrence Cortes (goes by Rence) is a 1st year BSIT student at ACLC College Ormoc City, Philippines. He's a full-stack developer and designer — pairing React, Next.js, and Node.js with a sharp design eye. He built documentation systems for a government accounting office and is now seeking IT internships.";
   if (/(phone|number|mobile|contact|call|cellphone|reach|whatsapp|sms)/.test(msg))
-    return "You can reach Lawrence at +63 960 885 7457 or on Facebook at facebook.com/Rennejay.Dev.21.";
+    return "For direct contact, reach Lawrence on Facebook at facebook.com/Rennejay.Dev.21 or LinkedIn at linkedin.com/in/lawrence-cortes-788101408.";
   if (/(where|from|location|origin|born|based)/.test(msg))
     return "Lawrence is based in Ormoc City, Leyte, Philippines.";
   if (/(skill|skills|tech|stack|next|typescript|tailwind|react|node|postgres|docker|java|python)/.test(msg))
