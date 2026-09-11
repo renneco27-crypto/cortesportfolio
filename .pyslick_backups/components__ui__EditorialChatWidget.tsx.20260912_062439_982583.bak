@@ -12,10 +12,8 @@ export default function EditorialChatWidget() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const turnstileRef = useRef<TurnstileInstance>(null);
-
+  
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     setHasMounted(true);
