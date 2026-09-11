@@ -1,0 +1,59 @@
+{
+  "directive": "chatbot system prompt response formatting ai-instructions",
+  "expanded_query": "chatbot system prompt response formatting ai-instructions chatbot system prompt response formatting ai instructions",
+  "search_terms_used": [
+    "response",
+    "formatting",
+    "system",
+    "ai",
+    "chatbot system prompt response formatting ai-instructions chatbot system prompt response formatting ai instructions",
+    "instructions",
+    "prompt",
+    "chatbot",
+    "ai-instructions",
+    "chatbot system prompt response formatting ai-instructions"
+  ],
+  "generated_at": "2026-09-12T05:55:45",
+  "budget": {
+    "whole_file_max_lines": 300,
+    "snippet_context_lines": 8,
+    "max_files": 5,
+    "max_total_lines": 600,
+    "max_snippets_per_file": 5
+  },
+  "files": [
+    {
+      "path": "C:\\Users\\corte\\Documents\\projects NOT DELETE\\CORTES-Engineering-Portfolio-main\\app\\portfolio-styles.css",
+      "mode": "snippet",
+      "line_count": 587,
+      "snippet_count": 5,
+      "snippets": [
+        {
+          "start_line": 1,
+          "end_line": 12,
+          "text": "    1: :root{\n    2:   --font-space:\"Space Grotesk\",ui-sans-serif,system-ui,sans-serif;\n    3:   --font-inter:\"Inter\",ui-sans-serif,system-ui,sans-serif;\n    4:   --font-mono:\"JetBrains Mono\",ui-monospace,monospace;\n    5: \n    6:    --bg:#ede9fe;\n    7:   --fg:#0a0a0f;\n    8: \n    9:   --violet-300:#c4b5fd;\n   10:   --violet-400:#a78bfa;\n   11:   --violet-500:#8b5cf6;\n   12:   --violet-600:#7c3aed;"
+        },
+        {
+          "start_line": 30,
+          "end_line": 46,
+          "text": "   30:   --yellow-400:#facc15;\n   31: \n   32:   --radius-md:.375rem;\n   33:   --radius-lg:.5rem;\n   34:   --radius-xl:.75rem;\n   35:   --radius-2xl:1rem;\n   36:   --radius-3xl:1.5rem;\n   37: \n   38:   --container:72rem;\n   39:   --ease:cubic-bezier(.4,0,.2,1);\n   40: }\n   41: \n   42: *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}\n   43: html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}\n   44: body{\n   45:   font-family:var(--font-inter);\n   46:   background:var(--bg);"
+        },
+        {
+          "start_line": 52,
+          "end_line": 69,
+          "text": "   52: img,svg{display:block;max-width:100%;}\n   53: a{color:inherit;text-decoration:none;}\n   54: ul{list-style:none;}\n   55: button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}\n   56: input,textarea{font:inherit;color:inherit;}\n   57: \n   58: :focus-visible{outline:2px solid var(--violet-400);outline-offset:3px;border-radius:4px;}\n   59: \n   60: .container{width:100%;max-width:var(--container);margin:0 auto;padding-inline:1.5rem;}\n   61: @media(min-width:768px){.container{padding-inline:2.5rem;}}\n   62: \n   63: .eyebrow{\n   64:   font-family:var(--font-mono);\n   65:   font-size:.75rem;\n   66:   letter-spacing:.18em;\n   67:   text-transform:uppercase;\n   68:   color:var(--violet-400);\n   69:   font-weight:600;"
+        },
+        {
+          "start_line": 203,
+          "end_line": 219,
+          "text": "  203: .term-bar span.path{\n  204:   margin-left:.5rem;font-family:var(--font-mono);font-size:.72rem;color:var(--zinc-500);\n  205: }\n  206: .term-body{\n  207:   padding:1.4rem 1.3rem 1.6rem;font-family:var(--font-mono);font-size:.84rem;\n  208:   color:var(--zinc-300);min-height:15rem;\n  209: }\n  210: .term-body .ln{margin-bottom:.55rem;white-space:pre-wrap;}\n  211: .term-body .prompt{color:var(--emerald-400);}\n  212: .term-body .path2{color:var(--violet-400);}\n  213: .term-body .out{color:var(--zinc-200);}\n  214: .term-body .dim{color:var(--zinc-500);}\n  215: .cursor{display:inline-block;width:.5em;height:1em;background:var(--violet-400);vertical-align:-2px;animation:blink 1s steps(1) infinite;}\n  216: @keyframes blink{50%{opacity:0;}}\n  217: .badge-live{\n  218:   display:inline-flex;align-items:center;gap:.4rem;\n  219:   font-family:var(--font-mono);font-size:.68rem;color:var(--emerald-400);"
+        },
+        {
+          "start_line": 408,
+          "end_line": 425,
+          "text": "  408:   padding:1rem;opacity:0;visibility:hidden;transform:translateY(8px) scale(.97);\n  409:   transition:opacity .18s var(--ease),transform .18s var(--ease),visibility .18s;\n  410: }\n  411: .chat-panel.open{opacity:1;visibility:visible;transform:translateY(0) scale(1);}\n  412: .chat-panel h4{font-size:.95rem;}\n  413: .chat-panel p{font-size:.82rem;color:var(--zinc-400);margin-top:.5rem;line-height:1.5;}\n  414: .chat-panel .btn{margin-top:1rem;font-size:.82rem;}\n  415: \n  416: /* Live Chatbot Classes */\n  417: .chat-panel-container {\n  418:   display: flex;\n  419:   flex-direction: column;\n  420:   height: 24rem;\n  421: }\n  422: .chat-header {\n  423:   border-bottom: 1px solid rgba(255,255,255,.08);\n  424:   padding-bottom: .6rem;\n  425:   margin-bottom: .6rem;"
+        }
+      ]
+    }
+  ]
+}
