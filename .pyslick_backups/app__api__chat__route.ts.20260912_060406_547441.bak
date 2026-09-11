@@ -239,29 +239,17 @@ function isRelevant(message: string): boolean {
 // ─────────────────────────────────────────────
 function getFallbackReply(userMessage: string): string {
   const msg = userMessage.toLowerCase();
-  if (/(who is|about|introduce|tell me|describe|background)/.test(msg))
-    return "Lawrence Cortes (goes by Rence) is a 1st year BSIT student at ACLC College Ormoc City, Philippines. He's a full-stack developer and designer — pairing React, Next.js, and Node.js with a sharp design eye. He built documentation systems for a government accounting office and is now seeking IT internships.";
   if (/(phone|number|mobile|contact|call|cellphone|reach|whatsapp|sms)/.test(msg))
-    return "For direct contact, reach Lawrence on Facebook at facebook.com/Rennejay.Dev.21 or LinkedIn at linkedin.com/in/lawrence-cortes-788101408.";
+    return "Lawrence's contact number is +63 960 885 7457 and his email is renneco27@gmail.com.";
   if (/(where|from|location|origin|born|based)/.test(msg))
-    return "Lawrence is based in Ormoc City, Leyte, Philippines.";
-  if (/(skill|skills|tech|stack|next|typescript|tailwind|react|node|postgres|docker|java|python)/.test(msg))
-    return "Lawrence works with React, Next.js, TypeScript, Node.js, REST APIs, PostgreSQL, MongoDB, and Docker. He also has exposure to Java, Spring Boot, Python, Go, Azure, and Google Cloud.";
-  if (/(project|projects|chatbot|telegram|pwa|dashboard)/.test(msg))
-    return "His projects include an AI Portfolio Chatbot (Next.js, TypeScript, Tailwind, Neon Postgres), a Telegram AI Chatbot integration, a Student Performance Dashboard, an Offline Study Notes PWA, and more.";
-  if (/(intern|internship|available|availability|opportunity|hire|hiring)/.test(msg))
-    return "Lawrence is immediately available for internships. He's open to IT Support, QA/Testing, Web Development, and IT Operations roles — remote preferred, onsite with prior school approval.";
-  if (/(goal|career|direction|future|plan)/.test(msg))
-    return "Lawrence's goal is to gain real-world IT exposure beyond the classroom — growing from IT support into advanced technical roles, with a long-term focus on full-stack development and cloud systems.";
-  if (/(experience|work|government|office|achiev)/.test(msg))
-    return "Lawrence completed an internship at a Government Accounting Office handling documentation and record management. He improved document retrieval efficiency by 30% and contributed to a 20% workflow improvement.";
-  if (/(education|degree|school|aclc|bsit|student|year)/.test(msg))
-    return "Lawrence is a 1st year Bachelor of Science in Information Technology (BSIT) student at ACLC College Ormoc Campus, expected to graduate in 2029.";
-  if (/(design|designer|eye|ui|ux|visual)/.test(msg))
-    return "Lawrence pairs full-stack development with a strong design discipline — his portfolio tagline is 'Developer by Code. Designer by Eye.' He builds interfaces that are both functional and visually intentional.";
-  if (/(strength|soft skill|ethic|detail|adapt)/.test(msg))
-    return "Lawrence is detail-oriented, structured, and highly adaptable. He's known for strong communication, discipline, and handling multiple tasks efficiently under deadlines.";
-  return "Lawrence Cortes is a full-stack developer and BSIT student from Ormoc City, Philippines — pairing React, Next.js, and Node.js with a sharp design eye. Ask me about his skills, projects, experience, or internship availability!";
+    return "Lawrence is from Ormoc City, Leyte, Philippines.";
+  if (/(skill|skills|tech|stack|next\.js|typescript|tailwind|vercel|neon|postgres)/.test(msg))
+    return "Lawrence works with Next.js, TypeScript, Tailwind CSS, Vercel AI SDK, and Neon Postgres.";
+  if (/(project|projects|portfolio|chatbot|telegram)/.test(msg))
+    return "His notable projects include the AI Portfolio Chatbot and a Telegram AI chatbot integration.";
+  if (/(intern|internship|available|availability|opportunity)/.test(msg))
+    return "Lawrence is currently open to internship opportunities.";
+  return "I'm Lawrence's AI assistant. I can answer questions about his skills, projects, and internship availability. For direct contact, visit his portfolio or Facebook page.";
 }
 
 // ─────────────────────────────────────────────
