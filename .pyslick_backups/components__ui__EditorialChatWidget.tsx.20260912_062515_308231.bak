@@ -49,16 +49,12 @@ export default function EditorialChatWidget() {
         role: 'assistant', 
         content: data.reply || "Connection terminated. Neural link lost." 
       };
-        setMessages(prev => [...prev, assistantMessage]);
-      } catch (err) {
-        setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "Error connecting to systems." }]);
-      } finally {
-        setIsLoading(false);
-        // Turnstile tokens are single-use — reset so onSuccess fires again
-        // with a fresh token before the next message is sent.
-        setTurnstileToken(null);
-        turnstileRef.current?.reset();
-      }
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (err) {
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "Error connecting to systems." }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!hasMounted) return null;
