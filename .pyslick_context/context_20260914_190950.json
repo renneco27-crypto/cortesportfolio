@@ -1,0 +1,253 @@
+{
+  "directive": "where is the message bot",
+  "expanded_query": "where is the message bot where is the message bot",
+  "synonyms": {
+    "terms": [
+      "where",
+      "is",
+      "the",
+      "message",
+      "bot"
+    ]
+  },
+  "tier_used": 1,
+  "graph_used": false,
+  "search_terms_used": [
+    "where is the message bot",
+    "where",
+    "is",
+    "the",
+    "message",
+    "bot"
+  ],
+  "generated_at": "2026-09-14T19:09:49",
+  "budget": {
+    "whole_file_max_lines": 300,
+    "snippet_context_lines": 8,
+    "max_files": 6,
+    "max_total_lines": 1200,
+    "max_snippets_per_file": 5
+  },
+  "files": [
+    {
+      "path": "components\\ui\\index.html",
+      "mode": "snippet",
+      "line_count": 897,
+      "snippet_count": 1,
+      "snippets": [
+        {
+          "start_line": 461,
+          "end_line": 477,
+          "matched_term": "ABOUT / HERO",
+          "text": "  461:       <li><a href=\"#certifications\">Certifications</a></li>\n  462:       <li><a href=\"#contact\">Contact</a></li>\n  463:     </ul>\n  464:   </div>\n  465: </header>\n  466: \n  467: <main id=\"top\">\n  468: \n  469:   <!-- ABOUT / HERO -->\n  470:   <section class=\"section hero\" id=\"about\">\n  471:     <div class=\"container\">\n  472:       <div class=\"hero-grid\">\n  473:         <div class=\"reveal\">\n  474:           <span class=\"eyebrow\">About</span>\n  475:           <h1>Developer by code,<br><span class=\"accent\">designer by eye.</span></h1>\n  476:           <p>I'm Lawrence Cortes, a BS Information Technology student based in Ormoc City, Leyte, Philippines. I pair full-stack development \u2014 React, Next.js, Node.js, REST APIs \u2014 with the documentation discipline I built supporting a government accounting office: precise, organized, and built to hold up under process.</p>\n  477:           <p>Currently pursuing internship opportunities where I can apply full-stack development, cloud fundamentals, and steady, detail-first execution to a real product team.</p>"
+        }
+      ],
+      "hits": [
+        {
+          "file": "components\\ui\\index.html",
+          "line": 469,
+          "text": "ABOUT / HERO",
+          "kind": "descriptive_block",
+          "score": 66.66666666666667
+        }
+      ],
+      "symbols": [],
+      "comments": [
+        {
+          "file": "components\\ui\\index.html",
+          "line": 469,
+          "range": "components\\ui\\index.html:469",
+          "kind": "descriptive_block",
+          "text": "ABOUT / HERO"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 508,
+          "range": "components\\ui\\index.html:508",
+          "kind": "descriptive_block",
+          "text": "SKILLS"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 555,
+          "range": "components\\ui\\index.html:555",
+          "kind": "descriptive_block",
+          "text": "EXPERIENCE"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 588,
+          "range": "components\\ui\\index.html:588",
+          "kind": "descriptive_block",
+          "text": "PROJECTS"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 634,
+          "range": "components\\ui\\index.html:634",
+          "kind": "descriptive_block",
+          "text": "CERTIFICATIONS"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 669,
+          "range": "components\\ui\\index.html:669",
+          "kind": "descriptive_block",
+          "text": "CONTACT"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 756,
+          "range": "components\\ui\\index.html:756",
+          "kind": "descriptive_block",
+          "text": "CHAT WIDGET"
+        }
+      ],
+      "functions_index": []
+    }
+  ],
+  "relation": {
+    "directive": "where is the message bot",
+    "is_relation_query": false,
+    "entities": [],
+    "matched": {},
+    "paths": [],
+    "evidence": [],
+    "confidence": "none",
+    "note": "not a relationship query"
+  },
+  "mode": "full_recon",
+  "snap": null,
+  "keyword_terms": [],
+  "keyword_functions": [],
+  "centrality": [
+    {
+      "id": "package",
+      "degree": 36,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_chat_route",
+      "degree": 21,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "ref_react",
+      "degree": 20,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "types_index",
+      "degree": 20,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "package_dependencies",
+      "degree": 18,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_contact_route",
+      "degree": 17,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "degree": 16,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_page",
+      "degree": 15,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "package_devdependencies",
+      "degree": 14,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "ref_lucide_react",
+      "degree": 12,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_contact_route_post",
+      "degree": 10,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_chat_route_post",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_layout",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "components_sections_skillssection",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "components_ui_projectcorridor",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    }
+  ],
+  "git": {
+    "is_repo": true,
+    "branch": "master",
+    "remote_url": "https://github.com/renneco27-crypto/cortesportfolio",
+    "upstream": "(none)",
+    "ahead": 0,
+    "behind": 0,
+    "dirty_count": 1,
+    "dirty_files": [
+      "?? .pyslick_context/context_20260914_190943.json"
+    ],
+    "last_commit": "b14097b afjdfi"
+  },
+  "git_log": [
+    {
+      "hash": "b14097b",
+      "date": "2026-09-14",
+      "author": "evlf skhwd",
+      "subject": "afjdfi"
+    }
+  ],
+  "git_stash": [],
+  "snaps": []
+}

@@ -1,0 +1,475 @@
+{
+  "directive": "where is the mouse follower",
+  "expanded_query": "where is the mouse follower where is the mouse follower position",
+  "synonyms": {
+    "terms": [
+      "where",
+      "is",
+      "the",
+      "mouse",
+      "follower",
+      "position"
+    ]
+  },
+  "tier_used": 1,
+  "graph_used": false,
+  "search_terms_used": [
+    "where is the mouse follower",
+    "where",
+    "is",
+    "the",
+    "mouse",
+    "follower",
+    "position"
+  ],
+  "generated_at": "2026-09-14T19:09:42",
+  "budget": {
+    "whole_file_max_lines": 300,
+    "snippet_context_lines": 8,
+    "max_files": 6,
+    "max_total_lines": 1200,
+    "max_snippets_per_file": 5
+  },
+  "files": [
+    {
+      "path": "app\\api\\contact\\route.ts",
+      "mode": "full",
+      "line_count": 253,
+      "content": "import { NextRequest, NextResponse } from \"next/server\";\nimport { Ratelimit } from \"@upstash/ratelimit\";\nimport { Redis } from \"@upstash/redis\";\nimport { sanitize } from \"@/lib/sanitize\";\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// CONFIG\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nconst TURNSTILE_VERIFY_URL = \"https://challenges.cloudflare.com/turnstile/v0/siteverify\";\nconst EMAILJS_API_URL = \"https://api.emailjs.com/api/v1.0/email/send\";\n\nconst CONTACT_DAILY_LIMIT = 3;    // max contact form submissions per IP per 24h\nconst DAILY_LIMIT_TTL = 86400;    // 24 hours in seconds\nconst MAX_NAME_CHARS = 100;\nconst MAX_EMAIL_CHARS = 150;\nconst MAX_MESSAGE_CHARS = 2000;\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// RATE LIMITER \u2014 burst protection (2 req / 60 s)\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nconst ratelimit = new Ratelimit({\n  redis: Redis.fromEnv(),\n  limiter: Ratelimit.slidingWindow(2, \"60 s\"),\n  analytics: true,\n});\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// DAILY LIMIT \u2014 3 form submissions per IP / 24h\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nconst redis = Redis.fromEnv();\n\nasync function getContactCount(ip: string): Promise<number> {\n  const count = await redis.get<number>(`contact_daily_${ip}`);\n  return count ?? 0;\n}\n\nasync function incrementContactCount(ip: string): Promise<number> {\n  const key = `contact_daily_${ip}`;\n  const newCount = await redis.incr(key);\n  if (newCount === 1) await redis.expire(key, DAILY_LIMIT_TTL);\n  return newCount;\n}\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// SPAM / INJECTION DETECTION\n// Adapted from the chat jailbreak detector \u2014\n// blocks scripting, injection, and bulk-paste spam\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nconst SPAM_PATTERNS = [\n  // Script / code injection\n  /<script[\\s\\S]*?>/i,\n  /javascript:/i,\n  /on\\w+\\s*=/i,             // onclick=, onload=, etc.\n  /eval\\s*\\(/i,\n  /base64/i,\n\n  // Promotional / SEO spam\n  /\\bcasino\\b/i,\n  /\\bforex\\b/i,\n  /\\bcrypto investment\\b/i,\n  /\\bmake money fast\\b/i,\n  /\\bwork from home\\b/i,\n  /\\bclick here\\b/i,\n  /\\bunsubscribe\\b/i,\n  /\\bviagra\\b/i,\n  /\\bsex\\b/i,\n\n  // Mass link pasting (3+ URLs in one message)\n  /(https?:\\/\\/\\S+\\s*){3,}/i,\n\n  // SQL injection\n  /(\\bSELECT\\b.*\\bFROM\\b|\\bDROP\\b.*\\bTABLE\\b|\\bINSERT\\b.*\\bINTO\\b)/i,\n];\n\nfunction detectSpam(text: string): boolean {\n  return SPAM_PATTERNS.some((p) => p.test(text));\n}\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// EMAIL VALIDATION\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nfunction isValidEmail(email: string): boolean {\n  return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);\n}\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// CLOUDFLARE TURNSTILE VERIFICATION\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nasync function verifyTurnstile(token: string, ip: string): Promise<boolean> {\n  const secret = process.env.TURNSTILE_SECRET;\n  if (!secret) {\n    console.warn(\"\u26a0\ufe0f  TURNSTILE_SECRET not set \u2014 skipping bot check (dev only)\");\n    return true;\n  }\n  const formData = new URLSearchParams();\n  formData.append(\"secret\", secret);\n  formData.append(\"response\", token);\n  formData.append(\"remoteip\", ip);\n\n  const res = await fetch(TURNSTILE_VERIFY_URL, { method: \"POST\", body: formData });\n  const data = await res.json() as { success: boolean };\n  return data.success === true;\n}\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// SEND VIA EMAILJS REST API (server-side)\n// Keeps the public key + service/template IDs\n// out of the browser entirely.\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nasync function sendEmailJS(params: {\n  name: string;\n  email: string;\n  message: string;\n  templateId: string;\n}) {\n  const serviceId  = process.env.EMAILJS_SERVICE_ID!;\n  const publicKey  = process.env.EMAILJS_PUBLIC_KEY!;\n\n  const res = await fetch(EMAILJS_API_URL, {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify({\n      service_id:  serviceId,\n      template_id: params.templateId,\n      user_id:     publicKey,\n      template_params: {\n        name:       params.name,\n        from_email: params.email,\n        title:      params.message.slice(0, 60),\n        message:    params.message,\n      },\n    }),\n  });\n\n  if (!res.ok) {\n    const err = await res.text();\n    throw new Error(`EmailJS error: ${err}`);\n  }\n}\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// HELPERS\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nfunction getClientIP(req: NextRequest): string {\n  return (\n    req.headers.get(\"x-forwarded-for\")?.split(\",\")[0]?.trim() ||\n    req.headers.get(\"x-real-ip\") ||\n    \"127.0.0.1\"\n  );\n}\n\nfunction err(msg: string, status: number) {\n  return NextResponse.json({ success: false, message: msg }, { status });\n}\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// GET /api/contact \u2014 submission status for this IP\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nexport async function GET(req: NextRequest) {\n  const ip = getClientIP(req);\n  const count = await getContactCount(ip);\n  const submissionsLeft = Math.max(0, CONTACT_DAILY_LIMIT - count);\n  return NextResponse.json({ submissionsLeft, limitReached: submissionsLeft === 0 });\n}\n\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n// POST /api/contact \u2014 secured contact form endpoint\n// \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nexport async function POST(req: NextRequest) {\n  try {\n    const ip = getClientIP(req);\n    const body = await req.json();\n\n    // \u2500\u2500 0. TURNSTILE BOT CHECK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    const turnstileToken: string = body.turnstileToken ?? \"\";\n    if (!turnstileToken) {\n      return err(\"Human verification required.\", 400);\n    }\n    try {\n      const isHuman = await verifyTurnstile(turnstileToken, ip);\n      if (!isHuman) return err(\"Human verification failed. Please try again.\", 403);\n    } catch {\n      return err(\"Verification service unavailable. Please try again shortly.\", 503);\n    }\n\n    // \u2500\u2500 1. BURST RATE LIMIT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    const { success: underBurst } = await ratelimit.limit(`contact_burst_${ip}`);\n    if (!underBurst) {\n      return err(\"You're submitting too fast. Please wait a moment.\", 429);\n    }\n\n    // \u2500\u2500 2. DAILY IP LIMIT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    const currentCount = await getContactCount(ip);\n    if (currentCount >= CONTACT_DAILY_LIMIT) {\n      return NextResponse.json(\n        {\n          success: false,\n          message: `You've already sent ${CONTACT_DAILY_LIMIT} messages today. Please try again tomorrow or reach out on LinkedIn.`,\n          limitReached: true,\n        },\n        { status: 429 }\n      );\n    }\n\n    // \u2500\u2500 3. SANITIZE & VALIDATE INPUT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    const rawName    = body.senderName    ?? body.name    ?? \"\";\n    const rawEmail   = body.senderEmail   ?? body.email   ?? \"\";\n    const rawMessage = body.messageBody   ?? body.message ?? \"\";\n\n    const name    = sanitize(rawName,    MAX_NAME_CHARS);\n    const email   = sanitize(rawEmail,   MAX_EMAIL_CHARS).toLowerCase();\n    const message = sanitize(rawMessage, MAX_MESSAGE_CHARS);\n\n    if (!name || name.length < 2) {\n      return err(\"Please enter your name (at least 2 characters).\", 400);\n    }\n    if (!email || !isValidEmail(email)) {\n      return err(\"Please enter a valid email address.\", 400);\n    }\n    if (!message || message.length < 10) {\n      return err(\"Your message is too short. Please say a bit more!\", 400);\n    }\n\n    // \u2500\u2500 4. SPAM / INJECTION CHECK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    // Check all fields \u2014 not just the message\n    if (detectSpam(name) || detectSpam(email) || detectSpam(message)) {\n      return err(\"Your message was flagged as spam. If this is a mistake, contact Lawrence on LinkedIn.\", 400);\n    }\n\n    // \u2500\u2500 5. INCREMENT DAILY COUNTER \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    // Only after all checks pass \u2014 valid submissions cost 1 credit\n    await incrementContactCount(ip);\n\n    // \u2500\u2500 6. SEND EMAILS VIA EMAILJS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    const contactTemplateId  = process.env.EMAILJS_TEMPLATE_ID_CONTACT!;\n    const autoreplyTemplateId = process.env.EMAILJS_TEMPLATE_ID_AUTOREPLY!;\n\n    // Send both in parallel \u2014 notification to Lawrence + autoreply to sender\n    await Promise.all([\n      sendEmailJS({ name, email, message, templateId: contactTemplateId }),\n      sendEmailJS({ name, email, message, templateId: autoreplyTemplateId }),\n    ]);\n\n    return NextResponse.json({\n      success: true,\n      message: \"Message sent! Lawrence will get back to you soon. \ud83d\ude4c\",\n    });\n\n  } catch (error) {\n    console.error(\"Contact route error:\", error);\n    return err(\"Something went wrong. Please try again or reach out on LinkedIn.\", 500);\n  }\n}",
+      "hits": [
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 71,
+          "text": "SQL injection",
+          "kind": "descriptive_block",
+          "score": 63.1578947368421
+        }
+      ],
+      "symbols": [],
+      "comments": [
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 6,
+          "range": "app\\api\\contact\\route.ts:6",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 CONFIG \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 18,
+          "range": "app\\api\\contact\\route.ts:18",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 RATE LIMITER \u2014 burst protection (2 req / 60 s) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 27,
+          "range": "app\\api\\contact\\route.ts:27",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 DAILY LIMIT \u2014 3 form submissions per IP / 24h \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 44,
+          "range": "app\\api\\contact\\route.ts:44",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 SPAM / INJECTION DETECTION Adapted from the chat jailbreak detector \u2014 blocks scripting, injection, and bulk-paste spam \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 50,
+          "range": "app\\api\\contact\\route.ts:50",
+          "kind": "descriptive_block",
+          "text": "Script / code injection"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 57,
+          "range": "app\\api\\contact\\route.ts:57",
+          "kind": "descriptive_block",
+          "text": "Promotional / SEO spam"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 68,
+          "range": "app\\api\\contact\\route.ts:68",
+          "kind": "descriptive_block",
+          "text": "Mass link pasting (3+ URLs in one message)"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 71,
+          "range": "app\\api\\contact\\route.ts:71",
+          "kind": "descriptive_block",
+          "text": "SQL injection"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 79,
+          "range": "app\\api\\contact\\route.ts:79",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 EMAIL VALIDATION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 86,
+          "range": "app\\api\\contact\\route.ts:86",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 CLOUDFLARE TURNSTILE VERIFICATION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 105,
+          "range": "app\\api\\contact\\route.ts:105",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 SEND VIA EMAILJS REST API (server-side) Keeps the public key + service/template IDs out of the browser entirely. \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 141,
+          "range": "app\\api\\contact\\route.ts:141",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 HELPERS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 156,
+          "range": "app\\api\\contact\\route.ts:156",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 GET /api/contact \u2014 submission status for this IP \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 166,
+          "range": "app\\api\\contact\\route.ts:166",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 POST /api/contact \u2014 secured contact form endpoint \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 174,
+          "range": "app\\api\\contact\\route.ts:174",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500 0. TURNSTILE BOT CHECK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 186,
+          "range": "app\\api\\contact\\route.ts:186",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500 1. BURST RATE LIMIT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 192,
+          "range": "app\\api\\contact\\route.ts:192",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500 2. DAILY IP LIMIT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 205,
+          "range": "app\\api\\contact\\route.ts:205",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500 3. SANITIZE & VALIDATE INPUT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 224,
+          "range": "app\\api\\contact\\route.ts:224",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500 4. SPAM / INJECTION CHECK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Check all fields \u2014 not just the message"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 230,
+          "range": "app\\api\\contact\\route.ts:230",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500 5. INCREMENT DAILY COUNTER \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Only after all checks pass \u2014 valid submissions cost 1 credit"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 234,
+          "range": "app\\api\\contact\\route.ts:234",
+          "kind": "descriptive_block",
+          "text": "\u2500\u2500 6. SEND EMAILS VIA EMAILJS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "file": "app\\api\\contact\\route.ts",
+          "line": 238,
+          "range": "app\\api\\contact\\route.ts:238",
+          "kind": "descriptive_block",
+          "text": "Send both in parallel \u2014 notification to Lawrence + autoreply to sender"
+        }
+      ],
+      "functions_index": []
+    },
+    {
+      "path": "app\\portfolio-styles.css",
+      "mode": "snippet",
+      "line_count": 587,
+      "snippet_count": 1,
+      "snippets": [
+        {
+          "start_line": 531,
+          "end_line": 547,
+          "matched_term": "Doors transition",
+          "text": "  531: \n  532: @media(prefers-reduced-motion:reduce){\n  533:   *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}\n  534: }\n  535: \n  536: .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease);}\n  537: .reveal.in{opacity:1;transform:translateY(0);}\n  538: \n  539: /* Doors transition */\n  540: .hero-grid.doors-open > .reveal:first-child {\n  541:   transform: translateX(-100%) !important;\n  542:   opacity: 0 !important;\n  543:   transition: transform 0.7s ease-in-out, opacity 0.7s ease !important;\n  544: }\n  545: .hero-grid.doors-open > .reveal:last-child {\n  546:   transform: translateX(100%) !important;\n  547:   opacity: 0 !important;"
+        }
+      ],
+      "hits": [
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 539,
+          "text": "Doors transition",
+          "kind": "descriptive_block",
+          "score": 62.5
+        }
+      ],
+      "symbols": [],
+      "comments": [
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 91,
+          "range": "app\\portfolio-styles.css:91",
+          "kind": "descriptive_block",
+          "text": "---------- NAV ----------"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 163,
+          "range": "app\\portfolio-styles.css:163",
+          "kind": "descriptive_block",
+          "text": "---------- HERO / ABOUT ----------"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 187,
+          "range": "app\\portfolio-styles.css:187",
+          "kind": "descriptive_block",
+          "text": "terminal signature card"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 226,
+          "range": "app\\portfolio-styles.css:226",
+          "kind": "descriptive_block",
+          "text": "---------- SKILLS ----------"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 246,
+          "range": "app\\portfolio-styles.css:246",
+          "kind": "descriptive_block",
+          "text": "---------- EXPERIENCE ----------"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 271,
+          "range": "app\\portfolio-styles.css:271",
+          "kind": "descriptive_block",
+          "text": "---------- PROJECTS ----------"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 295,
+          "range": "app\\portfolio-styles.css:295",
+          "kind": "descriptive_block",
+          "text": "---------- CERTIFICATIONS ----------"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 317,
+          "range": "app\\portfolio-styles.css:317",
+          "kind": "descriptive_block",
+          "text": "---------- CONTACT ----------"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 368,
+          "range": "app\\portfolio-styles.css:368",
+          "kind": "descriptive_block",
+          "text": "---------- CHAT WIDGET ----------"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 416,
+          "range": "app\\portfolio-styles.css:416",
+          "kind": "descriptive_block",
+          "text": "Live Chatbot Classes"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 511,
+          "range": "app\\portfolio-styles.css:511",
+          "kind": "descriptive_block",
+          "text": "---------- DEVELOPER ----------"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 539,
+          "range": "app\\portfolio-styles.css:539",
+          "kind": "descriptive_block",
+          "text": "Doors transition"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 559,
+          "range": "app\\portfolio-styles.css:559",
+          "kind": "descriptive_block",
+          "text": "GitHub contribution graph \u2014 prevent overflow on mobile"
+        },
+        {
+          "file": "app\\portfolio-styles.css",
+          "line": 564,
+          "range": "app\\portfolio-styles.css:564",
+          "kind": "descriptive_block",
+          "text": "Sleepy Chatbot status style"
+        }
+      ],
+      "functions_index": []
+    }
+  ],
+  "relation": {
+    "directive": "where is the mouse follower",
+    "is_relation_query": false,
+    "entities": [],
+    "matched": {},
+    "paths": [],
+    "evidence": [],
+    "confidence": "none",
+    "note": "not a relationship query"
+  },
+  "mode": "full_recon",
+  "snap": null,
+  "keyword_terms": [],
+  "keyword_functions": [],
+  "centrality": [
+    {
+      "id": "package",
+      "degree": 36,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_chat_route",
+      "degree": 21,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "ref_react",
+      "degree": 20,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "types_index",
+      "degree": 20,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "package_dependencies",
+      "degree": 18,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_contact_route",
+      "degree": 17,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "degree": 16,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_page",
+      "degree": 15,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "package_devdependencies",
+      "degree": 14,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "ref_lucide_react",
+      "degree": 12,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_contact_route_post",
+      "degree": 10,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_chat_route_post",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_layout",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "components_sections_skillssection",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "components_ui_projectcorridor",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    }
+  ],
+  "git": {
+    "is_repo": true,
+    "branch": "master",
+    "remote_url": "https://github.com/renneco27-crypto/cortesportfolio",
+    "upstream": "(none)",
+    "ahead": 0,
+    "behind": 0,
+    "dirty_count": 0,
+    "dirty_files": [],
+    "last_commit": "b14097b afjdfi"
+  },
+  "git_log": [
+    {
+      "hash": "b14097b",
+      "date": "2026-09-14",
+      "author": "evlf skhwd",
+      "subject": "afjdfi"
+    }
+  ],
+  "git_stash": [],
+  "snaps": []
+}
