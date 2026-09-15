@@ -1,0 +1,881 @@
+{
+  "built_at": "2026-09-14T18:08:49",
+  "root": "C:\\Users\\yuze2\\Desktop\\cortesportfolio-main",
+  "files": [
+    "app\\api\\chat\\route.ts",
+    "app\\api\\contact\\route.ts",
+    "app\\api\\credentials\\route.ts",
+    "app\\api\\resume\\route.ts",
+    "app\\globals.css",
+    "app\\page.tsx",
+    "app\\portfolio-styles.css",
+    "components\\ui\\index.html",
+    "lib\\tiktok-pixel.ts",
+    "test\\poc_full_scroll_lock.html",
+    "types\\index.ts"
+  ],
+  "comments": [
+    {
+      "file": "app\\globals.css",
+      "line": 13,
+      "text": "\u2500\u2500 Base body (dark default) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\globals.css",
+      "line": 24,
+      "text": "\u2500\u2500 Scrollbar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\globals.css",
+      "line": 29,
+      "text": "\u2500\u2500 Custom cursor \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\globals.css",
+      "line": 45,
+      "text": "\u2500\u2500 Selection \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\globals.css",
+      "line": 47,
+      "text": "\u2500\u2500 Zoom reveal \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\globals.css",
+      "line": 59,
+      "text": "\u2500\u2500 Marquee \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 30,
+      "text": "========================================== 1. EmailJS States & Refs ==========================================",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 41,
+      "text": "Fetch remaining contact submissions on mount",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 53,
+      "text": "Expose contact-form Turnstile callbacks (separate from chat widget)",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 55,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 59,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 64,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 66,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 73,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 90,
+      "text": "Capture + clear token immediately so it can't be reused",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 135,
+      "text": "========================================== 2. Chat Widget States & Refs (Cleaned up duplicates) ==========================================",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 149,
+      "text": "Turnstile bot-verification state",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 153,
+      "text": "Expose callback that Cloudflare Turnstile calls once the challenge is solved",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 155,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 159,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 164,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 166,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 171,
+      "text": "Helper to reset the Turnstile widget after each send",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 174,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 192,
+      "text": "Fetch dynamic credentials on mount",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 200,
+      "text": "Fetch remaining daily message count on mount",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 212,
+      "text": "Fetch dynamic resume URL on mount",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 224,
+      "text": "Sleepy Chatbot timeout logic",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 239,
+      "text": "Initialize timer",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 242,
+      "text": "Listen for active screen usage",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 252,
+      "text": "Instantly catch when tab changes or phone locks",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 272,
+      "text": "Auto scroll messages to the bottom",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 277,
+      "text": "========================================== 3. Interface Side Effects (Terminal, Themes, etc.) ==========================================",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 281,
+      "text": "Dynamic year display",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 287,
+      "text": "mobile menu",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 305,
+      "text": "terminal typing effect",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 364,
+      "text": "scroll reveal",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 386,
+      "text": "contact form -> mailto",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 411,
+      "text": "Doors transition effect \u2014 reversible",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 431,
+      "text": "========================================== 4. Chat Message Submission Handler ==========================================",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 444,
+      "text": "Capture pre-fetched token (or wait up to 1s if user clicked super fast)",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 447,
+      "text": "Wait up to 1000ms in 100ms polling intervals for pre-fetch token to land",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 450,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 475,
+      "text": "Update remaining message counter whenever the API tells us",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 481,
+      "text": "Daily limit hit \u2014 show the API's reply and lock input",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 491,
+      "text": "Multi-question blocked \u2014 show friendly nudge, don't count as error",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 500,
+      "text": "Other API error (jailbreak block, validation, etc.)",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 1095,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\page.tsx",
+      "line": 1244,
+      "text": "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 91,
+      "text": "---------- NAV ----------",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 163,
+      "text": "---------- HERO / ABOUT ----------",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 187,
+      "text": "terminal signature card",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 226,
+      "text": "---------- SKILLS ----------",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 246,
+      "text": "---------- EXPERIENCE ----------",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 271,
+      "text": "---------- PROJECTS ----------",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 295,
+      "text": "---------- CERTIFICATIONS ----------",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 317,
+      "text": "---------- CONTACT ----------",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 368,
+      "text": "---------- CHAT WIDGET ----------",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 416,
+      "text": "Live Chatbot Classes",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 511,
+      "text": "---------- DEVELOPER ----------",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 539,
+      "text": "Doors transition",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 559,
+      "text": "GitHub contribution graph \u2014 prevent overflow on mobile",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\portfolio-styles.css",
+      "line": 564,
+      "text": "Sleepy Chatbot status style",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 6,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 CONFIG \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 16,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 RATE LIMITER \u2014 per-minute burst protection (Upstash sliding window: 5 req / 60 s) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 26,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 DAILY LIMIT \u2014 10 messages per IP per 24 hours Stored as a separate key in Upstash Redis. \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 47,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 SYSTEM PROMPT \u2014 hardened against jailbreaks \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 130,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 JAILBREAK DETECTION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 155,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 MULTI-QUESTION & MULTI-TOPIC DETECTION Blocks prompts that ask multiple questions or request multiple topics at once \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 160,
+      "text": "More than one question mark = multiple questions",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 164,
+      "text": "Numbered list: \"1. ... 2. ...\"",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 168,
+      "text": "Bullet/dash list: \"- ... - ...\"",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 172,
+      "text": "Multiple possessive / pronoun topic requests (e.g., \"his age his job his skills\", \"your background your project your email\")",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 176,
+      "text": "Listing 3+ comma-separated topics in one request (e.g. \"age, job, work ethic, skills\")",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 180,
+      "text": "Connector phrases that signal a second question",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 197,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 INPUT SANITIZER Returns: null (block) | \"MULTI_QUESTION\" | clean string \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 209,
+      "text": "Block jailbreak attempts",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 212,
+      "text": "Block multiple questions or multi-topic prompts",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 218,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 RELEVANCE CHECK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 236,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 FALLBACK REPLIES (used when NVIDIA is down) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 252,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 HELPERS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 267,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 CLOUDFLARE TURNSTILE VERIFICATION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 291,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 GET /api/chat/status \u2014 remaining messages for this IP \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 304,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 POST /api/chat \u2014 main chat endpoint \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 312,
+      "text": "\u2500\u2500 1. INPUT SANITIZATION & MULTI-QUESTION / JAILBREAK CHECK (FIRST!) \u2500\u2500 Check message rules BEFORE Turnstile or rate limits so users get instant feedback on multi-questions without wasting quota or Turnstile verification.",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 336,
+      "text": "\u2500\u2500 2. RELEVANCE GATE \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 344,
+      "text": "\u2500\u2500 3. DAILY IP LIMIT CHECK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 358,
+      "text": "\u2500\u2500 4. PER-MINUTE BURST RATE LIMIT \u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 374,
+      "text": "\u2500\u2500 5. CLOUDFLARE TURNSTILE BOT CHECK \u2500\u2500\u2500 Verified after input validation so invalid prompts never trigger bot errors",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 402,
+      "text": "\u2500\u2500 6. INCREMENT DAILY COUNTER \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Only after all validation and verification passes",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\chat\\route.ts",
+      "line": 407,
+      "text": "\u2500\u2500 7. CALL NVIDIA API \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 6,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 CONFIG \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 18,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 RATE LIMITER \u2014 burst protection (2 req / 60 s) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 27,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 DAILY LIMIT \u2014 3 form submissions per IP / 24h \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 44,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 SPAM / INJECTION DETECTION Adapted from the chat jailbreak detector \u2014 blocks scripting, injection, and bulk-paste spam \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 50,
+      "text": "Script / code injection",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 57,
+      "text": "Promotional / SEO spam",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 68,
+      "text": "Mass link pasting (3+ URLs in one message)",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 71,
+      "text": "SQL injection",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 79,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 EMAIL VALIDATION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 86,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 CLOUDFLARE TURNSTILE VERIFICATION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 105,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 SEND VIA EMAILJS REST API (server-side) Keeps the public key + service/template IDs out of the browser entirely. \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 141,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 HELPERS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 156,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 GET /api/contact \u2014 submission status for this IP \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 166,
+      "text": "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 POST /api/contact \u2014 secured contact form endpoint \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 174,
+      "text": "\u2500\u2500 0. TURNSTILE BOT CHECK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 186,
+      "text": "\u2500\u2500 1. BURST RATE LIMIT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 192,
+      "text": "\u2500\u2500 2. DAILY IP LIMIT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 205,
+      "text": "\u2500\u2500 3. SANITIZE & VALIDATE INPUT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 224,
+      "text": "\u2500\u2500 4. SPAM / INJECTION CHECK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Check all fields \u2014 not just the message",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 230,
+      "text": "\u2500\u2500 5. INCREMENT DAILY COUNTER \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Only after all checks pass \u2014 valid submissions cost 1 credit",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 234,
+      "text": "\u2500\u2500 6. SEND EMAILS VIA EMAILJS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\contact\\route.ts",
+      "line": 238,
+      "text": "Send both in parallel \u2014 notification to Lawrence + autoreply to sender",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\credentials\\route.ts",
+      "line": 6,
+      "text": "Safely fetch credentials from Supabase, handling missing config gracefully.",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\credentials\\route.ts",
+      "line": 8,
+      "text": "Ensure Supabase configuration is present",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\credentials\\route.ts",
+      "line": 22,
+      "text": "Revalidate every minute to keep data fresh",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\resume\\route.ts",
+      "line": 98,
+      "text": "Upload file to Supabase Storage",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\resume\\route.ts",
+      "line": 121,
+      "text": "Public URL of the uploaded resume",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "app\\api\\resume\\route.ts",
+      "line": 124,
+      "text": "Upsert the public URL in portfolio_settings",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "components\\ui\\index.html",
+      "line": 469,
+      "text": "ABOUT / HERO",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "components\\ui\\index.html",
+      "line": 508,
+      "text": "SKILLS",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "components\\ui\\index.html",
+      "line": 555,
+      "text": "EXPERIENCE",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "components\\ui\\index.html",
+      "line": 588,
+      "text": "PROJECTS",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "components\\ui\\index.html",
+      "line": 634,
+      "text": "CERTIFICATIONS",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "components\\ui\\index.html",
+      "line": 669,
+      "text": "CONTACT",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "components\\ui\\index.html",
+      "line": 756,
+      "text": "CHAT WIDGET",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "lib\\tiktok-pixel.ts",
+      "line": 54,
+      "text": "swallow TikTok pixel errors in production",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "test\\poc_full_scroll_lock.html",
+      "line": 96,
+      "text": "============ WHO I AM ============",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "test\\poc_full_scroll_lock.html",
+      "line": 138,
+      "text": "============ WHAT I'VE SHIPPED (scroll-locked corridor) ============",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "test\\poc_full_scroll_lock.html",
+      "line": 155,
+      "text": "============ CERTIFICATIONS ============",
+      "kind": "descriptive_block"
+    },
+    {
+      "file": "types\\index.ts",
+      "line": 1,
+      "text": "types/index.ts",
+      "kind": "descriptive_block"
+    }
+  ],
+  "functions": [],
+  "rollups": {
+    "app\\globals.css": {
+      "opening_comments": [
+        "\u2500\u2500 Base body (dark default) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+        "\u2500\u2500 Scrollbar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+        "\u2500\u2500 Custom cursor \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+      ]
+    },
+    "app\\page.tsx": {
+      "opening_comments": [
+        "========================================== 1. EmailJS States & Refs ==========================================",
+        "Fetch remaining contact submissions on mount",
+        "Expose contact-form Turnstile callbacks (separate from chat widget)"
+      ]
+    },
+    "app\\portfolio-styles.css": {
+      "opening_comments": [
+        "---------- NAV ----------",
+        "---------- HERO / ABOUT ----------",
+        "terminal signature card"
+      ]
+    },
+    "app\\api\\chat\\route.ts": {
+      "opening_comments": [
+        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 CONFIG \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 RATE LIMITER \u2014 per-minute burst protection (Upstash sliding window: 5 req / 60 s) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 DAILY LIMIT \u2014 10 messages per IP per 24 hours Stored as a separate key in Upstash Redis. \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+      ]
+    },
+    "app\\api\\contact\\route.ts": {
+      "opening_comments": [
+        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 CONFIG \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 RATE LIMITER \u2014 burst protection (2 req / 60 s) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+        "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 DAILY LIMIT \u2014 3 form submissions per IP / 24h \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+      ]
+    },
+    "app\\api\\credentials\\route.ts": {
+      "opening_comments": [
+        "Safely fetch credentials from Supabase, handling missing config gracefully.",
+        "Ensure Supabase configuration is present",
+        "Revalidate every minute to keep data fresh"
+      ]
+    },
+    "app\\api\\resume\\route.ts": {
+      "opening_comments": [
+        "Upload file to Supabase Storage",
+        "Public URL of the uploaded resume",
+        "Upsert the public URL in portfolio_settings"
+      ]
+    },
+    "components\\ui\\index.html": {
+      "opening_comments": [
+        "ABOUT / HERO",
+        "SKILLS",
+        "EXPERIENCE"
+      ]
+    },
+    "lib\\tiktok-pixel.ts": {
+      "opening_comments": [
+        "swallow TikTok pixel errors in production"
+      ]
+    },
+    "test\\poc_full_scroll_lock.html": {
+      "opening_comments": [
+        "============ WHO I AM ============",
+        "============ WHAT I'VE SHIPPED (scroll-locked corridor) ============",
+        "============ CERTIFICATIONS ============"
+      ]
+    },
+    "types\\index.ts": {
+      "opening_comments": [
+        "types/index.ts"
+      ]
+    }
+  }
+}

@@ -1,0 +1,226 @@
+"use client";
+import { useEffect, useState } from "react";
+
+const REFRESH_INTERVAL_MS = 60 * 60 * 1000;
+const CACHE_KEY_PREFIX = "gh_contrib_cache_";
+
+interface DayData {
+  date: string;
+  count: number;
+}
+
+interface WeekData extends Array<DayData> {}
+
+function levelForCount(count: number) {
+  if (count === 0) return 0;
+  if (count <= 2) return 1;
+  if (count <= 5) return 2;
+  if (count <= 9) return 3;
+  return 4;
+}
+
+function buildWeeks(contributions: { date: string; count: number }[]) {
+  const byDate: Record<string, { date: string; count: number }> = {};
+  contributions.forEach((c) => { byDate[c.date] = c; });
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const end = new Date(today);
+  end.setDate(end.getDate() + (6 - end.getDay()));
+
+  const start = new Date(end);
+  start.setDate(start.getDate() - 7 * 52 - 6);
+  start.setDate(start.getDate() - start.getDay());
+
+  const weeks: WeekData[] = [];
+  let cursor = new Date(start);
+  let currentWeek: DayData[] = [];
+
+  while (cursor <= today) {
+    const iso = cursor.toISOString().slice(0, 10);
+    const entry = byDate[iso];
+    currentWeek.push({ date: iso, count: entry ? entry.count : 0 });
+    if (cursor.getDay() === 6) {
+      weeks.push(currentWeek);
+      currentWeek = [];
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  if (currentWeek.length) weeks.push(currentWeek);
+  return weeks;
+}
+
+function monthLabelsForWeeks(weeks: WeekData[]) {
+  const labels: { index: number; text: string }[] = [];
+  let lastMonth = -1;
+  weeks.forEach((week, i) => {
+    const d = new Date(week[0].date + "T00:00:00");
+    const m = d.getMonth();
+    if (m !== lastMonth) {
+      labels.push({
+        index: i,
+        text: d.toLocaleDateString(undefined, { month: "short" }),
+      });
+      lastMonth = m;
+    }
+  });
+  return labels;
+}
+
+const LEVEL_COLORS = ["var(--zinc-800)", "#0e4429", "#006d32", "#26a641", "#39d353"];
+const MUTED = "var(--zinc-400)";
+const TEXT = "var(--zinc-200)";
+
+export default function GitHubGraph({ username = "renneco27-crypto" }) {
+  const [weeks, setWeeks] = useState<WeekData[]>([]);
+  const [status, setStatus] = useState("Loading contribution data…");
+  const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      const cacheKey = CACHE_KEY_PREFIX + username.toLowerCase();
+      const cached = localStorage.getItem(cacheKey);
+      let data: any = null;
+
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          const age = Date.now() - parsed.fetchedAt;
+          if (age < REFRESH_INTERVAL_MS) {
+            data = parsed.data;
+          }
+        } catch (_) {}
+      }
+
+      if (!data) {
+        try {
+          const res = await fetch(
+            `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(username)}?y=last`
+          );
+          if (!res.ok) throw new Error(`Could not load data (status ${res.status})`);
+          data = await res.json();
+          if (!data || !data.contributions) throw new Error("Unexpected response format");
+          localStorage.setItem(cacheKey, JSON.stringify({ data, fetchedAt: Date.now() }));
+        } catch (err: any) {
+          if (!cancelled) setStatus(err.message);
+          return;
+        }
+      }
+
+      if (cancelled) return;
+
+      setWeeks(buildWeeks(data.contributions));
+      setStatus("");
+    }
+
+    load();
+    return () => { cancelled = true; };
+  }, [username]);
+
+  const months = weeks.length > 0 ? monthLabelsForWeeks(weeks) : [];
+
+  return (
+    <div style={{ marginTop: 32 }}>
+      <h3 style={{ margin: "0 0 8px 0", fontSize: 14, fontWeight: 600, color: TEXT }}>
+        GitHub contributions
+      </h3>
+
+      {status ? (
+        <div
+          style={{
+            fontSize: 13,
+            color: status.includes("error") || status.includes("Could") || status.includes("Unexpected")
+              ? "#f85149" : MUTED,
+            padding: "20px 0",
+            textAlign: "center",
+          }}
+        >
+          {status}
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{ display: "flex", fontSize: 11, color: MUTED, marginLeft: 30, marginBottom: 4 }}>
+            {months.map((m, idx) => {
+              const nextIdx = idx < months.length - 1 ? months[idx + 1].index : weeks.length;
+              const numWeeks = nextIdx - m.index;
+              const width = numWeeks * 14 - 3;
+              return <span key={m.index} style={{ width: Math.max(width, 28), flexShrink: 0 }}>{m.text}</span>;
+            })}
+          </div>
+          <div style={{ display: "flex" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                fontSize: 11,
+                color: MUTED,
+                width: 26,
+                paddingRight: 4,
+                paddingTop: 14,
+              }}
+            >
+              <span>Mon</span>
+              <span>Wed</span>
+              <span>Fri</span>
+            </div>
+            <div style={{ display: "flex", gap: 3 }}>
+              {weeks.map((week, wi) => (
+                <div key={wi} style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                  {week.map((day) => {
+                    const level = levelForCount(day.count);
+                    return (
+                      <div
+                        key={day.date}
+                        onMouseMove={(e) =>
+                          setTooltip({
+                            text: `${day.count} contribution${day.count === 1 ? "" : "s"} on ${new Date(day.date + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}`,
+                            x: e.clientX + 12,
+                            y: e.clientY + 12,
+                          })
+                        }
+                        onMouseLeave={() => setTooltip(null)}
+                        style={{
+                          width: 11,
+                          height: 11,
+                          borderRadius: 2,
+                          background: LEVEL_COLORS[level],
+                          outline: "1px solid var(--hairline)",
+                          flexShrink: 0,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {tooltip && (
+        <div
+          style={{
+            position: "fixed",
+            left: tooltip.x,
+            top: tooltip.y,
+            background: "var(--zinc-900)",
+            border: "1px solid var(--card-border)",
+            color: "var(--fg)",
+            fontSize: 12,
+            padding: "6px 8px",
+            borderRadius: 6,
+            pointerEvents: "none",
+            whiteSpace: "nowrap",
+            zIndex: 10,
+          }}
+        >
+          {tooltip.text}
+        </div>
+      )}
+    </div>
+  );
+}

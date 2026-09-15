@@ -1,0 +1,477 @@
+{
+  "communities": {
+    "0": [
+      "app_admin_page",
+      "app_admin_page_adminpage",
+      "app_page",
+      "app_page_currentyear",
+      "app_page_reveal",
+      "components_layout_footer",
+      "components_layout_footer_footercomponent",
+      "components_sections_aboutsection",
+      "components_sections_aboutsection_aboutsection",
+      "components_sections_contactsection",
+      "components_sections_contactsection_contactsection",
+      "components_sections_contactsection_contactsection_handlesubmit",
+      "components_sections_contactsection_currentyear",
+      "components_sections_githubsection",
+      "components_sections_githubsection_githubsection",
+      "components_sections_githubsection_terminallines",
+      "components_sections_projectssection",
+      "components_sections_projectssection_card",
+      "components_sections_projectssection_cards",
+      "components_sections_projectssection_projectssection",
+      "components_sections_tiktokfunnelsection",
+      "components_sections_tiktokfunnelsection_funnelsteps",
+      "components_sections_tiktokfunnelsection_tiktokfunnelsection",
+      "components_ui_animatedcounter",
+      "components_ui_animatedcounter_animatedcounter",
+      "components_ui_animatedcounter_animatedcounterprops",
+      "components_ui_chatwidget",
+      "components_ui_chatwidget_chatwidget",
+      "components_ui_chatwidget_chatwidget_sendmessage",
+      "components_ui_chatwidget_chatwidgetprops",
+      "components_ui_chatwidget_message",
+      "components_ui_zoomsection",
+      "components_ui_zoomsection_zoomsection",
+      "hooks_useanimateonview",
+      "hooks_useanimateonview_useanimateonviewhook",
+      "ref_emailjs_browser",
+      "ref_lucide_react",
+      "ref_react",
+      "types_index_portfoliocredential"
+    ],
+    "1": [
+      "components_layout_navbar",
+      "components_layout_navbar_navbarcomponent",
+      "components_layout_navbar_navbarprops",
+      "components_sections_skillssection",
+      "components_sections_skillssection_categories",
+      "components_sections_skillssection_skillssection",
+      "components_ui_projectcard",
+      "components_ui_projectcard_projectcard",
+      "components_ui_projectcard_projectcardprops",
+      "components_ui_skillcard",
+      "components_ui_skillcard_proficiencycolors",
+      "components_ui_skillcard_skillcard",
+      "components_ui_skillcard_skillcardprops",
+      "data_projects",
+      "data_projects_projectsdata",
+      "data_skills",
+      "data_skills_skillsdata",
+      "ref_framer_motion",
+      "types_index",
+      "types_index_certstatus",
+      "types_index_chatmessage",
+      "types_index_contactformpayload",
+      "types_index_navlink",
+      "types_index_proficiencylevel",
+      "types_index_project",
+      "types_index_projectcategory",
+      "types_index_skill",
+      "types_index_skillcategory"
+    ],
+    "2": [
+      "lib_db",
+      "lib_db_neondbclient",
+      "package",
+      "package_name",
+      "package_private",
+      "package_version",
+      "ref_ai",
+      "ref_ai_sdk_anthropic",
+      "ref_ai_sdk_openai",
+      "ref_autoprefixer",
+      "ref_enhanced_resolve",
+      "ref_eslint",
+      "ref_eslint_config_next",
+      "ref_neondatabase_serverless",
+      "ref_postcss",
+      "ref_react_dom",
+      "ref_resend",
+      "ref_sharp",
+      "ref_tailwindcss",
+      "ref_tailwindcss_postcss",
+      "ref_types_node",
+      "ref_types_react",
+      "ref_types_react_dom",
+      "ref_types_three",
+      "ref_typescript",
+      "ref_vercel_analytics",
+      "tailwind_config",
+      "tailwind_config_config"
+    ],
+    "3": [
+      "app_api_chat_route",
+      "app_api_chat_route_apierror",
+      "app_api_chat_route_detectjailbreak",
+      "app_api_chat_route_detectmultiplequestions",
+      "app_api_chat_route_get",
+      "app_api_chat_route_getclientip",
+      "app_api_chat_route_getdailycount",
+      "app_api_chat_route_getfallbackreply",
+      "app_api_chat_route_incrementdailycount",
+      "app_api_chat_route_isrelevant",
+      "app_api_chat_route_jailbreak_patterns",
+      "app_api_chat_route_lawrence_context_terms",
+      "app_api_chat_route_post",
+      "app_api_chat_route_ratelimit",
+      "app_api_chat_route_redis",
+      "app_api_chat_route_sanitizeinput",
+      "app_api_chat_route_system_prompt",
+      "app_api_chat_route_verifyturnstile",
+      "ref_upstash_ratelimit"
+    ],
+    "4": [
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include"
+    ],
+    "5": [
+      "app_layout",
+      "app_layout_metadata",
+      "app_layout_rootlayout",
+      "components_tiktokpixelinit",
+      "components_tiktokpixelinit_tiktokpixelinit",
+      "components_ui_customcursor",
+      "components_ui_customcursor_customcursor",
+      "components_ui_matrixrain",
+      "components_ui_matrixrain_matrixrain",
+      "lib_tiktok_pixel",
+      "lib_tiktok_pixel_gettiktokwindow",
+      "lib_tiktok_pixel_inittiktokpixel",
+      "lib_tiktok_pixel_tiktokpixelhelper",
+      "lib_tiktok_pixel_tiktokwindow",
+      "lib_tiktok_pixel_tracktiktokevent",
+      "next_config",
+      "next_config_nextconfig",
+      "ref_next"
+    ],
+    "6": [
+      "package_dependencies",
+      "package_dependencies_ai",
+      "package_dependencies_ai_sdk_anthropic",
+      "package_dependencies_ai_sdk_openai",
+      "package_dependencies_emailjs_browser",
+      "package_dependencies_framer_motion",
+      "package_dependencies_lucide_react",
+      "package_dependencies_neondatabase_serverless",
+      "package_dependencies_next",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_react_three_drei",
+      "package_dependencies_react_three_fiber",
+      "package_dependencies_resend",
+      "package_dependencies_three",
+      "package_dependencies_upstash_ratelimit",
+      "package_dependencies_upstash_redis",
+      "package_dependencies_vercel_analytics"
+    ],
+    "7": [
+      "app_api_contact_route",
+      "app_api_contact_route_detectspam",
+      "app_api_contact_route_err",
+      "app_api_contact_route_get",
+      "app_api_contact_route_getclientip",
+      "app_api_contact_route_getcontactcount",
+      "app_api_contact_route_incrementcontactcount",
+      "app_api_contact_route_isvalidemail",
+      "app_api_contact_route_post",
+      "app_api_contact_route_ratelimit",
+      "app_api_contact_route_redis",
+      "app_api_contact_route_sendemailjs",
+      "app_api_contact_route_spam_patterns",
+      "app_api_contact_route_verifyturnstile",
+      "lib_sanitize",
+      "lib_sanitize_sanitize"
+    ],
+    "8": [
+      "components_sections_developersection",
+      "components_sections_developersection_developersection",
+      "components_ui_githubgraph",
+      "components_ui_githubgraph_buildweeks",
+      "components_ui_githubgraph_daydata",
+      "components_ui_githubgraph_githubgraph",
+      "components_ui_githubgraph_githubgraph_load",
+      "components_ui_githubgraph_level_colors",
+      "components_ui_githubgraph_levelforcount",
+      "components_ui_githubgraph_monthlabelsforweeks",
+      "components_ui_githubgraph_weekdata",
+      "components_ui_techstackmarquee",
+      "components_ui_techstackmarquee_row1",
+      "components_ui_techstackmarquee_row2",
+      "components_ui_techstackmarquee_tag",
+      "components_ui_techstackmarquee_techstackmarquee"
+    ],
+    "9": [
+      "package_devdependencies",
+      "package_devdependencies_autoprefixer",
+      "package_devdependencies_enhanced_resolve",
+      "package_devdependencies_eslint",
+      "package_devdependencies_eslint_config_next",
+      "package_devdependencies_postcss",
+      "package_devdependencies_sharp",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_postcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_types_three",
+      "package_devdependencies_typescript"
+    ],
+    "10": [
+      "components_ui_projectcorridor",
+      "components_ui_projectcorridor_clamp",
+      "components_ui_projectcorridor_easein",
+      "components_ui_projectcorridor_easeout",
+      "components_ui_projectcorridor_link",
+      "components_ui_projectcorridor_panel",
+      "components_ui_projectcorridor_panels",
+      "components_ui_projectcorridor_projectcorridor",
+      "components_ui_projectcorridor_projectcorridor_computegeometry",
+      "components_ui_projectcorridor_projectcorridor_lp",
+      "components_ui_projectcorridor_projectcorridor_onresize",
+      "components_ui_projectcorridor_projectcorridor_onscroll",
+      "components_ui_projectcorridor_projectcorridor_render"
+    ],
+    "11": [
+      "components_sections_herosection",
+      "components_sections_herosection_fadeup",
+      "components_sections_herosection_herocanvas",
+      "components_sections_herosection_herosection",
+      "components_sections_herosection_herosectionprops",
+      "components_three_floatingcube",
+      "components_three_floatingcube_floatingcube",
+      "components_three_herocanvas",
+      "components_three_herocanvas_herocanvas",
+      "ref_react_three_drei",
+      "ref_react_three_fiber",
+      "ref_three"
+    ],
+    "12": [
+      "components_sections_certificationssection",
+      "components_sections_certificationssection_certificationssection",
+      "components_ui_certbadge",
+      "components_ui_certbadge_certbadge",
+      "components_ui_certbadge_certbadgeprops",
+      "components_ui_certbadge_statusconfig",
+      "data_certifications",
+      "data_certifications_certificationsdata",
+      "types_index_certification"
+    ],
+    "13": [
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_dev_3001",
+      "package_scripts_dev_clean",
+      "package_scripts_lint",
+      "package_scripts_precheck",
+      "package_scripts_start",
+      "package_scripts_type_check"
+    ],
+    "14": [
+      "app_api_resume_download_route",
+      "app_api_resume_download_route_get",
+      "app_api_resume_download_route_redis",
+      "app_api_resume_route",
+      "app_api_resume_route_get",
+      "app_api_resume_route_post",
+      "app_api_resume_route_redis",
+      "ref_upstash_redis"
+    ],
+    "15": [
+      "app_page_homepage",
+      "app_page_homepage_handlesubmit",
+      "app_page_homepage_putchatbottosleep",
+      "app_page_homepage_renderstatic",
+      "app_page_homepage_resetcontactturnstile",
+      "app_page_homepage_resettimer",
+      "app_page_homepage_typeline",
+      "app_page_homepage_typeline_tick"
+    ],
+    "16": [
+      "lib_ai_instructions",
+      "lib_ai_instructions_buildsysteminstructions",
+      "lib_ai_mode",
+      "lib_ai_mode_ai_modes",
+      "lib_ai_mode_aimode",
+      "lib_ai_mode_default_ai_mode"
+    ],
+    "17": [
+      "app_api_credentials_route",
+      "app_api_credentials_route_get"
+    ],
+    "18": [
+      "eslint_config",
+      "eslint_config_eslintconfig"
+    ],
+    "19": [
+      "postcss_config_config",
+      "postcss_config_mjs_postcss_config"
+    ],
+    "20": [
+      "githubsection"
+    ],
+    "21": [
+      "postcss_config_js_postcss_config"
+    ],
+    "22": [
+      "start_dev"
+    ]
+  },
+  "cohesion": {
+    "0": 0.07152496626180836,
+    "1": 0.10582010582010581,
+    "2": 0.07142857142857142,
+    "3": 0.17543859649122806,
+    "4": 0.10526315789473684,
+    "5": 0.13725490196078433,
+    "6": 0.1111111111111111,
+    "7": 0.225,
+    "8": 0.16666666666666666,
+    "9": 0.14285714285714285,
+    "10": 0.2564102564102564,
+    "11": 0.21212121212121213,
+    "12": 0.3333333333333333,
+    "13": 0.2222222222222222,
+    "14": 0.25,
+    "15": 0.32142857142857145,
+    "16": 0.4,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0
+  },
+  "gods": [
+    {
+      "id": "ref_react",
+      "label": "react",
+      "degree": 20
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "ref_lucide_react",
+      "label": "lucide-react",
+      "degree": 12
+    },
+    {
+      "id": "app_api_contact_route_post",
+      "label": "POST()",
+      "degree": 10
+    },
+    {
+      "id": "app_api_chat_route_post",
+      "label": "POST()",
+      "degree": 9
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 9
+    },
+    {
+      "id": "components_ui_projectcorridor_projectcorridor",
+      "label": "ProjectCorridor()",
+      "degree": 7
+    },
+    {
+      "id": "app_page_homepage",
+      "label": "HomePage()",
+      "degree": 7
+    },
+    {
+      "id": "components_ui_projectcorridor_projectcorridor_render",
+      "label": "render()",
+      "degree": 6
+    },
+    {
+      "id": "components_ui_animatedcounter_animatedcounter",
+      "label": "AnimatedCounter()",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "sanitizeInput()",
+      "target": "sanitize()",
+      "source_files": [
+        "app/api/chat/route.ts",
+        "lib/sanitize.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "NavbarProps",
+      "target": "NavLink",
+      "source_files": [
+        "components/layout/Navbar.tsx",
+        "types/index.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "ProjectCardProps",
+      "target": "Project",
+      "source_files": [
+        "components/ui/ProjectCard.tsx",
+        "types/index.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "SkillCardProps",
+      "target": "Skill",
+      "source_files": [
+        "components/ui/SkillCard.tsx",
+        "types/index.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "CertBadgeProps",
+      "target": "Certification",
+      "source_files": [
+        "components/ui/CertBadge.tsx",
+        "types/index.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

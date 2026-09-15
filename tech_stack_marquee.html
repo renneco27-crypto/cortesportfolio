@@ -1,0 +1,65 @@
+
+<style>
+.marquee-wrap { overflow: hidden; padding: 1.5rem 0; position: relative; }
+.marquee-wrap::before, .marquee-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none;
+}
+.marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--surface-0), transparent); }
+.marquee-wrap::after { right: 0; background: linear-gradient(to left, var(--surface-0), transparent); }
+.marquee-track { display: flex; gap: 10px; width: max-content; animation: scroll 22s linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-track2 { animation-duration: 28s; animation-direction: reverse; margin-top: 10px; }
+.tag {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 999px;
+  border: 0.5px solid var(--border-strong);
+  background: var(--surface-2);
+  font-size: 13px; font-weight: 500; color: var(--text-primary);
+  white-space: nowrap; cursor: default; transition: border-color 0.2s, background 0.2s;
+  user-select: none;
+}
+.tag:hover { border-color: var(--border-accent); background: var(--bg-accent); color: var(--text-accent); }
+.tag .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+</style>
+<h2 class="sr-only">Tech stack animation showing skills scrolling left to right</h2>
+<div class="marquee-wrap">
+  <div class="marquee-track" id="r1"></div>
+  <div class="marquee-track marquee-track2" id="r2"></div>
+</div>
+<script>
+const row1 = [
+  { label: 'HTML', color: '#e34c26' },
+  { label: 'CSS', color: '#264de4' },
+  { label: 'JavaScript', color: '#f7df1e' },
+  { label: 'TypeScript', color: '#3178c6' },
+  { label: 'React', color: '#61dafb' },
+  { label: 'Next.js', color: '#ffffff' },
+  { label: 'Node.js', color: '#3c873a' },
+  { label: 'PostgreSQL', color: '#336791' },
+];
+const row2 = [
+  { label: 'MongoDB', color: '#47a248' },
+  { label: 'Git', color: '#f05032' },
+  { label: 'Docker', color: '#2496ed' },
+  { label: 'REST APIs', color: '#ff6c37' },
+  { label: 'Java', color: '#ed8b00' },
+  { label: 'Spring Boot', color: '#6db33f' },
+  { label: 'Maven/Gradle', color: '#02303a' },
+  { label: 'Python', color: '#3776ab' },
+  { label: 'Azure', color: '#0078d4' },
+  { label: 'Google Cloud', color: '#4285f4' },
+];
+function buildRow(tags, trackId) {
+  const el = document.getElementById(trackId);
+  const doubled = [...tags, ...tags];
+  doubled.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.innerHTML = `<span class="dot" style="background:${t.color};"></span>${t.label}`;
+    el.appendChild(span);
+  });
+}
+buildRow(row1, 'r1');
+buildRow(row2, 'r2');
+</script>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scroll-lock POC — Who I Am → What I've Shipped → Certifications</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{
+  background:#04060c;
+  color:#e4e4e7;
+  font-family:system-ui,-apple-system,sans-serif;
+  overflow-x:hidden;
+}
+.container{max-width:1100px;margin:0 auto;padding:0 2rem}
+.section{padding:7rem 0}
+.eyebrow{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#a78bfa;margin-bottom:.9rem}
+h2{font-size:2.4rem;font-weight:700;color:#fff;line-height:1.15}
+
+/* ---------- WHO I AM ---------- */
+.dev-section{border-bottom:1px solid rgba(255,255,255,.06)}
+.dev-grid{display:grid;grid-template-columns:280px 1fr;gap:3.5rem;align-items:start}
+.dev-photo-wrap{width:280px;height:280px;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(139,92,246,.03));border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center}
+.dev-photo-wrap span{font-size:4rem;font-weight:700;color:rgba(255,255,255,.25)}
+.dev-info p{color:#a1a1aa;font-size:1rem;line-height:1.7;margin-top:1.1rem;max-width:560px}
+.greeting{color:#fff !important;font-size:1.3rem !important;font-weight:600;margin-top:1rem !important}
+.subtitle{color:#a78bfa !important;font-size:.95rem !important;margin-top:.35rem !important}
+.dev-email-link{color:#c4b5fd;text-decoration:none;border-bottom:1px dashed rgba(196,181,253,.4)}
+.tech-marquee{margin-top:2.2rem;padding-top:1.6rem;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:.6rem;flex-wrap:wrap}
+.tech-pill{font-family:ui-monospace,monospace;font-size:.75rem;color:#a1a1aa;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:.35rem .7rem;border-radius:999px}
+.gh-graph{margin-top:2.5rem;padding-top:1.8rem;border-top:1px solid rgba(255,255,255,.06)}
+.gh-graph-label{font-size:.75rem;color:#71717a;letter-spacing:.05em;margin-bottom:.7rem}
+.gh-grid{display:grid;grid-template-columns:repeat(26,1fr);gap:3px;max-width:520px}
+.gh-cell{width:100%;padding-top:100%;border-radius:2px;background:rgba(139,92,246,var(--o,.08))}
+
+/* ---------- CERTIFICATIONS ---------- */
+.cert-grid{display:grid;gap:1rem;margin-top:2.5rem}
+.cert-row{display:flex;align-items:center;gap:1.1rem;padding:1.1rem 1.3rem;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:14px}
+.cert-row .ico{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;color:#a78bfa}
+.cert-row .ico svg{width:19px;height:19px}
+.cert-row h4{font-size:.98rem;color:#fff;font-weight:600}
+.cert-row p{font-size:.85rem;color:#a1a1aa;margin-top:.15rem}
+
+/* ---------- marker rails so the "stop" is visible in this POC ---------- */
+.rail-marker{
+  position:fixed;top:50%;right:18px;transform:translateY(-50%);
+  z-index:50;font-family:ui-monospace,monospace;font-size:.68rem;color:rgba(255,255,255,.35);
+  writing-mode:vertical-rl;letter-spacing:.1em;pointer-events:none;
+}
+.rail-marker b{color:#a78bfa}
+
+/* ---------- CORRIDOR ---------- */
+#root{width:100%;position:relative;font-family:system-ui,-apple-system,sans-serif}
+#track{width:100%;position:relative}
+#sticky{position:sticky;top:0;width:100%;height:100vh;overflow:hidden;background:#04060c}
+#cards-layer{position:absolute;inset:0;pointer-events:none}
+.proj-card{
+  position:absolute;width:316px;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:29px;
+  display:flex;flex-direction:column;pointer-events:auto;will-change:transform,opacity;
+}
+.proj-card:hover{border-color:rgba(139,92,246,.35)}
+.proj-num{font-family:ui-monospace,monospace;font-size:.74rem;color:#a78bfa;line-height:1}
+.proj-card h3{font-size:1.15rem;font-weight:600;margin-top:.9rem;color:#fff;line-height:1.3}
+.proj-card p{color:rgba(161,161,170,1);font-size:.92rem;margin-top:.6rem;line-height:1.55;flex:1}
+.proj-link{margin-top:1.4rem;display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:600;color:#c4b5fd;text-decoration:none}
+.proj-link svg{width:.85rem;height:.85rem;flex-shrink:0;transition:transform .2s}
+.proj-card:hover .proj-link svg{transform:translate(2px,-2px)}
+.proj-links{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.4rem}
+.proj-card.proj-cta{background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.35)}
+#bar{position:absolute;bottom:0;left:0;height:2px;background:rgba(139,92,246,.7);z-index:20}
+#hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,.22);letter-spacing:.08em;pointer-events:none;white-space:nowrap;transition:opacity .3s}
+
+/* title card that proves the camera stops HERE before cards fly */
+#corridor-title{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;pointer-events:none;transition:opacity .25s;
+}
+#corridor-title .eyebrow{margin-bottom:1rem}
+#corridor-title h2{font-size:2.6rem}
+#corridor-title p{color:#a1a1aa;margin-top:.8rem;font-size:1rem;max-width:480px}
+#lock-status{
+  position:absolute;top:22px;left:50%;transform:translateX(-50%);
+  font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.08em;
+  padding:.4rem .9rem;border-radius:999px;border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.4);transition:all .2s;pointer-events:none;
+}
+#lock-status.locked{color:#c4b5fd;border-color:rgba(139,92,246,.5);background:rgba(139,92,246,.08)}
+</style>
+</head>
+<body>
+
+<div class="rail-marker">SCROLL-LOCK POC — <b>watch the badge top-center pin the section</b></div>
+
+<!-- ============ WHO I AM ============ -->
+<section class="section dev-section" id="developer">
+  <div class="container">
+    <div class="dev-grid">
+      <div class="dev-photo-wrap"><span>LC</span></div>
+      <div class="dev-info">
+        <span class="eyebrow">Developer</span>
+        <h2>Who I Am</h2>
+        <p class="greeting">Hey, I'm Lawrence Cortes</p>
+        <p class="subtitle">BS Information Technology · Ormoc City, Leyte, Philippines</p>
+        <p>
+          I build full-stack apps with Next.js, Node.js, and PostgreSQL — nothing fancy, just code
+          that actually runs. An accounting office once told me that's what matters, and I've
+          carried that with me ever since.
+        </p>
+        <p>
+          I'm obsessed with secure, maintainable, and thoughtful solutions.<br>
+          Looking for an internship where I can join a product team, solve real problems, and ship code
+          I'm proud of.
+        </p>
+        <p>
+          Wanna talk shop? Geek out over a stack? Or just say hi?<br>
+          Hit me up on Facebook:
+          <a href="https://www.facebook.com/Rennejay.Dev.21" target="_blank" rel="noopener noreferrer" class="dev-email-link">
+            facebook.com/Rennejay.Dev.21
+          </a><br>
+          Let's chat one-on-one.
+        </p>
+        <div class="tech-marquee">
+          <span class="tech-pill">Next.js</span><span class="tech-pill">TypeScript</span>
+          <span class="tech-pill">Node.js</span><span class="tech-pill">PostgreSQL</span>
+          <span class="tech-pill">Prisma</span><span class="tech-pill">Tailwind</span>
+        </div>
+      </div>
+    </div>
+    <div class="gh-graph">
+      <div class="gh-graph-label">contribution activity (placeholder)</div>
+      <div class="gh-grid" id="gh-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT I'VE SHIPPED (scroll-locked corridor) ============ -->
+<div id="root">
+  <div id="track">
+    <div id="sticky">
+      <div id="lock-status">camera: free</div>
+      <div id="corridor-title">
+        <span class="eyebrow">Projects</span>
+        <h2>What I've shipped</h2>
+        <p>A living list — more goes up on GitHub as each build ships.</p>
+      </div>
+      <div id="cards-layer"></div>
+      <div id="bar"></div>
+      <div id="hint">scroll to walk through</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CERTIFICATIONS ============ -->
+<section class="section" id="certifications">
+  <div class="container">
+    <span class="eyebrow">Certifications</span>
+    <h2>Credentials on record</h2>
+    <p style="color:#a1a1aa;margin-top:.8rem;max-width:560px">
+      Cloud fundamentals, security basics, and the civil-service track record behind the resume.
+    </p>
+    <div class="cert-grid">
+      <div class="cert-row">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+        <div><h4>Microsoft Applied Skills / Azure Fundamentals</h4><p>Microsoft</p></div>
+      </div>
+      <div class="cert-row">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+        <div><h4>Cloud Skill Badges &amp; Career Certificate</h4><p>Google Cloud</p></div>
+      </div>
+      <div class="cert-row">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+        <div><h4>Intro to Cybersecurity · Networking Basics · Python Essentials</h4><p>Cisco Networking Academy</p></div>
+      </div>
+      <div class="cert-row">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="m8.5 14 -1.5 6 5-2 5 2-1.5-6"/></svg></span>
+        <div><h4>Civil Service Exam Passer</h4><p>Civil Service Commission</p></div>
+      </div>
+      <div class="cert-row">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <div><h4>CSS NC II Training Certificate</h4><p>TESDA</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// filler GitHub-style grid, purely decorative for this POC
+(function(){
+  const grid=document.getElementById('gh-grid');
+  for(let i=0;i<26*7;i++){
+    const c=document.createElement('div');
+    c.className='gh-cell';
+    c.style.setProperty('--o', (Math.random()*0.85+0.05).toFixed(2));
+    grid.appendChild(c);
+  }
+})();
+
+const SVG_ARROW=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>`;
+
+const PANELS=[
+  {side:'L',num:'01',title:'CORTES Engineering Portfolio',
+   body:'This site. A dark, component-driven portfolio built to present projects, skills, and certifications in one place — and to keep getting rebuilt as the stack improves.',
+   links:[{label:'View live site',href:'https://cortes-engineering-portfolio.onrender.com'}]},
+  {side:'R',num:'02',title:'StudyUp',
+   body:'StitchAI turns structured CSV data into interactive study notes and quizzes — flashcards, multiple-choice, fill-in-the-blank, true/false, and list enumeration with progress tracking.',
+   links:[{label:'Try the app',href:'https://median.co/share/nmpwama#androidphone'},{label:'Telegram Bot',href:'https://t.me/+iBqel2uwqGA0NzRl'}]},
+  {side:'L',num:'03',title:'AutoCertification AI',
+   body:'An AI-powered certificate generation platform that automatically inserts recipient names into custom templates — for schools, organizations, and event coordinators generating large batches.',
+   links:[{label:'View live site',href:'https://autocertificationai.onrender.com/'}]},
+  {side:'R',num:'04',title:'Telegram Reminder Bot',
+   body:'A Telegram bot that automates reminders and follow-ups — ideal for students and professionals who want simple task and deadline management directly from Telegram.',
+   links:[{label:'View Telegram link',href:'https://web.telegram.org/a/#8905888956'}]},
+  {side:'L',num:'05',title:'Trash4Cash Barcode System',
+   body:'A barcode-based recycling rewards platform where students earn canteen credits by returning recyclable waste.',
+   links:[{label:'View repository',href:'https://github.com/crisantohcortes1-commits/-Trash4CashBarcode'}]},
+  {side:'R',num:'06',title:'For the Blind — Keyboard Touches',
+   body:'A browser extension for blind and visually impaired users that provides fast speech feedback, keyboard navigation, and screen exploration tools.',
+   links:[{label:'View repository',href:'https://github.com/renneco27-crypto/FortheBlind_BIngExtensionBlind'}]},
+  {side:'L',num:'07',title:'School Attendance Maker',
+   body:'A secure web application for academic institutions that streamlines classroom attendance tracking through a synchronized portal for instructors and students.',
+   links:[{label:'Download APK',href:'https://www.mediafire.com/file/e5mltyozkd9goji/ACLC_QR.apk/file'},{label:'Main Gateway',href:'https://attendancemaker-tsjz.onrender.com'},{label:'Teacher Interface',href:'https://teachesinterfaceattendanceaclc.onrender.com/'}]},
+  {side:'R',num:'08',title:'More on GitHub',
+   body:'New builds land here first. Browse everything currently in progress.',
+   links:[{label:'github.com/renneco27-crypto',href:'https://github.com/renneco27-crypto'}],cta:true},
+];
+
+const N=PANELS.length;
+const CARD_W=316,CARD_H=210;
+
+// 50/50 travel-vs-hold split so the pass-through motion stays visible
+const ARRIVE=0.25, DEPART=0.75;
+const T_PAUSE=0.38;
+const EASE_EXP=1.2;
+
+// the title card owns the very start of the corridor's local timeline —
+// this is the literal "camera stops here" moment before any card flies
+const TITLE_HOLD=0.06; // fraction of total corridor progress the title stays fully visible
+const TITLE_FADE=0.05; // fraction over which it fades out afterward
+
+let W, H, VPX, VPY, EDGE_Y, LINE_L, LINE_R, TOTAL;
+
+const track=document.getElementById('track');
+const layer=document.getElementById('cards-layer');
+const bar=document.getElementById('bar');
+const hint=document.getElementById('hint');
+const corridorTitle=document.getElementById('corridor-title');
+const lockStatus=document.getElementById('lock-status');
+
+function easeOut(t){return 1-Math.pow(1-t,EASE_EXP);}
+function easeIn(t){return Math.pow(t,EASE_EXP);}
+function lp(line,t){return{x:line.x1+(line.x2-line.x1)*t,y:line.y1+(line.y2-line.y1)*t};}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+
+const VH_PER_CARD=0.55;
+
+function computeGeometry(){
+  W=window.innerWidth;
+  H=window.innerHeight;
+  VPX=W/2;
+  VPY=H*0.42;
+  EDGE_Y=H*0.78;
+  LINE_L={x1:VPX,y1:VPY,x2:0,y2:EDGE_Y};
+  LINE_R={x1:VPX,y1:VPY,x2:W,y2:EDGE_Y};
+  TOTAL=Math.round(N*H*VH_PER_CARD);
+  track.style.height=TOTAL+'px';
+}
+
+const cardEls=PANELS.map((p)=>{
+  const d=document.createElement('div');
+  d.className='proj-card'+(p.cta?' proj-cta':'');
+  let html=`<span class="proj-num">${p.num}</span><h3>${p.title}</h3><p>${p.body}</p>`;
+  if(p.links.length===1){
+    html+=`<a class="proj-link" href="${p.links[0].href}" target="_blank" rel="noopener">${p.links[0].label}${SVG_ARROW}</a>`;
+  } else {
+    html+=`<div class="proj-links">${p.links.map(l=>`<a class="proj-link" href="${l.href}" target="_blank" rel="noopener">${l.label}${SVG_ARROW}</a>`).join('')}</div>`;
+  }
+  d.innerHTML=html;
+  d.style.opacity='0';
+  layer.appendChild(d);
+  return d;
+});
+
+let prog=0;
+
+function render(){
+  // title card: fully visible for the first TITLE_HOLD, fades over the next TITLE_FADE
+  const titleAlpha = prog<TITLE_HOLD ? 1 : clamp(1-(prog-TITLE_HOLD)/TITLE_FADE,0,1);
+  corridorTitle.style.opacity = titleAlpha;
+
+  // cards only start once the title has finished holding, remapped 0..1 over the remainder
+  const cardsStart = TITLE_HOLD;
+  const cardsProg = clamp((prog-cardsStart)/(1-cardsStart), 0, 1);
+
+  const scaled=cardsProg*N;
+  cardEls.forEach((el,i)=>{
+    const p=PANELS[i];
+    const local=scaled-i;
+    if(local<-0.02||local>1.02){el.style.opacity='0';el.style.pointerEvents='none';return;}
+    const lc=clamp(local,0,1);
+    const isL=p.side==='L';
+    const line=isL?LINE_L:LINE_R;
+    let t,scale,alpha;
+    if(lc<ARRIVE){
+      const pp=lc/ARRIVE,ep=easeOut(pp);
+      scale=0.3+ep*0.7;t=ep*T_PAUSE;alpha=pp<0.1?pp/0.1:1;
+    } else if(lc<=DEPART){
+      scale=1;t=T_PAUSE;alpha=1;
+    } else {
+      const pp=(lc-DEPART)/(1-DEPART),ep=easeIn(pp);
+      scale=1;t=T_PAUSE+(1-T_PAUSE+0.38)*ep;alpha=pp>0.55?1-(pp-0.55)/0.45:1;
+    }
+    const pt=lp(line,t);
+    const tx=pt.x-CARD_W/2,ty=pt.y-CARD_H/2;
+    el.style.opacity=Math.max(0,alpha);
+    el.style.pointerEvents=alpha>0.5?'auto':'none';
+    el.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`;
+    el.style.transformOrigin=`${CARD_W/2}px ${CARD_H/2}px`;
+  });
+  bar.style.width=(prog*100)+'%';
+  hint.style.opacity=(prog>0.015 && prog<0.98) ? 0 : (prog<=0.015?1:0);
+
+  // visual proof the camera is pinned: badge flips to "locked" the moment
+  // #sticky is actually stuck (i.e. we're inside the track's scroll range)
+  const isLocked = prog>0 && prog<1;
+  lockStatus.textContent = isLocked ? 'camera: locked on “what i’ve shipped”' : 'camera: free';
+  lockStatus.classList.toggle('locked', isLocked);
+}
+
+function onScroll(){
+  const trackTop=track.getBoundingClientRect().top+window.scrollY;
+  const range=Math.max(1,TOTAL-H);
+  prog=clamp((window.scrollY-trackTop)/range,0,1);
+  render();
+}
+
+function onResize(){
+  computeGeometry();
+  onScroll();
+}
+
+computeGeometry();
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',onResize);
+render();
+</script>
+</body>
+</html>

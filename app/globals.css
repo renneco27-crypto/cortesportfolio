@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import "tailwindcss";
+@import "./portfolio-styles.css";
+
+:root {
+  --font-space: "Space Grotesk", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-mono:  "JetBrains Mono", monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+/* ── Base body (dark default) ───────────────────────────────── */
+body {
+  font-family: var(--font-inter);
+  background-color: #0a0a0f;
+  color: #f8fafc;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-space); }
+code, pre, .font-mono    { font-family: var(--font-mono); }
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track  { background: #0a0a0f; }
+::-webkit-scrollbar-thumb  { background: #3f3f5c; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+/* ── Custom cursor ──────────────────────────────────────────── */
+@media (pointer: fine) { * { cursor: none !important; } }
+.cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid rgba(124,58,237,.8);
+  background: rgba(124,58,237,.1);
+  transition: width .25s, height .25s, background .25s, border-color .25s;
+  will-change: transform;
+}
+.cursor-dot.expanded {
+  width: 40px; height: 40px;
+  background: rgba(124,58,237,.18);
+  border-color: rgba(124,58,237,1);
+}
+
+/* ── Selection ──────────────────────────────────────────────── */
+::selection { background: rgba(124,58,237,.3); color: #f8fafc; }
+/* ── Zoom reveal ────────────────────────────────────────────── */
+.zoom-reveal {
+  opacity: 0;
+  transform: scale(0.93) translateY(36px);
+  transition: opacity .7s ease, transform .75s cubic-bezier(.22,1,.36,1);
+  will-change: transform, opacity;
+}
+.zoom-reveal.zoom-in-view { opacity: 1; transform: scale(1) translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .zoom-reveal { opacity: 1; transform: none; }
+}
+
+/* ── Marquee ────────────────────────────────────────────────── */
+@keyframes marquee {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 20s linear infinite; }
