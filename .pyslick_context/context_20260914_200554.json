@@ -1,0 +1,272 @@
+{
+  "directive": "where is the chat handler",
+  "expanded_query": "where is the chat handler where is the chat handler location",
+  "synonyms": {
+    "terms": [
+      "where",
+      "is",
+      "the",
+      "chat",
+      "handler",
+      "location"
+    ]
+  },
+  "tier_used": 1,
+  "graph_used": false,
+  "search_terms_used": [
+    "where is the chat handler",
+    "where",
+    "is",
+    "the",
+    "chat",
+    "handler",
+    "location"
+  ],
+  "generated_at": "2026-09-14T20:05:53",
+  "budget": {
+    "whole_file_max_lines": 300,
+    "snippet_context_lines": 8,
+    "max_files": 6,
+    "max_total_lines": 1200,
+    "max_snippets_per_file": 5
+  },
+  "files": [
+    {
+      "path": "components\\ui\\index.html",
+      "mode": "snippet",
+      "line_count": 897,
+      "snippet_count": 2,
+      "snippets": [
+        {
+          "start_line": 626,
+          "end_line": 642,
+          "matched_term": "CERTIFICATIONS",
+          "text": "  626:             github.com/renneco27-crypto\n  627:             <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 17 17 7\"/><path d=\"M7 7h10v10\"/></svg>\n  628:           </a>\n  629:         </div>\n  630:       </div>\n  631:     </div>\n  632:   </section>\n  633: \n  634:   <!-- CERTIFICATIONS -->\n  635:   <section class=\"section\" id=\"certifications\">\n  636:     <div class=\"container\">\n  637:       <div class=\"section-head reveal\">\n  638:         <span class=\"eyebrow\">Certifications</span>\n  639:         <h2>Credentials on record</h2>\n  640:         <p>Cloud fundamentals, security basics, and the civil-service track record behind the resume.</p>\n  641:       </div>\n  642: "
+        },
+        {
+          "start_line": 748,
+          "end_line": 764,
+          "matched_term": "CHAT WIDGET",
+          "text": "  748:       </a>\n  749:       <a href=\"https://www.facebook.com/Rennejay.Dev.21\" target=\"_blank\" aria-label=\"Facebook\">\n  750:         <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\"/><path d=\"m22 7-10 6L2 7\"/></svg>\n  751:       </a>\n  752:     </div>\n  753:   </div>\n  754: </footer>\n  755: \n  756: <!-- CHAT WIDGET -->\n  757: <div class=\"chat-dock\">\n  758:   <div class=\"poke\" id=\"poke\">\n  759:     Press me\n  760:     <button id=\"pokeClose\" aria-label=\"Dismiss\">\n  761:       <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"><path d=\"M18 6 6 18M6 6l12 12\"/></svg>\n  762:     </button>\n  763:   </div>\n  764: "
+        }
+      ],
+      "hits": [
+        {
+          "file": "components\\ui\\index.html",
+          "line": 634,
+          "text": "CERTIFICATIONS",
+          "kind": "descriptive_block",
+          "score": 64.0
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 756,
+          "text": "CHAT WIDGET",
+          "kind": "descriptive_block",
+          "score": 63.63636363636363
+        }
+      ],
+      "symbols": [],
+      "comments": [
+        {
+          "file": "components\\ui\\index.html",
+          "line": 469,
+          "range": "components\\ui\\index.html:469",
+          "kind": "descriptive_block",
+          "text": "ABOUT / HERO"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 508,
+          "range": "components\\ui\\index.html:508",
+          "kind": "descriptive_block",
+          "text": "SKILLS"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 555,
+          "range": "components\\ui\\index.html:555",
+          "kind": "descriptive_block",
+          "text": "EXPERIENCE"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 588,
+          "range": "components\\ui\\index.html:588",
+          "kind": "descriptive_block",
+          "text": "PROJECTS"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 634,
+          "range": "components\\ui\\index.html:634",
+          "kind": "descriptive_block",
+          "text": "CERTIFICATIONS"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 669,
+          "range": "components\\ui\\index.html:669",
+          "kind": "descriptive_block",
+          "text": "CONTACT"
+        },
+        {
+          "file": "components\\ui\\index.html",
+          "line": 756,
+          "range": "components\\ui\\index.html:756",
+          "kind": "descriptive_block",
+          "text": "CHAT WIDGET"
+        }
+      ],
+      "functions_index": []
+    }
+  ],
+  "relation": {
+    "directive": "where is the chat handler",
+    "is_relation_query": false,
+    "entities": [],
+    "matched": {},
+    "paths": [],
+    "evidence": [],
+    "confidence": "none",
+    "note": "not a relationship query"
+  },
+  "mode": "full_recon",
+  "snap": null,
+  "keyword_terms": [],
+  "keyword_functions": [],
+  "centrality": [
+    {
+      "id": "package",
+      "degree": 36,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_chat_route",
+      "degree": 21,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "ref_react",
+      "degree": 20,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "types_index",
+      "degree": 20,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "package_dependencies",
+      "degree": 18,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_contact_route",
+      "degree": 17,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "degree": 16,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_page",
+      "degree": 15,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "package_devdependencies",
+      "degree": 14,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "ref_lucide_react",
+      "degree": 12,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_contact_route_post",
+      "degree": 10,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_api_chat_route_post",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "app_layout",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "components_sections_skillssection",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    },
+    {
+      "id": "components_ui_projectcorridor",
+      "degree": 9,
+      "file": "",
+      "line": 0,
+      "type": "node"
+    }
+  ],
+  "git": {
+    "is_repo": true,
+    "branch": "master",
+    "remote_url": "https://github.com/renneco27-crypto/cortesportfolio",
+    "upstream": "(none)",
+    "ahead": 0,
+    "behind": 0,
+    "dirty_count": 0,
+    "dirty_files": [],
+    "last_commit": "95a16fb fwgg"
+  },
+  "git_log": [
+    {
+      "hash": "95a16fb",
+      "date": "2026-09-14",
+      "author": "evlf skhwd",
+      "subject": "fwgg"
+    },
+    {
+      "hash": "b14097b",
+      "date": "2026-09-14",
+      "author": "evlf skhwd",
+      "subject": "afjdfi"
+    }
+  ],
+  "git_stash": [],
+  "snaps": []
+}
