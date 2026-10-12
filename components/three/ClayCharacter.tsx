@@ -40,12 +40,11 @@ export default function ClayCharacter({
   const auraTimer = useRef(0);
   const auraLevel = useRef(0);
   const auraShieldRef = useRef<THREE.Mesh>(null);
-  const auraRaysGroupRef = useRef<THREE.Group>(null);
   const auraRing1Ref = useRef<THREE.Mesh>(null);
   const auraRing2Ref = useRef<THREE.Mesh>(null);
   const auraLightRef = useRef<THREE.PointLight>(null);
 
-  // Zelda Red Aura Shader Material (Fresnel Pulsing Energy Forcefield)
+  // Zelda Red Aura Shader Material (Fresnel Pulsing Energy Forcefield - Toned down by 50%)
   const auraShaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
       vertexShader: `
@@ -66,9 +65,9 @@ export default function ClayCharacter({
         void main() {
           float fresnel = pow(0.72 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.4);
           float wave = sin(vPosition.y * 14.0 - uTime * 7.5) * 0.18 + 0.82;
-          vec3 flameCol = mix(uColor, vec3(1.0, 0.85, 0.2), fresnel * 0.5);
-          float alpha = clamp(fresnel * wave * uIntensity, 0.0, 0.95);
-          gl_FragColor = vec4(flameCol * 2.4, alpha);
+          vec3 flameCol = mix(uColor, vec3(1.0, 0.85, 0.2), fresnel * 0.4);
+          float alpha = clamp(fresnel * wave * uIntensity * 0.5, 0.0, 0.45);
+          gl_FragColor = vec4(flameCol * 1.2, alpha);
         }
       `,
       uniforms: {
@@ -81,22 +80,6 @@ export default function ClayCharacter({
       depthWrite: false,
       side: THREE.DoubleSide,
     });
-  }, []);
-
-  // 8 Ascending Zelda Ray Beams around character
-  const rayOffsets = useMemo(() => {
-    const list = [];
-    const count = 8;
-    for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2;
-      const radius = 0.85 + (i % 2) * 0.3;
-      list.push({
-        x: Math.cos(angle) * radius,
-        z: Math.sin(angle) * radius,
-        height: 2.2 + (i % 3) * 0.4,
-      });
-    }
-    return list;
   }, []);
 
   // Clone scene and setup bounds & shadows
@@ -188,28 +171,19 @@ export default function ClayCharacter({
         }
       }
 
-      // Rotate ground energy rings
+      // Rotate ground energy rings (toned down by 50%)
       if (auraRing1Ref.current) {
         auraRing1Ref.current.rotation.z += clampedDelta * 3.5;
-        (auraRing1Ref.current.material as THREE.MeshBasicMaterial).opacity = 0.65 * curAura;
+        (auraRing1Ref.current.material as THREE.MeshBasicMaterial).opacity = 0.3 * curAura;
       }
       if (auraRing2Ref.current) {
         auraRing2Ref.current.rotation.z -= clampedDelta * 2.2;
-        (auraRing2Ref.current.material as THREE.MeshBasicMaterial).opacity = 0.45 * curAura;
+        (auraRing2Ref.current.material as THREE.MeshBasicMaterial).opacity = 0.2 * curAura;
       }
 
-      // Rotate ascending energy light rays
-      if (auraRaysGroupRef.current) {
-        auraRaysGroupRef.current.rotation.y += clampedDelta * 2.8;
-        auraRaysGroupRef.current.children.forEach((ray, i) => {
-          const stretch = 1.0 + Math.sin(time * 6.0 + i) * 0.3;
-          ray.scale.set(1, stretch, 1);
-        });
-      }
-
-      // Volumetric red ray-traced radiance light
+      // Volumetric red ray-traced radiance light (toned down by 50%)
       if (auraLightRef.current) {
-        auraLightRef.current.intensity = curAura * 6.8;
+        auraLightRef.current.intensity = curAura * 3.4;
       }
     } else {
       if (auraLightRef.current) auraLightRef.current.intensity = 0;
@@ -366,29 +340,13 @@ export default function ClayCharacter({
           />
         </mesh>
 
-        {/* 3. Ascending Zelda Energy Light Rays */}
-        <group ref={auraRaysGroupRef} position={[0, -yOffset - 0.4, 0]}>
-          {rayOffsets.map((r, i) => (
-            <mesh key={i} position={[r.x, r.height / 2, r.z]}>
-              <coneGeometry args={[0.07, r.height, 8]} />
-              <meshBasicMaterial
-                color="#ff1744"
-                transparent
-                opacity={0.55}
-                blending={THREE.AdditiveBlending}
-                depthWrite={false}
-              />
-            </mesh>
-          ))}
-        </group>
-
-        {/* 4. Volumetric Crimson Radiance Point Light */}
+        {/* 3. Volumetric Crimson Radiance Point Light (toned down by 50%) */}
         <pointLight
           ref={auraLightRef}
           position={[0, 0.8, 0]}
           color="#ff1744"
           intensity={0}
-          distance={6.5}
+          distance={4.5}
         />
       </group>
 

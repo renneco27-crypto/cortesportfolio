@@ -111,7 +111,7 @@ export default function EditorialProjects() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 pb-6 border-b border-[#1c1c1c]">
         <div>
           <span className="font-mono text-xs tracking-widest text-[#e63946] uppercase block mb-2">
-            [ 03 // DEPLOYED SYSTEMS &amp; SCHEMATICS ]
+            [ 03 — DEPLOYED SYSTEMS &amp; SCHEMATICS ]
           </span>
           <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tight">
             Selected Engineering Works
@@ -135,7 +135,7 @@ export default function EditorialProjects() {
             <div>
               <div className="flex justify-between items-center mb-6">
                 <span className="font-mono text-xs tracking-widest text-[#f4a261] uppercase">
-                  PROJECT {project.num} // {project.badge}
+                  PROJECT {project.num} — {project.badge}
                 </span>
                 <button
                   onClick={() => setSelectedProject(project)}
@@ -209,7 +209,7 @@ export default function EditorialProjects() {
             </button>
 
             <div className="font-mono text-xs tracking-widest text-[#e63946] uppercase mb-2">
-              [ SPECIFICATION SHEET // {selectedProject.badge} ]
+              [ SPECIFICATION SHEET — {selectedProject.badge} ]
             </div>
 
             <h3 className="text-3xl md:text-4xl font-normal tracking-tight mb-6">

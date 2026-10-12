@@ -52,7 +52,7 @@ export const certificationsData: Certification[] = [
   {
     id: "meta-social-cert",
     label: "Meta Social Media Marketing Certificate",
-    issuingBody: "Meta / Coursera",
+    issuingBody: "Meta & Coursera",
     status: "planned",
     notes: "Backs up TikTok funnel expertise with Meta's ecosystem cert.",
   },

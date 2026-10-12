@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 export default function EditorialHero() {
   const [terminalText, setTerminalText] = useState("");
-  const fullText = "$ system.init() — ready for full-stack & cloud deployment";
+  const fullText = "$ status: seeking internship — ready to learn, build & contribute";
   const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
 
   useEffect(() => {
@@ -20,28 +20,29 @@ export default function EditorialHero() {
       } else {
         clearInterval(interval);
       }
-    }, 40);
+    }, 35);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <section className="relative w-full h-[85vh] flex flex-col justify-center items-center text-center px-6 md:px-16 z-10 select-none">
-      <div className="flex flex-col items-center max-w-4xl">
-        <div className="font-mono text-xs md:text-sm tracking-[3px] uppercase text-[#e63946] mb-3 md:mb-4">
-          ENGINEERING PORTFOLIO // {currentYear}
+      {/* High-Contrast Backdrop Container ensuring 100% crisp readability over the 3D diorama canvas */}
+      <div className="relative flex flex-col items-center max-w-4xl px-8 md:px-12 py-10 rounded-2xl bg-black/55 backdrop-blur-[8px] border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)]">
+        <div className="font-mono text-xs md:text-sm tracking-[3px] uppercase text-[#ff4d5a] font-semibold mb-3 md:mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+          ENGINEERING PORTFOLIO — {currentYear}
         </div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-light tracking-tight text-white mb-3">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-normal tracking-tight text-white mb-4 drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]">
           Lawrence Cortes
         </h1>
 
-        <div className="text-xs sm:text-sm md:text-base text-[#666666] tracking-[2px] uppercase mb-8">
-          Full-Stack Web Systems &bull; Cloud Infrastructure &bull; UI/UX Architecture
+        <div className="text-xs sm:text-sm md:text-base text-zinc-200 font-medium tracking-[2px] uppercase mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+          IT Student &bull; Full-Stack Developer &bull; Seeking Software Internship
         </div>
 
-        {/* Terminal Line with Left Border & Blinker */}
-        <div className="inline-flex items-center font-mono text-xs sm:text-sm md:text-base text-[#cccccc] bg-transparent border-l-2 border-[#333333] pl-4 py-2">
+        {/* High-Legibility Terminal Pill */}
+        <div className="inline-flex items-center font-mono text-xs sm:text-sm md:text-base text-zinc-100 bg-black/70 border border-zinc-700/70 px-5 py-2.5 rounded-lg shadow-xl backdrop-blur-md">
           <span>{terminalText}</span>
           <span className="inline-block w-[9px] h-[1em] bg-white ml-2 align-middle animate-[blink_1s_step-end_infinite]"></span>
         </div>

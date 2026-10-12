@@ -91,30 +91,30 @@ export default function SectionWipeTransitions() {
           position:absolute;inset:0;display:flex;align-items:center;
           padding:0 8vw;box-sizing:border-box;gap:4rem;">
 
-          <!-- Left: Defier of Limits Editorial Header Block -->
-          <div style="flex:1;max-width:480px;padding-right:1rem;">
+          <!-- Left: Editorial Header Block -->
+          <div style="flex:1;max-width:440px;padding-right:1rem;">
             <!-- Angled Ribbon Pill Badge -->
             <div style="margin-bottom:1.4rem;">
               <div style="
                 display:inline-block;
                 background:#ff1e42;
                 color:#fff;
-                font-family:'Courier New',monospace;
-                font-size:0.65rem;
-                font-weight:800;
-                letter-spacing:2.5px;
+                font-family:'Space Grotesk',-apple-system,sans-serif;
+                font-size:0.68rem;
+                font-weight:700;
+                letter-spacing:2px;
                 text-transform:uppercase;
-                padding:5px 20px 5px 12px;
-                clip-path:polygon(0 0, 93% 0, 100% 100%, 0 100%);
-                box-shadow:0 0 16px rgba(255,30,66,0.4);">
-                VERIFIED CREDENTIAL ARCHIVE
+                padding:6px 18px 6px 12px;
+                clip-path:polygon(0 0, 92% 0, 100% 100%, 0 100%);
+                box-shadow:0 0 16px rgba(255,30,66,0.35);">
+                CREDENTIAL ARCHIVE
               </div>
             </div>
 
             <!-- Main Title with Split White + Red + Cyan Color Theory -->
             <h2 style="
               font-family:'Space Grotesk',-apple-system,sans-serif;
-              font-size:clamp(2.5rem,5.2vw,4.4rem);
+              font-size:clamp(2.4rem,4.8vw,4.2rem);
               font-weight:800;
               letter-spacing:-0.03em;
               line-height:0.95;
@@ -125,47 +125,27 @@ export default function SectionWipeTransitions() {
               <span style="color:#00e5ff;">&amp; BADGES.</span>
             </h2>
 
-            <!-- Glowing Horizon Separator Bar -->
+            <!-- Clean Glowing Horizon Separator Bar -->
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
               <div style="height:2px;width:52px;background:#ff1e42;box-shadow:0 0 10px #ff1e42;"></div>
               <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(255,30,66,0.6) 0%,rgba(0,229,255,0.4) 65%,transparent 100%);"></div>
-              <span style="font-family:'Courier New',monospace;font-size:0.65rem;color:#71717a;letter-spacing:2px;font-weight:600;">
-                ID: #SPECIAL-GRADE
-              </span>
             </div>
 
             <p style="
-              color:#94a3b8;font-size:0.85rem;line-height:1.7;
-              font-weight:400;margin-bottom:2rem;max-width:380px;
+              color:#94a3b8;font-size:0.88rem;line-height:1.65;
+              font-weight:400;margin:0;max-width:370px;
               border-left:2.5px solid #ff1e42;padding-left:1.25rem;">
-              Civil service eligibility, cloud engineering credentials, systems servicing, and cybersecurity paths. Synced live with Supabase telemetry.
+              Verified government civil service eligibility, systems administration, cloud engineering, and cybersecurity certifications.
             </p>
-
-            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;">
-              <div style="
-                font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:2px;
-                text-transform:uppercase;color:#00e5ff;background:rgba(0,229,255,0.08);
-                border:1px solid rgba(0,229,255,0.3);padding:8px 16px;border-radius:4px;
-                box-shadow:0 0 14px rgba(0,229,255,0.15);display:inline-flex;align-items:center;gap:8px;">
-                <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e5ff;box-shadow:0 0 6px #00e5ff;"></span>
-                SUPABASE LIVE SYNC
-              </div>
-              <div style="
-                font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:2px;
-                text-transform:uppercase;color:#ff2a55;background:rgba(255,42,85,0.08);
-                border:1px solid rgba(255,42,85,0.3);padding:8px 14px;border-radius:4px;">
-                SPECIAL GRADE PH // GLOBAL
-              </div>
-            </div>
           </div>
 
-          <!-- Right: Scrollable Defier of Limits Cards Container -->
+          <!-- Right: Scrollable Clean Cards Container (HCI Compliant) -->
           <div id="cert-panel-grid" style="
-            flex:1.25;
+            flex:1.3;
             display:flex;
             flex-direction:column;
-            gap:14px;
-            max-width:600px;
+            gap:10px;
+            max-width:620px;
             max-height:82vh;
             overflow-y:auto;
             overscroll-behavior:contain;
@@ -175,7 +155,7 @@ export default function SectionWipeTransitions() {
           </div>
         </div>
 
-        <!-- Cyberpunk subtle background telemetry grid -->
+        <!-- Subtle ambient grid -->
         <div style="
           position:absolute;inset:0;pointer-events:none;
           background-image:linear-gradient(rgba(255,30,66,0.03) 1px,transparent 1px),
@@ -187,7 +167,7 @@ export default function SectionWipeTransitions() {
       document.body.appendChild(certOv);
       overlays.push(certOv);
 
-      // Render Gojo / Defier of Limits styled credential cards
+      // Render HCI-compliant, scannable credential cards
       const renderCertCards = (
         items: Array<{
           id: string;
@@ -202,19 +182,27 @@ export default function SectionWipeTransitions() {
         const grid = certOv.querySelector("#cert-panel-grid");
         if (!grid) return;
         grid.innerHTML = items
-          .map((c, idx) => {
+          .map((c) => {
             const isEarned = c.status === "earned";
-            const isInProgress = c.status === "in-progress";
+            const isInProgress = c.status === "in-progress" || c.status === "pending";
 
-            // Color theory: Cyan for Earned / Special Grade, Red for Active / In-Progress, Amber for Target
+            // Color theory: Cyan for Earned, Crimson for In Progress, Amber for Planned
             const statusColor = isEarned ? "#00e5ff" : isInProgress ? "#ff2a55" : "#facc15";
-            const statusText = isEarned
-              ? "SPECIAL GRADE // EARNED"
+            const statusBg = isEarned
+              ? "rgba(0,229,255,0.1)"
               : isInProgress
-              ? "GRADE 1 // IN PROGRESS"
-              : "ROADMAP // TARGET";
-
-            const cardId = `ID: #${(c.id || `CRED-${idx + 1}`).toUpperCase().replace(/-/g, "-").slice(0, 14)}`;
+              ? "rgba(255,42,85,0.1)"
+              : "rgba(250,204,21,0.1)";
+            const statusBorder = isEarned
+              ? "rgba(0,229,255,0.35)"
+              : isInProgress
+              ? "rgba(255,42,85,0.35)"
+              : "rgba(250,204,21,0.35)";
+            const statusText = isEarned
+              ? "Earned"
+              : isInProgress
+              ? "In Progress"
+              : "Planned";
 
             const iconSvg =
               c.badge_icon === "shield"
@@ -231,72 +219,49 @@ export default function SectionWipeTransitions() {
                 border:1px solid rgba(255,255,255,0.08);
                 border-left:3.5px solid #ff1e42;
                 border-radius:8px;
-                padding:1.15rem 1.35rem;
+                padding:0.95rem 1.25rem;
                 box-sizing:border-box;
                 display:flex;
                 flex-direction:column;
-                gap:0.75rem;
-                box-shadow:0 12px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+                gap:0.45rem;
+                box-shadow:0 8px 24px rgba(0,0,0,0.45);
                 transition:transform 0.2s, border-color 0.2s;
                 pointer-events:auto;"
                 onmouseover="this.style.borderColor='rgba(0,229,255,0.4)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(4px)';"
                 onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(0)';">
 
-                <!-- Header: Badge Icon + Title + ID stamp -->
+                <!-- Row 1: Icon + Title + Status Pill -->
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
                   <div style="display:flex;align-items:center;gap:10px;min-width:0;">
                     <span style="
                       display:inline-flex;align-items:center;justify-content:center;
-                      width:28px;height:28px;border-radius:4px;
-                      background:rgba(255,30,66,0.15);border:1px solid rgba(255,30,66,0.4);
+                      width:26px;height:26px;border-radius:4px;
+                      background:rgba(255,30,66,0.15);border:1px solid rgba(255,30,66,0.35);
                       flex-shrink:0;">
                       ${iconSvg}
                     </span>
-                    <h3 style="margin:0;font-size:0.96rem;font-weight:700;color:#ffffff;letter-spacing:0.3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                    <h3 style="margin:0;font-size:0.92rem;font-weight:700;color:#ffffff;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                       ${c.label}
                     </h3>
                   </div>
-                  <span style="font-family:'Courier New',monospace;font-size:0.68rem;color:#71717a;letter-spacing:1.5px;font-weight:600;flex-shrink:0;">
-                    ${cardId}
+                  <span style="
+                    font-size:0.68rem;font-weight:700;letter-spacing:0.5px;
+                    color:${statusColor};background:${statusBg};border:1px solid ${statusBorder};
+                    padding:3px 10px;border-radius:9999px;white-space:nowrap;flex-shrink:0;">
+                    ${statusText}
                   </span>
                 </div>
 
-                <!-- Notes / Description -->
-                <p style="margin:0;font-size:0.8rem;color:#94a3b8;line-height:1.55;font-weight:400;">
-                  ${c.notes || 'Verified competency standard validated for production full-stack engineering and security architecture.'}
-                </p>
-
-                <!-- Gojo 3-Tile Attribute Badges Grid -->
-                <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;margin-top:2px;">
-                  <!-- Tile 1: Issuing Body -->
-                  <div style="background:#141824;border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:7px 11px;">
-                    <div style="font-family:'Courier New',monospace;font-size:0.56rem;color:#71717a;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">
-                      ISSUING BODY
-                    </div>
-                    <div style="font-size:0.76rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                      ${c.issuing_body}
-                    </div>
-                  </div>
-
-                  <!-- Tile 2: Grade / Status -->
-                  <div style="background:#141824;border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:7px 11px;">
-                    <div style="font-family:'Courier New',monospace;font-size:0.56rem;color:#71717a;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">
-                      GRADE / STATUS
-                    </div>
-                    <div style="font-size:0.75rem;font-weight:800;color:${statusColor};letter-spacing:0.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                      ${statusText}
-                    </div>
-                  </div>
-
-                  <!-- Tile 3: Verification Link -->
-                  <div style="background:#141824;border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:7px 11px;display:flex;flex-direction:column;justify-content:center;">
-                    <div style="font-family:'Courier New',monospace;font-size:0.56rem;color:#71717a;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">
-                      VERIFICATION
-                    </div>
-                    <div style="font-size:0.75rem;font-weight:700;">
-                      ${c.verify_url ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="color:#00e5ff;text-decoration:none;display:inline-flex;align-items:center;gap:3px;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">ONLINE REPO ↗</a>` : `<span style="color:#64748b;font-weight:600;">GOV VERIFIED</span>`}
-                    </div>
-                  </div>
+                <!-- Row 2: Issuing Body + Direct Verification Link -->
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-left:36px;">
+                  <span style="font-size:0.78rem;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                    ${c.issuing_body}
+                  </span>
+                  ${
+                    c.verify_url
+                      ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;font-weight:600;color:#00e5ff;text-decoration:none;display:inline-flex;align-items:center;gap:3px;flex-shrink:0;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Verify ↗</a>`
+                      : `<span style="font-size:0.75rem;color:#64748b;flex-shrink:0;">Verified</span>`
+                  }
                 </div>
               </div>
             `;
@@ -322,15 +287,14 @@ export default function SectionWipeTransitions() {
         );
       }
 
-      // Initial render with complete Defier of Limits seed data
+      // Initial render with clean, concise seed data
       renderCertCards([
         {
           id: "csc-professional",
           label: "Civil Service Exam — Professional Level",
-          issuing_body: "CSC Philippines",
+          issuing_body: "Civil Service Commission",
           status: "earned",
           badge_icon: "award",
-          notes: "Passing score: 80%+. Civil service eligibility required for state technical roles and enterprise IT governance.",
           verify_url: "https://www.csc.gov.ph",
         },
         {
@@ -339,34 +303,30 @@ export default function SectionWipeTransitions() {
           issuing_body: "TESDA",
           status: "earned",
           badge_icon: "check",
-          notes: "Hands-on national practical assessment — hardware assembly, enterprise operating systems, networking & diagnostics.",
           verify_url: "https://www.tesda.gov.ph",
         },
         {
           id: "cisco-cybersecurity",
-          label: "Intro to Cybersecurity & Networking Basics",
+          label: "Intro to Cybersecurity & Networking",
           issuing_body: "Cisco Networking Academy",
           status: "earned",
           badge_icon: "shield",
-          notes: "Enterprise network topologies, packet inspection, defense-in-depth, security analytics, and incident response.",
           verify_url: "https://www.netacad.com",
         },
         {
           id: "pwncollege-badge",
           label: "pwn.college — Program Security Path",
-          issuing_body: "pwn.college / ASU",
+          issuing_body: "pwn.college & ASU",
           status: "in-progress",
           badge_icon: "shield",
-          notes: "Low-level binary exploitation, reverse engineering, memory corruption defense, and shellcode telemetry.",
           verify_url: "https://pwn.college",
         },
         {
           id: "nextwork-cloud",
           label: "NextWork — Cloud-Native AI Engineering",
-          issuing_body: "NextWork Global",
+          issuing_body: "NextWork",
           status: "in-progress",
           badge_icon: "graduation",
-          notes: "Production cloud-native architectures, generative AI pipeline integration, and serverless edge delivery.",
           verify_url: "https://nextwork.org",
         },
         {
@@ -375,7 +335,6 @@ export default function SectionWipeTransitions() {
           issuing_body: "Amazon Web Services",
           status: "planned",
           badge_icon: "award",
-          notes: "Core AWS cloud services, IAM architecture, security governance, and scalable distributed deployment.",
           verify_url: "https://aws.amazon.com/certification",
         },
         {
@@ -384,16 +343,14 @@ export default function SectionWipeTransitions() {
           issuing_body: "Google Skillshop",
           status: "planned",
           badge_icon: "award",
-          notes: "Performance search marketing, automated bid strategies, attribution modeling, and conversion pipelines.",
           verify_url: "https://skillshop.google.com",
         },
         {
           id: "meta-social-cert",
-          label: "Meta Social Media Marketing Certificate",
-          issuing_body: "Meta / Coursera",
+          label: "Meta Social Media Marketing",
+          issuing_body: "Meta & Coursera",
           status: "planned",
           badge_icon: "award",
-          notes: "Cross-platform funnel optimization, conversion APIs, custom audience telemetry, and creative scaling.",
           verify_url: "https://coursera.org",
         },
       ]);
@@ -428,7 +385,7 @@ export default function SectionWipeTransitions() {
               text-transform:uppercase;color:#e63946;margin-bottom:3rem;
               display:flex;align-items:center;gap:12px;">
               <span style="display:inline-block;width:32px;height:1px;background:#e63946;"></span>
-              03 / ARCHITECTURAL WORKS
+              03 — ARCHITECTURAL WORKS
             </div>
 
             <h2 style="
@@ -579,7 +536,7 @@ export default function SectionWipeTransitions() {
                 color:#e63946;margin-bottom:1rem;
                 display:flex;align-items:center;gap:12px;">
                 <span style="display:inline-block;width:32px;height:1px;background:#e63946;"></span>
-                04 / COMMUNICATION PROTOCOL
+                04 — COMMUNICATION PROTOCOL
               </div>
               <h2 style="
                 font-size:clamp(2rem,5vw,4rem);font-weight:200;
@@ -664,7 +621,7 @@ export default function SectionWipeTransitions() {
               <div style="display:flex;flex-direction:column;gap:6px;grid-column:1/-1;">
                 <label style="font-family:'Courier New',monospace;font-size:0.65rem;
                   letter-spacing:2px;text-transform:uppercase;color:#888;">
-                  Transmission / Message *
+                  Message *
                 </label>
                 <textarea name="messageBody" required rows="4"
                   placeholder="Describe your requirements, project timeline, or questions..."

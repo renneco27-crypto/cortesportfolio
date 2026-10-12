@@ -76,7 +76,7 @@ export default function EditorialContact() {
       <div className="max-w-6xl mx-auto mb-14 pb-6 border-b border-[#1c1c1c] flex flex-col md:flex-row justify-between items-start md:items-end">
         <div>
           <span className="font-mono text-xs tracking-widest text-[#e63946] uppercase block mb-2">
-            [ 03 // COMMUNICATION PROTOCOL ]
+            [ 03 — COMMUNICATION PROTOCOL ]
           </span>
           <h2 className="text-3xl md:text-5xl font-light uppercase tracking-tight">
             Initiate Contact

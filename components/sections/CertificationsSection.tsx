@@ -16,7 +16,7 @@ export default function CertificationsSection() {
 
         <div className="grid md:grid-cols-2 gap-8">
           <div className="flex flex-col gap-3">
-            <p className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-1">Earned / In Progress</p>
+            <p className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-1">Earned & In Progress</p>
             {active.map((c) => <CertBadge key={c.id} cert={c} />)}
           </div>
           <div className="flex flex-col gap-3">

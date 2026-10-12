@@ -39,7 +39,7 @@ export default function EditorialAbout() {
         <div className="reveal-item flex flex-col md:flex-row justify-between items-start md:items-end pb-6 border-b border-[#1c1c1c]">
           <div>
             <span className="font-mono text-xs tracking-widest text-[#e63946] uppercase block mb-2">
-              [ 01 // ABOUT LAWRENCE CORTES ]
+              [ 01 — ABOUT LAWRENCE CORTES ]
             </span>
             <h2 className="text-3xl md:text-5xl font-light uppercase tracking-tight">
               Developer by code. Designer by eye.
@@ -80,7 +80,7 @@ export default function EditorialAbout() {
               fundamentals, and steady, detail-first execution to a real product team.
             </p>
             <p className="text-sm text-[#888] font-mono border-l-2 border-[#e63946] pl-4 pt-1">
-              &ldquo;Obsessed with secure, maintainable, and thoughtful solutions. Engineering business outcomes with speed and precision.&rdquo;
+              &ldquo;Focused on clean code, solid fundamentals, and continuous learning. Ready to work hard and contribute to a real team.&rdquo;
             </p>
           </div>
         </div>
