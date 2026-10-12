@@ -270,19 +270,15 @@ export default function SectionWipeTransitions() {
           .join("");
       };
 
-      // Direct wheel capture on #cert-panel-grid: guarantees wheel scrolling scrolls the cards!
+      // Direct wheel capture on #cert-panel-grid: isolates card scrolling completely so it stops at the bottom and never leaks to the next slide!
       const panelGrid = certOv.querySelector("#cert-panel-grid") as HTMLElement | null;
       if (panelGrid) {
         panelGrid.addEventListener(
           "wheel",
           (e) => {
             e.stopPropagation();
-            const canScrollDown = panelGrid.scrollTop + panelGrid.clientHeight < panelGrid.scrollHeight - 2;
-            const canScrollUp = panelGrid.scrollTop > 2;
-            if ((e.deltaY > 0 && canScrollDown) || (e.deltaY < 0 && canScrollUp)) {
-              e.preventDefault();
-              panelGrid.scrollTop += e.deltaY * 0.85;
-            }
+            e.preventDefault();
+            panelGrid.scrollTop += e.deltaY * 0.85;
           },
           { passive: false }
         );
@@ -687,18 +683,18 @@ export default function SectionWipeTransitions() {
         0
       );
 
-      // Phase 2 (AT EXACT SAME INSTANT 0.8): Wipe 0 exits clipping upward WHILE Wipe 1 enters from right!
+      // Phase 2 (AT 1.2): Wipe 0 holds in place, then exits clipping upward WHILE Wipe 1 enters from right!
       masterTl.to(
         certOv,
         {
           clipPath: "inset(0% 0 100% 0)",
           ease: "power3.inOut",
-          duration: 0.5,
+          duration: 0.55,
           onComplete: () => {
             gsap.set(certOv, { pointerEvents: "none" });
           },
         },
-        0.8
+        1.2
       );
 
       masterTl.fromTo(
@@ -713,21 +709,21 @@ export default function SectionWipeTransitions() {
             gsap.set(ov1, { opacity: 1, pointerEvents: "auto" });
           },
         },
-        0.8
+        1.2
       );
 
-      // Phase 3 (AT EXACT SAME INSTANT 1.6): Wipe 1 exits clipping upward WHILE Wipe 2 (Contact) enters!
+      // Phase 3 (AT 2.3): Wipe 1 holds in place, then exits clipping upward WHILE Wipe 2 (Contact) enters!
       masterTl.to(
         ov1,
         {
           clipPath: "inset(0% 0 100% 0)",
           ease: "power3.inOut",
-          duration: 0.5,
+          duration: 0.55,
           onComplete: () => {
             gsap.set(ov1, { pointerEvents: "none" });
           },
         },
-        1.6
+        2.3
       );
 
       masterTl.fromTo(
@@ -742,21 +738,21 @@ export default function SectionWipeTransitions() {
             gsap.set([leftOv, rightOv], { opacity: 1, pointerEvents: "auto" });
           },
         },
-        1.6
+        2.3
       );
 
       masterTl.fromTo(
         rightOv,
         { clipPath: "inset(0 0 100% 0)", opacity: 1 },
         { clipPath: "inset(0 0 0% 0)", opacity: 1, ease: "power3.inOut", duration: 0.55 },
-        1.6
+        2.3
       );
 
       // Phase 4: Initiate Contact stays locked in place until the end of the page (no upward clip exit)
       masterTl.to(
         [leftOv, rightOv],
         { clipPath: "inset(0% 0 0% 0)", opacity: 1, duration: 0.5 },
-        2.3
+        3.2
       );
 
       triggers.push(masterTl.scrollTrigger!);
