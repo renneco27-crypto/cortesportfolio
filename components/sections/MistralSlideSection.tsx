@@ -56,6 +56,174 @@ export default function SectionWipeTransitions() {
     const masterTrigger = document.querySelector("#slide-trigger-master") as HTMLElement | null;
 
     if (masterTrigger) {
+      /* ── 0. Create Overlay 0: Verified Credentials (Panel before Selected Works) ── */
+      const certOv = document.createElement("div");
+      certOv.style.cssText =
+        "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;" +
+        "pointer-events:none;opacity:0;clip-path:inset(0 0 0 100%);" +
+        "background:rgba(5, 5, 5, 0.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);" +
+        "overflow:hidden;";
+
+      certOv.innerHTML = `
+        <div style="
+          position:absolute;inset:0;display:flex;align-items:center;
+          padding:0 8vw;box-sizing:border-box;gap:4rem;">
+
+          <!-- Left: Editorial text block -->
+          <div style="flex:1;max-width:500px;padding-right:2rem;">
+            <div style="
+              font-family:'Courier New',monospace;font-size:0.7rem;letter-spacing:4px;
+              text-transform:uppercase;color:#e63946;margin-bottom:2.5rem;
+              display:flex;align-items:center;gap:12px;">
+              <span style="display:inline-block;width:32px;height:1px;background:#e63946;"></span>
+              02 / VERIFIED CREDENTIALS
+            </div>
+
+            <h2 style="
+              font-size:clamp(2.6rem,5.5vw,4.8rem);font-weight:200;
+              letter-spacing:-0.04em;line-height:0.92;
+              color:#fff;margin:0 0 2rem;
+              text-transform:uppercase;">
+              Technical<br/>
+              <span style="color:#e63946;">Certifications</span><br/>
+              &amp; Badges.
+            </h2>
+
+            <p style="
+              color:#aaa;font-size:0.85rem;line-height:1.7;
+              font-weight:300;margin-bottom:2.5rem;max-width:380px;
+              border-left:2px solid rgba(230,57,70,0.5);padding-left:1.25rem;">
+              Civil service eligibility, cloud engineering credentials, systems servicing, and cybersecurity paths. Synced live with Supabase telemetry.
+            </p>
+
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;">
+              <div style="
+                font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:2px;
+                text-transform:uppercase;color:#4ade80;background:rgba(74,222,128,0.08);
+                border:1px solid rgba(74,222,128,0.25);padding:8px 16px;border-radius:2px;
+                display:inline-flex;align-items:center;gap:8px;">
+                <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#4ade80;"></span>
+                SUPABASE LIVE SYNC
+              </div>
+              <div style="
+                font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:2px;
+                text-transform:uppercase;color:#888;">
+                PH &bull; GLOBAL CREDENTIALS
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Dynamic Credentials Cards Grid -->
+          <div id="cert-panel-grid" style="
+            flex:1.2;display:flex;flex-direction:column;gap:10px;
+            max-width:580px;max-height:82vh;overflow-y:auto;padding-right:8px;">
+          </div>
+        </div>
+
+        <!-- Subtle grid overlay -->
+        <div style="
+          position:absolute;inset:0;pointer-events:none;
+          background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
+            linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+          background-size:60px 60px;">
+        </div>
+      `;
+
+      document.body.appendChild(certOv);
+      overlays.push(certOv);
+
+      // Render credential cards helper
+      const renderCertCards = (
+        items: Array<{
+          id: string;
+          label: string;
+          issuing_body: string;
+          status: string;
+          badge_icon: string;
+          verify_url?: string;
+        }>
+      ) => {
+        const grid = certOv.querySelector("#cert-panel-grid");
+        if (!grid) return;
+        grid.innerHTML = items
+          .map((c) => {
+            const isEarned = c.status === "earned";
+            const statusColor = isEarned ? "#4ade80" : "#facc15";
+            const statusBg = isEarned ? "rgba(74,222,128,0.1)" : "rgba(250,204,21,0.1)";
+            const statusBorder = isEarned ? "rgba(74,222,128,0.25)" : "rgba(250,204,21,0.25)";
+            const statusLabel = isEarned ? "EARNED" : c.status === "in-progress" ? "IN PROGRESS" : "PLANNED";
+
+            const iconSvg =
+              c.badge_icon === "shield"
+                ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
+                : c.badge_icon === "graduation"
+                ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`
+                : c.badge_icon === "check"
+                ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+                : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>`;
+
+            return `
+              <div style="
+                background:rgba(15,15,18,0.85);border:1px solid rgba(255,255,255,0.09);
+                padding:12px 18px;border-radius:2px;display:flex;align-items:center;
+                justify-content:space-between;gap:14px;transition:all 0.2s;"
+                onmouseover="this.style.borderColor='${statusColor}';this.style.background='rgba(255,255,255,0.03)';"
+                onmouseout="this.style.borderColor='rgba(255,255,255,0.09)';this.style.background='rgba(15,15,18,0.85)';">
+                <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+                  <div style="
+                    width:36px;height:36px;border-radius:2px;background:${statusBg};
+                    border:1px solid ${statusBorder};display:flex;align-items:center;
+                    justify-content:center;flex-shrink:0;">
+                    ${iconSvg}
+                  </div>
+                  <div style="min-width:0;">
+                    <div style="font-size:0.85rem;color:#fff;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                      ${c.label}
+                    </div>
+                    <div style="font-family:'Courier New',monospace;font-size:0.65rem;color:#777;letter-spacing:1px;margin-top:2px;">
+                      ${c.issuing_body}
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+                  <span style="
+                    font-family:'Courier New',monospace;font-size:0.6rem;letter-spacing:1.5px;
+                    color:${statusColor};background:${statusBg};border:1px solid ${statusBorder};
+                    padding:3px 8px;border-radius:2px;font-weight:600;">
+                    ${statusLabel}
+                  </span>
+                  ${
+                    c.verify_url
+                      ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="color:#666;display:inline-flex;align-items:center;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`
+                      : ""
+                  }
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+      };
+
+      // Initial render with defaults
+      renderCertCards([
+        { id: "csc-professional", label: "Civil Service Exam — Professional Level", issuing_body: "Civil Service Commission (CSC), Philippines", status: "earned", badge_icon: "award", verify_url: "https://www.csc.gov.ph" },
+        { id: "tesda-css-nc2", label: "Computer Systems Servicing NC II", issuing_body: "TESDA", status: "earned", badge_icon: "check", verify_url: "https://www.tesda.gov.ph" },
+        { id: "cisco-cybersecurity", label: "Intro to Cybersecurity & Networking Basics", issuing_body: "Cisco Networking Academy", status: "earned", badge_icon: "shield", verify_url: "https://www.netacad.com" },
+        { id: "pwncollege-badge", label: "pwn.college — Program Security Path", issuing_body: "pwn.college", status: "in-progress", badge_icon: "shield", verify_url: "https://pwn.college" },
+        { id: "nextwork-cloud", label: "NextWork — Cloud-Native AI Engineering", issuing_body: "NextWork", status: "in-progress", badge_icon: "graduation", verify_url: "https://nextwork.org" },
+        { id: "aws-cloud-practitioner", label: "AWS Certified Cloud Practitioner", issuing_body: "Amazon Web Services", status: "planned", badge_icon: "award", verify_url: "https://aws.amazon.com/certification" },
+      ]);
+
+      // Connect to Supabase via /api/credentials
+      fetch("/api/credentials")
+        .then((r) => r.json())
+        .then((data) => {
+          if (Array.isArray(data) && data.length > 0) {
+            renderCertCards(data);
+          }
+        })
+        .catch(() => {});
+
       /* ── 1. Create Overlay 1: Selected Engineering Works ── */
       const ov1 = document.createElement("div");
       ov1.style.cssText =
@@ -76,7 +244,7 @@ export default function SectionWipeTransitions() {
               text-transform:uppercase;color:#e63946;margin-bottom:3rem;
               display:flex;align-items:center;gap:12px;">
               <span style="display:inline-block;width:32px;height:1px;background:#e63946;"></span>
-              02 / ARCHITECTURAL WORKS
+              03 / ARCHITECTURAL WORKS
             </div>
 
             <h2 style="
@@ -227,7 +395,7 @@ export default function SectionWipeTransitions() {
                 color:#e63946;margin-bottom:1rem;
                 display:flex;align-items:center;gap:12px;">
                 <span style="display:inline-block;width:32px;height:1px;background:#e63946;"></span>
-                03 / COMMUNICATION PROTOCOL
+                04 / COMMUNICATION PROTOCOL
               </div>
               <h2 style="
                 font-size:clamp(2rem,5vw,4rem);font-weight:200;
@@ -368,7 +536,7 @@ export default function SectionWipeTransitions() {
       document.body.appendChild(rightOv);
       overlays.push(rightOv);
 
-      /* ── 3. Single Master Timeline — Chains Wipe 1 & Wipe 2 with Zero Gap ── */
+      /* ── 3. Single Master Timeline — Chains Certs -> Selected Works -> Contact with Zero Gap ── */
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: masterTrigger,
@@ -376,49 +544,93 @@ export default function SectionWipeTransitions() {
           end: "bottom bottom",
           scrub: 1.0,
           onEnter: () => {
-            gsap.set(ov1, { opacity: 1, pointerEvents: "auto" });
+            gsap.set(certOv, { opacity: 1, pointerEvents: "auto" });
+            gsap.set([ov1, leftOv, rightOv], { pointerEvents: "none" });
           },
           onLeaveBack: () => {
-            gsap.set(ov1, { opacity: 0, pointerEvents: "none" });
-            gsap.set([leftOv, rightOv], { opacity: 0, pointerEvents: "none" });
+            gsap.set([certOv, ov1, leftOv, rightOv], { opacity: 0, pointerEvents: "none" });
           },
         },
       });
 
-      // Phase 1: Wipe 1 enters from right edge
+      // Phase 1: Wipe 0 (Credentials) enters from right edge
       masterTl.fromTo(
-        ov1,
-        { clipPath: "inset(0 0 0 100%)" },
-        { clipPath: "inset(0 0 0 0%)", ease: "power3.inOut", duration: 0.6 },
+        certOv,
+        { clipPath: "inset(0 0 0 100%)", opacity: 1 },
+        { clipPath: "inset(0 0 0 0%)", opacity: 1, ease: "power3.inOut", duration: 0.6 },
         0
       );
 
-      // Phase 2 (AT EXACT SAME INSTANT 0.8): Wipe 1 exits clipping upward WHILE Wipe 2 enters!
+      // Phase 2 (AT EXACT SAME INSTANT 0.8): Wipe 0 exits clipping upward WHILE Wipe 1 enters from right!
+      masterTl.to(
+        certOv,
+        {
+          clipPath: "inset(0% 0 100% 0)",
+          ease: "power3.inOut",
+          duration: 0.5,
+          onComplete: () => {
+            gsap.set(certOv, { pointerEvents: "none" });
+          },
+        },
+        0.8
+      );
+
+      masterTl.fromTo(
+        ov1,
+        { clipPath: "inset(0 0 0 100%)", opacity: 1 },
+        {
+          clipPath: "inset(0 0 0 0%)",
+          opacity: 1,
+          ease: "power3.inOut",
+          duration: 0.55,
+          onStart: () => {
+            gsap.set(ov1, { opacity: 1, pointerEvents: "auto" });
+          },
+        },
+        0.8
+      );
+
+      // Phase 3 (AT EXACT SAME INSTANT 1.6): Wipe 1 exits clipping upward WHILE Wipe 2 (Contact) enters!
       masterTl.to(
         ov1,
-        { clipPath: "inset(0% 0 100% 0)", ease: "power3.inOut", duration: 0.5, onComplete: () => { gsap.set(ov1, { pointerEvents: "none" }); } },
-        0.8
+        {
+          clipPath: "inset(0% 0 100% 0)",
+          ease: "power3.inOut",
+          duration: 0.5,
+          onComplete: () => {
+            gsap.set(ov1, { pointerEvents: "none" });
+          },
+        },
+        1.6
       );
 
       masterTl.fromTo(
         leftOv,
         { clipPath: "inset(100% 0 0 0)", opacity: 1 },
-        { clipPath: "inset(0% 0 0 0)", opacity: 1, ease: "power3.inOut", duration: 0.55, onStart: () => { gsap.set([leftOv, rightOv], { opacity: 1, pointerEvents: "auto" }); } },
-        0.8
+        {
+          clipPath: "inset(0% 0 0 0)",
+          opacity: 1,
+          ease: "power3.inOut",
+          duration: 0.55,
+          onStart: () => {
+            gsap.set([leftOv, rightOv], { opacity: 1, pointerEvents: "auto" });
+          },
+        },
+        1.6
       );
 
       masterTl.fromTo(
         rightOv,
         { clipPath: "inset(0 0 100% 0)", opacity: 1 },
         { clipPath: "inset(0 0 0% 0)", opacity: 1, ease: "power3.inOut", duration: 0.55 },
-        0.8
+        1.6
       );
 
-      // Phase 3: Initiate Contact panel stays locked in place until the end of the page (no upward clip exit)
+      // Phase 4: Initiate Contact stays locked in place until the end of the page (no upward clip exit)
       masterTl.to(
         [leftOv, rightOv],
         { clipPath: "inset(0% 0 0% 0)", opacity: 1, duration: 0.5 },
-        1.3
+        2.3
       );
 
       triggers.push(masterTl.scrollTrigger!);

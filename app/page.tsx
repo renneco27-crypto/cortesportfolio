@@ -36,8 +36,8 @@ export default function EditorialPage() {
           {/* 1px tiny gap ensuring GitHub is fully clickthrough & hoverable */}
           <section className="w-full h-[1px] bg-transparent pointer-events-none select-none" id="slide-trigger-gap" aria-hidden="true" />
 
-          {/* Master Trigger Section — combines Wipe 1 & Wipe 2 into 1 single continuous scrub timeline with zero gaps */}
-          <section className="w-full h-[240vh] bg-transparent pointer-events-none select-none" id="slide-trigger-master" aria-hidden="true" />
+          {/* Master Trigger Section — chains Credentials, Selected Works & Contact into 1 continuous scrub timeline */}
+          <section className="w-full h-[360vh] bg-transparent pointer-events-none select-none" id="slide-trigger-master" aria-hidden="true" />
         </div>
       </div>
 

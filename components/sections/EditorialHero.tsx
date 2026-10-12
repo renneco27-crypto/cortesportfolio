@@ -5,6 +5,11 @@ import React, { useState, useEffect } from "react";
 export default function EditorialHero() {
   const [terminalText, setTerminalText] = useState("");
   const fullText = "$ system.init() — ready for full-stack & cloud deployment";
+  const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   useEffect(() => {
     let index = 0;
@@ -24,7 +29,7 @@ export default function EditorialHero() {
     <section className="relative w-full h-[85vh] flex flex-col justify-center items-center text-center px-6 md:px-16 z-10 select-none">
       <div className="flex flex-col items-center max-w-4xl">
         <div className="font-mono text-xs md:text-sm tracking-[3px] uppercase text-[#e63946] mb-3 md:mb-4">
-          ENGINEERING PORTFOLIO // 2026
+          ENGINEERING PORTFOLIO // {currentYear}
         </div>
 
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-light tracking-tight text-white mb-3">
