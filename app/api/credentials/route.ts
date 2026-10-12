@@ -2,36 +2,45 @@ import { NextResponse } from "next/server";
 import { certificationsData } from "@/data/certifications";
 import type { PortfolioCredential } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://nstyqceyjkgevnibfqks.supabase.co";
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+const SUPABASE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_ANON_KEY ||
+  "";
 
 const fallbackCredentials: PortfolioCredential[] = [
   {
     id: "csc-professional",
     label: "Civil Service Exam — Professional Level",
     issuing_body: "Civil Service Commission (CSC), Philippines",
-    status: "earned",
+    status: "in-progress",
     badge_icon: "award",
     sort_order: 1,
-    notes: "Passing score: 80%+. Required for PH gov internships. Covers English, Math, General Info, Analogies, Logical Reasoning.",
+    notes: "Civil service eligibility for government technical roles.",
+    verify_url: "https://www.csc.gov.ph",
   },
   {
     id: "tesda-css-nc2",
     label: "Computer Systems Servicing NC II",
     issuing_body: "TESDA",
-    status: "earned",
+    status: "in-progress",
     badge_icon: "check",
     sort_order: 2,
-    notes: "Hands-on practical assessment — hardware, OS, networking, troubleshooting.",
+    notes: "Hands-on hardware, OS, and networking assessment.",
+    verify_url: "https://www.tesda.gov.ph",
   },
   {
     id: "cisco-cybersecurity",
     label: "Intro to Cybersecurity & Networking Basics",
     issuing_body: "Cisco Networking Academy",
-    status: "earned",
+    status: "in-progress",
     badge_icon: "shield",
     sort_order: 3,
-    notes: "Network security, packet analysis, threat defense fundamentals.",
+    notes: "Enterprise network security and threat defense fundamentals.",
+    verify_url: "https://www.netacad.com",
   },
   {
     id: "pwncollege-badge",
@@ -60,39 +69,20 @@ const fallbackCredentials: PortfolioCredential[] = [
     sort_order: 6,
     notes: "Entry-level AWS cert. Strong signal for cloud-adjacent roles.",
   },
-  {
-    id: "google-ads-cert",
-    label: "Google Ads — Search Certification",
-    issuing_body: "Google Skillshop",
-    status: "pending",
-    badge_icon: "award",
-    sort_order: 7,
-    notes: "Free. Reinforces digital growth & funnel architecture.",
-  },
-  {
-    id: "meta-social-cert",
-    label: "Meta Social Media Marketing Certificate",
-    issuing_body: "Meta / Coursera",
-    status: "pending",
-    badge_icon: "award",
-    sort_order: 8,
-    notes: "Backs up marketing funnel expertise with Meta ecosystem credential.",
-  },
 ];
 
 // Safely fetch credentials from Supabase, handling missing config or missing table gracefully.
 export async function GET() {
-  if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+  if (SUPABASE_URL && SUPABASE_KEY) {
     try {
       const res = await fetch(
         `${SUPABASE_URL}/rest/v1/credentials?select=*&order=sort_order.asc`,
         {
           headers: {
-            apikey: SUPABASE_ANON_KEY,
-            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${SUPABASE_KEY}`,
           },
-          // Revalidate every minute to keep data fresh
-          next: { revalidate: 60 },
+          cache: "no-store",
         }
       );
 

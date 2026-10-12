@@ -62,10 +62,10 @@ VALUES
     'csc-professional',
     'Civil Service Exam — Professional Level',
     'Civil Service Commission (CSC), Philippines',
-    'earned',
+    'in-progress',
     'award',
     1,
-    'Passing score: 80%+. Required for PH government and enterprise internships.',
+    'Civil service eligibility for government technical roles.',
     'https://www.csc.gov.ph',
     '2025-08-01'
   ),
@@ -73,10 +73,10 @@ VALUES
     'tesda-css-nc2',
     'Computer Systems Servicing NC II',
     'TESDA',
-    'earned',
+    'in-progress',
     'check',
     2,
-    'Hands-on practical assessment — hardware assembly, operating systems, networking, diagnostic troubleshooting.',
+    'Hands-on hardware assembly, operating systems, networking, and troubleshooting.',
     'https://www.tesda.gov.ph',
     NULL
   ),
@@ -84,10 +84,10 @@ VALUES
     'cisco-cybersecurity',
     'Intro to Cybersecurity & Networking Basics',
     'Cisco Networking Academy',
-    'earned',
+    'in-progress',
     'shield',
     3,
-    'Enterprise network security, routing basics, defense-in-depth, and packet inspections.',
+    'Enterprise network security, routing basics, and defense fundamentals.',
     'https://www.netacad.com',
     NULL
   ),
@@ -123,28 +123,6 @@ VALUES
     'Core AWS services, security, IAM architecture, pricing, and cloud economics.',
     'https://aws.amazon.com/certification',
     '2025-12-01'
-  ),
-  (
-    'google-ads-cert',
-    'Google Ads — Search Certification',
-    'Google Skillshop',
-    'planned',
-    'award',
-    7,
-    'Performance marketing, search campaign optimization, attribution modeling, and funnel growth.',
-    'https://skillshop.google.com',
-    NULL
-  ),
-  (
-    'meta-social-cert',
-    'Meta Social Media Marketing Certificate',
-    'Meta / Coursera',
-    'planned',
-    'award',
-    8,
-    'Social ads ecosystem, funnel acquisition, creative analytics, and conversion APIs.',
-    'https://coursera.org',
-    NULL
   )
 ON CONFLICT (id) DO UPDATE SET
   label = EXCLUDED.label,

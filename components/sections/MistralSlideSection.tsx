@@ -186,23 +186,23 @@ export default function SectionWipeTransitions() {
             const isEarned = c.status === "earned";
             const isInProgress = c.status === "in-progress" || c.status === "pending";
 
-            // Color theory: Cyan for Earned, Crimson for In Progress, Amber for Planned
-            const statusColor = isEarned ? "#00e5ff" : isInProgress ? "#ff2a55" : "#facc15";
+            // Color theory: Green for Earned / Achieved, Crimson for In Progress, Amber for Planned
+            const statusColor = isEarned ? "#00e676" : isInProgress ? "#ff2a55" : "#facc15";
             const statusBg = isEarned
-              ? "rgba(0,229,255,0.1)"
+              ? "rgba(0,230,118,0.14)"
               : isInProgress
-              ? "rgba(255,42,85,0.1)"
-              : "rgba(250,204,21,0.1)";
+              ? "rgba(255,42,85,0.14)"
+              : "rgba(250,204,21,0.14)";
             const statusBorder = isEarned
-              ? "rgba(0,229,255,0.35)"
+              ? "rgba(0,230,118,0.5)"
               : isInProgress
-              ? "rgba(255,42,85,0.35)"
-              : "rgba(250,204,21,0.35)";
+              ? "rgba(255,42,85,0.5)"
+              : "rgba(250,204,21,0.5)";
             const statusText = isEarned
-              ? "Earned"
+              ? "EARNED"
               : isInProgress
-              ? "In Progress"
-              : "Planned";
+              ? "IN PROGRESS"
+              : "PLANNED";
 
             const iconSvg =
               c.badge_icon === "shield"
@@ -219,19 +219,19 @@ export default function SectionWipeTransitions() {
                 border:1px solid rgba(255,255,255,0.08);
                 border-left:3.5px solid #ff1e42;
                 border-radius:8px;
-                padding:0.95rem 1.25rem;
+                padding:1rem 1.35rem;
                 box-sizing:border-box;
                 display:flex;
                 flex-direction:column;
-                gap:0.45rem;
+                gap:0.55rem;
                 box-shadow:0 8px 24px rgba(0,0,0,0.45);
                 transition:transform 0.2s, border-color 0.2s;
                 pointer-events:auto;"
                 onmouseover="this.style.borderColor='rgba(0,229,255,0.4)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(4px)';"
                 onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(0)';">
 
-                <!-- Row 1: Icon + Title + Status Pill -->
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                <!-- Row 1: Icon + Title + Prominent Status Pill -->
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;">
                   <div style="display:flex;align-items:center;gap:10px;min-width:0;">
                     <span style="
                       display:inline-flex;align-items:center;justify-content:center;
@@ -240,27 +240,28 @@ export default function SectionWipeTransitions() {
                       flex-shrink:0;">
                       ${iconSvg}
                     </span>
-                    <h3 style="margin:0;font-size:0.92rem;font-weight:700;color:#ffffff;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                    <h3 style="margin:0;font-size:0.94rem;font-weight:700;color:#ffffff;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                       ${c.label}
                     </h3>
                   </div>
                   <span style="
-                    font-size:0.68rem;font-weight:700;letter-spacing:0.5px;
+                    font-family:'Space Grotesk',sans-serif;
+                    font-size:0.76rem;font-weight:800;letter-spacing:1px;
                     color:${statusColor};background:${statusBg};border:1px solid ${statusBorder};
-                    padding:3px 10px;border-radius:9999px;white-space:nowrap;flex-shrink:0;">
+                    padding:5px 13px;border-radius:6px;white-space:nowrap;flex-shrink:0;">
                     ${statusText}
                   </span>
                 </div>
 
-                <!-- Row 2: Issuing Body + Direct Verification Link -->
+                <!-- Row 2: Issuing Body + Optional Link (No fake Verified text) -->
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-left:36px;">
-                  <span style="font-size:0.78rem;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                  <span style="font-size:0.8rem;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                     ${c.issuing_body}
                   </span>
                   ${
                     c.verify_url
-                      ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;font-weight:600;color:#00e5ff;text-decoration:none;display:inline-flex;align-items:center;gap:3px;flex-shrink:0;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Verify ↗</a>`
-                      : `<span style="font-size:0.75rem;color:#64748b;flex-shrink:0;">Verified</span>`
+                      ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;font-weight:600;color:#00e5ff;text-decoration:none;display:inline-flex;align-items:center;gap:3px;flex-shrink:0;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Official Link ↗</a>`
+                      : ""
                   }
                 </div>
               </div>
@@ -287,13 +288,13 @@ export default function SectionWipeTransitions() {
         );
       }
 
-      // Initial render with clean, concise seed data
+      // Initial render with clean in-progress and planned items (no fake earned items)
       renderCertCards([
         {
           id: "csc-professional",
           label: "Civil Service Exam — Professional Level",
           issuing_body: "Civil Service Commission",
-          status: "earned",
+          status: "in-progress",
           badge_icon: "award",
           verify_url: "https://www.csc.gov.ph",
         },
@@ -301,7 +302,7 @@ export default function SectionWipeTransitions() {
           id: "tesda-css-nc2",
           label: "Computer Systems Servicing NC II",
           issuing_body: "TESDA",
-          status: "earned",
+          status: "in-progress",
           badge_icon: "check",
           verify_url: "https://www.tesda.gov.ph",
         },
@@ -309,7 +310,7 @@ export default function SectionWipeTransitions() {
           id: "cisco-cybersecurity",
           label: "Intro to Cybersecurity & Networking",
           issuing_body: "Cisco Networking Academy",
-          status: "earned",
+          status: "in-progress",
           badge_icon: "shield",
           verify_url: "https://www.netacad.com",
         },
@@ -336,22 +337,6 @@ export default function SectionWipeTransitions() {
           status: "planned",
           badge_icon: "award",
           verify_url: "https://aws.amazon.com/certification",
-        },
-        {
-          id: "google-ads-cert",
-          label: "Google Ads — Search Certification",
-          issuing_body: "Google Skillshop",
-          status: "planned",
-          badge_icon: "award",
-          verify_url: "https://skillshop.google.com",
-        },
-        {
-          id: "meta-social-cert",
-          label: "Meta Social Media Marketing",
-          issuing_body: "Meta & Coursera",
-          status: "planned",
-          badge_icon: "award",
-          verify_url: "https://coursera.org",
         },
       ]);
 

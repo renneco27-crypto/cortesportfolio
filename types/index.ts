@@ -69,10 +69,11 @@ export interface PortfolioCredential {
   id: string;
   label: string;
   issuing_body: string;
-  status: "pending" | "earned";
+  status: "earned" | "in-progress" | "planned" | "pending";
   badge_icon: string;
   sort_order: number;
   notes?: string;
+  verify_url?: string;
 }
 
 export type CertStatus =

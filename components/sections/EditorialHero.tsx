@@ -6,6 +6,7 @@ export default function EditorialHero() {
   const [terminalText, setTerminalText] = useState("");
   const fullText = "$ status: seeking internship — ready to learn, build & contribute";
   const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
+  const [isShiftedUp, setIsShiftedUp] = useState<boolean>(false);
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
@@ -27,8 +28,14 @@ export default function EditorialHero() {
 
   return (
     <section className="relative w-full h-[85vh] flex flex-col justify-center items-center text-center px-6 md:px-16 z-10 select-none">
-      {/* High-Contrast Backdrop Container ensuring 100% crisp readability over the 3D diorama canvas */}
-      <div className="relative flex flex-col items-center max-w-4xl px-8 md:px-12 py-10 rounded-2xl bg-black/55 backdrop-blur-[8px] border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)]">
+      {/* High-Contrast Backdrop Container - Click to toggle slide up / down */}
+      <div
+        onClick={() => setIsShiftedUp((prev) => !prev)}
+        className={`relative flex flex-col items-center max-w-4xl px-8 md:px-12 py-10 rounded-2xl bg-black/55 backdrop-blur-[8px] border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)] cursor-pointer transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-white/20 active:scale-[0.99] ${
+          isShiftedUp ? "-translate-y-28 md:-translate-y-40" : "translate-y-0"
+        }`}
+        title="Click to toggle position"
+      >
         <div className="font-mono text-xs md:text-sm tracking-[3px] uppercase text-[#ff4d5a] font-semibold mb-3 md:mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
           ENGINEERING PORTFOLIO — {currentYear}
         </div>
