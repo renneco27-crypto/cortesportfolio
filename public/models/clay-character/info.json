@@ -1,0 +1,26 @@
+{
+  "uid": "fa68f26cf95d4bb4a8c3e5186134fd65",
+  "name": "Clayverse - Clay Player Character with Sword",
+  "author": "gcaruso",
+  "source_url": "https://sketchfab.com/3d-models/clayverse-clay-player-character-with-sword-fa68f26cf95d4bb4a8c3e5186134fd65",
+  "project": "https://github.com/seryi882/sketchfab-downloader-extension",
+  "format": "glb+gltf+osgjs",
+  "geometry_count": 5,
+  "textures_downloaded": 4,
+  "textures_skipped": false,
+  "textures_embedded_in_glb": 4,
+  "files": [
+    "Clayverse_-_Clay_Player_Character_with_Sword.glb",
+    "model.gltf",
+    "model.bin",
+    "textures/Character2_LP_PlayerTextureP1_BaseMap-Reco.png",
+    "textures/XXXXXX-Clay_normal.png",
+    "textures/Character2_LP_PlayerTextureP1_Normal.png",
+    "textures/EquipsTexture_Colors3.jpg",
+    "file.osgjs",
+    "model_file.bin",
+    "model_file_wireframe.bin",
+    "README.txt"
+  ],
+  "note": "Open .glb (textures packed inside when enabled) or model.gltf. See README.txt."
+}

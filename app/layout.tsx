@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import TikTokPixelInit from "@/components/TikTokPixelInit";
 import MatrixRain from "@/components/ui/MatrixRain";
 import CustomCursor from "@/components/ui/CustomCursor";
+import WireframeMeshLoader from "@/components/ui/WireframeMeshLoader";
 
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"),
@@ -58,6 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body>
+        <WireframeMeshLoader />
         <MatrixRain />
         <CustomCursor />
         <script
