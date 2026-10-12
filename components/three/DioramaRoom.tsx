@@ -5,12 +5,12 @@ import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
+// Smaller square stairs, tallest block on the right deleted (4 blocks remaining)
 export const PLATFORM_BLOCKS = [
-  { x: -3.2, z: 1.6, w: 2.1, d: 2.1, topY: 0.8 },
-  { x: -1.4, z: 0.5, w: 2.1, d: 2.1, topY: 1.4 },
-  { x: 0.3, z: -0.6, w: 2.3, d: 2.3, topY: 2.0 },
-  { x: 2.1, z: -1.8, w: 2.1, d: 2.1, topY: 2.6 },
-  { x: 3.8, z: -2.9, w: 2.3, d: 2.3, topY: 3.3 },
+  { x: -2.4, z: 1.2, w: 1.3, d: 1.3, topY: 0.5 },
+  { x: -1.0, z: 0.3, w: 1.3, d: 1.3, topY: 1.0 },
+  { x: 0.4, z: -0.6, w: 1.3, d: 1.3, topY: 1.5 },
+  { x: 1.8, z: -1.5, w: 1.3, d: 1.3, topY: 2.0 },
 ];
 
 interface DioramaRoomProps {
@@ -19,23 +19,66 @@ interface DioramaRoomProps {
 
 export default function DioramaRoom({ target }: DioramaRoomProps) {
   const spotLightRef = useRef<THREE.SpotLight>(null);
-  const lightTargetRef = useRef<THREE.Object3D>(new THREE.Object3D());
   const lightPoolRef = useRef<THREE.Mesh>(null);
   const targetObject = useMemo(() => new THREE.Object3D(), []);
 
-  // 1. Load Background Image
+  // 1. Wallpaper Texture for the back wall
   const bgTexture = useTexture("/images/diorama-bg.webp");
 
-  // 2. Clone and configure floor texture using the bottom half (1/2 down) of the image
-  const floorTexture = useMemo(() => {
-    const t = bgTexture.clone();
-    t.repeat.set(1, 0.5); // 1/2 vertical height
-    t.offset.set(0, 0);   // bottom half (mountains & forest canopy)
-    t.wrapS = THREE.ClampToEdgeWrapping;
-    t.wrapT = THREE.ClampToEdgeWrapping;
-    t.needsUpdate = true;
-    return t;
-  }, [bgTexture]);
+  // 2. Procedural Pixelated Minecraft Gold Block Texture (16x16 NearestFilter)
+  const goldTexture = useMemo(() => {
+    if (typeof document === "undefined") return null;
+    const canvas = document.createElement("canvas");
+    canvas.width = 16;
+    canvas.height = 16;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+
+    // Base Minecraft gold pixel variations
+    const goldPalette = ["#fad338", "#ebd034", "#f2ce2b", "#fadc42", "#e8c31f"];
+    for (let y = 0; y < 16; y++) {
+      for (let x = 0; x < 16; x++) {
+        const seed = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+        const n = Math.floor(Math.abs(seed) % goldPalette.length);
+        ctx.fillStyle = goldPalette[n];
+        ctx.fillRect(x, y, 1, 1);
+      }
+    }
+
+    // Outer beveled frame (top/left highlight, bottom/right shadow)
+    ctx.fillStyle = "#fff59d";
+    ctx.fillRect(0, 0, 16, 1);
+    ctx.fillRect(0, 0, 1, 16);
+
+    ctx.fillStyle = "#8d6400";
+    ctx.fillRect(0, 15, 16, 1);
+    ctx.fillRect(15, 0, 1, 16);
+
+    // Inner quadrant cross-seam
+    ctx.fillStyle = "#ca8a04";
+    ctx.fillRect(7, 1, 2, 14);
+    ctx.fillRect(1, 7, 14, 2);
+
+    // Corner rivet accents
+    ctx.fillStyle = "#fff9c4";
+    ctx.fillRect(2, 2, 2, 2);
+    ctx.fillRect(12, 2, 2, 2);
+    ctx.fillRect(2, 12, 2, 2);
+    ctx.fillRect(12, 12, 2, 2);
+
+    ctx.fillStyle = "#713f12";
+    ctx.fillRect(3, 4, 1, 1);
+    ctx.fillRect(13, 4, 1, 1);
+    ctx.fillRect(3, 14, 1, 1);
+    ctx.fillRect(13, 14, 1, 1);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
+    texture.generateMipmaps = false;
+    texture.needsUpdate = true;
+    return texture;
+  }, []);
 
   useFrame((_, delta) => {
     const clampedDelta = Math.min(delta, 0.1);
@@ -123,63 +166,42 @@ export default function DioramaRoom({ target }: DioramaRoomProps) {
 
       {/* ── Background & Room Structure ── */}
       <group position={[0, 0, 0]}>
-        {/* Full Image Back Wall Backdrop (Starry Sky, Moon, and Mountains) */}
-        <mesh position={[0, 6.5, -8.6]}>
-          <planeGeometry args={[28, 15]} />
+        {/* Back Wall with Wallpaper fitted to exact 16:9 aspect ratio (22.28 x 12.5) */}
+        <mesh position={[0, 6.25, -8.0]} receiveShadow>
+          <planeGeometry args={[22.28, 12.5]} />
           <meshBasicMaterial map={bgTexture} toneMapped={false} />
         </mesh>
 
-        {/* Floor Plane using the 1/2 bottom half of the image */}
+        {/* Clean Matte Diorama Floor (NO image) */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
           <planeGeometry args={[26, 20]} />
           <meshStandardMaterial
-            map={floorTexture}
-            roughness={0.7}
-            metalness={0.08}
+            color="#0e1017"
+            roughness={0.82}
+            metalness={0.12}
           />
         </mesh>
 
-        {/* Soft atmospheric framing side panels */}
-        <mesh position={[-13, 6.5, 0.5]} rotation={[0, Math.PI / 2, 0]}>
-          <planeGeometry args={[20, 15]} />
-          <meshStandardMaterial color="#080c10" roughness={0.9} />
-        </mesh>
-        <mesh position={[13, 6.5, 0.5]} rotation={[0, -Math.PI / 2, 0]}>
-          <planeGeometry args={[20, 15]} />
-          <meshStandardMaterial color="#080c10" roughness={0.9} />
-        </mesh>
-
-        {/* ── 3D Jumping Blocks Path Leading Through the Light ── */}
+        {/* ── Minecraft Gold Block Stairs (Smaller, Square, 4 Blocks) ── */}
         {PLATFORM_BLOCKS.map((b, idx) => (
           <group key={idx} position={[b.x, b.topY / 2, b.z]}>
-            {/* Main Block Box */}
+            {/* Minecraft Gold Block Box */}
             <mesh castShadow receiveShadow>
               <boxGeometry args={[b.w, b.topY, b.d]} />
               <meshStandardMaterial
-                color="#1b3036"
-                roughness={0.65}
-                metalness={0.15}
+                map={goldTexture ?? undefined}
+                color="#ffe043"
+                roughness={0.28}
+                metalness={0.72}
               />
             </mesh>
 
-            {/* Glowing Clay Cap / Top Stepping Surface */}
-            <mesh position={[0, b.topY / 2 + 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-              <planeGeometry args={[b.w * 0.94, b.d * 0.94]} />
-              <meshStandardMaterial
-                color={idx === 2 ? "#e63946" : "#2dd4bf"}
-                roughness={0.4}
-                metalness={0.2}
-                emissive={idx === 2 ? "#e63946" : "#0d9488"}
-                emissiveIntensity={0.35}
-              />
-            </mesh>
-
-            {/* Soft Ambient Light Ray Indicator on each block */}
+            {/* Subtle Golden Glow illuminating the steps */}
             <pointLight
-              position={[0, b.topY / 2 + 0.6, 0]}
-              intensity={0.6}
-              color={idx === 2 ? "#ffa8b0" : "#a7f3d0"}
-              distance={3.5}
+              position={[0, b.topY / 2 + 0.35, 0]}
+              intensity={0.45}
+              color="#fef08a"
+              distance={2.5}
             />
           </group>
         ))}
