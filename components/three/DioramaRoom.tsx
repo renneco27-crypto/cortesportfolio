@@ -5,28 +5,39 @@ import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
-// Smaller square stairs, tallest block on the right deleted (4 blocks remaining)
+// 4 Blocks scattered in background and flanks (center is 100% open for clean hero text readability)
 export const PLATFORM_BLOCKS = [
-  { x: -2.4, z: 1.2, w: 1.3, d: 1.3, topY: 0.5 },
-  { x: -1.0, z: 0.3, w: 1.3, d: 1.3, topY: 1.0 },
-  { x: 0.4, z: -0.6, w: 1.3, d: 1.3, topY: 1.5 },
-  { x: 1.8, z: -1.5, w: 1.3, d: 1.3, topY: 2.0 },
+  // 1. Far Left Background
+  { x: -5.8, z: -3.6, w: 1.4, d: 1.4, topY: 1.1 },
+  // 2. Mid Left Flank
+  { x: -4.4, z: -1.6, w: 1.4, d: 1.4, topY: 0.65 },
+  // 3. Far Right Background
+  { x: 5.5, z: -3.4, w: 1.4, d: 1.4, topY: 1.25 },
+  // 4. Mid Right Flank
+  { x: 4.2, z: -1.4, w: 1.4, d: 1.4, topY: 0.75 },
 ];
 
 interface DioramaRoomProps {
   target: [number, number, number];
+  applePos?: [number, number, number];
+  isAppleActive?: boolean;
 }
 
-export default function DioramaRoom({ target }: DioramaRoomProps) {
+export default function DioramaRoom({
+  target,
+  applePos = [2.2, 0.28, 0.8],
+  isAppleActive = true,
+}: DioramaRoomProps) {
   const spotLightRef = useRef<THREE.SpotLight>(null);
   const lightPoolRef = useRef<THREE.Mesh>(null);
+  const appleGroupRef = useRef<THREE.Group>(null);
   const targetObject = useMemo(() => new THREE.Object3D(), []);
 
   // 1. Wallpaper Texture for the back wall
   const bgTexture = useTexture("/images/diorama-bg.webp");
 
-  // 2. Procedural Pixelated Minecraft Gold Block Texture (16x16 NearestFilter)
-  const goldTexture = useMemo(() => {
+  // 2. Procedural Minecraft Lush Cave / Flowering Azalea Leaf Texture (16x16 NearestFilter)
+  const lushLeafTexture = useMemo(() => {
     if (typeof document === "undefined") return null;
     const canvas = document.createElement("canvas");
     canvas.width = 16;
@@ -34,43 +45,44 @@ export default function DioramaRoom({ target }: DioramaRoomProps) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return null;
 
-    // Base Minecraft gold pixel variations
-    const goldPalette = ["#fad338", "#ebd034", "#f2ce2b", "#fadc42", "#e8c31f"];
+    // Official Minecraft Azalea Leaves foliage palette
+    const greens = [
+      "#315423", // deep shadow
+      "#4a7832", // mid green
+      "#4a7832", // mid green base
+      "#679c3e", // bright leaf highlight
+      "#679c3e", // bright foliage
+      "#89ba59", // pale mint accent
+    ];
+
+    // Dappled leaf cluster pattern
     for (let y = 0; y < 16; y++) {
       for (let x = 0; x < 16; x++) {
-        const seed = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
-        const n = Math.floor(Math.abs(seed) % goldPalette.length);
-        ctx.fillStyle = goldPalette[n];
+        const seed = Math.sin(x * 37.11 + y * 91.73) * 43758.5453;
+        const idx = Math.floor(Math.abs(seed) % greens.length);
+        ctx.fillStyle = greens[idx];
         ctx.fillRect(x, y, 1, 1);
       }
     }
 
-    // Outer beveled frame (top/left highlight, bottom/right shadow)
-    ctx.fillStyle = "#fff59d";
-    ctx.fillRect(0, 0, 16, 1);
-    ctx.fillRect(0, 0, 1, 16);
+    // Flowering Azalea blossoms (2 blossom clusters)
+    // Blossom 1
+    ctx.fillStyle = "#a83e72"; // blossom shadow
+    ctx.fillRect(4, 5, 2, 2);
+    ctx.fillStyle = "#e87ab4"; // vibrant petal
+    ctx.fillRect(3, 4, 3, 2);
+    ctx.fillRect(4, 3, 2, 3);
+    ctx.fillStyle = "#f7b2d6"; // center highlight
+    ctx.fillRect(4, 4, 1, 1);
 
-    ctx.fillStyle = "#8d6400";
-    ctx.fillRect(0, 15, 16, 1);
-    ctx.fillRect(15, 0, 1, 16);
-
-    // Inner quadrant cross-seam
-    ctx.fillStyle = "#ca8a04";
-    ctx.fillRect(7, 1, 2, 14);
-    ctx.fillRect(1, 7, 14, 2);
-
-    // Corner rivet accents
-    ctx.fillStyle = "#fff9c4";
-    ctx.fillRect(2, 2, 2, 2);
-    ctx.fillRect(12, 2, 2, 2);
-    ctx.fillRect(2, 12, 2, 2);
-    ctx.fillRect(12, 12, 2, 2);
-
-    ctx.fillStyle = "#713f12";
-    ctx.fillRect(3, 4, 1, 1);
-    ctx.fillRect(13, 4, 1, 1);
-    ctx.fillRect(3, 14, 1, 1);
-    ctx.fillRect(13, 14, 1, 1);
+    // Blossom 2
+    ctx.fillStyle = "#a83e72";
+    ctx.fillRect(11, 11, 2, 2);
+    ctx.fillStyle = "#e87ab4";
+    ctx.fillRect(10, 10, 3, 2);
+    ctx.fillRect(11, 9, 2, 3);
+    ctx.fillStyle = "#f7b2d6";
+    ctx.fillRect(11, 10, 1, 1);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.magFilter = THREE.NearestFilter;
@@ -80,10 +92,11 @@ export default function DioramaRoom({ target }: DioramaRoomProps) {
     return texture;
   }, []);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     const clampedDelta = Math.min(delta, 0.1);
     const tx = target[0];
     const tz = target[2];
+    const time = state.clock.elapsedTime;
 
     // Smoothly ease spotlight toward mouse
     if (spotLightRef.current) {
@@ -97,6 +110,12 @@ export default function DioramaRoom({ target }: DioramaRoomProps) {
     if (lightPoolRef.current) {
       lightPoolRef.current.position.x += (tx - lightPoolRef.current.position.x) * clampedDelta * 9;
       lightPoolRef.current.position.z += (tz - lightPoolRef.current.position.z) * clampedDelta * 9;
+    }
+
+    // Apple bobbing and gentle floating spin
+    if (appleGroupRef.current && isAppleActive) {
+      appleGroupRef.current.position.y = applePos[1] + Math.sin(time * 3.5) * 0.08;
+      appleGroupRef.current.rotation.y += clampedDelta * 1.6;
     }
   });
 
@@ -172,7 +191,7 @@ export default function DioramaRoom({ target }: DioramaRoomProps) {
           <meshBasicMaterial map={bgTexture} toneMapped={false} />
         </mesh>
 
-        {/* Clean Matte Diorama Floor (NO image) */}
+        {/* Clean Matte Diorama Floor (NO image, clean shadow reception) */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
           <planeGeometry args={[26, 20]} />
           <meshStandardMaterial
@@ -182,29 +201,75 @@ export default function DioramaRoom({ target }: DioramaRoomProps) {
           />
         </mesh>
 
-        {/* ── Minecraft Gold Block Stairs (Smaller, Square, 4 Blocks) ── */}
+        {/* ── 4 Minecraft Lush Cave Leaf Blocks Scattered in Background ── */}
         {PLATFORM_BLOCKS.map((b, idx) => (
           <group key={idx} position={[b.x, b.topY / 2, b.z]}>
-            {/* Minecraft Gold Block Box */}
+            {/* Lush Cave Azalea Leaf Block */}
             <mesh castShadow receiveShadow>
               <boxGeometry args={[b.w, b.topY, b.d]} />
               <meshStandardMaterial
-                map={goldTexture ?? undefined}
-                color="#ffe043"
-                roughness={0.28}
-                metalness={0.72}
+                map={lushLeafTexture ?? undefined}
+                color="#86efac"
+                roughness={0.85}
+                metalness={0.06}
               />
             </mesh>
 
-            {/* Subtle Golden Glow illuminating the steps */}
+            {/* Subtle Azalea Blossom Spore Glow */}
             <pointLight
               position={[0, b.topY / 2 + 0.35, 0]}
-              intensity={0.45}
-              color="#fef08a"
-              distance={2.5}
+              intensity={0.35}
+              color="#f472b6"
+              distance={2.4}
             />
           </group>
         ))}
+
+        {/* ── 3D Interactive Teleporting Apple ── */}
+        {isAppleActive && (
+          <group
+            ref={appleGroupRef}
+            position={[applePos[0], applePos[1], applePos[2]]}
+          >
+            {/* Apple Body */}
+            <mesh castShadow position={[0, 0, 0]}>
+              <sphereGeometry args={[0.26, 16, 16]} />
+              <meshStandardMaterial
+                color="#ef4444"
+                emissive="#be123c"
+                emissiveIntensity={0.32}
+                roughness={0.22}
+                metalness={0.12}
+              />
+            </mesh>
+
+            {/* Apple Stem */}
+            <mesh position={[0, 0.28, 0]}>
+              <cylinderGeometry args={[0.02, 0.025, 0.14, 8]} />
+              <meshStandardMaterial color="#5c2e0b" roughness={0.8} />
+            </mesh>
+
+            {/* Apple Leaf */}
+            <mesh position={[0.06, 0.3, 0]} rotation={[0, 0, -Math.PI / 4]}>
+              <planeGeometry args={[0.1, 0.06]} />
+              <meshStandardMaterial color="#4ade80" side={THREE.DoubleSide} />
+            </mesh>
+
+            {/* Pulsing Target Beacon Disc on Ground */}
+            <mesh position={[0, -applePos[1] + 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+              <ringGeometry args={[0.22, 0.38, 32]} />
+              <meshBasicMaterial
+                color="#ff1a40"
+                transparent
+                opacity={0.45}
+                side={THREE.DoubleSide}
+              />
+            </mesh>
+
+            {/* Apple Beacon Glow */}
+            <pointLight color="#ff2d55" intensity={2.0} distance={3.0} />
+          </group>
+        )}
       </group>
     </>
   );

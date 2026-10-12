@@ -56,83 +56,138 @@ export default function SectionWipeTransitions() {
     const masterTrigger = document.querySelector("#slide-trigger-master") as HTMLElement | null;
 
     if (masterTrigger) {
-      /* ── 0. Create Overlay 0: Verified Credentials (Panel before Selected Works) ── */
+      /* ── 0. Create Overlay 0: Verified Credentials (Defier of Limits / Gojo Design) ── */
       const certOv = document.createElement("div");
       certOv.style.cssText =
         "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;" +
         "pointer-events:none;opacity:0;clip-path:inset(0 0 0 100%);" +
-        "background:rgba(5, 5, 5, 0.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);" +
+        "background:rgba(8, 10, 16, 0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);" +
         "overflow:hidden;";
 
       certOv.innerHTML = `
+        <style>
+          #cert-panel-grid {
+            scrollbar-width: thin;
+            scrollbar-color: #ff1e42 rgba(255, 255, 255, 0.04);
+          }
+          #cert-panel-grid::-webkit-scrollbar {
+            width: 7px;
+          }
+          #cert-panel-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 9999px;
+          }
+          #cert-panel-grid::-webkit-scrollbar-thumb {
+            background: #ff1e42;
+            border-radius: 9999px;
+            box-shadow: 0 0 10px rgba(255, 30, 66, 0.8);
+          }
+          #cert-panel-grid::-webkit-scrollbar-thumb:hover {
+            background: #ff4d6d;
+          }
+        </style>
+
         <div style="
           position:absolute;inset:0;display:flex;align-items:center;
           padding:0 8vw;box-sizing:border-box;gap:4rem;">
 
-          <!-- Left: Editorial text block -->
-          <div style="flex:1;max-width:500px;padding-right:2rem;">
-            <div style="
-              font-family:'Courier New',monospace;font-size:0.7rem;letter-spacing:4px;
-              text-transform:uppercase;color:#e63946;margin-bottom:2.5rem;
-              display:flex;align-items:center;gap:12px;">
-              <span style="display:inline-block;width:32px;height:1px;background:#e63946;"></span>
-              02 / VERIFIED CREDENTIALS
+          <!-- Left: Defier of Limits Editorial Header Block -->
+          <div style="flex:1;max-width:480px;padding-right:1rem;">
+            <!-- Angled Ribbon Pill Badge -->
+            <div style="margin-bottom:1.4rem;">
+              <div style="
+                display:inline-block;
+                background:#ff1e42;
+                color:#fff;
+                font-family:'Courier New',monospace;
+                font-size:0.65rem;
+                font-weight:800;
+                letter-spacing:2.5px;
+                text-transform:uppercase;
+                padding:5px 20px 5px 12px;
+                clip-path:polygon(0 0, 93% 0, 100% 100%, 0 100%);
+                box-shadow:0 0 16px rgba(255,30,66,0.4);">
+                VERIFIED CREDENTIAL ARCHIVE
+              </div>
             </div>
 
+            <!-- Main Title with Split White + Red + Cyan Color Theory -->
             <h2 style="
-              font-size:clamp(2.6rem,5.5vw,4.8rem);font-weight:200;
-              letter-spacing:-0.04em;line-height:0.92;
-              color:#fff;margin:0 0 2rem;
+              font-family:'Space Grotesk',-apple-system,sans-serif;
+              font-size:clamp(2.5rem,5.2vw,4.4rem);
+              font-weight:800;
+              letter-spacing:-0.03em;
+              line-height:0.95;
+              margin:0 0 1.25rem;
               text-transform:uppercase;">
-              Technical<br/>
-              <span style="color:#e63946;">Certifications</span><br/>
-              &amp; Badges.
+              <span style="color:#ffffff;">TECHNICAL</span><br/>
+              <span style="color:#ff2a55;">CERTIFICATIONS</span><br/>
+              <span style="color:#00e5ff;">&amp; BADGES.</span>
             </h2>
 
+            <!-- Glowing Horizon Separator Bar -->
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+              <div style="height:2px;width:52px;background:#ff1e42;box-shadow:0 0 10px #ff1e42;"></div>
+              <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(255,30,66,0.6) 0%,rgba(0,229,255,0.4) 65%,transparent 100%);"></div>
+              <span style="font-family:'Courier New',monospace;font-size:0.65rem;color:#71717a;letter-spacing:2px;font-weight:600;">
+                ID: #SPECIAL-GRADE
+              </span>
+            </div>
+
             <p style="
-              color:#aaa;font-size:0.85rem;line-height:1.7;
-              font-weight:300;margin-bottom:2.5rem;max-width:380px;
-              border-left:2px solid rgba(230,57,70,0.5);padding-left:1.25rem;">
+              color:#94a3b8;font-size:0.85rem;line-height:1.7;
+              font-weight:400;margin-bottom:2rem;max-width:380px;
+              border-left:2.5px solid #ff1e42;padding-left:1.25rem;">
               Civil service eligibility, cloud engineering credentials, systems servicing, and cybersecurity paths. Synced live with Supabase telemetry.
             </p>
 
             <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;">
               <div style="
                 font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:2px;
-                text-transform:uppercase;color:#4ade80;background:rgba(74,222,128,0.08);
-                border:1px solid rgba(74,222,128,0.25);padding:8px 16px;border-radius:2px;
-                display:inline-flex;align-items:center;gap:8px;">
-                <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#4ade80;"></span>
+                text-transform:uppercase;color:#00e5ff;background:rgba(0,229,255,0.08);
+                border:1px solid rgba(0,229,255,0.3);padding:8px 16px;border-radius:4px;
+                box-shadow:0 0 14px rgba(0,229,255,0.15);display:inline-flex;align-items:center;gap:8px;">
+                <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e5ff;box-shadow:0 0 6px #00e5ff;"></span>
                 SUPABASE LIVE SYNC
               </div>
               <div style="
                 font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:2px;
-                text-transform:uppercase;color:#888;">
-                PH &bull; GLOBAL CREDENTIALS
+                text-transform:uppercase;color:#ff2a55;background:rgba(255,42,85,0.08);
+                border:1px solid rgba(255,42,85,0.3);padding:8px 14px;border-radius:4px;">
+                SPECIAL GRADE PH // GLOBAL
               </div>
             </div>
           </div>
 
-          <!-- Right: Dynamic Credentials Cards Grid -->
+          <!-- Right: Scrollable Defier of Limits Cards Container -->
           <div id="cert-panel-grid" style="
-            flex:1.2;display:flex;flex-direction:column;gap:10px;
-            max-width:580px;max-height:82vh;overflow-y:auto;padding-right:8px;">
+            flex:1.25;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+            max-width:600px;
+            max-height:82vh;
+            overflow-y:auto;
+            overscroll-behavior:contain;
+            padding-right:12px;
+            pointer-events:auto !important;
+            touch-action:pan-y;">
           </div>
         </div>
 
-        <!-- Subtle grid overlay -->
+        <!-- Cyberpunk subtle background telemetry grid -->
         <div style="
           position:absolute;inset:0;pointer-events:none;
-          background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
-            linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
-          background-size:60px 60px;">
+          background-image:linear-gradient(rgba(255,30,66,0.03) 1px,transparent 1px),
+            linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);
+          background-size:48px 48px;">
         </div>
       `;
 
       document.body.appendChild(certOv);
       overlays.push(certOv);
 
-      // Render credential cards helper
+      // Render Gojo / Defier of Limits styled credential cards
       const renderCertCards = (
         items: Array<{
           id: string;
@@ -140,63 +195,108 @@ export default function SectionWipeTransitions() {
           issuing_body: string;
           status: string;
           badge_icon: string;
+          notes?: string;
           verify_url?: string;
         }>
       ) => {
         const grid = certOv.querySelector("#cert-panel-grid");
         if (!grid) return;
         grid.innerHTML = items
-          .map((c) => {
+          .map((c, idx) => {
             const isEarned = c.status === "earned";
-            const statusColor = isEarned ? "#4ade80" : "#facc15";
-            const statusBg = isEarned ? "rgba(74,222,128,0.1)" : "rgba(250,204,21,0.1)";
-            const statusBorder = isEarned ? "rgba(74,222,128,0.25)" : "rgba(250,204,21,0.25)";
-            const statusLabel = isEarned ? "EARNED" : c.status === "in-progress" ? "IN PROGRESS" : "PLANNED";
+            const isInProgress = c.status === "in-progress";
+
+            // Color theory: Cyan for Earned / Special Grade, Red for Active / In-Progress, Amber for Target
+            const statusColor = isEarned ? "#00e5ff" : isInProgress ? "#ff2a55" : "#facc15";
+            const statusText = isEarned
+              ? "SPECIAL GRADE // EARNED"
+              : isInProgress
+              ? "GRADE 1 // IN PROGRESS"
+              : "ROADMAP // TARGET";
+
+            const cardId = `ID: #${(c.id || `CRED-${idx + 1}`).toUpperCase().replace(/-/g, "-").slice(0, 14)}`;
 
             const iconSvg =
               c.badge_icon === "shield"
-                ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
+                ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
                 : c.badge_icon === "graduation"
-                ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`
+                ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`
                 : c.badge_icon === "check"
-                ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
-                : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>`;
+                ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+                : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>`;
 
             return `
               <div style="
-                background:rgba(15,15,18,0.85);border:1px solid rgba(255,255,255,0.09);
-                padding:12px 18px;border-radius:2px;display:flex;align-items:center;
-                justify-content:space-between;gap:14px;transition:all 0.2s;"
-                onmouseover="this.style.borderColor='${statusColor}';this.style.background='rgba(255,255,255,0.03)';"
-                onmouseout="this.style.borderColor='rgba(255,255,255,0.09)';this.style.background='rgba(15,15,18,0.85)';">
-                <div style="display:flex;align-items:center;gap:14px;min-width:0;">
-                  <div style="
-                    width:36px;height:36px;border-radius:2px;background:${statusBg};
-                    border:1px solid ${statusBorder};display:flex;align-items:center;
-                    justify-content:center;flex-shrink:0;">
-                    ${iconSvg}
-                  </div>
-                  <div style="min-width:0;">
-                    <div style="font-size:0.85rem;color:#fff;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                background:rgba(13,16,25,0.92);
+                border:1px solid rgba(255,255,255,0.08);
+                border-left:3.5px solid #ff1e42;
+                border-radius:8px;
+                padding:1.15rem 1.35rem;
+                box-sizing:border-box;
+                display:flex;
+                flex-direction:column;
+                gap:0.75rem;
+                box-shadow:0 12px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+                transition:transform 0.2s, border-color 0.2s;
+                pointer-events:auto;"
+                onmouseover="this.style.borderColor='rgba(0,229,255,0.4)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(4px)';"
+                onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(0)';">
+
+                <!-- Header: Badge Icon + Title + ID stamp -->
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                  <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+                    <span style="
+                      display:inline-flex;align-items:center;justify-content:center;
+                      width:28px;height:28px;border-radius:4px;
+                      background:rgba(255,30,66,0.15);border:1px solid rgba(255,30,66,0.4);
+                      flex-shrink:0;">
+                      ${iconSvg}
+                    </span>
+                    <h3 style="margin:0;font-size:0.96rem;font-weight:700;color:#ffffff;letter-spacing:0.3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                       ${c.label}
+                    </h3>
+                  </div>
+                  <span style="font-family:'Courier New',monospace;font-size:0.68rem;color:#71717a;letter-spacing:1.5px;font-weight:600;flex-shrink:0;">
+                    ${cardId}
+                  </span>
+                </div>
+
+                <!-- Notes / Description -->
+                <p style="margin:0;font-size:0.8rem;color:#94a3b8;line-height:1.55;font-weight:400;">
+                  ${c.notes || 'Verified competency standard validated for production full-stack engineering and security architecture.'}
+                </p>
+
+                <!-- Gojo 3-Tile Attribute Badges Grid -->
+                <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;margin-top:2px;">
+                  <!-- Tile 1: Issuing Body -->
+                  <div style="background:#141824;border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:7px 11px;">
+                    <div style="font-family:'Courier New',monospace;font-size:0.56rem;color:#71717a;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">
+                      ISSUING BODY
                     </div>
-                    <div style="font-family:'Courier New',monospace;font-size:0.65rem;color:#777;letter-spacing:1px;margin-top:2px;">
+                    <div style="font-size:0.76rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                       ${c.issuing_body}
                     </div>
                   </div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
-                  <span style="
-                    font-family:'Courier New',monospace;font-size:0.6rem;letter-spacing:1.5px;
-                    color:${statusColor};background:${statusBg};border:1px solid ${statusBorder};
-                    padding:3px 8px;border-radius:2px;font-weight:600;">
-                    ${statusLabel}
-                  </span>
-                  ${
-                    c.verify_url
-                      ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="color:#666;display:inline-flex;align-items:center;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`
-                      : ""
-                  }
+
+                  <!-- Tile 2: Grade / Status -->
+                  <div style="background:#141824;border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:7px 11px;">
+                    <div style="font-family:'Courier New',monospace;font-size:0.56rem;color:#71717a;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">
+                      GRADE / STATUS
+                    </div>
+                    <div style="font-size:0.75rem;font-weight:800;color:${statusColor};letter-spacing:0.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                      ${statusText}
+                    </div>
+                  </div>
+
+                  <!-- Tile 3: Verification Link -->
+                  <div style="background:#141824;border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:7px 11px;display:flex;flex-direction:column;justify-content:center;">
+                    <div style="font-family:'Courier New',monospace;font-size:0.56rem;color:#71717a;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">
+                      VERIFICATION
+                    </div>
+                    <div style="font-size:0.75rem;font-weight:700;">
+                      ${c.verify_url ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="color:#00e5ff;text-decoration:none;display:inline-flex;align-items:center;gap:3px;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">ONLINE REPO ↗</a>` : `<span style="color:#64748b;font-weight:600;">GOV VERIFIED</span>`}
+                    </div>
+                  </div>
                 </div>
               </div>
             `;
@@ -204,14 +304,98 @@ export default function SectionWipeTransitions() {
           .join("");
       };
 
-      // Initial render with defaults
+      // Direct wheel capture on #cert-panel-grid: guarantees wheel scrolling scrolls the cards!
+      const panelGrid = certOv.querySelector("#cert-panel-grid") as HTMLElement | null;
+      if (panelGrid) {
+        panelGrid.addEventListener(
+          "wheel",
+          (e) => {
+            e.stopPropagation();
+            const canScrollDown = panelGrid.scrollTop + panelGrid.clientHeight < panelGrid.scrollHeight - 2;
+            const canScrollUp = panelGrid.scrollTop > 2;
+            if ((e.deltaY > 0 && canScrollDown) || (e.deltaY < 0 && canScrollUp)) {
+              e.preventDefault();
+              panelGrid.scrollTop += e.deltaY * 0.85;
+            }
+          },
+          { passive: false }
+        );
+      }
+
+      // Initial render with complete Defier of Limits seed data
       renderCertCards([
-        { id: "csc-professional", label: "Civil Service Exam — Professional Level", issuing_body: "Civil Service Commission (CSC), Philippines", status: "earned", badge_icon: "award", verify_url: "https://www.csc.gov.ph" },
-        { id: "tesda-css-nc2", label: "Computer Systems Servicing NC II", issuing_body: "TESDA", status: "earned", badge_icon: "check", verify_url: "https://www.tesda.gov.ph" },
-        { id: "cisco-cybersecurity", label: "Intro to Cybersecurity & Networking Basics", issuing_body: "Cisco Networking Academy", status: "earned", badge_icon: "shield", verify_url: "https://www.netacad.com" },
-        { id: "pwncollege-badge", label: "pwn.college — Program Security Path", issuing_body: "pwn.college", status: "in-progress", badge_icon: "shield", verify_url: "https://pwn.college" },
-        { id: "nextwork-cloud", label: "NextWork — Cloud-Native AI Engineering", issuing_body: "NextWork", status: "in-progress", badge_icon: "graduation", verify_url: "https://nextwork.org" },
-        { id: "aws-cloud-practitioner", label: "AWS Certified Cloud Practitioner", issuing_body: "Amazon Web Services", status: "planned", badge_icon: "award", verify_url: "https://aws.amazon.com/certification" },
+        {
+          id: "csc-professional",
+          label: "Civil Service Exam — Professional Level",
+          issuing_body: "CSC Philippines",
+          status: "earned",
+          badge_icon: "award",
+          notes: "Passing score: 80%+. Civil service eligibility required for state technical roles and enterprise IT governance.",
+          verify_url: "https://www.csc.gov.ph",
+        },
+        {
+          id: "tesda-css-nc2",
+          label: "Computer Systems Servicing NC II",
+          issuing_body: "TESDA",
+          status: "earned",
+          badge_icon: "check",
+          notes: "Hands-on national practical assessment — hardware assembly, enterprise operating systems, networking & diagnostics.",
+          verify_url: "https://www.tesda.gov.ph",
+        },
+        {
+          id: "cisco-cybersecurity",
+          label: "Intro to Cybersecurity & Networking Basics",
+          issuing_body: "Cisco Networking Academy",
+          status: "earned",
+          badge_icon: "shield",
+          notes: "Enterprise network topologies, packet inspection, defense-in-depth, security analytics, and incident response.",
+          verify_url: "https://www.netacad.com",
+        },
+        {
+          id: "pwncollege-badge",
+          label: "pwn.college — Program Security Path",
+          issuing_body: "pwn.college / ASU",
+          status: "in-progress",
+          badge_icon: "shield",
+          notes: "Low-level binary exploitation, reverse engineering, memory corruption defense, and shellcode telemetry.",
+          verify_url: "https://pwn.college",
+        },
+        {
+          id: "nextwork-cloud",
+          label: "NextWork — Cloud-Native AI Engineering",
+          issuing_body: "NextWork Global",
+          status: "in-progress",
+          badge_icon: "graduation",
+          notes: "Production cloud-native architectures, generative AI pipeline integration, and serverless edge delivery.",
+          verify_url: "https://nextwork.org",
+        },
+        {
+          id: "aws-cloud-practitioner",
+          label: "AWS Certified Cloud Practitioner",
+          issuing_body: "Amazon Web Services",
+          status: "planned",
+          badge_icon: "award",
+          notes: "Core AWS cloud services, IAM architecture, security governance, and scalable distributed deployment.",
+          verify_url: "https://aws.amazon.com/certification",
+        },
+        {
+          id: "google-ads-cert",
+          label: "Google Ads — Search Certification",
+          issuing_body: "Google Skillshop",
+          status: "planned",
+          badge_icon: "award",
+          notes: "Performance search marketing, automated bid strategies, attribution modeling, and conversion pipelines.",
+          verify_url: "https://skillshop.google.com",
+        },
+        {
+          id: "meta-social-cert",
+          label: "Meta Social Media Marketing Certificate",
+          issuing_body: "Meta / Coursera",
+          status: "planned",
+          badge_icon: "award",
+          notes: "Cross-platform funnel optimization, conversion APIs, custom audience telemetry, and creative scaling.",
+          verify_url: "https://coursera.org",
+        },
       ]);
 
       // Connect to Supabase via /api/credentials

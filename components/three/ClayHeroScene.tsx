@@ -4,9 +4,9 @@ import React, { useRef, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import ClayCharacter from "./ClayCharacter";
-import DioramaRoom from "./DioramaRoom";
+import DioramaRoom, { PLATFORM_BLOCKS } from "./DioramaRoom";
 
-// Inner 3D controller that calculates raycast intersection with ground plane
+// Inner 3D controller that coordinates character locomotion and apple teleportation
 function SceneController({
   mouseNDC,
   isUserActive,
@@ -23,9 +23,46 @@ function SceneController({
   const currentTarget = useRef<[number, number, number]>([0, 0, 1]);
   const patrolTime = useRef(0);
 
+  // ── Randomly Teleporting Apple State ──
+  const applePos = useRef<[number, number, number]>([2.2, 0.28, 0.8]);
+  const isAppleActive = useRef(true);
+  const respawnTimer = useRef(0);
+  const [, setTriggerUpdate] = useState(0);
+
+  const handleAppleEaten = () => {
+    isAppleActive.current = false;
+    respawnTimer.current = 3.2; // 3.2 seconds until teleport respawn
+    setTriggerUpdate((n) => n + 1);
+  };
+
   useFrame((_, delta) => {
     const clampedDelta = Math.min(delta, 0.1);
 
+    // 1. Handle Apple Teleport Respawn
+    if (!isAppleActive.current) {
+      respawnTimer.current -= clampedDelta;
+      if (respawnTimer.current <= 0) {
+        // Teleport apple: 28% chance on top of one of the 4 leaf blocks, 72% on ground
+        const pickBlock = Math.random() < 0.28;
+        let nx = 0, ny = 0.28, nz = 0;
+        if (pickBlock && PLATFORM_BLOCKS.length > 0) {
+          const b = PLATFORM_BLOCKS[Math.floor(Math.random() * PLATFORM_BLOCKS.length)];
+          nx = b.x;
+          ny = b.topY + 0.28;
+          nz = b.z;
+        } else {
+          nx = (Math.random() - 0.5) * 8.0;
+          if (Math.abs(nx) < 1.2) nx = nx < 0 ? -2.4 : 2.4;
+          nz = Math.random() * 4.2 - 2.8;
+          ny = 0.28;
+        }
+        applePos.current = [nx, ny, nz];
+        isAppleActive.current = true;
+        setTriggerUpdate((n) => n + 1);
+      }
+    }
+
+    // 2. Character Target Navigation
     if (isUserActive.current) {
       // Raycast from camera using mouse NDC coords onto Y=0 ground plane
       raycaster.current.setFromCamera(mouseNDC.current, camera);
@@ -41,10 +78,16 @@ function SceneController({
         currentTarget.current[2] += (clampedZ - currentTarget.current[2]) * clampedDelta * 12;
       }
     } else {
-      // Automated gentle patrol when idle or on initial load
+      // Automated gentle patrol when idle
       patrolTime.current += clampedDelta * 0.75;
-      const patrolX = Math.sin(patrolTime.current) * 4.5;
-      const patrolZ = Math.sin(patrolTime.current * 2) * 2.2 - 1.2;
+      let patrolX = Math.sin(patrolTime.current) * 4.2;
+      let patrolZ = Math.sin(patrolTime.current * 2) * 2.0 - 1.0;
+
+      // When apple is active, gently steer idle movement toward the apple
+      if (isAppleActive.current && Math.sin(patrolTime.current * 0.5) > 0.05) {
+        patrolX = THREE.MathUtils.lerp(patrolX, applePos.current[0], 0.65);
+        patrolZ = THREE.MathUtils.lerp(patrolZ, applePos.current[2], 0.65);
+      }
 
       currentTarget.current[0] += (patrolX - currentTarget.current[0]) * clampedDelta * 5;
       currentTarget.current[2] += (patrolZ - currentTarget.current[2]) * clampedDelta * 5;
@@ -53,8 +96,18 @@ function SceneController({
 
   return (
     <>
-      <DioramaRoom target={currentTarget.current} />
-      <ClayCharacter target={currentTarget.current} attackTrigger={attackTrigger} />
+      <DioramaRoom
+        target={currentTarget.current}
+        applePos={applePos.current}
+        isAppleActive={isAppleActive.current}
+      />
+      <ClayCharacter
+        target={currentTarget.current}
+        attackTrigger={attackTrigger}
+        applePos={applePos.current}
+        isAppleActive={isAppleActive.current}
+        onEatApple={handleAppleEaten}
+      />
     </>
   );
 }
