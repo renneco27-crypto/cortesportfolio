@@ -22,6 +22,8 @@ export default function ClayCharacter({ target, attackTrigger }: ClayCharacterPr
   const idleCycle = useRef(0);
   const attackTimer = useRef(0);
   const lastAttackTrigger = useRef(attackTrigger);
+  const isMoving = useRef(false);
+  const moveBlend = useRef(0); // 0 (pure idle) to 1 (pure run)
 
   // Clone scene and setup bounds & shadows
   const { clonedScene, baseScale, yOffset } = useMemo(() => {
@@ -80,81 +82,90 @@ export default function ClayCharacter({ target, attackTrigger }: ClayCharacterPr
     const dz = tz - currentPos.current.z;
     const dist = Math.hypot(dx, dz);
 
-    let hopY = 0;
-    let tiltX = 0;
-    let tiltZ = 0;
-    let scaleSquashY = 1;
-    let scaleSquashXZ = 1;
-    let attackSpin = 0;
-    let attackHop = 0;
-
     // 1. Attack / Click Action Animation
+    let attackHop = 0;
+    let attackSpin = 0;
+    let attackSquashY = 1;
+    let attackSquashXZ = 1;
+
     if (attackTimer.current > 0) {
       attackTimer.current -= clampedDelta;
       const progress = 1 - Math.max(0, attackTimer.current) / 0.55;
-      // High jump arc
       attackHop = Math.sin(progress * Math.PI) * 1.35;
-      // 360 degree spin slash
       attackSpin = progress * Math.PI * 2;
-      // Squash on takeoff and landing
       if (progress < 0.2 || progress > 0.8) {
-        scaleSquashY = 0.85;
-        scaleSquashXZ = 1.1;
+        attackSquashY = 0.85;
+        attackSquashXZ = 1.1;
       } else {
-        scaleSquashY = 1.2;
-        scaleSquashXZ = 0.92;
+        attackSquashY = 1.2;
+        attackSquashXZ = 0.92;
       }
     }
 
-    // 2. Locomotion vs Idle
-    if (dist > 0.22) {
-      // Running state
-      const runSpeed = 4.6;
+    // 2. Dual-Threshold Hysteresis for Locomotion (prevents jitter / double-thinking inside circle)
+    const START_MOVE_THRESHOLD = 0.45; // circle edge threshold to begin pursuit
+    const STOP_MOVE_THRESHOLD = 0.16;  // center threshold to come to rest
+
+    if (isMoving.current) {
+      if (dist < STOP_MOVE_THRESHOLD) {
+        isMoving.current = false;
+      }
+    } else {
+      if (dist > START_MOVE_THRESHOLD) {
+        isMoving.current = true;
+      }
+    }
+
+    // Smoothly blend movement weight (0 = idle, 1 = running) to eliminate abrupt switches
+    const targetBlend = isMoving.current ? 1 : 0;
+    moveBlend.current += (targetBlend - moveBlend.current) * Math.min(1, clampedDelta * 9);
+
+    // Smooth physics locomotion
+    if (isMoving.current && dist > 0.05) {
+      // Ease speed smoothly as character nears the stop zone
+      const speedFactor = THREE.MathUtils.clamp((dist - STOP_MOVE_THRESHOLD) / 0.8, 0.2, 1);
+      const runSpeed = 4.6 * speedFactor;
       const moveStep = Math.min(dist, runSpeed * clampedDelta);
+
       currentPos.current.x += (dx / dist) * moveStep;
       currentPos.current.z += (dz / dist) * moveStep;
 
-      // Calculate desired heading towards target
-      // Character default faces +Z, so atan2(dx, dz) gives rotation around Y
-      const targetAngle = Math.atan2(dx, dz);
-
-      // Shortest angle interpolation
-      let angleDiff = targetAngle - currentRotY.current;
-      while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-      while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-      currentRotY.current += angleDiff * Math.min(1, clampedDelta * 11);
-
-      // Hop & Squash-and-Stretch physics
-      runCycle.current += clampedDelta * 14;
-      const stepPhase = runCycle.current;
-      hopY = Math.abs(Math.sin(stepPhase)) * 0.42;
-
-      // Dynamic clay deformation
-      const stretch = Math.sin(stepPhase * 2) * 0.12;
-      if (attackTimer.current <= 0) {
-        scaleSquashY = 1 + stretch;
-        scaleSquashXZ = 1 - stretch * 0.5;
-        // Lean into movement direction & bank into turns
-        tiltX = 0.12;
-        tiltZ = -THREE.MathUtils.clamp(angleDiff * 0.35, -0.25, 0.25);
+      // Only recalculate heading when far enough away to avoid 180° twitching near center
+      if (dist > 0.28) {
+        const targetAngle = Math.atan2(dx, dz);
+        let angleDiff = targetAngle - currentRotY.current;
+        while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+        while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+        currentRotY.current += angleDiff * Math.min(1, clampedDelta * 10);
       }
     } else {
-      // Idle state inside spotlight
-      idleCycle.current += clampedDelta * 2.6;
-      const breathe = Math.sin(idleCycle.current);
-      if (attackTimer.current <= 0) {
-        hopY = breathe * 0.04;
-        scaleSquashY = 1 + breathe * 0.03;
-        scaleSquashXZ = 1 - breathe * 0.015;
-        tiltZ = Math.sin(idleCycle.current * 0.8) * 0.04;
-      }
-
-      // Gently ease rotation toward camera if resting
+      // Resting inside circle: smoothly turn back towards camera
       let cameraAngleDiff = 0 - currentRotY.current;
       while (cameraAngleDiff > Math.PI) cameraAngleDiff -= Math.PI * 2;
       while (cameraAngleDiff < -Math.PI) cameraAngleDiff += Math.PI * 2;
-      currentRotY.current += cameraAngleDiff * Math.min(1, clampedDelta * 2);
+      currentRotY.current += cameraAngleDiff * Math.min(1, clampedDelta * (2.5 * (1 - moveBlend.current)));
     }
+
+    // Cycles for both run hop and idle breathing
+    runCycle.current += clampedDelta * (14 * Math.max(0.2, moveBlend.current));
+    idleCycle.current += clampedDelta * 2.6;
+
+    const runHop = Math.abs(Math.sin(runCycle.current)) * 0.42;
+    const idleHop = Math.sin(idleCycle.current) * 0.04;
+    const hopY = THREE.MathUtils.lerp(idleHop, runHop, moveBlend.current);
+
+    const runStretch = Math.sin(runCycle.current * 2) * 0.12;
+    const idleBreathe = Math.sin(idleCycle.current) * 0.03;
+
+    const scaleSquashY = THREE.MathUtils.lerp(1 + idleBreathe, 1 + runStretch, moveBlend.current) * attackSquashY;
+    const scaleSquashXZ = THREE.MathUtils.lerp(1 - idleBreathe * 0.5, 1 - runStretch * 0.5, moveBlend.current) * attackSquashXZ;
+
+    const tiltX = THREE.MathUtils.lerp(0, 0.12, moveBlend.current);
+    const tiltZ = THREE.MathUtils.lerp(
+      Math.sin(idleCycle.current * 0.8) * 0.03,
+      0,
+      moveBlend.current
+    );
 
     // Apply position
     groupRef.current.position.set(
