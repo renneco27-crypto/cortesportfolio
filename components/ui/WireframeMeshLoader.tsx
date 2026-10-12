@@ -3,86 +3,25 @@
 import React, { useEffect, useState } from "react";
 
 export default function WireframeMeshLoader() {
-  const [progress, setProgress] = useState(0);
-  const [networkStatus, setNetworkStatus] = useState("CALIBRATING");
   const [isDone, setIsDone] = useState(false);
   const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
-    // Lock body scroll while wireframe loader is active
+    // Lock body scroll while wireframe is showing
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    // 1. Detect Network Connection Speed (slow connection detection)
-    interface NetworkInfo {
-      effectiveType?: string;
-      downlink?: number;
-      rtt?: number;
-      saveData?: boolean;
-    }
-    const nav = navigator as unknown as { connection?: NetworkInfo };
-    const conn = nav.connection;
-    let isSlow = false;
-    if (conn) {
-      if (
-        conn.effectiveType === "slow-2g" ||
-        conn.effectiveType === "2g" ||
-        conn.effectiveType === "3g" ||
-        (conn.rtt && conn.rtt > 500) ||
-        (conn.downlink && conn.downlink < 1.5)
-      ) {
-        isSlow = true;
-        setNetworkStatus(`SLOW NETWORK [${(conn.effectiveType || "LOW SPEED").toUpperCase()}] &bull; EXTENDING WIREFRAME`);
-      } else {
-        setNetworkStatus(`NETWORK ACTIVE [${(conn.effectiveType || "FAST").toUpperCase()}]`);
-      }
-    } else {
-      setNetworkStatus("NETWORK ACTIVE // 2.0s WIREFRAME HOLD");
-    }
-
-    // 2. Minimum 2.0s (2000ms) Display Guarantee
-    const MINIMUM_DURATION_MS = 2000;
-    const startTime = performance.now();
-    let pageLoaded = document.readyState === "complete";
-
-    const handleWindowLoad = () => {
-      pageLoaded = true;
-    };
-
-    if (!pageLoaded) {
-      window.addEventListener("load", handleWindowLoad);
-    }
-
-    const progressInterval = setInterval(() => {
-      const elapsed = performance.now() - startTime;
-      const timeRatio = Math.min(elapsed / MINIMUM_DURATION_MS, 1);
-
-      if (timeRatio < 1) {
-        // First 2 seconds: progress up to 90%
-        setProgress(Math.floor(timeRatio * 90));
-      } else if (!pageLoaded) {
-        // Slower connection: keep wireframe screen visible while assets load
-        setNetworkStatus("SLOW INTERNET DETECTED &bull; STREAMING PAGE ASSETS");
-        setProgress((prev) => Math.min(prev + 1, 98));
-      } else {
-        // Completed: at least 2.0s passed AND page is fully loaded
-        setProgress(100);
-        clearInterval(progressInterval);
-
-        // Smooth transition reveal
-        setTimeout(() => {
-          setIsFading(true);
-          setTimeout(() => {
-            setIsDone(true);
-            document.body.style.overflow = originalOverflow;
-          }, 500); // 500ms fade transition
-        }, 120);
-      }
-    }, 40);
+    // 1 second display timer, then seamlessly transition to the actual website
+    const timer = setTimeout(() => {
+      setIsFading(true);
+      setTimeout(() => {
+        setIsDone(true);
+        document.body.style.overflow = originalOverflow;
+      }, 400); // 400ms fade duration
+    }, 1000);
 
     return () => {
-      window.removeEventListener("load", handleWindowLoad);
-      clearInterval(progressInterval);
+      clearTimeout(timer);
       document.body.style.overflow = originalOverflow;
     };
   }, []);
@@ -91,210 +30,147 @@ export default function WireframeMeshLoader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[99999] bg-[#0c0c0d] flex flex-col justify-start items-center select-none overflow-hidden transition-opacity duration-500 ease-out ${
+      className={`fixed inset-0 z-[99999] bg-[#050505] text-white overflow-y-auto select-none transition-opacity duration-400 ease-out ${
         isFading ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
       aria-hidden={isFading}
     >
-      {/* ── Outer Browser Window Mockup Frame (YouTube Vector Wireframe aesthetic) ── */}
-      <div className="w-full h-full flex flex-col bg-[#111113] border border-[#26262a] shadow-2xl overflow-y-auto">
-        {/* Browser Top Window Bar */}
-        <div className="w-full h-11 bg-[#18181c] border-b border-[#2a2a2f] px-4 md:px-6 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-[#3a3a42] border border-[#4a4a54]" />
-            <div className="w-3 h-3 rounded-full bg-[#3a3a42] border border-[#4a4a54]" />
-            <div className="w-3 h-3 rounded-full bg-[#3a3a42] border border-[#4a4a54]" />
-          </div>
-
-          {/* Browser Address Bar Wireframe */}
-          <div className="wireframe-glint flex-1 max-w-md mx-4 h-6 rounded bg-[#222228] border border-[#35353e] flex items-center px-3">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#555562] mr-2" />
-            <div className="wireframe-stretch h-2 w-48 rounded bg-[#40404c]" />
-          </div>
-
-          {/* Window action controls */}
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-3 rounded bg-[#2d2d36] border border-[#3d3d48]" />
-            <div className="w-4 h-3 rounded bg-[#2d2d36] border border-[#3d3d48]" />
-            <div className="w-4 h-3 rounded bg-[#2d2d36] border border-[#3d3d48]" />
-          </div>
+      {/* ── 1. SwissNavbar Wireframe ── */}
+      <header className="fixed top-0 left-0 w-full h-[60px] z-50 flex justify-between items-center px-6 md:px-10 bg-[#050505]/95 backdrop-blur-md border-b border-[#1c1c1f]">
+        {/* Brand / Logo Wireframe */}
+        <div className="flex items-center gap-3">
+          <div className="wireframe-glint h-4 w-48 rounded-[2px] bg-[#1e1e22] border border-[#33333a]" />
+          <div className="h-3 w-20 rounded-[2px] bg-[#e63946]/30 border border-[#e63946]/50" />
         </div>
 
-        {/* ── Swiss Navbar Wireframe ── */}
-        <div className="w-full h-14 bg-[#141418] border-b border-[#242429] px-6 md:px-12 flex items-center justify-between shrink-0">
-          {/* Brand Logo Wireframe: Gray block with Red accent tag */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-6 rounded-sm bg-[#e63946] border border-[#ff4d5a] shadow-[0_0_12px_rgba(230,57,70,0.4)]" />
-            <div className="wireframe-glint h-4 w-40 rounded bg-[#2b2b33] border border-[#3a3a44]" />
-          </div>
+        {/* Center Navigation Links Wireframe */}
+        <nav className="hidden md:flex items-center gap-7">
+          <div className="wireframe-glint h-3.5 w-14 rounded-[2px] bg-[#1c1c20] border border-[#2e2e36]" />
+          <div className="wireframe-glint h-3.5 w-24 rounded-[2px] bg-[#1c1c20] border border-[#2e2e36]" />
+          <div className="wireframe-glint h-3.5 w-20 rounded-[2px] bg-[#1c1c20] border border-[#2e2e36]" />
+          <div className="wireframe-glint h-3.5 w-16 rounded-[2px] bg-[#1c1c20] border border-[#2e2e36]" />
+        </nav>
 
-          {/* Nav links wireframe */}
-          <div className="hidden md:flex items-center gap-6">
-            <div className="wireframe-glint h-3.5 w-16 rounded bg-[#282830] border border-[#363640]" />
-            <div className="wireframe-glint h-3.5 w-24 rounded bg-[#282830] border border-[#363640]" />
-            <div className="wireframe-glint h-3.5 w-20 rounded bg-[#282830] border border-[#363640]" />
-            <div className="wireframe-glint h-3.5 w-18 rounded bg-[#282830] border border-[#363640]" />
+        {/* Right CTA Action Buttons Wireframe */}
+        <div className="flex items-center gap-3">
+          <div className="wireframe-glint h-8 w-24 rounded-[2px] bg-[#1f1f24] border border-[#383842] flex items-center justify-center">
+            <div className="h-2.5 w-14 rounded bg-[#33333c]" />
           </div>
-
-          {/* CTA Buttons */}
-          <div className="flex items-center gap-3">
-            <div className="wireframe-glint h-7 w-20 rounded bg-[#24242c] border border-[#3b3b46]" />
-            <div className="wireframe-glint h-7 w-24 rounded bg-[#2a2a34] border border-[#3f3f4c]" />
-          </div>
+          <div className="wireframe-glint w-8 h-8 rounded-[2px] bg-[#161618] border border-[#2b2b30]" />
         </div>
+      </header>
 
-        {/* ── Main Wireframe Content Body (Vector Wireframe Layout) ── */}
-        <div className="flex-1 w-full max-w-7xl mx-auto p-4 md:p-8 flex flex-col gap-8">
-          {/* Top Hero Wireframe Block */}
-          <div className="w-full flex flex-col items-center text-center pt-4 pb-2">
-            {/* Tag / Category Eyebrow Wireframe */}
-            <div className="wireframe-glint h-4 w-52 rounded bg-[#282832] border border-[#3d3d4a] mb-4" />
-
-            {/* Giant Title Wireframe: Animated getting longer */}
-            <div className="wireframe-stretch wireframe-glint h-10 md:h-14 w-3/4 max-w-2xl rounded bg-[#2e2e38] border border-[#444452] mb-3" />
-            <div className="wireframe-stretch wireframe-glint h-8 md:h-10 w-1/2 max-w-md rounded bg-[#25252e] border border-[#3a3a46] mb-5" />
-
-            {/* Subtitle Lines */}
-            <div className="flex flex-col items-center gap-2 mb-6 w-full">
-              <div className="wireframe-glint h-3 w-4/5 max-w-xl rounded bg-[#22222a] border border-[#33333e]" />
-              <div className="wireframe-glint h-3 w-2/3 max-w-lg rounded bg-[#22222a] border border-[#33333e]" />
-            </div>
-
-            {/* Terminal Line Wireframe with Blinker */}
-            <div className="wireframe-glint h-9 w-full max-w-md rounded bg-[#18181f] border border-[#2d2d38] flex items-center px-4 gap-3">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#e63946]" />
-              <div className="wireframe-stretch h-3 w-64 rounded bg-[#363644]" />
-              <div className="w-2 h-4 bg-white/70 animate-pulse ml-auto" />
+      {/* ── Main Page Layout Wireframe (1:1 Match with Lawrence Cortes Portfolio) ── */}
+      <main className="w-full min-h-screen flex flex-col items-center pt-[60px]">
+        {/* ── 2. EditorialHero Section Wireframe (h-[85vh]) ── */}
+        <section className="relative w-full h-[85vh] flex flex-col justify-center items-center text-center px-6 md:px-16 border-b border-[#141416]">
+          {/* Subtle 3D Hero Scene Outline Canvas Grid */}
+          <div className="absolute inset-x-8 inset-y-12 rounded border border-[#1a1a20] pointer-events-none opacity-40 flex items-center justify-center">
+            <div className="w-3/4 h-3/4 border border-dashed border-[#262630] rounded flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-[#e63946]/50 animate-ping" />
             </div>
           </div>
 
-          {/* ── Grid: Main Media / Feature Stage (Left) & Sidebar List (Right) ── */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* Left Big Stage Frame (Like YouTube Main Video Frame in reference image) */}
-            <div className="lg:col-span-8 flex flex-col gap-4">
-              <div className="wireframe-glint relative w-full aspect-video md:h-96 rounded-md bg-[#18181e] border-2 border-[#2f2f3a] overflow-hidden flex flex-col justify-between p-4 md:p-6">
-                {/* Top Corner Markers */}
-                <div className="flex justify-between items-center">
-                  <div className="h-3 w-20 rounded bg-[#2a2a34] border border-[#393946]" />
-                  <div className="h-3 w-12 rounded bg-[#2a2a34] border border-[#393946]" />
-                </div>
+          <div className="relative z-10 flex flex-col items-center max-w-4xl w-full">
+            {/* Eyebrow Tag: ENGINEERING PORTFOLIO // 2026 */}
+            <div className="wireframe-glint h-4 w-56 rounded-[2px] bg-[#221c1f] border border-[#e63946]/40 mb-4 flex items-center justify-center">
+              <div className="h-2 w-44 rounded bg-[#e63946]/50" />
+            </div>
 
-                {/* Central Play / Node Outline Accent */}
-                <div className="self-center flex flex-col items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-[#24242d] border-2 border-[#454555] flex items-center justify-center shadow-lg">
-                    <div className="w-0 h-0 border-y-[8px] border-y-transparent border-l-[14px] border-l-[#e63946] ml-1" />
-                  </div>
-                  <div className="wireframe-stretch h-2.5 w-32 rounded bg-[#2f2f3c] mt-3" />
-                </div>
+            {/* Main H1 Title: Lawrence Cortes (animated stretch) */}
+            <div className="wireframe-stretch wireframe-glint h-12 sm:h-16 md:h-20 w-4/5 max-w-xl rounded-[2px] bg-[#222228] border border-[#3d3d48] mb-4" />
 
-                {/* Bottom Media Controls / Red Wireframe Scrub Bar */}
-                <div className="w-full flex flex-col gap-2">
-                  <div className="w-full h-2 rounded-full bg-[#262630] overflow-hidden border border-[#343442]">
-                    <div className="h-full bg-[#e63946] rounded-full transition-all duration-100" style={{ width: `${Math.max(progress, 25)}%` }} />
-                  </div>
-                  <div className="flex justify-between items-center pt-1">
-                    <div className="flex gap-2">
-                      <div className="w-3.5 h-3.5 rounded bg-[#33333f]" />
-                      <div className="w-3.5 h-3.5 rounded bg-[#33333f]" />
-                      <div className="w-3.5 h-3.5 rounded bg-[#33333f]" />
-                    </div>
-                    <div className="w-16 h-3 rounded bg-[#2f2f3b]" />
-                  </div>
-                </div>
-              </div>
+            {/* Subtitle: Full-Stack Web Systems • Cloud Infrastructure • UI/UX Architecture */}
+            <div className="wireframe-stretch wireframe-glint h-4 md:h-5 w-3/5 max-w-lg rounded-[2px] bg-[#1c1c22] border border-[#30303a] mb-8" />
 
-              {/* Lower Stage Info Card (Like Channel Bar in reference) */}
-              <div className="w-full rounded-md bg-[#16161b] border border-[#2b2b35] p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  {/* Avatar / Icon box */}
-                  <div className="w-12 h-12 rounded bg-[#282832] border border-[#3b3b48] shrink-0" />
-                  <div className="flex flex-col gap-2">
-                    <div className="wireframe-stretch wireframe-glint h-4 w-44 rounded bg-[#30303c] border border-[#40404f]" />
-                    <div className="wireframe-glint h-3 w-60 rounded bg-[#22222a] border border-[#30303c]" />
-                  </div>
-                </div>
+            {/* Terminal Console Line: $ system.init() — ready for full-stack & cloud deployment */}
+            <div className="wireframe-glint inline-flex items-center h-10 px-4 w-full max-w-lg bg-[#111114] border-l-2 border-[#e63946] border-y border-r border-[#26262e] rounded-r-[2px] gap-3">
+              <div className="wireframe-stretch h-3 w-64 rounded bg-[#2e2e38]" />
+              <span className="inline-block w-2.5 h-4 bg-white/80 animate-pulse ml-auto" />
+            </div>
+          </div>
+        </section>
 
-                <div className="flex items-center gap-3">
-                  <div className="h-8 w-24 rounded bg-[#e63946] border border-[#ff4d5a] flex items-center justify-center">
-                    <div className="h-2.5 w-14 bg-white/70 rounded-sm" />
-                  </div>
-                  <div className="h-8 w-20 rounded bg-[#282832] border border-[#3c3c4a]" />
-                </div>
+        {/* ── 3. EditorialAbout Section Wireframe ── */}
+        <section className="relative w-full max-w-6xl mx-auto py-20 px-6 md:px-16 border-b border-[#141416]">
+          {/* Section Header: [ 01 // ABOUT LAWRENCE CORTES ] */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end pb-6 border-b border-[#1c1c20] mb-12">
+            <div className="space-y-3 w-full max-w-md">
+              <div className="h-3 w-48 rounded bg-[#e63946]/40 border border-[#e63946]/30" />
+              <div className="wireframe-stretch wireframe-glint h-8 w-full rounded bg-[#24242c] border border-[#383844]" />
+            </div>
+            <div className="wireframe-glint h-3 w-40 rounded bg-[#1c1c22] border border-[#2b2b34] mt-4 md:mt-0" />
+          </div>
+
+          {/* Grid: Portrait (Left) & Narrative Bio (Right) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            {/* Portrait Box Wireframe */}
+            <div className="lg:col-span-4">
+              <div className="wireframe-glint relative w-full aspect-square max-w-[340px] mx-auto lg:mx-0 rounded-[2px] border border-[#33333c] bg-[#16161a] flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-[#202028] border border-[#383846]" />
               </div>
             </div>
 
-            {/* Right Sidebar List (Like Related Videos in reference image) */}
-            <div className="lg:col-span-4 flex flex-col gap-3">
-              {[1, 2, 3, 4, 5].map((item, index) => (
-                <div
-                  key={item}
-                  className="w-full rounded-md bg-[#16161c] border border-[#2a2a34] p-2.5 flex gap-3 items-center"
-                >
-                  {/* Thumbnail box with gray fill & outline */}
-                  <div className="wireframe-glint w-24 h-16 rounded bg-[#23232c] border border-[#383846] shrink-0 flex items-center justify-center">
-                    <div className="w-4 h-4 rounded bg-[#333340] border border-[#444452]" />
-                  </div>
+            {/* Bio Narrative Lines Wireframe */}
+            <div className="lg:col-span-8 space-y-4">
+              <div className="wireframe-stretch wireframe-glint h-4 w-full rounded bg-[#222228] border border-[#32323c]" />
+              <div className="wireframe-stretch wireframe-glint h-4 w-11/12 rounded bg-[#222228] border border-[#32323c]" />
+              <div className="wireframe-stretch wireframe-glint h-4 w-4/5 rounded bg-[#222228] border border-[#32323c]" />
+              <div className="wireframe-stretch wireframe-glint h-4 w-full rounded bg-[#222228] border border-[#32323c] pt-2" />
+              <div className="wireframe-stretch wireframe-glint h-4 w-3/4 rounded bg-[#222228] border border-[#32323c]" />
 
-                  {/* Multiline text bars (animated expanding width) */}
-                  <div className="flex-1 flex flex-col gap-2">
-                    <div
-                      className="wireframe-stretch wireframe-glint h-3 rounded bg-[#2f2f3b] border border-[#3e3e4d]"
-                      style={{
-                        width: index % 2 === 0 ? "95%" : "82%",
-                        animationDelay: `${index * 0.15}s`,
-                      }}
-                    />
-                    <div
-                      className="wireframe-glint h-2.5 rounded bg-[#23232b] border border-[#32323d]"
-                      style={{ width: "65%" }}
-                    />
-                    <div
-                      className="wireframe-glint h-2 rounded bg-[#1e1e25] border border-[#2c2c36]"
-                      style={{ width: "45%" }}
-                    />
-                  </div>
-                </div>
-              ))}
+              {/* Quote Bar Wireframe */}
+              <div className="wireframe-glint h-8 w-full max-w-xl bg-[#141418] border-l-2 border-[#e63946] border-y border-r border-[#22222a] p-2 mt-4 flex items-center">
+                <div className="wireframe-stretch h-3 w-4/5 rounded bg-[#2a2a34]" />
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* ── Bottom Telemetry / Progress Bar Bar ── */}
-        <div className="w-full bg-[#141418] border-t border-[#26262c] px-6 py-3 flex flex-col sm:flex-row justify-between items-center gap-3 shrink-0">
-          <div className="flex items-center gap-3 font-mono text-[11px] text-[#888894]">
-            <span className="w-2 h-2 rounded-full bg-[#e63946] animate-ping" />
-            <span className="text-white font-medium uppercase">VECTOR WIREFRAME SKELETON</span>
-            <span className="text-[#555562]">&bull;</span>
-            <span
-              className="text-[#e63946] font-medium"
-              dangerouslySetInnerHTML={{ __html: networkStatus }}
-            />
+        {/* ── 4. EditorialGitHub Activity Section Wireframe ── */}
+        <section className="relative w-full max-w-6xl mx-auto py-16 px-6 md:px-16">
+          <div className="flex justify-between items-center pb-6 border-b border-[#1c1c20] mb-8">
+            <div className="h-3.5 w-40 rounded bg-[#e63946]/40 border border-[#e63946]/30" />
+            <div className="wireframe-glint h-3 w-32 rounded bg-[#1c1c22] border border-[#2b2b34]" />
           </div>
 
-          <div className="flex items-center gap-4 w-full sm:w-auto">
-            <span className="font-mono text-xs text-white/90 font-semibold">{progress}%</span>
-            <div className="w-44 h-2 bg-[#22222a] rounded-full overflow-hidden border border-[#32323d]">
+          {/* Metric Cards Row */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            {[1, 2, 3].map((card) => (
               <div
-                className="h-full bg-gradient-to-r from-[#e63946] to-white rounded-full transition-all duration-75"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <span className="font-mono text-[10px] text-[#666672] uppercase hidden md:inline">
-              [HOLD 2.0s]
-            </span>
+                key={card}
+                className="wireframe-glint h-20 rounded-[2px] bg-[#141418] border border-[#2b2b34] p-4 flex flex-col justify-between"
+              >
+                <div className="h-2.5 w-24 rounded bg-[#24242d]" />
+                <div className="h-6 w-16 rounded bg-[#2e2e3a] border border-[#3e3e4c]" />
+              </div>
+            ))}
           </div>
-        </div>
+
+          {/* GitHub Activity Heatmap Grid Skeleton */}
+          <div className="wireframe-glint w-full h-32 rounded-[2px] bg-[#121216] border border-[#282832] p-4 flex flex-col justify-between">
+            <div className="flex justify-between items-center">
+              <div className="h-3 w-32 rounded bg-[#24242e]" />
+              <div className="flex gap-1.5">
+                {[1, 2, 3, 4, 5].map((lvl) => (
+                  <div key={lvl} className="w-3 h-3 rounded-[1px] bg-[#24242e] border border-[#343440]" />
+                ))}
+              </div>
+            </div>
+            <div className="w-full h-16 rounded bg-[#18181e] border border-[#282834] flex items-center justify-center">
+              <div className="wireframe-stretch h-2 w-3/4 rounded bg-[#2a2a36]" />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* ── 5. EditorialChatWidget Wireframe (Bottom-Right Floating [ INTERACT ]) ── */}
+      <div className="fixed bottom-6 right-6 z-[70] flex items-center gap-3 bg-[#0a0a0a] border border-[#33333c] px-5 py-3 rounded-none shadow-2xl wireframe-glint">
+        <div className="wireframe-stretch h-3 w-20 rounded bg-[#30303a]" />
+        <div className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
       </div>
 
-      {/* Floating Chat Widget Wireframe (Bottom-Right) */}
-      <div className="fixed bottom-6 right-6 z-30 wireframe-glint flex items-center gap-3 bg-[#18181f] border-2 border-[#363644] rounded-full px-4 py-2.5 shadow-2xl">
-        <div className="w-6 h-6 rounded-full bg-[#e63946] flex items-center justify-center">
-          <div className="w-2 h-2 rounded-full bg-white" />
-        </div>
-        <div className="wireframe-stretch h-3 w-24 rounded bg-[#33333f]" />
-      </div>
-
-      {/* Custom Wireframe Glint & Stretch Animations */}
+      {/* ── Shimmer Glint & Expansion Keyframes ── */}
       <style jsx>{`
         @keyframes glint {
           0% {
@@ -310,26 +186,26 @@ export default function WireframeMeshLoader() {
           background-image: linear-gradient(
             90deg,
             rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.09) 50%,
+            rgba(255, 255, 255, 0.12) 50%,
             rgba(255, 255, 255, 0) 100%
           );
           background-size: 200% 100%;
-          animation: glint 2s infinite linear;
+          animation: glint 1.8s infinite linear;
         }
 
         @keyframes expandLength {
           0%, 100% {
-            transform: scaleX(0.92);
+            transform: scaleX(0.96);
             transform-origin: left;
           }
           50% {
-            transform: scaleX(1.04);
+            transform: scaleX(1.02);
             transform-origin: left;
           }
         }
 
         .wireframe-stretch {
-          animation: expandLength 2.2s ease-in-out infinite;
+          animation: expandLength 2s ease-in-out infinite;
         }
       `}</style>
     </div>
