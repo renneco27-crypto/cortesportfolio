@@ -11,7 +11,7 @@ export default function CertificationsSection() {
         <div>
           <span className="font-mono text-xs text-violet-400 uppercase tracking-widest">Credentials</span>
           <h2 className="text-4xl font-bold text-white mt-2">Certifications</h2>
-          <p className="text-zinc-400 mt-2">Verified skills for PH internships and global tech roles.</p>
+          <p className="text-zinc-400 mt-2">Technical certifications and credentials in software systems, networking, and cloud infrastructure.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">

@@ -61,29 +61,29 @@ export default function SectionWipeTransitions() {
       certOv.style.cssText =
         "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;" +
         "pointer-events:none;opacity:0;clip-path:inset(0 0 0 100%);" +
-        "background:rgba(8, 10, 16, 0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);" +
+        "background:rgba(8, 11, 20, 0.72);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);" +
         "overflow:hidden;";
 
       certOv.innerHTML = `
         <style>
           #cert-panel-grid {
             scrollbar-width: thin;
-            scrollbar-color: #ff1e42 rgba(255, 255, 255, 0.04);
+            scrollbar-color: rgba(255, 30, 66, 0.6) rgba(255, 255, 255, 0.03);
           }
           #cert-panel-grid::-webkit-scrollbar {
-            width: 7px;
+            width: 6px;
           }
           #cert-panel-grid::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 9999px;
           }
           #cert-panel-grid::-webkit-scrollbar-thumb {
-            background: #ff1e42;
+            background: rgba(255, 30, 66, 0.6);
             border-radius: 9999px;
-            box-shadow: 0 0 10px rgba(255, 30, 66, 0.8);
+            box-shadow: 0 0 8px rgba(255, 30, 66, 0.5);
           }
           #cert-panel-grid::-webkit-scrollbar-thumb:hover {
-            background: #ff4d6d;
+            background: #ff1e42;
           }
         </style>
 
@@ -93,11 +93,14 @@ export default function SectionWipeTransitions() {
 
           <!-- Left: Editorial Header Block -->
           <div style="flex:1;max-width:440px;padding-right:1rem;">
-            <!-- Angled Ribbon Pill Badge -->
+            <!-- Angled Ribbon Pill Badge with Glassmorphism -->
             <div style="margin-bottom:1.4rem;">
               <div style="
                 display:inline-block;
-                background:#ff1e42;
+                background:rgba(255, 30, 66, 0.85);
+                backdrop-filter:blur(10px);
+                -webkit-backdrop-filter:blur(10px);
+                border:1px solid rgba(255, 255, 255, 0.25);
                 color:#fff;
                 font-family:'Space Grotesk',-apple-system,sans-serif;
                 font-size:0.68rem;
@@ -106,7 +109,7 @@ export default function SectionWipeTransitions() {
                 text-transform:uppercase;
                 padding:6px 18px 6px 12px;
                 clip-path:polygon(0 0, 92% 0, 100% 100%, 0 100%);
-                box-shadow:0 0 16px rgba(255,30,66,0.35);">
+                box-shadow:0 0 24px rgba(255,30,66,0.45), inset 0 1px 1px rgba(255,255,255,0.35);">
                 CREDENTIAL ARCHIVE
               </div>
             </div>
@@ -139,7 +142,7 @@ export default function SectionWipeTransitions() {
             </p>
           </div>
 
-          <!-- Right: Scrollable Clean Cards Container (HCI Compliant) -->
+          <!-- Right: Scrollable Clean Glassmorphic Cards Container (HCI Compliant) -->
           <div id="cert-panel-grid" style="
             flex:1.3;
             display:flex;
@@ -167,7 +170,7 @@ export default function SectionWipeTransitions() {
       document.body.appendChild(certOv);
       overlays.push(certOv);
 
-      // Render HCI-compliant, scannable credential cards
+      // Render HCI-compliant, glassmorphic credential cards
       const renderCertCards = (
         items: Array<{
           id: string;
@@ -186,18 +189,28 @@ export default function SectionWipeTransitions() {
             const isEarned = c.status === "earned";
             const isInProgress = c.status === "in-progress" || c.status === "pending";
 
-            // Color theory: Green for Earned / Achieved, Crimson for In Progress, Amber for Planned
+            // Color theory with Glassmorphic Translucency & Specular Highlights
             const statusColor = isEarned ? "#00e676" : isInProgress ? "#ff2a55" : "#facc15";
             const statusBg = isEarned
-              ? "rgba(0,230,118,0.14)"
+              ? "rgba(0,230,118,0.12)"
               : isInProgress
-              ? "rgba(255,42,85,0.14)"
-              : "rgba(250,204,21,0.14)";
+              ? "rgba(255,42,85,0.12)"
+              : "rgba(250,204,21,0.12)";
+            const statusGradient = isEarned
+              ? "linear-gradient(135deg, rgba(0,230,118,0.22) 0%, rgba(0,230,118,0.04) 100%)"
+              : isInProgress
+              ? "linear-gradient(135deg, rgba(255,42,85,0.22) 0%, rgba(255,42,85,0.04) 100%)"
+              : "linear-gradient(135deg, rgba(250,204,21,0.22) 0%, rgba(250,204,21,0.04) 100%)";
             const statusBorder = isEarned
-              ? "rgba(0,230,118,0.5)"
+              ? "rgba(0,230,118,0.45)"
               : isInProgress
-              ? "rgba(255,42,85,0.5)"
-              : "rgba(250,204,21,0.5)";
+              ? "rgba(255,42,85,0.45)"
+              : "rgba(250,204,21,0.45)";
+            const statusShadow = isEarned
+              ? "0 4px 14px rgba(0,230,118,0.2), inset 0 1px 1px rgba(255,255,255,0.3)"
+              : isInProgress
+              ? "0 4px 14px rgba(255,42,85,0.2), inset 0 1px 1px rgba(255,255,255,0.3)"
+              : "0 4px 14px rgba(250,204,21,0.18), inset 0 1px 1px rgba(255,255,255,0.3)";
             const statusText = isEarned
               ? "EARNED"
               : isInProgress
@@ -215,28 +228,36 @@ export default function SectionWipeTransitions() {
 
             return `
               <div style="
-                background:rgba(13,16,25,0.92);
-                border:1px solid rgba(255,255,255,0.08);
+                background:rgba(18,22,34,0.55);
+                background-image:linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 100%);
+                backdrop-filter:blur(16px) saturate(180%);
+                -webkit-backdrop-filter:blur(16px) saturate(180%);
+                border:1px solid rgba(255,255,255,0.12);
                 border-left:3.5px solid #ff1e42;
-                border-radius:8px;
-                padding:1rem 1.35rem;
+                border-radius:12px;
+                padding:1.05rem 1.35rem;
                 box-sizing:border-box;
                 display:flex;
                 flex-direction:column;
-                gap:0.55rem;
-                box-shadow:0 8px 24px rgba(0,0,0,0.45);
-                transition:transform 0.2s, border-color 0.2s;
+                gap:0.6rem;
+                box-shadow:0 8px 32px 0 rgba(0,0,0,0.45), inset 0 1px 1px 0 rgba(255,255,255,0.12);
+                transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
                 pointer-events:auto;"
-                onmouseover="this.style.borderColor='rgba(0,229,255,0.4)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(4px)';"
-                onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(0)';">
+                onmouseover="this.style.borderColor='rgba(0,229,255,0.45)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(4px)';this.style.boxShadow='0 12px 36px rgba(0,0,0,0.55), 0 0 20px rgba(0,229,255,0.15), inset 0 1px 1px rgba(255,255,255,0.2)';"
+                onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(0)';this.style.boxShadow='0 8px 32px 0 rgba(0,0,0,0.45), inset 0 1px 1px 0 rgba(255,255,255,0.12)';">
 
-                <!-- Row 1: Icon + Title + Prominent Status Pill -->
+                <!-- Row 1: Icon + Title + Glassmorphic Status Pill -->
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;">
                   <div style="display:flex;align-items:center;gap:10px;min-width:0;">
                     <span style="
                       display:inline-flex;align-items:center;justify-content:center;
-                      width:26px;height:26px;border-radius:4px;
-                      background:rgba(255,30,66,0.15);border:1px solid rgba(255,30,66,0.35);
+                      width:28px;height:28px;border-radius:7px;
+                      background:rgba(255,30,66,0.14);
+                      background-image:linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,30,66,0.05) 100%);
+                      backdrop-filter:blur(6px);
+                      -webkit-backdrop-filter:blur(6px);
+                      border:1px solid rgba(255,30,66,0.4);
+                      box-shadow:inset 0 1px 1px rgba(255,255,255,0.25);
                       flex-shrink:0;">
                       ${iconSvg}
                     </span>
@@ -246,21 +267,27 @@ export default function SectionWipeTransitions() {
                   </div>
                   <span style="
                     font-family:'Space Grotesk',sans-serif;
-                    font-size:0.76rem;font-weight:800;letter-spacing:1px;
-                    color:${statusColor};background:${statusBg};border:1px solid ${statusBorder};
+                    font-size:0.75rem;font-weight:800;letter-spacing:1px;
+                    color:${statusColor};
+                    background:${statusBg};
+                    background-image:${statusGradient};
+                    border:1px solid ${statusBorder};
+                    box-shadow:${statusShadow};
+                    backdrop-filter:blur(8px);
+                    -webkit-backdrop-filter:blur(8px);
                     padding:5px 13px;border-radius:6px;white-space:nowrap;flex-shrink:0;">
                     ${statusText}
                   </span>
                 </div>
 
-                <!-- Row 2: Issuing Body + Optional Link (No fake Verified text) -->
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-left:36px;">
+                <!-- Row 2: Issuing Body + Official Link Glass Pill -->
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-left:38px;">
                   <span style="font-size:0.8rem;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                     ${c.issuing_body}
                   </span>
                   ${
                     c.verify_url
-                      ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;font-weight:600;color:#00e5ff;text-decoration:none;display:inline-flex;align-items:center;gap:3px;flex-shrink:0;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Official Link ↗</a>`
+                      ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;font-weight:600;color:#00e5ff;text-decoration:none;display:inline-flex;align-items:center;gap:4px;flex-shrink:0;background:rgba(0,229,255,0.08);background-image:linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(0,229,255,0.03) 100%);border:1px solid rgba(0,229,255,0.3);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:3px 9px;border-radius:6px;box-shadow:inset 0 1px 1px rgba(255,255,255,0.15);transition:border-color 0.2s, background 0.2s;" onmouseover="this.style.borderColor='#00e5ff';this.style.background='rgba(0,229,255,0.18)';" onmouseout="this.style.borderColor='rgba(0,229,255,0.3)';this.style.background='rgba(0,229,255,0.08)';">Official Link ↗</a>`
                       : ""
                   }
                 </div>
