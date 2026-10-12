@@ -3,7 +3,7 @@ import SwissNavbar from "@/components/layout/SwissNavbar";
 import EditorialHero from "@/components/sections/EditorialHero";
 import EditorialAbout from "@/components/sections/EditorialAbout";
 import EditorialGitHub from "@/components/sections/EditorialGitHub";
-import NodeCanvas from "@/components/ui/NodeCanvas";
+import ClayHeroScene from "@/components/three/ClayHeroScene";
 import PixelTransition from "@/components/ui/PixelTransition";
 import EditorialChatWidget from "@/components/ui/EditorialChatWidget";
 import SectionWipeTransitions from "@/components/sections/MistralSlideSection";
@@ -11,7 +11,7 @@ import SectionWipeTransitions from "@/components/sections/MistralSlideSection";
 export default function EditorialPage() {
   return (
     <main className="bg-[#050505] min-h-screen text-white relative">
-      <NodeCanvas />
+      <ClayHeroScene />
       <SwissNavbar />
 
       {/* Pure GSAP wipe transitions — renders null, attaches translucent clip-path overlays between sections */}
