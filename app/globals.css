@@ -268,3 +268,20 @@ body.wireframe-active header nav a {
 body.wireframe-active .text-\[\#e63946\] {
   border-color: rgba(230, 57, 70, 0.75) !important;
 }
+
+/* Guarantee ZERO overlapping boxes: strip backgrounds & borders from any inner child elements */
+body.wireframe-active h1 *,
+body.wireframe-active h2 *,
+body.wireframe-active h3 *,
+body.wireframe-active h4 *,
+body.wireframe-active p *,
+body.wireframe-active a *,
+body.wireframe-active button *,
+body.wireframe-active section * * {
+  border: none !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}

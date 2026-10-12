@@ -4,6 +4,7 @@ import React, { useMemo, useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { PLATFORM_BLOCKS } from "./DioramaRoom";
 
 interface ClayCharacterProps {
   target: [number, number, number];
@@ -17,6 +18,7 @@ export default function ClayCharacter({ target, attackTrigger }: ClayCharacterPr
 
   // Position, rotation, animation states
   const currentPos = useRef(new THREE.Vector3(0, 0, 1));
+  const currentBaseY = useRef(0); // Platform height
   const currentRotY = useRef(0);
   const runCycle = useRef(0);
   const idleCycle = useRef(0);
@@ -167,10 +169,27 @@ export default function ClayCharacter({ target, attackTrigger }: ClayCharacterPr
       moveBlend.current
     );
 
-    // Apply position
+    // 3. Platform height calculation (standing on blocks or floor)
+    let targetBaseY = 0;
+    for (const b of PLATFORM_BLOCKS) {
+      const halfW = b.w * 0.52;
+      const halfD = b.d * 0.52;
+      if (
+        Math.abs(currentPos.current.x - b.x) <= halfW &&
+        Math.abs(currentPos.current.z - b.z) <= halfD
+      ) {
+        targetBaseY = b.topY;
+        break;
+      }
+    }
+
+    // Smoothly elevate character when stepping onto or off blocks
+    currentBaseY.current += (targetBaseY - currentBaseY.current) * Math.min(1, clampedDelta * 11);
+
+    // Apply position (X, Z, and platform height + hop + attack)
     groupRef.current.position.set(
       currentPos.current.x,
-      hopY + attackHop,
+      currentBaseY.current + hopY + attackHop,
       currentPos.current.z
     );
 
