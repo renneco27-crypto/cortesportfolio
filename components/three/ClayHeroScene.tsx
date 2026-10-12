@@ -111,7 +111,6 @@ export default function ClayHeroScene() {
       const fadeThreshold = 380;
       const newOpacity = Math.max(0, 1 - scrollY / fadeThreshold);
       setOpacity(newOpacity);
-      setIsOffscreen(scrollY > 440);
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
@@ -130,15 +129,14 @@ export default function ClayHeroScene() {
     };
   }, []);
 
-  if (isOffscreen) {
-    return null;
-  }
-
   return (
     <div
       id="clay-hero-diorama"
       className="fixed inset-0 pointer-events-none z-[5] transition-opacity duration-300"
-      style={{ opacity }}
+      style={{
+        opacity,
+        visibility: opacity <= 0 ? "hidden" : "visible",
+      }}
       aria-hidden="true"
     >
       <Canvas

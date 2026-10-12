@@ -85,10 +85,14 @@ export default function PixelTransition({
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
     handleScroll();
+    const rafId = requestAnimationFrame(handleScroll);
 
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
   }, [columns, rows, reverse, imageSrc]);
 

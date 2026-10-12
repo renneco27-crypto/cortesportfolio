@@ -192,3 +192,79 @@ code, pre, .font-mono {
   color: #050505;
   border-color: #ffffff;
 }
+
+/* ── Direct 1-Second Wireframe Mode (Zero Overlap / Exact Position) ── */
+@keyframes wireframe-glint-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+body.wireframe-active {
+  user-select: none !important;
+}
+
+body.wireframe-active #clay-hero-diorama {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.wireframe-active svg {
+  opacity: 0 !important;
+}
+
+body.wireframe-active h1,
+body.wireframe-active h2,
+body.wireframe-active h3,
+body.wireframe-active h4,
+body.wireframe-active p,
+body.wireframe-active header nav a,
+body.wireframe-active header .btn-cta,
+body.wireframe-active header a[aria-label="GitHub Profile"],
+body.wireframe-active header a:first-child,
+body.wireframe-active section .font-mono,
+body.wireframe-active section .tracking-\[2px\],
+body.wireframe-active section .inline-flex.font-mono,
+body.wireframe-active .btn-cta,
+body.wireframe-active .aspect-square,
+body.wireframe-active [id*="chat-widget"] button {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  background-color: #1a1a20 !important;
+  border: 1px solid #363644 !important;
+  background-image: linear-gradient(
+    90deg,
+    #18181e 0%,
+    #2a2a34 50%,
+    #18181e 100%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: wireframe-glint-sweep 1.6s infinite linear !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+}
+
+body.wireframe-active h1 {
+  width: fit-content !important;
+  max-width: 90% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 4px !important;
+}
+
+body.wireframe-active h2 {
+  width: fit-content !important;
+  max-width: 85% !important;
+  border-radius: 3px !important;
+}
+
+body.wireframe-active header nav a {
+  border-radius: 3px !important;
+}
+
+body.wireframe-active .text-\[\#e63946\] {
+  border-color: rgba(230, 57, 70, 0.75) !important;
+}

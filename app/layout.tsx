@@ -58,7 +58,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body>
+      <body className="wireframe-active">
         <WireframeMeshLoader />
         <MatrixRain />
         <CustomCursor />
