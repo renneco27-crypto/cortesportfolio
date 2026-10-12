@@ -34,19 +34,27 @@ export default function ClayCharacter({ target, attackTrigger }: ClayCharacterPr
     box.getSize(size);
     box.getCenter(center);
 
-    // Target height around 2.1 units in diorama world
-    const scale = size.y > 0 ? 2.1 / size.y : 0.15;
+    // Target height around 2.8 units for clear visibility
+    const scale = size.y > 0 ? 2.8 / size.y : 0.22;
     const offsetY = -box.min.y * scale;
 
     // Center X & Z
     cloned.position.x = -center.x;
     cloned.position.z = -center.z;
 
-    // Enable shadows on all child meshes
+    // Enable shadows and enhance material responsiveness on child meshes
     cloned.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
+        const mesh = child as THREE.Mesh;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        if (mesh.material) {
+          const mat = mesh.material as THREE.MeshStandardMaterial;
+          if (mat.isMeshStandardMaterial) {
+            mat.roughness = Math.min(mat.roughness, 0.6);
+            mat.needsUpdate = true;
+          }
+        }
       }
     });
 

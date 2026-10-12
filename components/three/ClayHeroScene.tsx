@@ -137,15 +137,15 @@ export default function ClayHeroScene() {
   return (
     <div
       id="clay-hero-diorama"
-      className="fixed inset-0 pointer-events-none z-[1] transition-opacity duration-300"
+      className="fixed inset-0 pointer-events-none z-[5] transition-opacity duration-300"
       style={{ opacity }}
       aria-hidden="true"
     >
       <Canvas
         shadows="soft"
         camera={{
-          position: [0, 5.2, 11.5],
-          fov: 46,
+          position: [0, 4.2, 9.8],
+          fov: 44,
           near: 0.1,
           far: 50,
         }}

@@ -70,78 +70,71 @@ export default function DioramaRoom({ target }: DioramaRoomProps) {
         />
       </mesh>
 
-      {/* Ambient & Key Room Lighting */}
-      <ambientLight intensity={0.38} color="#8892a4" />
+      {/* Ambient & Key Room Lighting - High Visibility */}
+      <ambientLight intensity={1.4} color="#ffffff" />
       <directionalLight
-        position={[6, 9, 7]}
-        intensity={0.55}
-        color="#edf2f7"
+        position={[6, 12, 8]}
+        intensity={2.4}
+        color="#ffffff"
         castShadow
         shadow-mapSize={[1024, 1024]}
         shadow-bias={-0.0002}
       />
-      <pointLight position={[0, 3.5, -4]} intensity={0.35} color="#ffa97a" distance={15} />
+      <directionalLight
+        position={[-6, 8, 6]}
+        intensity={1.6}
+        color="#dbeafe"
+      />
+      <pointLight position={[0, 4.5, -2]} intensity={2.0} color="#ffedd5" distance={20} />
 
-      {/* Diorama 3D Box Architecture */}
+      {/* Diorama 3D Architecture */}
       <group position={[0, 0, 0]}>
-        {/* Floor Plane */}
+        {/* Floor Plane (clean without grid lines) */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
-          <planeGeometry args={[24, 18]} />
+          <planeGeometry args={[26, 20]} />
           <meshStandardMaterial
-            color="#131317"
-            roughness={0.88}
-            metalness={0.06}
+            color="#141418"
+            roughness={0.82}
+            metalness={0.08}
           />
         </mesh>
 
-        {/* Subtle Diorama Floor Grid / Tile Lines */}
-        <gridHelper
-          args={[22, 22, "#2a2d38", "#1c1e26"]}
-          position={[0, 0.005, 0]}
-        />
-
         {/* Back Wall */}
         <mesh position={[0, 6, -8.5]} receiveShadow>
-          <planeGeometry args={[24, 14]} />
+          <planeGeometry args={[26, 14]} />
           <meshStandardMaterial
-            color="#0b0b0e"
-            roughness={0.92}
+            color="#0d0d11"
+            roughness={0.9}
             metalness={0.04}
           />
         </mesh>
 
         {/* Left Wall */}
         <mesh
-          position={[-12, 6, 0.5]}
+          position={[-13, 6, 0.5]}
           rotation={[0, Math.PI / 2, 0]}
           receiveShadow
         >
-          <planeGeometry args={[18, 14]} />
+          <planeGeometry args={[20, 14]} />
           <meshStandardMaterial
-            color="#09090c"
-            roughness={0.94}
+            color="#0b0b0f"
+            roughness={0.92}
             metalness={0.03}
           />
         </mesh>
 
         {/* Right Wall */}
         <mesh
-          position={[12, 6, 0.5]}
+          position={[13, 6, 0.5]}
           rotation={[0, -Math.PI / 2, 0]}
           receiveShadow
         >
-          <planeGeometry args={[18, 14]} />
+          <planeGeometry args={[20, 14]} />
           <meshStandardMaterial
-            color="#09090c"
-            roughness={0.94}
+            color="#0b0b0f"
+            roughness={0.92}
             metalness={0.03}
           />
-        </mesh>
-
-        {/* Top Ceiling Trim Bar / Framing */}
-        <mesh position={[0, 12, -8.4]}>
-          <boxGeometry args={[24, 0.25, 0.35]} />
-          <meshStandardMaterial color="#1a1c23" roughness={0.7} />
         </mesh>
       </group>
     </>
