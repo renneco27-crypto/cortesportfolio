@@ -5,6 +5,9 @@ import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 type Message = { id: string; role: 'user' | 'assistant'; content: string };
 
+const SPINNER_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+const TARGET_GREETING = "ready. ask me about my experience or projects.";
+
 export default function EditorialChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
@@ -14,12 +17,85 @@ export default function EditorialChatWidget() {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  // Terminal boot animation states
+  const [bootStep, setBootStep] = useState<number>(0); // 0: idle, 1: downloading, 2: linked, 3: typing, 4: ready
+  const [spinnerIndex, setSpinnerIndex] = useState(0);
+  const [progressPct, setProgressPct] = useState(0);
+  const [typedGreeting, setTypedGreeting] = useState("");
 
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      if (messages.length === 0) {
+        setBootStep(0);
+        setProgressPct(0);
+        setTypedGreeting("");
+      }
+      return;
+    }
+
+    if (messages.length > 0) return;
+
+    let isCancelled = false;
+    let spinnerTimer: ReturnType<typeof setInterval>;
+    let progressTimer: ReturnType<typeof setInterval>;
+    let typeTimer: ReturnType<typeof setInterval>;
+    let stageTimeout: ReturnType<typeof setTimeout>;
+
+    setBootStep(1);
+    setProgressPct(0);
+    setTypedGreeting("");
+
+    // Rotating npm spinner
+    spinnerTimer = setInterval(() => {
+      setSpinnerIndex((prev) => (prev + 1) % SPINNER_FRAMES.length);
+    }, 60);
+
+    // Progress bar simulation (0 to 100% over ~550ms)
+    let currentPct = 0;
+    progressTimer = setInterval(() => {
+      currentPct += 14;
+      if (currentPct >= 100) {
+        currentPct = 100;
+        clearInterval(progressTimer);
+        clearInterval(spinnerTimer);
+        if (!isCancelled) {
+          setProgressPct(100);
+          setBootStep(2);
+
+          // Transition to typewriter after verification
+          stageTimeout = setTimeout(() => {
+            if (isCancelled) return;
+            setBootStep(3);
+            let charIndex = 0;
+            typeTimer = setInterval(() => {
+              charIndex++;
+              setTypedGreeting(TARGET_GREETING.slice(0, charIndex));
+              if (charIndex >= TARGET_GREETING.length) {
+                clearInterval(typeTimer);
+                if (!isCancelled) setBootStep(4);
+              }
+            }, 18);
+          }, 260);
+        }
+      } else {
+        if (!isCancelled) setProgressPct(currentPct);
+      }
+    }, 55);
+
+    return () => {
+      isCancelled = true;
+      clearInterval(spinnerTimer);
+      clearInterval(progressTimer);
+      clearInterval(typeTimer);
+      clearTimeout(stageTimeout);
+    };
+  }, [isOpen, messages.length]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -88,9 +164,42 @@ export default function EditorialChatWidget() {
           {/* Messages Area */}
           <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-4 bg-[#050505] scrollbar-hide font-mono text-[0.8rem] leading-relaxed">
             {messages.length === 0 && (
-              <div className="text-[#555] uppercase tracking-wide">
-                $ init neural-link...<br />
-                &gt; ready. ask me about my experience or projects.
+              <div className="text-[#888] font-mono text-[0.78rem] leading-relaxed select-none space-y-2">
+                <div>
+                  <span className="text-[#e63946] font-semibold">$</span> init neural-link...
+                </div>
+
+                {bootStep === 1 && (
+                  <div className="text-[#aaa] flex items-center gap-2">
+                    <span className="text-[#e63946] font-bold">{SPINNER_FRAMES[spinnerIndex]}</span>
+                    <span>fetching packages [
+                      <span className="text-[#e63946]">{"■".repeat(Math.min(10, Math.floor((progressPct / 100) * 10)))}</span>
+                      <span className="text-[#444]">{"□".repeat(10 - Math.min(10, Math.floor((progressPct / 100) * 10)))}</span>
+                    ] {progressPct}%</span>
+                  </div>
+                )}
+
+                {bootStep >= 2 && (
+                  <div className="text-[#4ade80] flex items-center gap-1.5 text-[0.75rem]">
+                    <span>✔</span>
+                    <span className="text-[#888]">neural-link@2.4.0 verified in 380ms</span>
+                  </div>
+                )}
+
+                {bootStep >= 3 && (
+                  <div className="text-white pt-1">
+                    <span className="text-[#e63946] font-semibold">&gt;</span>{" "}
+                    <span>{typedGreeting}</span>
+                    <span className="inline-block w-2 h-3.5 bg-[#e63946] ml-1.5 align-middle animate-cursor" />
+                  </div>
+                )}
+
+                {bootStep === 0 && (
+                  <div className="text-[#555]">
+                    <span className="text-[#e63946]">&gt;</span> awaiting signal...
+                    <span className="inline-block w-2 h-3.5 bg-[#e63946] ml-1.5 align-middle animate-cursor" />
+                  </div>
+                )}
               </div>
             )}
             
@@ -167,6 +276,13 @@ export default function EditorialChatWidget() {
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        @keyframes cursorBlink {
+          0%, 49% { opacity: 1; }
+          50%, 100% { opacity: 0; }
+        }
+        .animate-cursor {
+          animation: cursorBlink 0.8s infinite;
         }
       `}</style>
     </div>
