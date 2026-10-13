@@ -185,27 +185,28 @@ export default function SectionWipeTransitions() {
           .profile-badge {
             display: flex;
             align-items: center;
-            gap: 12px;
-            background: rgba(14, 6, 27, 0.88);
-            padding: 6px 14px 6px 8px;
-            border: 2.5px solid #000;
-            border-left: 4px solid var(--comic-cyan);
-            box-shadow: 4px 4px 0 #000;
-            transform: rotate(-2.5deg) skewX(-15deg);
+            gap: 14px;
+            background: rgba(14, 6, 27, 0.92);
+            padding: 8px 18px 8px 12px;
+            border: 3px solid #000;
+            border-left: 5px solid var(--comic-cyan);
+            box-shadow: 5px 5px 0 #000;
+            transform: rotate(-2deg) skewX(-15deg);
             pointer-events: auto;
             cursor: pointer;
-            transition: transform 0.15s;
+            transition: transform 0.15s, box-shadow 0.15s;
           }
 
           .profile-badge:hover {
-            transform: rotate(-2.5deg) skewX(-15deg) scale(1.04);
+            transform: rotate(-2deg) skewX(-15deg) scale(1.05);
+            box-shadow: 7px 7px 0 var(--comic-cyan);
           }
 
           .avatar-frame {
-            width: 44px;
-            height: 44px;
+            width: 50px;
+            height: 50px;
             background: #ffb703;
-            border: 2px solid #000;
+            border: 2.5px solid #000;
             overflow: hidden;
           }
 
@@ -218,26 +219,29 @@ export default function SectionWipeTransitions() {
           .profile-info {
             display: flex;
             flex-direction: column;
+            line-height: 1.1;
           }
 
           .profile-name {
             font-family: var(--font-comic);
-            font-size: 1.05rem;
+            font-size: 1.55rem;
             font-weight: 900;
-            color: #fff;
+            font-style: italic;
+            color: #ffffff;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 0 #000;
+            letter-spacing: 1.5px;
+            text-shadow: 2.5px 2.5px 0 #000;
           }
 
           .profile-lvl {
             font-family: var(--font-comic);
-            font-size: 0.8rem;
+            font-size: 1.05rem;
             font-weight: 900;
-            color: var(--comic-pink);
+            font-style: italic;
+            color: var(--comic-yellow);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-shadow: 1px 1px 0 #000;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 #000;
           }
 
           .currencies-group {
@@ -700,14 +704,14 @@ export default function SectionWipeTransitions() {
 
           <!-- Top Navigation Bar -->
           <header class="top-bar">
-            <!-- Player Profile Badge -->
-            <div class="profile-badge" id="profileBadge" title="Player Dossier">
+            <!-- Achievements & Certifications Header Badge -->
+            <div class="profile-badge" id="profileBadge" title="Achievements & Certifications">
               <div class="avatar-frame">
-                <img src="/assets/avatar.png" alt="Avatar">
+                <img src="/assets/avatar.png" alt="Achievements">
               </div>
               <div class="profile-info">
-                <span class="profile-name">LAWRENCE CORTES</span>
-                <span class="profile-lvl">SOFTWARE &amp; CLOUD DEV</span>
+                <span class="profile-name">ACHIEVEMENTS</span>
+                <span class="profile-lvl">&amp; CERTIFICATIONS</span>
               </div>
             </div>
 
@@ -1116,13 +1120,13 @@ export default function SectionWipeTransitions() {
         if (floatingArrow) floatingArrow.classList.remove("visible");
         if (modalStatusBadge) {
           modalStatusBadge.className = "modal-status-badge achieved";
-          modalStatusBadge.textContent = "[DOSSIER]";
+          modalStatusBadge.textContent = "[CREDENTIALS]";
         }
-        if (modalTitle) modalTitle.textContent = "LAWRENCE MANZO CORTES";
-        if (modalIssuer) modalIssuer.textContent = "Software Developer & Cloud Builder";
+        if (modalTitle) modalTitle.textContent = "ACHIEVEMENTS & CERTIFICATIONS";
+        if (modalIssuer) modalIssuer.textContent = "Technical Credentials & Badges";
         if (modalDesc) {
           modalDesc.textContent =
-            "Systems development, cloud architectures, Linux security paths, and applied generative AI tooling based in Ormoc City, Leyte, Philippines.";
+            "Explore verified technical assessment pathways, cloud engineering progress, and low-level security foundations.";
         }
         if (modalVerifyBtn) modalVerifyBtn.style.display = "none";
         if (actionModal) actionModal.classList.add("open");
