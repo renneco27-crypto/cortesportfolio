@@ -68,19 +68,19 @@ export default function SectionWipeTransitions() {
         <style>
           #cert-panel-grid {
             scrollbar-width: thin;
-            scrollbar-color: rgba(255, 30, 66, 0.6) rgba(255, 255, 255, 0.03);
+            scrollbar-color: rgba(255, 30, 66, 0.5) rgba(255, 255, 255, 0.02);
           }
           #cert-panel-grid::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
           }
           #cert-panel-grid::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 9999px;
           }
           #cert-panel-grid::-webkit-scrollbar-thumb {
             background: rgba(255, 30, 66, 0.6);
             border-radius: 9999px;
-            box-shadow: 0 0 8px rgba(255, 30, 66, 0.5);
+            box-shadow: 0 0 6px rgba(255, 30, 66, 0.4);
           }
           #cert-panel-grid::-webkit-scrollbar-thumb:hover {
             background: #ff1e42;
@@ -142,17 +142,16 @@ export default function SectionWipeTransitions() {
             </p>
           </div>
 
-          <!-- Right: Scrollable Clean Glassmorphic Cards Container (HCI Compliant) -->
+          <!-- Right: Compact Scrollable Glassmorphic Cards Container (HCI Compliant) -->
           <div id="cert-panel-grid" style="
-            flex:1.3;
+            flex:1.2;
             display:flex;
             flex-direction:column;
-            gap:10px;
-            max-width:620px;
-            max-height:82vh;
+            gap:7px;
+            max-width:510px;
+            max-height:50vh;
             overflow-y:auto;
-            overscroll-behavior:contain;
-            padding-right:12px;
+            padding-right:8px;
             pointer-events:auto !important;
             touch-action:pan-y;">
           </div>
@@ -219,12 +218,12 @@ export default function SectionWipeTransitions() {
 
             const iconSvg =
               c.badge_icon === "shield"
-                ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
+                ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
                 : c.badge_icon === "graduation"
-                ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`
+                ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`
                 : c.badge_icon === "check"
-                ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
-                : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>`;
+                ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+                : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ff1e42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>`;
 
             return `
               <div style="
@@ -233,25 +232,25 @@ export default function SectionWipeTransitions() {
                 backdrop-filter:blur(16px) saturate(180%);
                 -webkit-backdrop-filter:blur(16px) saturate(180%);
                 border:1px solid rgba(255,255,255,0.12);
-                border-left:3.5px solid #ff1e42;
-                border-radius:12px;
-                padding:1.05rem 1.35rem;
+                border-left:3px solid #ff1e42;
+                border-radius:9px;
+                padding:0.6rem 0.95rem;
                 box-sizing:border-box;
                 display:flex;
                 flex-direction:column;
-                gap:0.6rem;
-                box-shadow:0 8px 32px 0 rgba(0,0,0,0.45), inset 0 1px 1px 0 rgba(255,255,255,0.12);
-                transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+                gap:0.35rem;
+                box-shadow:0 6px 24px 0 rgba(0,0,0,0.4), inset 0 1px 1px 0 rgba(255,255,255,0.12);
+                transition:transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
                 pointer-events:auto;"
-                onmouseover="this.style.borderColor='rgba(0,229,255,0.45)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(4px)';this.style.boxShadow='0 12px 36px rgba(0,0,0,0.55), 0 0 20px rgba(0,229,255,0.15), inset 0 1px 1px rgba(255,255,255,0.2)';"
-                onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(0)';this.style.boxShadow='0 8px 32px 0 rgba(0,0,0,0.45), inset 0 1px 1px 0 rgba(255,255,255,0.12)';">
+                onmouseover="this.style.borderColor='rgba(0,229,255,0.45)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(3px)';this.style.boxShadow='0 8px 28px rgba(0,0,0,0.5), 0 0 16px rgba(0,229,255,0.15), inset 0 1px 1px rgba(255,255,255,0.2)';"
+                onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.borderLeftColor='#ff1e42';this.style.transform='translateX(0)';this.style.boxShadow='0 6px 24px 0 rgba(0,0,0,0.4), inset 0 1px 1px 0 rgba(255,255,255,0.12)';">
 
                 <!-- Row 1: Icon + Title + Glassmorphic Status Pill -->
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;">
-                  <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+                  <div style="display:flex;align-items:center;gap:8px;min-width:0;">
                     <span style="
                       display:inline-flex;align-items:center;justify-content:center;
-                      width:28px;height:28px;border-radius:7px;
+                      width:22px;height:22px;border-radius:5px;
                       background:rgba(255,30,66,0.14);
                       background-image:linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,30,66,0.05) 100%);
                       backdrop-filter:blur(6px);
@@ -261,13 +260,13 @@ export default function SectionWipeTransitions() {
                       flex-shrink:0;">
                       ${iconSvg}
                     </span>
-                    <h3 style="margin:0;font-size:0.94rem;font-weight:700;color:#ffffff;letter-spacing:0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                    <h3 style="margin:0;font-size:0.85rem;font-weight:600;color:#ffffff;letter-spacing:0.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                       ${c.label}
                     </h3>
                   </div>
                   <span style="
                     font-family:'Space Grotesk',sans-serif;
-                    font-size:0.75rem;font-weight:800;letter-spacing:1px;
+                    font-size:0.66rem;font-weight:700;letter-spacing:0.8px;
                     color:${statusColor};
                     background:${statusBg};
                     background-image:${statusGradient};
@@ -275,19 +274,19 @@ export default function SectionWipeTransitions() {
                     box-shadow:${statusShadow};
                     backdrop-filter:blur(8px);
                     -webkit-backdrop-filter:blur(8px);
-                    padding:5px 13px;border-radius:6px;white-space:nowrap;flex-shrink:0;">
+                    padding:3px 8px;border-radius:5px;white-space:nowrap;flex-shrink:0;">
                     ${statusText}
                   </span>
                 </div>
 
                 <!-- Row 2: Issuing Body + Official Link Glass Pill -->
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-left:38px;">
-                  <span style="font-size:0.8rem;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding-left:30px;">
+                  <span style="font-size:0.75rem;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                     ${c.issuing_body}
                   </span>
                   ${
                     c.verify_url
-                      ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;font-weight:600;color:#00e5ff;text-decoration:none;display:inline-flex;align-items:center;gap:4px;flex-shrink:0;background:rgba(0,229,255,0.08);background-image:linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(0,229,255,0.03) 100%);border:1px solid rgba(0,229,255,0.3);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:3px 9px;border-radius:6px;box-shadow:inset 0 1px 1px rgba(255,255,255,0.15);transition:border-color 0.2s, background 0.2s;" onmouseover="this.style.borderColor='#00e5ff';this.style.background='rgba(0,229,255,0.18)';" onmouseout="this.style.borderColor='rgba(0,229,255,0.3)';this.style.background='rgba(0,229,255,0.08)';">Official Link ↗</a>`
+                      ? `<a href="${c.verify_url}" target="_blank" rel="noopener noreferrer" style="font-size:0.68rem;font-weight:600;color:#00e5ff;text-decoration:none;display:inline-flex;align-items:center;gap:3px;flex-shrink:0;background:rgba(0,229,255,0.08);background-image:linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(0,229,255,0.03) 100%);border:1px solid rgba(0,229,255,0.3);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:2px 7px;border-radius:4px;box-shadow:inset 0 1px 1px rgba(255,255,255,0.15);transition:border-color 0.2s, background 0.2s;" onmouseover="this.style.borderColor='#00e5ff';this.style.background='rgba(0,229,255,0.18)';" onmouseout="this.style.borderColor='rgba(0,229,255,0.3)';this.style.background='rgba(0,229,255,0.08)';">Official Link ↗</a>`
                       : ""
                   }
                 </div>
@@ -297,19 +296,54 @@ export default function SectionWipeTransitions() {
           .join("");
       };
 
-      // Direct wheel capture on #cert-panel-grid: isolates card scrolling completely so it stops at the bottom and never leaks to the next slide!
+      // Two-stage wheel handling: scrolls cards smoothly, then seamlessly flows into Selected Engineering Works upon reaching the bottom!
       const panelGrid = certOv.querySelector("#cert-panel-grid") as HTMLElement | null;
       if (panelGrid) {
         panelGrid.addEventListener(
           "wheel",
           (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            panelGrid.scrollTop += e.deltaY * 0.85;
+            const isScrollingDown = e.deltaY > 0;
+            const isScrollingUp = e.deltaY < 0;
+            // 4px tolerance for subpixel/fractional devicePixelRatio
+            const atBottom = panelGrid.scrollTop + panelGrid.clientHeight >= panelGrid.scrollHeight - 4;
+            const atTop = panelGrid.scrollTop <= 4;
+
+            if (isScrollingDown) {
+              if (!atBottom) {
+                // Scroll internal cards panel
+                e.stopPropagation();
+                e.preventDefault();
+                panelGrid.scrollTop += e.deltaY * 0.9;
+              } else {
+                // Reached bottom of cards! Forward scroll to window to smoothly wipe to Selected Engineering Works
+                window.scrollBy({ top: e.deltaY, behavior: "auto" });
+              }
+            } else if (isScrollingUp) {
+              if (!atTop) {
+                // Scroll internal cards panel up
+                e.stopPropagation();
+                e.preventDefault();
+                panelGrid.scrollTop += e.deltaY * 0.9;
+              } else {
+                // Reached top of cards! Forward scroll to window to scroll back up
+                window.scrollBy({ top: e.deltaY, behavior: "auto" });
+              }
+            }
           },
           { passive: false }
         );
       }
+
+      // Forward wheel on the fixed overlay background directly to window
+      certOv.addEventListener(
+        "wheel",
+        (e) => {
+          if (!panelGrid || !panelGrid.contains(e.target as Node)) {
+            window.scrollBy({ top: e.deltaY, behavior: "auto" });
+          }
+        },
+        { passive: true }
+      );
 
       // Initial render with clean in-progress and planned items (no fake earned items)
       renderCertCards([
@@ -706,22 +740,22 @@ export default function SectionWipeTransitions() {
       masterTl.fromTo(
         certOv,
         { clipPath: "inset(0 0 0 100%)", opacity: 1 },
-        { clipPath: "inset(0 0 0 0%)", opacity: 1, ease: "power3.inOut", duration: 0.6 },
+        { clipPath: "inset(0 0 0 0%)", opacity: 1, ease: "power3.inOut", duration: 0.5 },
         0
       );
 
-      // Phase 2 (AT 1.2): Wipe 0 holds in place, then exits clipping upward WHILE Wipe 1 enters from right!
+      // Phase 2 (AT 0.8): Wipe 0 exits clipping upward WHILE Wipe 1 enters from right!
       masterTl.to(
         certOv,
         {
           clipPath: "inset(0% 0 100% 0)",
           ease: "power3.inOut",
-          duration: 0.55,
+          duration: 0.5,
           onComplete: () => {
             gsap.set(certOv, { pointerEvents: "none" });
           },
         },
-        1.2
+        0.8
       );
 
       masterTl.fromTo(
@@ -731,26 +765,26 @@ export default function SectionWipeTransitions() {
           clipPath: "inset(0 0 0 0%)",
           opacity: 1,
           ease: "power3.inOut",
-          duration: 0.55,
+          duration: 0.5,
           onStart: () => {
             gsap.set(ov1, { opacity: 1, pointerEvents: "auto" });
           },
         },
-        1.2
+        0.8
       );
 
-      // Phase 3 (AT 2.3): Wipe 1 holds in place, then exits clipping upward WHILE Wipe 2 (Contact) enters!
+      // Phase 3 (AT 1.6): Wipe 1 holds in place, then exits clipping upward WHILE Wipe 2 (Contact) enters!
       masterTl.to(
         ov1,
         {
           clipPath: "inset(0% 0 100% 0)",
           ease: "power3.inOut",
-          duration: 0.55,
+          duration: 0.5,
           onComplete: () => {
             gsap.set(ov1, { pointerEvents: "none" });
           },
         },
-        2.3
+        1.6
       );
 
       masterTl.fromTo(
@@ -760,26 +794,26 @@ export default function SectionWipeTransitions() {
           clipPath: "inset(0% 0 0 0)",
           opacity: 1,
           ease: "power3.inOut",
-          duration: 0.55,
+          duration: 0.5,
           onStart: () => {
             gsap.set([leftOv, rightOv], { opacity: 1, pointerEvents: "auto" });
           },
         },
-        2.3
+        1.6
       );
 
       masterTl.fromTo(
         rightOv,
         { clipPath: "inset(0 0 100% 0)", opacity: 1 },
-        { clipPath: "inset(0 0 0% 0)", opacity: 1, ease: "power3.inOut", duration: 0.55 },
-        2.3
+        { clipPath: "inset(0 0 0% 0)", opacity: 1, ease: "power3.inOut", duration: 0.5 },
+        1.6
       );
 
       // Phase 4: Initiate Contact stays locked in place until the end of the page (no upward clip exit)
       masterTl.to(
         [leftOv, rightOv],
-        { clipPath: "inset(0% 0 0% 0)", opacity: 1, duration: 0.5 },
-        3.2
+        { clipPath: "inset(0% 0 0% 0)", opacity: 1, duration: 0.4 },
+        2.3
       );
 
       triggers.push(masterTl.scrollTrigger!);
