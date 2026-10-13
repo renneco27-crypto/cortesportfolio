@@ -64,11 +64,11 @@ export default function EditorialChatWidget() {
   if (!hasMounted) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-[70] flex flex-col items-end">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[70] flex flex-col items-end">
       {/* Flat Editorial Panel */}
       <div 
         className={`transition-all duration-300 ease-in-out overflow-hidden bg-[#050505] border border-[#222] shadow-2xl origin-bottom-right
-        ${isOpen ? 'w-[320px] sm:w-[380px] h-[480px] opacity-100 scale-100 mb-4' : 'w-[320px] h-0 opacity-0 scale-95 mb-0 border-transparent'}`}
+        ${isOpen ? 'w-[calc(100vw-32px)] max-w-[380px] h-[480px] max-h-[75vh] opacity-100 scale-100 mb-3 sm:mb-4' : 'w-[calc(100vw-32px)] max-w-[380px] h-0 opacity-0 scale-95 mb-0 border-transparent'}`}
       >
         <div className="flex flex-col h-full w-full">
           {/* Header */}
@@ -152,9 +152,9 @@ export default function EditorialChatWidget() {
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center gap-3 bg-[#0a0a0a] border border-[#222] hover:border-[#555] text-white px-5 py-3 rounded-none shadow-xl transition-all duration-300"
+        className="group flex items-center gap-2 sm:gap-3 bg-[#0a0a0a] border border-[#222] hover:border-[#555] text-white px-3.5 py-2 sm:px-5 sm:py-3 rounded-none shadow-xl transition-all duration-300"
       >
-        <span className="font-mono text-xs uppercase tracking-widest text-[#888] group-hover:text-white transition-colors">
+        <span className="font-mono text-[0.7rem] sm:text-xs uppercase tracking-widest text-[#888] group-hover:text-white transition-colors">
           [ INTERACT ]
         </span>
         <div className={`w-2 h-2 rounded-full ${isOpen ? 'bg-[#e63946]' : 'bg-white'} shadow-[0_0_8px_rgba(255,255,255,0.4)]`}></div>

@@ -705,15 +705,21 @@ export default function SectionWipeTransitions() {
               top: 10px;
               left: 10px;
               right: 10px;
+              width: calc(100% - 20px);
               display: flex;
+              flex-direction: row;
               justify-content: space-between;
               align-items: center;
               gap: 8px;
+              box-sizing: border-box;
             }
 
             .profile-badge {
-              padding: 5px 12px 5px 8px;
-              gap: 10px;
+              flex: 1 1 auto;
+              min-width: 0;
+              max-width: calc(100% - 110px);
+              padding: 5px 10px 5px 8px;
+              gap: 8px;
               border: 2px solid #000;
               border-left: 4px solid var(--comic-cyan);
               box-shadow: 3px 3px 0 #000;
@@ -721,50 +727,70 @@ export default function SectionWipeTransitions() {
             }
 
             .avatar-frame {
-              width: 36px;
-              height: 36px;
+              width: 32px;
+              height: 32px;
+              flex-shrink: 0;
               border: 2px solid #000;
+            }
+
+            .profile-info {
+              min-width: 0;
+              overflow: hidden;
+              display: flex;
+              flex-direction: column;
             }
 
             .profile-name {
-              font-size: 1.15rem;
-              letter-spacing: 1px;
-              text-shadow: 2px 2px 0 #000;
+              font-size: clamp(0.75rem, 2.8vw, 0.95rem);
+              letter-spacing: 0.5px;
+              text-shadow: 1.5px 1.5px 0 #000;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
 
             .profile-lvl {
-              font-size: 0.8rem;
-              letter-spacing: 1.2px;
-              text-shadow: 1.5px 1.5px 0 #000;
+              font-size: clamp(0.55rem, 2vw, 0.72rem);
+              letter-spacing: 0.8px;
+              text-shadow: 1px 1px 0 #000;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
 
             .currencies-group {
+              flex: 0 0 auto;
+              display: flex;
+              align-items: center;
               gap: 6px;
               transform: rotate(-1deg) skewX(-10deg);
+              margin: 0;
             }
 
             .currency-pill {
-              padding: 2px 8px;
-              font-size: 0.95rem;
+              padding: 2px 7px;
+              font-size: 0.85rem;
               border: 2px solid #000;
-              box-shadow: 3px 3px 0 #000;
+              box-shadow: 2.5px 2.5px 0 #000;
+              white-space: nowrap;
             }
 
             .currency-icon {
-              font-size: 0.95rem;
+              font-size: 0.85rem;
               margin-right: 3px;
             }
 
             .sound-btn {
-              width: 34px;
-              height: 32px;
+              width: 32px;
+              height: 30px;
               border: 2px solid #000;
-              box-shadow: 3px 3px 0 #000;
+              box-shadow: 2.5px 2.5px 0 #000;
+              flex-shrink: 0;
             }
 
             .sound-btn svg {
-              width: 18px;
-              height: 18px;
+              width: 16px;
+              height: 16px;
             }
 
             .character-center-layer {
@@ -775,71 +801,90 @@ export default function SectionWipeTransitions() {
             }
 
             .menu-right-zone {
-              top: 68px;
+              top: 56px;
+              bottom: 56px;
               right: 0;
               left: 0;
               width: 100%;
-              height: calc(100% - 138px);
-              height: calc(100dvh - 138px);
-              perspective: 900px;
-              perspective-origin: 50% 50%;
-              padding: 0;
+              height: auto;
+              perspective: none;
+              transform: none;
+              padding: 0 8px;
+              box-sizing: border-box;
+              display: flex;
               align-items: center;
               justify-content: center;
             }
 
             .menu-carousel-wrapper {
-              width: 95%;
-              max-width: 440px;
+              width: 100%;
+              max-width: 480px;
               height: 100%;
+              display: flex;
               align-items: center;
+              justify-content: center;
             }
 
             .menu-scroller {
-              padding: 24px 0 40px;
-              gap: 10px;
-              align-items: center;
+              width: 100%;
+              height: 100%;
+              padding: 8px 4px 16px;
+              gap: 8px;
+              align-items: stretch;
+              box-sizing: border-box;
               -webkit-overflow-scrolling: touch;
-              mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
-              -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+              mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 96%, transparent 100%);
+              -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 4%, black 96%, transparent 100%);
             }
 
             .menu-item-slot {
-              width: 94%;
-              min-height: 52px;
-              transform: rotateY(-8deg) rotateX(2deg) skewX(-9deg) scale(0.97);
-              justify-content: center;
-              opacity: 0.88;
+              width: 100%;
+              max-width: 100%;
+              box-sizing: border-box;
+              min-height: 48px;
+              transform: skewX(-4deg);
+              opacity: 0.92;
+              display: flex;
             }
 
             .menu-item-slot.active {
-              transform: rotateY(-8deg) rotateX(2deg) skewX(-9deg) scale(1.02) translateX(-4px);
+              transform: skewX(-4deg) scale(1.02);
+              opacity: 1;
             }
 
             .comic-btn-face {
-              min-height: 50px;
-              padding: 0 12px 0 14px;
-              border: 2.5px solid #000;
-              box-shadow: 5px 5px 0px #000, 8px 8px 0px rgba(0, 0, 0, 0.4);
+              width: 100%;
+              min-height: 48px;
+              padding: 0 10px 0 12px;
+              box-sizing: border-box;
+              border: 2px solid #000;
+              box-shadow: 4px 4px 0px #000;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
             }
 
             .menu-text {
-              font-size: 1.05rem;
-              letter-spacing: 1px;
-              text-shadow: 2px 2px 0 #000;
+              font-size: clamp(0.72rem, 2.8vw, 0.92rem);
+              letter-spacing: 0.5px;
+              text-shadow: 1.5px 1.5px 0 #000;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-width: calc(100% - 70px);
             }
 
             .slot-status-pill {
-              font-size: 0.6rem;
-              padding: 2px 6px;
+              font-size: 0.55rem;
+              padding: 2px 5px;
               margin-left: 6px;
               border: 1.5px solid #000;
               box-shadow: 1.5px 1.5px 0 #000;
+              flex-shrink: 0;
             }
 
             .floating-menu-arrow {
-              width: 30px;
-              height: 30px;
+              display: none !important;
             }
 
             .bottom-squad {
@@ -854,15 +899,15 @@ export default function SectionWipeTransitions() {
             }
 
             .squad-frame {
-              width: 36px;
-              height: 36px;
+              width: 32px;
+              height: 32px;
               border: 2px solid #000;
               box-shadow: 2px 2px 0 #000;
             }
 
             .squad-name-tag {
-              font-size: 0.56rem;
-              padding: 1px 4px;
+              font-size: 0.52rem;
+              padding: 1px 3px;
               border: 1.5px solid #000;
               box-shadow: 1.5px 1.5px 0 #000;
               margin-top: 2px;
@@ -871,90 +916,73 @@ export default function SectionWipeTransitions() {
             .exit-btn {
               bottom: 10px;
               right: 10px;
-              padding: 6px 14px;
-              font-size: 0.95rem;
+              padding: 6px 12px;
+              font-size: 0.88rem;
               border: 2px solid #000;
-              box-shadow: 3px 3px 0 #000;
+              box-shadow: 2.5px 2.5px 0 #000;
               transform: skewX(-10deg);
-              gap: 6px;
+              gap: 5px;
             }
 
             .exit-btn svg {
-              width: 16px;
-              height: 16px;
+              width: 14px;
+              height: 14px;
             }
 
             .action-modal-box {
-              padding: 24px 18px;
+              padding: 20px 16px;
               width: 90%;
-              max-width: 360px;
+              max-width: 340px;
               border: 3px solid var(--comic-cyan);
-              box-shadow: 8px 8px 0 var(--comic-pink);
+              box-shadow: 6px 6px 0 var(--comic-pink);
             }
 
             .modal-title {
-              font-size: 1.45rem;
+              font-size: 1.35rem;
               margin-bottom: 4px;
             }
 
             .modal-issuer {
-              font-size: 0.8rem;
-              margin-bottom: 12px;
+              font-size: 0.78rem;
+              margin-bottom: 10px;
             }
 
             .modal-desc {
-              font-size: 0.88rem;
-              margin-bottom: 18px;
-              line-height: 1.45;
+              font-size: 0.84rem;
+              margin-bottom: 16px;
+              line-height: 1.4;
             }
 
             .modal-btn {
-              font-size: 0.9rem;
-              padding: 8px 18px;
+              font-size: 0.85rem;
+              padding: 8px 16px;
               border: 2px solid #000;
             }
           }
 
-          @media (max-width: 440px) {
-            .top-bar {
-              flex-direction: column;
-              align-items: flex-start;
-              gap: 6px;
+          @media (max-width: 480px) {
+            .currency-pill:first-child {
+              display: none;
+            }
+
+            .bottom-squad .squad-slot:nth-child(n+3) {
+              display: none;
+            }
+          }
+
+          @media (max-width: 360px) {
+            .bottom-squad .squad-slot:nth-child(n+2) {
+              display: none;
+            }
+
+            .exit-btn {
+              padding: 5px 8px;
+              font-size: 0.78rem;
             }
 
             .profile-badge {
-              width: auto;
-            }
-
-            .profile-name {
-              font-size: 0.98rem;
-            }
-
-            .profile-lvl {
-              font-size: 0.72rem;
-            }
-
-            .currencies-group {
-              align-self: flex-end;
-              margin-top: -38px;
-            }
-
-            .menu-right-zone {
-              top: 76px;
-              height: calc(100% - 146px);
-              height: calc(100dvh - 146px);
-            }
-
-            .menu-item-slot {
-              width: 98%;
-            }
-
-            .menu-text {
-              font-size: 0.92rem;
-            }
-
-            .bottom-squad .squad-slot:last-child {
-              display: none;
+              max-width: calc(100% - 90px);
+              padding: 3px 6px;
             }
           }
         </style>
@@ -1492,7 +1520,7 @@ export default function SectionWipeTransitions() {
         { passive: true }
       );
 
-      // Touch gestures anywhere on certOv directly trigger the vertical slide wipe
+      // Touch gestures on certOv: allows fluid card scrolling while advancing the master wipe when at edges or on background
       let ovTouchStartY = 0;
       certOv.addEventListener(
         "touchstart",
@@ -1511,7 +1539,19 @@ export default function SectionWipeTransitions() {
           const currentY = e.touches[0].clientY;
           const diff = ovTouchStartY - currentY;
           ovTouchStartY = currentY;
-          window.scrollBy({ top: diff * 1.15, behavior: "auto" });
+
+          const scroller = certOv.querySelector(".menu-scroller") as HTMLElement | null;
+          const isTouchingScroller = (e.target as HTMLElement)?.closest(".menu-scroller");
+
+          if (isTouchingScroller && scroller && scroller.scrollHeight > scroller.clientHeight + 4) {
+            const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 6;
+            const atTop = scroller.scrollTop <= 6;
+            if ((diff > 0 && atBottom) || (diff < 0 && atTop)) {
+              window.scrollBy({ top: diff * 1.15, behavior: "auto" });
+            }
+          } else {
+            window.scrollBy({ top: diff * 1.15, behavior: "auto" });
+          }
         },
         { passive: true }
       );
@@ -1594,48 +1634,188 @@ export default function SectionWipeTransitions() {
         "overflow:hidden;";
 
       ov1.innerHTML = `
-        <div style="
-          position:absolute;inset:0;display:flex;align-items:center;
-          padding:0 8vw;box-sizing:border-box;">
+        <style>
+          .ov1-stage {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8vw;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+          }
+          .ov1-left {
+            flex: 1;
+            max-width: 520px;
+            padding-right: 4rem;
+            box-sizing: border-box;
+          }
+          .ov1-tag {
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #e63946;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+          .ov1-tag-line {
+            display: inline-block;
+            width: 32px;
+            height: 1px;
+            background: #e63946;
+          }
+          .ov1-title {
+            font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+            font-weight: 200;
+            letter-spacing: -0.04em;
+            line-height: 0.92;
+            color: #fff;
+            margin: 0 0 2rem;
+            text-transform: uppercase;
+          }
+          .ov1-desc {
+            color: #aaa;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            max-width: 380px;
+            border-left: 2px solid rgba(230,57,70,0.5);
+            padding-left: 1.25rem;
+          }
+          .ov1-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #050505;
+            background: #fff;
+            padding: 14px 32px;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+          }
+          .ov1-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            max-width: 480px;
+            opacity: 0.95;
+            box-sizing: border-box;
+          }
+          .ov1-row1 {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1px;
+          }
+          .ov1-row2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1px;
+          }
+          .ov1-card {
+            height: 180px;
+            background: rgba(14,14,14,0.85);
+            border: 1px solid rgba(255,255,255,0.12);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.25rem;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s, background 0.3s;
+          }
+          .ov1-card-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
 
+          @media (max-width: 868px) {
+            .ov1-stage {
+              flex-direction: column;
+              justify-content: flex-start;
+              align-items: stretch;
+              padding: 56px 6vw 48px;
+              overflow-y: auto;
+              -webkit-overflow-scrolling: touch;
+              gap: 1.5rem;
+            }
+            .ov1-left {
+              max-width: 100%;
+              padding-right: 0;
+              flex: none;
+            }
+            .ov1-tag {
+              margin-bottom: 0.75rem;
+              font-size: 0.65rem;
+            }
+            .ov1-title {
+              font-size: clamp(2rem, 7vw, 3rem);
+              margin-bottom: 1rem;
+              line-height: 0.95;
+            }
+            .ov1-desc {
+              margin-bottom: 1.25rem;
+              font-size: 0.8rem;
+              padding-left: 0.75rem;
+            }
+            .ov1-btn {
+              padding: 10px 20px;
+              font-size: 0.68rem;
+              width: fit-content;
+            }
+            .ov1-right {
+              max-width: 100%;
+              flex: none;
+              gap: 8px;
+              padding-bottom: 30px;
+            }
+            .ov1-row1, .ov1-row2 {
+              grid-template-columns: 1fr !important;
+              gap: 8px !important;
+            }
+            .ov1-card {
+              height: auto !important;
+              min-height: 85px !important;
+              padding: 1rem !important;
+            }
+          }
+        </style>
+
+        <div class="ov1-stage">
           <!-- Left: Editorial text block -->
-          <div style="flex:1;max-width:520px;padding-right:4rem;">
-            <div style="
-              font-family:'Courier New',monospace;font-size:0.7rem;letter-spacing:4px;
-              text-transform:uppercase;color:#e63946;margin-bottom:3rem;
-              display:flex;align-items:center;gap:12px;">
-              <span style="display:inline-block;width:32px;height:1px;background:#e63946;"></span>
+          <div class="ov1-left">
+            <div class="ov1-tag">
+              <span class="ov1-tag-line"></span>
               03 — ARCHITECTURAL WORKS
             </div>
 
-            <h2 style="
-              font-size:clamp(2.8rem,6vw,5rem);font-weight:200;
-              letter-spacing:-0.04em;line-height:0.9;
-              color:#fff;margin:0 0 2.5rem;
-              text-transform:uppercase;">
+            <h2 class="ov1-title">
               Selected<br/>
               <span style="color:#e63946;">Engineering</span><br/>
               Works.
             </h2>
 
-            <p style="
-              color:#aaa;font-size:0.85rem;line-height:1.7;
-              font-weight:300;margin-bottom:3rem;max-width:380px;
-              border-left:2px solid rgba(230,57,70,0.5);padding-left:1.25rem;">
+            <p class="ov1-desc">
               AI systems · EdTech · automation · web security.<br/>
               Live demos, source repos, and full technical telemetry.
             </p>
 
             <a href="/projects"
               onclick="window.__handleProjectCardZoom(event, '/projects')"
-              style="
-              display:inline-flex;align-items:center;gap:14px;
-              font-family:'Courier New',monospace;font-size:0.72rem;
-              letter-spacing:3px;text-transform:uppercase;
-              color:#050505;background:#fff;
-              padding:14px 32px;text-decoration:none;font-weight:700;
-              cursor:pointer;
-              transition:background 0.2s,color 0.2s,transform 0.2s;"
+              class="ov1-btn"
               onmouseover="this.style.background='#e63946';this.style.color='#fff';this.style.transform='translateY(-2px)';"
               onmouseout="this.style.background='#fff';this.style.color='#050505';this.style.transform='translateY(0)';">
               View All Projects
@@ -1648,16 +1828,12 @@ export default function SectionWipeTransitions() {
           </div>
 
           <!-- Right: Clickable project grid cards with Zoom + Fade transition -->
-          <div style="flex:1;display:flex;flex-direction:column;gap:1px;max-width:480px;opacity:0.95;">
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;">
-
+          <div class="ov1-right">
+            <div class="ov1-row1">
               <!-- Card 001: Lex Memoria -->
               <div onclick="window.__handleProjectCardZoom(event, '/projects')"
-                style="height:180px;background:rgba(14,14,14,0.85);border:1px solid rgba(255,255,255,0.12);
-                display:flex;flex-direction:column;justify-content:flex-end;
-                padding:1.25rem;box-sizing:border-box;cursor:pointer;
-                transition:transform 0.3s ease, border-color 0.3s, background 0.3s;"
-                onmouseover="this.style.transform='scale(1.05)';this.style.borderColor='#e63946';this.style.background='rgba(230,57,70,0.15)';"
+                class="ov1-card"
+                onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#e63946';this.style.background='rgba(230,57,70,0.15)';"
                 onmouseout="this.style.transform='scale(1)';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='rgba(14,14,14,0.85)';">
                 <div style="font-family:'Courier New',monospace;font-size:0.6rem;
                   color:#e63946;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">
@@ -1669,11 +1845,9 @@ export default function SectionWipeTransitions() {
 
               <!-- Card 002: StylePeek -->
               <div onclick="window.__handleProjectCardZoom(event, '/projects')"
-                style="height:180px;background:rgba(10,10,10,0.85);border:1px solid rgba(255,255,255,0.12);
-                display:flex;flex-direction:column;justify-content:flex-end;
-                padding:1.25rem;box-sizing:border-box;grid-column:span 2;cursor:pointer;
-                transition:transform 0.3s ease, border-color 0.3s, background 0.3s;"
-                onmouseover="this.style.transform='scale(1.05)';this.style.borderColor='#f4a261';this.style.background='rgba(244,162,97,0.15)';"
+                class="ov1-card"
+                style="background:rgba(10,10,10,0.85);"
+                onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#f4a261';this.style.background='rgba(244,162,97,0.15)';"
                 onmouseout="this.style.transform='scale(1)';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='rgba(10,10,10,0.85)';">
                 <div style="font-family:'Courier New',monospace;font-size:0.6rem;
                   color:#f4a261;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">
@@ -1682,17 +1856,14 @@ export default function SectionWipeTransitions() {
                 <div style="font-size:0.85rem;color:#fff;font-weight:400;">StylePeek by Rence</div>
                 <div style="font-mono text-[0.65rem] color:#888;margin-top:2px;">CSS & Design Telemetry ↗</div>
               </div>
-
             </div>
-            <div style="display:grid;grid-template-columns:2fr 1fr;gap:1px;">
 
+            <div class="ov1-row2">
               <!-- Card 003: NaturalVoice -->
               <div onclick="window.__handleProjectCardZoom(event, '/projects')"
-                style="height:120px;background:rgba(12,12,12,0.85);border:1px solid rgba(255,255,255,0.12);
-                display:flex;flex-direction:column;justify-content:flex-end;
-                padding:1.25rem;box-sizing:border-box;cursor:pointer;
-                transition:transform 0.3s ease, border-color 0.3s, background 0.3s;"
-                onmouseover="this.style.transform='scale(1.05)';this.style.borderColor='#e63946';this.style.background='rgba(230,57,70,0.15)';"
+                class="ov1-card"
+                style="height:120px;background:rgba(12,12,12,0.85);"
+                onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#e63946';this.style.background='rgba(230,57,70,0.15)';"
                 onmouseout="this.style.transform='scale(1)';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='rgba(12,12,12,0.85)';">
                 <div style="font-family:'Courier New',monospace;font-size:0.6rem;
                   color:#e63946;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">
@@ -1704,17 +1875,15 @@ export default function SectionWipeTransitions() {
 
               <!-- Card + more: NaturalVoice Edge Screen Reader GitHub -->
               <div onclick="window.__handleProjectCardZoom(event, 'https://github.com/renneco27-crypto/NaturalVoice_EdgeScreenReader_Renne')"
-                style="height:120px;background:rgba(17,17,17,0.85);border:1px solid rgba(255,255,255,0.12);
-                display:flex;align-items:center;justify-content:center;cursor:pointer;
-                transition:transform 0.3s ease, border-color 0.3s, background 0.3s;"
-                onmouseover="this.style.transform='scale(1.05)';this.style.borderColor='#e63946';this.style.background='rgba(230,57,70,0.15)';"
+                class="ov1-card ov1-card-center"
+                style="height:120px;background:rgba(17,17,17,0.85);"
+                onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#e63946';this.style.background='rgba(230,57,70,0.15)';"
                 onmouseout="this.style.transform='scale(1)';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='rgba(17,17,17,0.85)';">
                 <span style="font-family:'Courier New',monospace;font-size:0.7rem;
                   color:#fff;letter-spacing:2px;text-transform:uppercase;font-weight:700;">
                   NaturalVoice ↗
                 </span>
               </div>
-
             </div>
           </div>
         </div>
@@ -1731,48 +1900,222 @@ export default function SectionWipeTransitions() {
       document.body.appendChild(ov1);
       overlays.push(ov1);
 
-      /* ── 2. Create Overlay 2: Initiate Contact (50/50 Split) ── */
+      /* ── 2. Create Overlay 2: Initiate Contact (PowerPoint Curtain / Responsive) ── */
       const CONTACT_FORM_ID = "wipe-cf-" + Math.random().toString(36).slice(2);
+      const isMobileViewport = typeof window !== "undefined" && window.innerWidth <= 868;
 
       const contactHTML = `
-        <div style="
-          position:absolute;top:0;left:0;
-          width:100vw;height:100vh;
-          display:flex;align-items:center;
-          justify-content:center;
-          padding:0 8vw;
-          box-sizing:border-box;
-          background:rgba(13, 13, 13, 0.85);
-          backdrop-filter:blur(12px);
-          -webkit-backdrop-filter:blur(12px);">
+        <style>
+          .contact-stage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8vw;
+            box-sizing: border-box;
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            overflow: hidden;
+          }
+          .contact-wrapper {
+            width: 100%;
+            max-width: 960px;
+            box-sizing: border-box;
+          }
+          .contact-header {
+            margin-bottom: 2.5rem;
+          }
+          .contact-tag {
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #e63946;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+          .contact-tag-line {
+            display: inline-block;
+            width: 32px;
+            height: 1px;
+            background: #e63946;
+          }
+          .contact-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 200;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            color: #fff;
+            margin: 0 0 0.5rem;
+            line-height: 0.92;
+          }
+          .contact-sub {
+            color: #777;
+            font-size: 0.75rem;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+          }
+          .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+            box-sizing: border-box;
+          }
+          .contact-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+          }
+          .contact-label {
+            font-family: 'Courier New', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #888;
+          }
+          .contact-input {
+            background: rgba(20,20,20,0.6);
+            border: none;
+            border-bottom: 1px solid #333;
+            color: #fff;
+            padding: 10px 0;
+            font-size: 1rem;
+            outline: none;
+            font-family: inherit;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+          }
+          .contact-input:focus {
+            border-bottom-color: #fff;
+          }
+          .contact-textarea {
+            background: rgba(20,20,20,0.6);
+            border: none;
+            border-bottom: 1px solid #333;
+            color: #fff;
+            padding: 10px 0;
+            font-size: 1rem;
+            outline: none;
+            resize: none;
+            font-family: inherit;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+          }
+          .contact-textarea:focus {
+            border-bottom-color: #fff;
+          }
+          .contact-submit-row {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            gap: 1rem;
+            flex-wrap: wrap;
+          }
+          .contact-btn {
+            background: #fff;
+            color: #050505;
+            font-family: 'Courier New', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 13px 32px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background 0.2s, color 0.2s;
+          }
+          .contact-feedback {
+            font-family: 'Courier New', monospace;
+            font-size: 0.68rem;
+            color: #777;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            flex: 1;
+            text-align: right;
+          }
 
-          <div style="width:100%;max-width:960px;">
+          @media (max-width: 868px) {
+            .contact-stage {
+              padding: 56px 6vw 48px;
+              align-items: flex-start;
+              justify-content: flex-start;
+              overflow-y: auto;
+              -webkit-overflow-scrolling: touch;
+              height: 100%;
+              height: 100dvh;
+            }
+            .contact-wrapper {
+              margin: 0 auto;
+            }
+            .contact-header {
+              margin-bottom: 1.5rem;
+            }
+            .contact-tag {
+              font-size: 0.65rem;
+              margin-bottom: 0.5rem;
+            }
+            .contact-title {
+              font-size: clamp(1.8rem, 6.5vw, 2.8rem);
+            }
+            .contact-sub {
+              font-size: 0.65rem;
+              letter-spacing: 1.5px;
+            }
+            .contact-form {
+              grid-template-columns: 1fr !important;
+              gap: 1rem !important;
+              padding-bottom: 32px;
+            }
+            .contact-submit-row {
+              flex-direction: column;
+              align-items: stretch;
+              gap: 12px;
+              padding-top: 1rem;
+            }
+            .contact-btn {
+              width: 100%;
+              text-align: center;
+              padding: 12px 20px;
+            }
+            .contact-feedback {
+              text-align: center !important;
+            }
+          }
+        </style>
 
+        <div class="contact-stage">
+          <div class="contact-wrapper">
             <!-- Header -->
-            <div style="margin-bottom:3rem;">
-              <div style="
-                font-family:'Courier New',monospace;font-size:0.7rem;
-                letter-spacing:4px;text-transform:uppercase;
-                color:#e63946;margin-bottom:1rem;
-                display:flex;align-items:center;gap:12px;">
-                <span style="display:inline-block;width:32px;height:1px;background:#e63946;"></span>
+            <div class="contact-header">
+              <div class="contact-tag">
+                <span class="contact-tag-line"></span>
                 04 — COMMUNICATION PROTOCOL
               </div>
-              <h2 style="
-                font-size:clamp(2rem,5vw,4rem);font-weight:200;
-                letter-spacing:-0.04em;text-transform:uppercase;
-                color:#fff;margin:0 0 0.5rem;line-height:0.92;">
+              <h2 class="contact-title">
                 Initiate Contact
               </h2>
-              <p style="color:#777;font-size:0.75rem;font-family:'Courier New',monospace;
-                letter-spacing:2.5px;text-transform:uppercase;">
+              <p class="contact-sub">
                 DIRECT LINE · HIGH-IMPACT INQUIRIES ONLY
               </p>
             </div>
 
             <!-- Form -->
             <form id="${CONTACT_FORM_ID}"
-              style="display:grid;grid-template-columns:1fr 1fr;gap:1rem 2rem;"
+              class="contact-form"
               onsubmit="(function(e){
                 e.preventDefault();
                 var f=e.target;
@@ -1808,67 +2151,43 @@ export default function SectionWipeTransitions() {
               })(event);">
 
               <!-- Sender Name -->
-              <div style="display:flex;flex-direction:column;gap:6px;">
-                <label style="font-family:'Courier New',monospace;font-size:0.65rem;
-                  letter-spacing:2px;text-transform:uppercase;color:#888;">
+              <div class="contact-field">
+                <label class="contact-label">
                   Sender Name *
                 </label>
                 <input name="senderName" type="text" required placeholder="e.g. Alex Morgan"
-                  style="background:rgba(20,20,20,0.6);border:none;border-bottom:1px solid #333;
-                    color:#fff;padding:10px 0;font-size:0.9rem;outline:none;
-                    font-family:inherit;width:100%;box-sizing:border-box;
-                    transition:border-color 0.2s;"
-                  onfocus="this.style.borderBottomColor='#fff';"
-                  onblur="this.style.borderBottomColor='#333';"/>
+                  class="contact-input"/>
               </div>
 
               <!-- Email -->
-              <div style="display:flex;flex-direction:column;gap:6px;">
-                <label style="font-family:'Courier New',monospace;font-size:0.65rem;
-                  letter-spacing:2px;text-transform:uppercase;color:#888;">
+              <div class="contact-field">
+                <label class="contact-label">
                   Email Address *
                 </label>
                 <input name="senderEmail" type="email" required placeholder="e.g. alex@company.com"
-                  style="background:rgba(20,20,20,0.6);border:none;border-bottom:1px solid #333;
-                    color:#fff;padding:10px 0;font-size:0.9rem;outline:none;
-                    font-family:inherit;width:100%;box-sizing:border-box;
-                    transition:border-color 0.2s;"
-                  onfocus="this.style.borderBottomColor='#fff';"
-                  onblur="this.style.borderBottomColor='#333';"/>
+                  class="contact-input"/>
               </div>
 
               <!-- Message -->
-              <div style="display:flex;flex-direction:column;gap:6px;grid-column:1/-1;">
-                <label style="font-family:'Courier New',monospace;font-size:0.65rem;
-                  letter-spacing:2px;text-transform:uppercase;color:#888;">
+              <div class="contact-field" style="grid-column:1/-1;">
+                <label class="contact-label">
                   Message *
                 </label>
                 <textarea name="messageBody" required rows="4"
                   placeholder="Describe your requirements, project timeline, or questions..."
-                  style="background:rgba(20,20,20,0.6);border:none;border-bottom:1px solid #333;
-                    color:#fff;padding:10px 0;font-size:0.9rem;outline:none;resize:none;
-                    font-family:inherit;width:100%;box-sizing:border-box;
-                    transition:border-color 0.2s;"
-                  onfocus="this.style.borderBottomColor='#fff';"
-                  onblur="this.style.borderBottomColor='#333';"></textarea>
+                  class="contact-textarea"></textarea>
               </div>
 
               <!-- Submit row -->
-              <div style="grid-column:1/-1;display:flex;align-items:center;
-                justify-content:space-between;padding-top:1.5rem;
-                border-top:1px solid rgba(255,255,255,0.08);gap:1rem;flex-wrap:wrap;">
+              <div class="contact-submit-row">
                 <button id="${CONTACT_FORM_ID}-btn" type="submit"
-                  style="background:#fff;color:#050505;font-family:'Courier New',monospace;
-                    font-size:0.72rem;letter-spacing:2.5px;text-transform:uppercase;
-                    padding:13px 32px;border:none;cursor:pointer;font-weight:700;
-                    transition:background 0.2s,color 0.2s;"
+                  class="contact-btn"
                   onmouseover="if(!this.disabled){this.style.background='#e63946';this.style.color='#fff';}"
                   onmouseout="if(!this.disabled){this.style.background='#fff';this.style.color='#050505';}">
                   SEND TRANSMISSION ↵
                 </button>
                 <span id="${CONTACT_FORM_ID}-fb"
-                  style="font-family:'Courier New',monospace;font-size:0.68rem;
-                    color:#777;letter-spacing:1.5px;text-transform:uppercase;flex:1;text-align:right;">
+                  class="contact-feedback">
                   END-TO-END VERIFIED
                 </span>
               </div>
@@ -1880,20 +2199,28 @@ export default function SectionWipeTransitions() {
       // LEFT panel
       const leftOv = document.createElement("div");
       leftOv.style.cssText =
-        "position:fixed;top:0;left:0;width:50vw;height:100vh;z-index:60;" +
+        (isMobileViewport
+          ? "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;"
+          : "position:fixed;top:0;left:0;width:50vw;height:100vh;z-index:60;") +
         "pointer-events:none;opacity:0;clip-path:inset(100% 0 0 0);" +
         "overflow:hidden;";
-      leftOv.innerHTML = `<div style="position:relative;width:100vw;height:100vh;">${contactHTML}</div>`;
+      leftOv.innerHTML = isMobileViewport
+        ? contactHTML
+        : `<div style="position:relative;width:100vw;height:100vh;">${contactHTML}</div>`;
       document.body.appendChild(leftOv);
       overlays.push(leftOv);
 
-      // RIGHT panel
+      // RIGHT panel (desktop split PowerPoint wipe; hidden on mobile)
       const rightOv = document.createElement("div");
       rightOv.style.cssText =
-        "position:fixed;top:0;left:50vw;width:50vw;height:100vh;z-index:60;" +
+        (isMobileViewport
+          ? "display:none;"
+          : "position:fixed;top:0;left:50vw;width:50vw;height:100vh;z-index:60;") +
         "pointer-events:none;opacity:0;clip-path:inset(0 0 100% 0);" +
         "overflow:hidden;";
-      rightOv.innerHTML = `<div style="position:relative;width:100vw;height:100vh;left:-50vw;">${contactHTML}</div>`;
+      if (!isMobileViewport) {
+        rightOv.innerHTML = `<div style="position:relative;width:100vw;height:100vh;left:-50vw;">${contactHTML}</div>`;
+      }
       document.body.appendChild(rightOv);
       overlays.push(rightOv);
 
@@ -1980,17 +2307,35 @@ export default function SectionWipeTransitions() {
         1.6
       );
 
-      masterTl.fromTo(
-        rightOv,
-        { clipPath: "inset(0 0 100% 0)", opacity: 1 },
-        { clipPath: "inset(0 0 0% 0)", opacity: 1, ease: "power3.inOut", duration: 0.5 },
-        1.6
-      );
+      if (!isMobileViewport) {
+        masterTl.fromTo(
+          rightOv,
+          { clipPath: "inset(0 0 100% 0)", opacity: 1 },
+          { clipPath: "inset(0 0 0% 0)", opacity: 1, ease: "power3.inOut", duration: 0.5 },
+          1.6
+        );
+      }
 
       // Phase 4: Initiate Contact stays locked in place until the end of the page (no upward clip exit)
       masterTl.to(
-        [leftOv, rightOv],
-        { clipPath: "inset(0% 0 0% 0)", opacity: 1, duration: 0.4 },
+        isMobileViewport ? leftOv : [leftOv, rightOv],
+        {
+          clipPath: "inset(0% 0 0% 0)",
+          opacity: 1,
+          duration: 0.4,
+          onComplete: () => {
+            if (!isMobileViewport) {
+              leftOv.style.width = "100vw";
+              rightOv.style.display = "none";
+            }
+          },
+          onReverseComplete: () => {
+            if (!isMobileViewport) {
+              leftOv.style.width = "50vw";
+              rightOv.style.display = "block";
+            }
+          },
+        },
         2.3
       );
 
