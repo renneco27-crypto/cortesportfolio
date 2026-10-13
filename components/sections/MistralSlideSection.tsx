@@ -1872,27 +1872,28 @@ export default function SectionWipeTransitions() {
             justify-content: center;
           }
 
-          /* Ambient Center Arc Reactor Background Video (Black Background Removed) */
+          /* Ambient Center Arc Reactor Spritesheet Canvas (100% Client-Side GPU, Zero Lag) */
           .ov1-bg-video-wrap {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 580px;
+            width: 520px;
+            height: 520px;
             max-width: 90vw;
-            height: auto;
-            aspect-ratio: 16 / 9;
+            max-height: 90vh;
+            aspect-ratio: 1 / 1;
             display: flex;
             align-items: center;
             justify-content: center;
             pointer-events: none;
             z-index: 1;
             mix-blend-mode: screen;
-            mask-image: radial-gradient(circle at 50% 50%, black 45%, transparent 72%);
-            -webkit-mask-image: radial-gradient(circle at 50% 50%, black 45%, transparent 72%);
+            mask-image: radial-gradient(circle at 50% 50%, black 48%, transparent 72%);
+            -webkit-mask-image: radial-gradient(circle at 50% 50%, black 48%, transparent 72%);
             filter: contrast(110%) brightness(105%);
           }
-          #ov1-bg-video {
+          #ov1-bg-canvas {
             width: 100%;
             height: 100%;
             object-fit: contain;
@@ -1949,24 +1950,22 @@ export default function SectionWipeTransitions() {
               padding: 1rem !important;
             }
             .ov1-bg-video-wrap {
-              width: 360px;
+              width: 340px;
+              height: 340px;
               max-width: 95vw;
               top: 45%;
-              opacity: 0.85;
+              opacity: 0.88;
             }
           }
         </style>
 
-        <!-- Centered Background Video Layer (Black background removed via screen blend & radial mask) -->
+        <!-- Centered Background Canvas Layer (Black background removed via screen blend & radial mask) -->
         <div class="ov1-bg-video-wrap">
-          <video
-            id="ov1-bg-video"
-            src="/assets/gemini_generated_video_2fee527f.mp4"
-            muted
-            playsinline
-            loop
-            preload="auto"
-          ></video>
+          <canvas
+            id="ov1-bg-canvas"
+            width="320"
+            height="320"
+          ></canvas>
         </div>
 
         <div class="ov1-stage">
@@ -2075,15 +2074,66 @@ export default function SectionWipeTransitions() {
       document.body.appendChild(ov1);
       overlays.push(ov1);
 
-      /* ── High-Performance Bidirectional Arc Reactor Video Controller ── */
-      const videoEl = ov1.querySelector("#ov1-bg-video") as HTMLVideoElement | null;
-      const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
+      /* ── 100% Client-Side GPU Spritesheet Arc Reactor Engine (Zero Lag, Bidirectional Scrub) ── */
+      const TOTAL_FRAMES = 240;
+      const FRAMES_PER_SHEET = 120;
+      const COLS = 12;
+      const FRAME_SIZE = 320;
 
-      let isReversing = false;
-      let reverseRafId: number | null = null;
-      let lastReverseTime = 0;
-      let scrollIdleTimer: ReturnType<typeof setTimeout> | null = null;
-      let currentVelocity = 0;
+      const canvasEl = ov1.querySelector("#ov1-bg-canvas") as HTMLCanvasElement | null;
+      const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
+      const ctx = canvasEl?.getContext("2d");
+
+      // Preload the two optimized WebP spritesheets directly into client memory
+      let sheet1Loaded = false;
+      let sheet2Loaded = false;
+      const sheet1 = new Image();
+      sheet1.src = "/assets/arc_reactor_sheet1.webp";
+      const sheet2 = new Image();
+      sheet2.src = "/assets/arc_reactor_sheet2.webp";
+
+      let currentFrameFloat = 0;
+      let lastDrawnFrame = -1;
+      let targetVelocity = 0;
+      let animRafId: number | null = null;
+
+      const renderFrame = (frameIdx: number) => {
+        if (!ctx) return;
+        const normalized = ((Math.floor(frameIdx) % TOTAL_FRAMES) + TOTAL_FRAMES) % TOTAL_FRAMES;
+        if (normalized === lastDrawnFrame) return;
+
+        const isFirst = normalized < FRAMES_PER_SHEET;
+        const sheetImg = isFirst ? sheet1 : sheet2;
+        const isLoaded = isFirst ? sheet1Loaded : sheet2Loaded;
+
+        if (!isLoaded) {
+          if (sheet1Loaded) {
+            const fallbackIdx = normalized % FRAMES_PER_SHEET;
+            const c = fallbackIdx % COLS;
+            const r = Math.floor(fallbackIdx / COLS);
+            ctx.clearRect(0, 0, FRAME_SIZE, FRAME_SIZE);
+            ctx.drawImage(sheet1, c * FRAME_SIZE, r * FRAME_SIZE, FRAME_SIZE, FRAME_SIZE, 0, 0, FRAME_SIZE, FRAME_SIZE);
+            lastDrawnFrame = normalized;
+          }
+          return;
+        }
+
+        const localIdx = normalized % FRAMES_PER_SHEET;
+        const col = localIdx % COLS;
+        const row = Math.floor(localIdx / COLS);
+
+        ctx.clearRect(0, 0, FRAME_SIZE, FRAME_SIZE);
+        ctx.drawImage(sheetImg, col * FRAME_SIZE, row * FRAME_SIZE, FRAME_SIZE, FRAME_SIZE, 0, 0, FRAME_SIZE, FRAME_SIZE);
+        lastDrawnFrame = normalized;
+      };
+
+      sheet1.onload = () => {
+        sheet1Loaded = true;
+        renderFrame(0);
+      };
+      sheet2.onload = () => {
+        sheet2Loaded = true;
+      };
 
       const isOv1InView = () => {
         if (!masterTl) return false;
@@ -2091,85 +2141,62 @@ export default function SectionWipeTransitions() {
         return t >= 0.95 && t <= 3.45;
       };
 
-      const stopOv1Playback = () => {
-        if (scrollIdleTimer) {
-          clearTimeout(scrollIdleTimer);
-          scrollIdleTimer = null;
+      const tickAnimation = () => {
+        if (!isOv1InView()) {
+          targetVelocity = 0;
+          animRafId = null;
+          return;
         }
-        isReversing = false;
-        if (reverseRafId !== null) {
-          cancelAnimationFrame(reverseRafId);
-          reverseRafId = null;
-        }
-        if (videoEl && !videoEl.paused) {
-          videoEl.pause();
+
+        if (Math.abs(targetVelocity) > 0.05) {
+          currentFrameFloat = (currentFrameFloat + targetVelocity) % TOTAL_FRAMES;
+          if (currentFrameFloat < 0) currentFrameFloat += TOTAL_FRAMES;
+
+          renderFrame(currentFrameFloat);
+          targetVelocity *= 0.88; // Smooth momentum decay
+
+          animRafId = requestAnimationFrame(tickAnimation);
+        } else {
+          targetVelocity = 0;
+          animRafId = null;
         }
       };
 
-      const reverseTick = () => {
-        if (!isReversing || !videoEl || !videoEl.duration) {
-          reverseRafId = null;
+      const startAnimIfNeeded = () => {
+        if (animRafId === null && isOv1InView()) {
+          animRafId = requestAnimationFrame(tickAnimation);
+        }
+      };
+
+      const stopOv1Playback = () => {
+        targetVelocity = 0;
+        if (animRafId !== null) {
+          cancelAnimationFrame(animRafId);
+          animRafId = null;
+        }
+      };
+
+      const addScrollImpulse = (impulse: number) => {
+        if (!isOv1InView()) {
+          stopOv1Playback();
           return;
         }
-        const now = performance.now();
-        const dt = Math.min(0.05, Math.max(0.012, (now - lastReverseTime) / 1000));
-        lastReverseTime = now;
-
-        const absVel = Math.abs(currentVelocity);
-        const speed = Math.min(4.0, Math.max(1.0, 1.0 + absVel * 0.0012));
-        const step = dt * speed;
-
-        let nextTime = videoEl.currentTime - step;
-        if (nextTime < 0) {
-          nextTime += videoEl.duration; // Seamless loop in reverse
-        }
-        videoEl.currentTime = nextTime;
-
-        reverseRafId = requestAnimationFrame(reverseTick);
+        // Clamped impulse: smooth acceleration, instant reverse when negative
+        targetVelocity = Math.max(-7.0, Math.min(7.0, targetVelocity * 0.4 + impulse));
+        startAnimIfNeeded();
       };
 
       const handleScrollActivity = (rawVelocity: number) => {
-        if (!isOv1InView() || !videoEl) {
+        if (!isOv1InView()) {
           stopOv1Playback();
           return;
         }
-
-        currentVelocity = rawVelocity;
         const absVel = Math.abs(rawVelocity);
-        if (absVel < 4) return;
-
-        if (rawVelocity > 0) {
-          // Scrolling DOWN: Play FORWARD with dynamic speed
-          if (isReversing) {
-            isReversing = false;
-            if (reverseRafId !== null) {
-              cancelAnimationFrame(reverseRafId);
-              reverseRafId = null;
-            }
-          }
-          const speed = Math.min(4.0, Math.max(1.0, 1.0 + absVel * 0.0012));
-          videoEl.playbackRate = speed;
-          if (videoEl.paused) {
-            videoEl.play().catch(() => {});
-          }
-        } else {
-          // Scrolling UP: Play in REVERSE
-          if (!videoEl.paused) {
-            videoEl.pause();
-          }
-          if (!isReversing) {
-            isReversing = true;
-            lastReverseTime = performance.now();
-            if (reverseRafId === null) {
-              reverseRafId = requestAnimationFrame(reverseTick);
-            }
-          }
-        }
-
-        if (scrollIdleTimer) clearTimeout(scrollIdleTimer);
-        scrollIdleTimer = setTimeout(() => {
-          stopOv1Playback();
-        }, 130);
+        if (absVel < 5) return;
+        const sign = rawVelocity > 0 ? 1 : -1;
+        // Dynamically scale frame velocity based on scroll speed
+        const impulse = sign * Math.min(5.5, Math.max(0.8, Math.pow(absVel * 0.002, 0.85)));
+        addScrollImpulse(impulse);
       };
 
       // Listen to scroll events on ov1-stage for mobile internal scrolling
@@ -2191,7 +2218,9 @@ export default function SectionWipeTransitions() {
       const onWindowWheel = (e: WheelEvent) => {
         if (isOv1InView()) {
           // e.deltaY > 0 is scroll down (forward), e.deltaY < 0 is scroll up (reverse)
-          handleScrollActivity(e.deltaY * 6);
+          const sign = e.deltaY > 0 ? 1 : -1;
+          const mag = Math.min(5.0, Math.max(1.0, Math.abs(e.deltaY) * 0.03));
+          addScrollImpulse(sign * mag);
         }
       };
       window.addEventListener("wheel", onWindowWheel, { passive: true });
@@ -2226,6 +2255,7 @@ export default function SectionWipeTransitions() {
 
       stopVideoPlayback = stopOv1Playback;
       removeVideoListeners = () => {
+        stopOv1Playback();
         stageEl?.removeEventListener("scroll", onStageScroll);
         window.removeEventListener("wheel", onWindowWheel);
         window.removeEventListener("touchstart", onTouchStart);
