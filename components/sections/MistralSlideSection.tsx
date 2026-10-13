@@ -66,7 +66,7 @@ export default function SectionWipeTransitions() {
       const certOv = document.createElement("div");
       certOv.style.cssText =
         "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;" +
-        "pointer-events:none;opacity:0;clip-path:inset(100% 0 0 0);" +
+        "pointer-events:none;opacity:0;visibility:hidden;clip-path:inset(100% 0 0 0);" +
         "background:#070210;" +
         "display:flex;align-items:center;justify-content:center;" +
         "overflow:hidden;";
@@ -1754,7 +1754,7 @@ export default function SectionWipeTransitions() {
       const ov1 = document.createElement("div");
       ov1.style.cssText =
         "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;" +
-        "pointer-events:none;opacity:0;clip-path:inset(100% 0 0 0);" +
+        "pointer-events:none;opacity:0;visibility:hidden;clip-path:inset(100% 0 0 0);" +
         "background:rgba(5, 5, 5, 0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);" +
         "overflow:hidden;";
 
@@ -2578,7 +2578,7 @@ export default function SectionWipeTransitions() {
         (isMobileViewport
           ? "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;"
           : "position:fixed;top:0;left:0;width:50vw;height:100vh;z-index:60;") +
-        "pointer-events:none;opacity:0;clip-path:inset(100% 0 0 0);" +
+        "pointer-events:none;opacity:0;visibility:hidden;clip-path:inset(100% 0 0 0);" +
         "overflow:hidden;";
       leftOv.innerHTML = isMobileViewport
         ? contactHTML
@@ -2592,7 +2592,7 @@ export default function SectionWipeTransitions() {
         (isMobileViewport
           ? "display:none;"
           : "position:fixed;top:0;left:50vw;width:50vw;height:100vh;z-index:60;") +
-        "pointer-events:none;opacity:0;clip-path:inset(0 0 100% 0);" +
+        "pointer-events:none;opacity:0;visibility:hidden;clip-path:inset(0 0 100% 0);" +
         "overflow:hidden;";
       if (!isMobileViewport) {
         rightOv.innerHTML = `<div style="position:relative;width:100vw;height:100vh;left:-50vw;">${contactHTML}</div>`;
@@ -2608,18 +2608,30 @@ export default function SectionWipeTransitions() {
           end: "bottom bottom",
           scrub: 1.0,
           onEnter: () => {
-            gsap.set(certOv, { opacity: 1, pointerEvents: "auto" });
-            gsap.set([ov1, leftOv, rightOv], { pointerEvents: "none" });
+            gsap.set(certOv, { opacity: 1, visibility: "visible", pointerEvents: "auto" });
+            gsap.set([ov1, leftOv, rightOv], { visibility: "hidden", pointerEvents: "none" });
           },
           onLeaveBack: () => {
             stopOv1Playback();
-            gsap.set([certOv, ov1, leftOv, rightOv], { opacity: 0, pointerEvents: "none" });
+            gsap.set([certOv, ov1, leftOv, rightOv], { opacity: 0, visibility: "hidden", pointerEvents: "none" });
           },
           onLeave: () => {
             stopOv1Playback();
           },
           onUpdate: (self) => {
             const t = masterTl ? masterTl.time() : 0;
+
+            // Visibility orchestration: ONLY active/transitioning panels are rendered by the GPU!
+            // Inactive panels are set to visibility: "hidden" so they NEVER intercept clicks or consume GPU composite cycles.
+            const certVisible = t >= 0 && t < 1.65;
+            const ov1Visible = t >= 0.95 && t < 3.45;
+            const contactVisible = t >= 2.75;
+
+            certOv.style.visibility = certVisible ? "visible" : "hidden";
+            ov1.style.visibility = ov1Visible ? "visible" : "hidden";
+            leftOv.style.visibility = contactVisible ? "visible" : "hidden";
+            if (rightOv) rightOv.style.visibility = contactVisible ? "visible" : "hidden";
+
             // Dynamic, bidirectional pointer events: guarantees active slide is clickable
             const certActive = t >= 0.05 && t < 1.1;
             const ov1Active = t >= 1.1 && t < 2.9;
