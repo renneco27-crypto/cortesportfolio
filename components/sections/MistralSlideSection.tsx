@@ -683,6 +683,276 @@ export default function SectionWipeTransitions() {
             background: var(--comic-yellow);
             transform: skewX(-6deg) scale(1.05);
           }
+
+          /* ── Responsive & Fluid Mobile Adaptation ── */
+          @media (max-width: 868px) {
+            #game-stage {
+              width: 100vw;
+              height: 100vh;
+              height: 100dvh;
+              max-height: 100vh;
+              max-height: 100dvh;
+              max-width: 100vw;
+              aspect-ratio: auto;
+              box-shadow: none;
+            }
+
+            .top-bar {
+              top: 10px;
+              left: 10px;
+              right: 10px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 8px;
+            }
+
+            .profile-badge {
+              padding: 5px 12px 5px 8px;
+              gap: 10px;
+              border: 2px solid #000;
+              border-left: 4px solid var(--comic-cyan);
+              box-shadow: 3px 3px 0 #000;
+              transform: rotate(-1.5deg) skewX(-10deg);
+            }
+
+            .avatar-frame {
+              width: 36px;
+              height: 36px;
+              border: 2px solid #000;
+            }
+
+            .profile-name {
+              font-size: 1.15rem;
+              letter-spacing: 1px;
+              text-shadow: 2px 2px 0 #000;
+            }
+
+            .profile-lvl {
+              font-size: 0.8rem;
+              letter-spacing: 1.2px;
+              text-shadow: 1.5px 1.5px 0 #000;
+            }
+
+            .currencies-group {
+              gap: 6px;
+              transform: rotate(-1deg) skewX(-10deg);
+            }
+
+            .currency-pill {
+              padding: 2px 8px;
+              font-size: 0.95rem;
+              border: 2px solid #000;
+              box-shadow: 3px 3px 0 #000;
+            }
+
+            .currency-icon {
+              font-size: 0.95rem;
+              margin-right: 3px;
+            }
+
+            .sound-btn {
+              width: 34px;
+              height: 32px;
+              border: 2px solid #000;
+              box-shadow: 3px 3px 0 #000;
+            }
+
+            .sound-btn svg {
+              width: 18px;
+              height: 18px;
+            }
+
+            .character-center-layer {
+              left: 28%;
+              height: 64%;
+              opacity: 0.32;
+              filter: blur(0.5px);
+            }
+
+            .menu-right-zone {
+              top: 68px;
+              right: 0;
+              left: 0;
+              width: 100%;
+              height: calc(100% - 138px);
+              height: calc(100dvh - 138px);
+              perspective: 900px;
+              perspective-origin: 50% 50%;
+              padding: 0;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .menu-carousel-wrapper {
+              width: 95%;
+              max-width: 440px;
+              height: 100%;
+              align-items: center;
+            }
+
+            .menu-scroller {
+              padding: 24px 0 40px;
+              gap: 10px;
+              align-items: center;
+              -webkit-overflow-scrolling: touch;
+              mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+              -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+            }
+
+            .menu-item-slot {
+              width: 94%;
+              min-height: 52px;
+              transform: rotateY(-8deg) rotateX(2deg) skewX(-9deg) scale(0.97);
+              justify-content: center;
+              opacity: 0.88;
+            }
+
+            .menu-item-slot.active {
+              transform: rotateY(-8deg) rotateX(2deg) skewX(-9deg) scale(1.02) translateX(-4px);
+            }
+
+            .comic-btn-face {
+              min-height: 50px;
+              padding: 0 12px 0 14px;
+              border: 2.5px solid #000;
+              box-shadow: 5px 5px 0px #000, 8px 8px 0px rgba(0, 0, 0, 0.4);
+            }
+
+            .menu-text {
+              font-size: 1.05rem;
+              letter-spacing: 1px;
+              text-shadow: 2px 2px 0 #000;
+            }
+
+            .slot-status-pill {
+              font-size: 0.6rem;
+              padding: 2px 6px;
+              margin-left: 6px;
+              border: 1.5px solid #000;
+              box-shadow: 1.5px 1.5px 0 #000;
+            }
+
+            .floating-menu-arrow {
+              width: 30px;
+              height: 30px;
+            }
+
+            .bottom-squad {
+              bottom: 10px;
+              left: 10px;
+              gap: 6px;
+              transform: rotate(-1deg);
+            }
+
+            .squad-slot {
+              transform: skewX(-8deg);
+            }
+
+            .squad-frame {
+              width: 36px;
+              height: 36px;
+              border: 2px solid #000;
+              box-shadow: 2px 2px 0 #000;
+            }
+
+            .squad-name-tag {
+              font-size: 0.56rem;
+              padding: 1px 4px;
+              border: 1.5px solid #000;
+              box-shadow: 1.5px 1.5px 0 #000;
+              margin-top: 2px;
+            }
+
+            .exit-btn {
+              bottom: 10px;
+              right: 10px;
+              padding: 6px 14px;
+              font-size: 0.95rem;
+              border: 2px solid #000;
+              box-shadow: 3px 3px 0 #000;
+              transform: skewX(-10deg);
+              gap: 6px;
+            }
+
+            .exit-btn svg {
+              width: 16px;
+              height: 16px;
+            }
+
+            .action-modal-box {
+              padding: 24px 18px;
+              width: 90%;
+              max-width: 360px;
+              border: 3px solid var(--comic-cyan);
+              box-shadow: 8px 8px 0 var(--comic-pink);
+            }
+
+            .modal-title {
+              font-size: 1.45rem;
+              margin-bottom: 4px;
+            }
+
+            .modal-issuer {
+              font-size: 0.8rem;
+              margin-bottom: 12px;
+            }
+
+            .modal-desc {
+              font-size: 0.88rem;
+              margin-bottom: 18px;
+              line-height: 1.45;
+            }
+
+            .modal-btn {
+              font-size: 0.9rem;
+              padding: 8px 18px;
+              border: 2px solid #000;
+            }
+          }
+
+          @media (max-width: 440px) {
+            .top-bar {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 6px;
+            }
+
+            .profile-badge {
+              width: auto;
+            }
+
+            .profile-name {
+              font-size: 0.98rem;
+            }
+
+            .profile-lvl {
+              font-size: 0.72rem;
+            }
+
+            .currencies-group {
+              align-self: flex-end;
+              margin-top: -38px;
+            }
+
+            .menu-right-zone {
+              top: 76px;
+              height: calc(100% - 146px);
+              height: calc(100dvh - 146px);
+            }
+
+            .menu-item-slot {
+              width: 98%;
+            }
+
+            .menu-text {
+              font-size: 0.92rem;
+            }
+
+            .bottom-squad .squad-slot:last-child {
+              display: none;
+            }
+          }
         </style>
 
         <div id="game-stage">
@@ -905,7 +1175,10 @@ export default function SectionWipeTransitions() {
         const stageRect = stage.getBoundingClientRect();
 
         const top = itemRect.top + itemRect.height / 2 - stageRect.top;
-        const left = itemRect.left - stageRect.left - 46;
+        const isMobile = window.innerWidth <= 868;
+        const left = isMobile
+          ? itemRect.left - stageRect.left - 24
+          : itemRect.left - stageRect.left - 46;
 
         floatingArrow.style.top = top + "px";
         floatingArrow.style.left = left + "px";
@@ -1233,6 +1506,64 @@ export default function SectionWipeTransitions() {
           if (!menuZone || !menuZone.contains(e.target as Node)) {
             window.scrollBy({ top: e.deltaY, behavior: "auto" });
           }
+        },
+        { passive: true }
+      );
+
+      // Mobile touch scrolling and chaining into slide wipes
+      let scrollerTouchStartY = 0;
+      if (scroller) {
+        scroller.addEventListener(
+          "touchstart",
+          (e) => {
+            if (e.touches && e.touches.length > 0) {
+              scrollerTouchStartY = e.touches[0].clientY;
+            }
+          },
+          { passive: true }
+        );
+
+        scroller.addEventListener(
+          "touchmove",
+          (e) => {
+            if (!e.touches || e.touches.length === 0) return;
+            const currentY = e.touches[0].clientY;
+            const diff = scrollerTouchStartY - currentY;
+            const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 6;
+            const atTop = scroller.scrollTop <= 4;
+
+            if (diff > 0 && atBottom) {
+              window.scrollBy({ top: diff * 0.9, behavior: "auto" });
+            } else if (diff < 0 && atTop) {
+              window.scrollBy({ top: diff * 0.9, behavior: "auto" });
+            }
+            scrollerTouchStartY = currentY;
+            updateArrowPosition();
+          },
+          { passive: true }
+        );
+      }
+
+      let ovTouchStartY = 0;
+      certOv.addEventListener(
+        "touchstart",
+        (e) => {
+          if (e.touches && e.touches.length > 0) {
+            ovTouchStartY = e.touches[0].clientY;
+          }
+        },
+        { passive: true }
+      );
+
+      certOv.addEventListener(
+        "touchmove",
+        (e) => {
+          if (scroller && scroller.contains(e.target as Node)) return;
+          if (!e.touches || e.touches.length === 0) return;
+          const currentY = e.touches[0].clientY;
+          const diff = ovTouchStartY - currentY;
+          ovTouchStartY = currentY;
+          window.scrollBy({ top: diff * 1.05, behavior: "auto" });
         },
         { passive: true }
       );
