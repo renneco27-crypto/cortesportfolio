@@ -1298,9 +1298,9 @@ export default function SectionWipeTransitions() {
         if (masterTl && masterTl.scrollTrigger) {
           const st = masterTl.scrollTrigger;
           const totalDist = st.end - st.start;
-          targetY = st.start + totalDist * (1.4 / 2.7);
+          targetY = st.start + totalDist * (2.1 / 3.8);
         } else {
-          targetY = window.scrollY + window.innerHeight * 1.1;
+          targetY = window.scrollY + window.innerHeight * 1.2;
         }
 
         window.scrollTo({
@@ -2075,40 +2075,100 @@ export default function SectionWipeTransitions() {
       document.body.appendChild(ov1);
       overlays.push(ov1);
 
-      /* ── Centered Background Arc Reactor Scroll Playback Controller ── */
+      /* ── High-Performance Bidirectional Arc Reactor Video Controller ── */
       const videoEl = ov1.querySelector("#ov1-bg-video") as HTMLVideoElement | null;
       const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
 
-      let isOv1Active = false;
+      let isReversing = false;
+      let reverseRafId: number | null = null;
+      let lastReverseTime = 0;
       let scrollIdleTimer: ReturnType<typeof setTimeout> | null = null;
+      let currentVelocity = 0;
+
+      const isOv1InView = () => {
+        if (!masterTl) return false;
+        const t = masterTl.time();
+        return t >= 0.95 && t <= 3.45;
+      };
 
       const stopOv1Playback = () => {
         if (scrollIdleTimer) {
           clearTimeout(scrollIdleTimer);
           scrollIdleTimer = null;
         }
+        isReversing = false;
+        if (reverseRafId !== null) {
+          cancelAnimationFrame(reverseRafId);
+          reverseRafId = null;
+        }
         if (videoEl && !videoEl.paused) {
           videoEl.pause();
         }
       };
 
+      const reverseTick = () => {
+        if (!isReversing || !videoEl || !videoEl.duration) {
+          reverseRafId = null;
+          return;
+        }
+        const now = performance.now();
+        const dt = Math.min(0.05, Math.max(0.012, (now - lastReverseTime) / 1000));
+        lastReverseTime = now;
+
+        const absVel = Math.abs(currentVelocity);
+        const speed = Math.min(4.0, Math.max(1.0, 1.0 + absVel * 0.0012));
+        const step = dt * speed;
+
+        let nextTime = videoEl.currentTime - step;
+        if (nextTime < 0) {
+          nextTime += videoEl.duration; // Seamless loop in reverse
+        }
+        videoEl.currentTime = nextTime;
+
+        reverseRafId = requestAnimationFrame(reverseTick);
+      };
+
       const handleScrollActivity = (rawVelocity: number) => {
-        if (!isOv1Active || !videoEl) return;
+        if (!isOv1InView() || !videoEl) {
+          stopOv1Playback();
+          return;
+        }
 
-        const vel = Math.abs(rawVelocity);
-        // Map scroll velocity smoothly: baseline 1.0x, scaling dynamically up to 4.0x
-        const speed = Math.min(4.0, Math.max(1.0, 1.0 + vel * 0.0012));
-        videoEl.playbackRate = speed;
+        currentVelocity = rawVelocity;
+        const absVel = Math.abs(rawVelocity);
+        if (absVel < 4) return;
 
-        if (videoEl.paused) {
-          videoEl.play().catch(() => {});
+        if (rawVelocity > 0) {
+          // Scrolling DOWN: Play FORWARD with dynamic speed
+          if (isReversing) {
+            isReversing = false;
+            if (reverseRafId !== null) {
+              cancelAnimationFrame(reverseRafId);
+              reverseRafId = null;
+            }
+          }
+          const speed = Math.min(4.0, Math.max(1.0, 1.0 + absVel * 0.0012));
+          videoEl.playbackRate = speed;
+          if (videoEl.paused) {
+            videoEl.play().catch(() => {});
+          }
+        } else {
+          // Scrolling UP: Play in REVERSE
+          if (!videoEl.paused) {
+            videoEl.pause();
+          }
+          if (!isReversing) {
+            isReversing = true;
+            lastReverseTime = performance.now();
+            if (reverseRafId === null) {
+              reverseRafId = requestAnimationFrame(reverseTick);
+            }
+          }
         }
 
         if (scrollIdleTimer) clearTimeout(scrollIdleTimer);
         scrollIdleTimer = setTimeout(() => {
-          if (videoEl && !videoEl.paused) {
-            videoEl.pause();
-          }
+          stopOv1Playback();
         }, 130);
       };
 
@@ -2116,10 +2176,10 @@ export default function SectionWipeTransitions() {
       let lastStageScrollTop = 0;
       let lastStageScrollTime = performance.now();
       const onStageScroll = () => {
-        if (!isOv1Active || !stageEl) return;
+        if (!isOv1InView() || !stageEl) return;
         const now = performance.now();
         const dt = Math.max(16, now - lastStageScrollTime);
-        const dy = Math.abs(stageEl.scrollTop - lastStageScrollTop);
+        const dy = stageEl.scrollTop - lastStageScrollTop;
         const vel = (dy / dt) * 1000;
         handleScrollActivity(vel);
         lastStageScrollTop = stageEl.scrollTop;
@@ -2127,14 +2187,16 @@ export default function SectionWipeTransitions() {
       };
       stageEl?.addEventListener("scroll", onStageScroll, { passive: true });
 
-      // Window wheel & touch listeners for dynamic scrub response
+      // Window wheel for instantaneous bidirectional scrub response
       const onWindowWheel = (e: WheelEvent) => {
-        if (isOv1Active) {
-          handleScrollActivity(Math.abs(e.deltaY) * 8);
+        if (isOv1InView()) {
+          // e.deltaY > 0 is scroll down (forward), e.deltaY < 0 is scroll up (reverse)
+          handleScrollActivity(e.deltaY * 6);
         }
       };
       window.addEventListener("wheel", onWindowWheel, { passive: true });
 
+      // Touch events with mobile upward scroll-chaining
       let lastTouchY = 0;
       let lastTouchTime = performance.now();
       const onTouchStart = (e: TouchEvent) => {
@@ -2144,11 +2206,17 @@ export default function SectionWipeTransitions() {
         }
       };
       const onTouchMove = (e: TouchEvent) => {
-        if (!isOv1Active || e.touches.length === 0) return;
+        if (!isOv1InView() || e.touches.length === 0) return;
         const now = performance.now();
         const dt = Math.max(16, now - lastTouchTime);
-        const dy = Math.abs(e.touches[0].clientY - lastTouchY);
+        const dy = lastTouchY - e.touches[0].clientY; // positive = scroll down, negative = scroll up
         const vel = (dy / dt) * 1000;
+
+        // When at top of ov1 and swiping down (scrolling up): chain to window scroll
+        if (stageEl && stageEl.scrollTop <= 4 && dy < 0) {
+          window.scrollBy({ top: dy * 1.2, behavior: "auto" });
+        }
+
         handleScrollActivity(vel);
         lastTouchY = e.touches[0].clientY;
         lastTouchTime = now;
@@ -2500,17 +2568,17 @@ export default function SectionWipeTransitions() {
             gsap.set([ov1, leftOv, rightOv], { pointerEvents: "none" });
           },
           onLeaveBack: () => {
-            isOv1Active = false;
             stopOv1Playback();
             gsap.set([certOv, ov1, leftOv, rightOv], { opacity: 0, pointerEvents: "none" });
           },
           onLeave: () => {
-            isOv1Active = false;
             stopOv1Playback();
           },
           onUpdate: (self) => {
-            if (isOv1Active) {
+            if (isOv1InView()) {
               handleScrollActivity(self.getVelocity());
+            } else {
+              stopOv1Playback();
             }
           },
         },
@@ -2520,22 +2588,22 @@ export default function SectionWipeTransitions() {
       masterTl.fromTo(
         certOv,
         { clipPath: "inset(100% 0 0 0)", opacity: 1 },
-        { clipPath: "inset(0% 0 0 0)", opacity: 1, ease: "power3.inOut", duration: 0.5 },
+        { clipPath: "inset(0% 0 0 0)", opacity: 1, ease: "power3.inOut", duration: 0.6 },
         0
       );
 
-      // Phase 2 (AT 0.8): Wipe 0 scrolls/wipes upward WHILE Wipe 1 (Selected Works) enters from bottom
+      // Phase 2 (AT 1.0): Wipe 0 scrolls/wipes upward WHILE Wipe 1 (Selected Works) enters from bottom
       masterTl.to(
         certOv,
         {
           clipPath: "inset(0% 0 100% 0)",
           ease: "power3.inOut",
-          duration: 0.5,
+          duration: 0.6,
           onComplete: () => {
             gsap.set(certOv, { pointerEvents: "none" });
           },
         },
-        0.8
+        1.0
       );
 
       masterTl.fromTo(
@@ -2545,36 +2613,28 @@ export default function SectionWipeTransitions() {
           clipPath: "inset(0% 0 0 0)",
           opacity: 1,
           ease: "power3.inOut",
-          duration: 0.5,
+          duration: 0.6,
           onStart: () => {
-            isOv1Active = true;
             gsap.set(ov1, { opacity: 1, pointerEvents: "auto" });
           },
-          onReverseComplete: () => {
-            isOv1Active = false;
-            stopOv1Playback();
-          },
         },
-        0.8
+        1.0
       );
 
-      // Phase 3 (AT 1.6): Wipe 1 holds in place, then exits clipping upward WHILE Wipe 2 (Contact) enters!
+      // Phase 3 (AT 2.8): Wipe 1 holds in place comfortably from 1.6 to 2.8 (generous time to view Selected Works),
+      // then exits clipping upward WHILE Wipe 2 (Contact) enters!
       masterTl.to(
         ov1,
         {
           clipPath: "inset(0% 0 100% 0)",
           ease: "power3.inOut",
-          duration: 0.5,
+          duration: 0.6,
           onComplete: () => {
-            isOv1Active = false;
             stopOv1Playback();
             gsap.set(ov1, { pointerEvents: "none" });
           },
-          onReverseStart: () => {
-            isOv1Active = true;
-          },
         },
-        1.6
+        2.8
       );
 
       masterTl.fromTo(
@@ -2584,20 +2644,20 @@ export default function SectionWipeTransitions() {
           clipPath: "inset(0% 0 0 0)",
           opacity: 1,
           ease: "power3.inOut",
-          duration: 0.5,
+          duration: 0.6,
           onStart: () => {
             gsap.set([leftOv, rightOv], { opacity: 1, pointerEvents: "auto" });
           },
         },
-        1.6
+        2.8
       );
 
       if (!isMobileViewport) {
         masterTl.fromTo(
           rightOv,
           { clipPath: "inset(0 0 100% 0)", opacity: 1 },
-          { clipPath: "inset(0 0 0% 0)", opacity: 1, ease: "power3.inOut", duration: 0.5 },
-          1.6
+          { clipPath: "inset(0 0 0% 0)", opacity: 1, ease: "power3.inOut", duration: 0.6 },
+          2.8
         );
       }
 
@@ -2607,7 +2667,7 @@ export default function SectionWipeTransitions() {
         {
           clipPath: "inset(0% 0 0% 0)",
           opacity: 1,
-          duration: 0.4,
+          duration: 0.5,
           onComplete: () => {
             if (!isMobileViewport) {
               leftOv.style.width = "100vw";
@@ -2621,7 +2681,7 @@ export default function SectionWipeTransitions() {
             }
           },
         },
-        2.3
+        3.5
       );
 
       triggers.push(masterTl.scrollTrigger!);
