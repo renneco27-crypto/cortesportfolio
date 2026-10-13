@@ -1771,8 +1771,11 @@ export default function SectionWipeTransitions() {
             width: 100%;
             height: 100%;
             overflow: hidden;
+            z-index: 2;
           }
           .ov1-left {
+            position: relative;
+            z-index: 2;
             flex: 1;
             max-width: 520px;
             padding-right: 4rem;
@@ -1831,6 +1834,8 @@ export default function SectionWipeTransitions() {
             transition: background 0.2s, color 0.2s, transform 0.2s;
           }
           .ov1-right {
+            position: relative;
+            z-index: 2;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -1867,89 +1872,31 @@ export default function SectionWipeTransitions() {
             justify-content: center;
           }
 
-          /* Video Telemetry HUD capsule */
-          .ov1-video-hud {
+          /* Ambient Center Arc Reactor Background Video (Black Background Removed) */
+          .ov1-bg-video-wrap {
             position: absolute;
-            bottom: 2.2rem;
-            right: 8vw;
-            width: 280px;
-            background: rgba(12, 12, 12, 0.85);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
-            z-index: 25;
-            pointer-events: auto;
-            transition: border-color 0.25s ease, transform 0.25s ease;
-          }
-          .ov1-video-hud:hover {
-            border-color: rgba(230, 57, 70, 0.6);
-            transform: translateY(-2px);
-          }
-          .ov1-video-header {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 580px;
+            max-width: 90vw;
+            height: auto;
+            aspect-ratio: 16 / 9;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 7px 10px;
-            background: rgba(20, 20, 20, 0.95);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-family: 'Courier New', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 1px;
-          }
-          .ov1-video-title {
-            color: #ddd;
-            font-weight: 700;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-          }
-          .ov1-video-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #e63946;
-            box-shadow: 0 0 8px #e63946;
-            display: inline-block;
-            animation: ov1Pulse 1.8s infinite;
-          }
-          @keyframes ov1Pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.35; transform: scale(0.85); }
-            100% { opacity: 1; transform: scale(1); }
-          }
-          .ov1-video-speed {
-            color: #888;
-            font-weight: 700;
-            transition: color 0.2s ease;
-          }
-          .ov1-video-wrapper {
-            position: relative;
-            width: 100%;
-            background: #000;
-            line-height: 0;
-            overflow: hidden;
-          }
-          #ov1-telemetry-video {
-            width: 100%;
-            height: 156px;
-            object-fit: cover;
-            display: block;
-          }
-          .ov1-video-scanline {
-            position: absolute;
-            inset: 0;
+            justify-content: center;
             pointer-events: none;
-            background: linear-gradient(
-              to bottom,
-              rgba(255,255,255,0) 50%,
-              rgba(0, 0, 0, 0.25) 51%
-            );
-            background-size: 100% 4px;
-            opacity: 0.5;
+            z-index: 1;
+            mix-blend-mode: screen;
+            mask-image: radial-gradient(circle at 50% 50%, black 45%, transparent 72%);
+            -webkit-mask-image: radial-gradient(circle at 50% 50%, black 45%, transparent 72%);
+            filter: contrast(110%) brightness(105%);
+          }
+          #ov1-bg-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
           }
 
           @media (max-width: 868px) {
@@ -2001,20 +1948,26 @@ export default function SectionWipeTransitions() {
               min-height: 85px !important;
               padding: 1rem !important;
             }
-            .ov1-video-hud {
-              position: relative !important;
-              bottom: auto !important;
-              right: auto !important;
-              width: 100% !important;
-              max-width: 100% !important;
-              margin-top: 0.5rem !important;
-              margin-bottom: 3.5rem !important;
-            }
-            #ov1-telemetry-video {
-              height: 180px !important;
+            .ov1-bg-video-wrap {
+              width: 360px;
+              max-width: 95vw;
+              top: 45%;
+              opacity: 0.85;
             }
           }
         </style>
+
+        <!-- Centered Background Video Layer (Black background removed via screen blend & radial mask) -->
+        <div class="ov1-bg-video-wrap">
+          <video
+            id="ov1-bg-video"
+            src="/assets/gemini_generated_video_2fee527f.mp4"
+            muted
+            playsinline
+            loop
+            preload="auto"
+          ></video>
+        </div>
 
         <div class="ov1-stage">
           <!-- Left: Editorial text block -->
@@ -2108,28 +2061,6 @@ export default function SectionWipeTransitions() {
               </div>
             </div>
           </div>
-
-          <!-- Bottom-Right HUD: Telemetry Video Stream -->
-          <div class="ov1-video-hud">
-            <div class="ov1-video-header">
-              <span class="ov1-video-title">
-                <span class="ov1-video-dot"></span>
-                TELEMETRY STREAM
-              </span>
-              <span class="ov1-video-speed" id="ov1-speed-readout">SPEED: 0.0x (IDLE)</span>
-            </div>
-            <div class="ov1-video-wrapper">
-              <video
-                id="ov1-telemetry-video"
-                src="/assets/gemini_generated_video_2fee527f.mp4"
-                muted
-                playsinline
-                loop
-                preload="auto"
-              ></video>
-              <div class="ov1-video-scanline"></div>
-            </div>
-          </div>
         </div>
 
         <!-- Subtle grid overlay -->
@@ -2144,9 +2075,8 @@ export default function SectionWipeTransitions() {
       document.body.appendChild(ov1);
       overlays.push(ov1);
 
-      /* ── Video HUD Scroll Playback Controller ── */
-      const videoEl = ov1.querySelector("#ov1-telemetry-video") as HTMLVideoElement | null;
-      const speedReadout = ov1.querySelector("#ov1-speed-readout") as HTMLElement | null;
+      /* ── Centered Background Arc Reactor Scroll Playback Controller ── */
+      const videoEl = ov1.querySelector("#ov1-bg-video") as HTMLVideoElement | null;
       const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
 
       let isOv1Active = false;
@@ -2160,10 +2090,6 @@ export default function SectionWipeTransitions() {
         if (videoEl && !videoEl.paused) {
           videoEl.pause();
         }
-        if (speedReadout) {
-          speedReadout.textContent = "SPEED: 0.0x (IDLE)";
-          speedReadout.style.color = "#888";
-        }
       };
 
       const handleScrollActivity = (rawVelocity: number) => {
@@ -2174,11 +2100,6 @@ export default function SectionWipeTransitions() {
         const speed = Math.min(4.0, Math.max(1.0, 1.0 + vel * 0.0012));
         videoEl.playbackRate = speed;
 
-        if (speedReadout) {
-          speedReadout.textContent = `SPEED: ${speed.toFixed(1)}x`;
-          speedReadout.style.color = "#74c69d";
-        }
-
         if (videoEl.paused) {
           videoEl.play().catch(() => {});
         }
@@ -2187,10 +2108,6 @@ export default function SectionWipeTransitions() {
         scrollIdleTimer = setTimeout(() => {
           if (videoEl && !videoEl.paused) {
             videoEl.pause();
-          }
-          if (speedReadout) {
-            speedReadout.textContent = "SPEED: 0.0x (IDLE)";
-            speedReadout.style.color = "#888";
           }
         }, 130);
       };
