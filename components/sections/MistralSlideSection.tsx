@@ -1537,13 +1537,13 @@ export default function SectionWipeTransitions() {
           const relativeY = e.clientY - rect.top;
           const ratio = relativeY / rect.height;
 
-          if (ratio < 0.22) {
-            const intensity = (0.22 - ratio) / 0.22;
-            autoScrollSpeed = -intensity * 5.5;
+          if (ratio < 0.28) {
+            const intensity = (0.28 - ratio) / 0.28;
+            autoScrollSpeed = -Math.max(3.0, intensity * 14.0);
             startAutoScrollIfNeeded();
-          } else if (ratio > 0.78) {
-            const intensity = (ratio - 0.78) / 0.22;
-            autoScrollSpeed = intensity * 5.5;
+          } else if (ratio > 0.72) {
+            const intensity = (ratio - 0.72) / 0.28;
+            autoScrollSpeed = Math.max(3.0, intensity * 14.0);
             startAutoScrollIfNeeded();
           } else {
             autoScrollSpeed = 0;
@@ -1880,7 +1880,6 @@ export default function SectionWipeTransitions() {
             transform: translate(-50%, -50%);
             width: 580px;
             max-width: 90vw;
-            height: auto;
             aspect-ratio: 16 / 9;
             display: flex;
             align-items: center;
@@ -1892,8 +1891,8 @@ export default function SectionWipeTransitions() {
           }
           #ov1-bg-canvas {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
+            height: auto;
+            aspect-ratio: 16 / 9;
             display: block;
           }
 
@@ -2085,26 +2084,24 @@ export default function SectionWipeTransitions() {
       let sheet1Loaded = false;
       let sheet2Loaded = false;
       const sheet1 = new Image();
-      sheet1.src = "/assets/arc_reactor_sheet1.webp";
       const sheet2 = new Image();
-      sheet2.src = "/assets/arc_reactor_sheet2.webp";
 
       let currentFrameFloat = 0;
       let lastDrawnFrame = -1;
       let targetVelocity = 0;
       let animRafId: number | null = null;
 
-      const renderFrame = (frameIdx: number) => {
+      const renderFrame = (frameIdx: number, force = false) => {
         if (!ctx) return;
         const normalized = ((Math.floor(frameIdx) % TOTAL_FRAMES) + TOTAL_FRAMES) % TOTAL_FRAMES;
-        if (normalized === lastDrawnFrame) return;
+        if (!force && normalized === lastDrawnFrame) return;
 
         const isFirst = normalized < FRAMES_PER_SHEET;
         const sheetImg = isFirst ? sheet1 : sheet2;
         const isLoaded = isFirst ? sheet1Loaded : sheet2Loaded;
 
         if (!isLoaded) {
-          if (sheet1Loaded) {
+          if (sheet1Loaded && sheet1.naturalWidth > 0) {
             const fallbackIdx = normalized % FRAMES_PER_SHEET;
             const c = fallbackIdx % COLS;
             const r = Math.floor(fallbackIdx / COLS);
@@ -2115,22 +2112,36 @@ export default function SectionWipeTransitions() {
           return;
         }
 
-        const localIdx = normalized % FRAMES_PER_SHEET;
-        const col = localIdx % COLS;
-        const row = Math.floor(localIdx / COLS);
+        if (sheetImg.naturalWidth > 0) {
+          const localIdx = normalized % FRAMES_PER_SHEET;
+          const col = localIdx % COLS;
+          const row = Math.floor(localIdx / COLS);
 
-        ctx.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-        ctx.drawImage(sheetImg, col * FRAME_WIDTH, row * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-        lastDrawnFrame = normalized;
+          ctx.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+          ctx.drawImage(sheetImg, col * FRAME_WIDTH, row * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+          lastDrawnFrame = normalized;
+        }
       };
 
-      sheet1.onload = () => {
+      const onSheet1Load = () => {
         sheet1Loaded = true;
-        renderFrame(0);
+        renderFrame(0, true);
       };
-      sheet2.onload = () => {
+      const onSheet2Load = () => {
         sheet2Loaded = true;
       };
+
+      sheet1.onload = onSheet1Load;
+      sheet2.onload = onSheet2Load;
+      sheet1.src = "/assets/arc_reactor_sheet1.webp";
+      sheet2.src = "/assets/arc_reactor_sheet2.webp";
+
+      if (sheet1.complete && sheet1.naturalWidth > 0) {
+        onSheet1Load();
+      }
+      if (sheet2.complete && sheet2.naturalWidth > 0) {
+        onSheet2Load();
+      }
 
       const isOv1InView = () => {
         if (!masterTl) return false;
@@ -2643,6 +2654,7 @@ export default function SectionWipeTransitions() {
           duration: 0.6,
           onStart: () => {
             gsap.set(ov1, { opacity: 1, pointerEvents: "auto" });
+            renderFrame(currentFrameFloat, true);
           },
         },
         1.0
