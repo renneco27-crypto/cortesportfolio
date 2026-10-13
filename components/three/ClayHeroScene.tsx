@@ -120,8 +120,14 @@ export default function ClayHeroScene() {
   const [attackTrigger, setAttackTrigger] = useState(0);
   const [opacity, setOpacity] = useState(1);
   const [isOffscreen, setIsOffscreen] = useState(false);
+  const [isTabVisible, setIsTabVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(window.innerWidth <= 868);
+    const handleResize = () => setIsMobile(window.innerWidth <= 868);
+    window.addEventListener("resize", handleResize, { passive: true });
+
     // Ensure the pixel eating animation and page elements load first before mounting 3D canvas
     const mountTimer = setTimeout(() => {
       setIsMounted(true);
@@ -136,6 +142,7 @@ export default function ClayHeroScene() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (window.scrollY > 400 || document.hidden) return;
       markActive();
       // Calculate normalized device coordinates (-1 to +1)
       const x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -144,6 +151,7 @@ export default function ClayHeroScene() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
+      if (window.scrollY > 400 || document.hidden) return;
       if (e.touches.length > 0) {
         markActive();
         const touch = e.touches[0];
@@ -154,6 +162,7 @@ export default function ClayHeroScene() {
     };
 
     const handleClick = (e: MouseEvent) => {
+      if (window.scrollY > 400) return;
       // Check if click was on interactive UI element
       const target = e.target as HTMLElement | null;
       if (target) {
@@ -170,20 +179,28 @@ export default function ClayHeroScene() {
       const fadeThreshold = 380;
       const newOpacity = Math.max(0, 1 - scrollY / fadeThreshold);
       setOpacity(newOpacity);
+      setIsOffscreen(scrollY > 400);
+    };
+
+    const handleVisibility = () => {
+      setIsTabVisible(!document.hidden);
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
     window.addEventListener("click", handleClick, { passive: true });
     window.addEventListener("scroll", handleScroll, { passive: true });
+    document.addEventListener("visibilitychange", handleVisibility);
 
     handleScroll();
 
     return () => {
+      window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("click", handleClick);
       window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("visibilitychange", handleVisibility);
       if (idleTimeout.current) clearTimeout(idleTimeout.current);
       clearTimeout(mountTimer);
     };
@@ -193,18 +210,21 @@ export default function ClayHeroScene() {
     return null;
   }
 
+  const shouldRender = opacity > 0 && !isOffscreen && isTabVisible;
+
   return (
     <div
       id="clay-hero-diorama"
       className="fixed inset-0 pointer-events-none z-[5] transition-opacity duration-300"
       style={{
         opacity,
-        visibility: opacity <= 0 ? "hidden" : "visible",
+        visibility: shouldRender ? "visible" : "hidden",
       }}
       aria-hidden="true"
     >
       <Canvas
-        shadows="soft"
+        shadows={isMobile ? false : "soft"}
+        dpr={[1, isMobile ? 1 : Math.min(typeof window !== "undefined" ? window.devicePixelRatio : 1, 1.5)]}
         camera={{
           position: [0, 4.2, 9.8],
           fov: 44,
@@ -212,11 +232,11 @@ export default function ClayHeroScene() {
           far: 50,
         }}
         gl={{
-          antialias: true,
+          antialias: !isMobile,
           powerPreference: "high-performance",
           alpha: true,
         }}
-        frameloop={opacity > 0 ? "always" : "never"}
+        frameloop={shouldRender ? "always" : "never"}
       >
         <Suspense fallback={null}>
           <SceneController

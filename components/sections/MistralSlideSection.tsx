@@ -55,7 +55,11 @@ export default function SectionWipeTransitions() {
 
     const masterTrigger = document.querySelector("#slide-trigger-master") as HTMLElement | null;
 
-    if (masterTrigger) {
+    let isInitialized = false;
+    const initMasterTransitions = () => {
+      if (isInitialized || !masterTrigger) return;
+      isInitialized = true;
+
       /* ── 0. Create Overlay 0: Comic Arcade Achievements Console (sharp-curie) ── */
       const certOv = document.createElement("div");
       certOv.style.cssText =
@@ -1242,7 +1246,9 @@ export default function SectionWipeTransitions() {
         }
       }
 
-      function autoScrollLoop() {
+      let autoScrollRafId: number | null = null;
+
+      function autoScrollStep() {
         if (autoScrollSpeed !== 0 && scroller) {
           scroller.scrollTop += autoScrollSpeed;
           if (isMouseOverMenu && lastClientY !== null) {
@@ -1250,10 +1256,17 @@ export default function SectionWipeTransitions() {
           } else {
             updateArrowPosition();
           }
+          autoScrollRafId = requestAnimationFrame(autoScrollStep);
+        } else {
+          autoScrollRafId = null;
         }
-        requestAnimationFrame(autoScrollLoop);
       }
-      requestAnimationFrame(autoScrollLoop);
+
+      function startAutoScrollIfNeeded() {
+        if (autoScrollSpeed !== 0 && autoScrollRafId === null) {
+          autoScrollRafId = requestAnimationFrame(autoScrollStep);
+        }
+      }
 
       // Render items inside .menu-scroller
       const renderCertCards = (
@@ -1448,9 +1461,11 @@ export default function SectionWipeTransitions() {
           if (ratio < 0.22) {
             const intensity = (0.22 - ratio) / 0.22;
             autoScrollSpeed = -intensity * 5.5;
+            startAutoScrollIfNeeded();
           } else if (ratio > 0.78) {
             const intensity = (ratio - 0.78) / 0.22;
             autoScrollSpeed = intensity * 5.5;
+            startAutoScrollIfNeeded();
           } else {
             autoScrollSpeed = 0;
           }
@@ -1460,6 +1475,10 @@ export default function SectionWipeTransitions() {
           isMouseOverMenu = false;
           autoScrollSpeed = 0;
           lastClientY = null;
+          if (autoScrollRafId !== null) {
+            cancelAnimationFrame(autoScrollRafId);
+            autoScrollRafId = null;
+          }
         });
 
         // Two-stage responsive wheel scrolling on menuZone
@@ -2047,9 +2066,37 @@ export default function SectionWipeTransitions() {
       );
 
       triggers.push(masterTl.scrollTrigger!);
+    };
+
+    let observer: IntersectionObserver | null = null;
+    if (masterTrigger && "IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            initMasterTransitions();
+            observer?.disconnect();
+          }
+        },
+        { rootMargin: "800px 0px 800px 0px" }
+      );
+      observer.observe(masterTrigger);
     }
 
+    // Idle & Scroll fallbacks: ensure smooth transition even if user rapidly scrubs
+    const idleTimer = setTimeout(initMasterTransitions, 3500);
+
+    const handleScrollFallback = () => {
+      if (window.scrollY > 300) {
+        initMasterTransitions();
+        window.removeEventListener("scroll", handleScrollFallback);
+      }
+    };
+    window.addEventListener("scroll", handleScrollFallback, { passive: true });
+
     return () => {
+      observer?.disconnect();
+      clearTimeout(idleTimer);
+      window.removeEventListener("scroll", handleScrollFallback);
       triggers.forEach((t) => t?.kill());
       overlays.forEach((el) => el.remove());
       delete (window as unknown as Record<string, unknown>).__handleProjectCardZoom;

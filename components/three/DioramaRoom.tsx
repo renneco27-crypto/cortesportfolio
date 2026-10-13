@@ -135,7 +135,7 @@ export default function DioramaRoom({
         penumbra={0.75}
         distance={28}
         castShadow
-        shadow-mapSize={[1024, 1024]}
+        shadow-mapSize={[512, 512]}
         shadow-bias={-0.0001}
       />
 
@@ -173,7 +173,7 @@ export default function DioramaRoom({
         intensity={2.2}
         color="#ffffff"
         castShadow
-        shadow-mapSize={[1024, 1024]}
+        shadow-mapSize={[512, 512]}
         shadow-bias={-0.0002}
       />
       <directionalLight

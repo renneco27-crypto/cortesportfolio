@@ -21,7 +21,7 @@ export default function ClayCharacter({
   isAppleActive = true,
   onEatApple,
 }: ClayCharacterProps) {
-  const { scene } = useGLTF("/models/clay-character/character.glb");
+  const { scene } = useGLTF("/models/clay-character/character-opt.glb", "/draco/");
   const groupRef = useRef<THREE.Group>(null);
   const characterInnerRef = useRef<THREE.Group>(null);
 
@@ -362,4 +362,4 @@ export default function ClayCharacter({
   );
 }
 
-useGLTF.preload("/models/clay-character/character.glb");
+useGLTF.preload("/models/clay-character/character-opt.glb", "/draco/");
