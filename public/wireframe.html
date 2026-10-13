@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Architecture Wireframe Graph — Lawrence Cortes Portfolio</title>
+  <style>
+    /* ==========================================================================
+       FIGMA WIREFRAME BLUEPRINT SYSTEM
+       Pitch Black Canvas + Crisp White Artboard Cards (Maximum Legibility)
+       ========================================================================== */
+    :root {
+      --canvas-bg: #050505;
+      --grid-dot: #222630;
+      --wf-bg: #ffffff;
+      --wf-surface: #f1f5f9;
+      --wf-border: #94a3b8;
+      --wf-border-light: #cbd5e1;
+      --wf-border-dark: #334155;
+      --wf-text-main: #0f172a;
+      --wf-text-muted: #475569;
+      --wf-text-subtle: #64748b;
+      --wf-placeholder-bg: #f8fafc;
+      --wf-placeholder-line: #94a3b8;
+      --wf-line-wire: #94a3b8;
+      --flow-primary: #38bdf8;
+      --flow-secondary: #2dd4bf;
+      --flow-modal: #c084fc;
+      --flow-nav: #fb923c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji";
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--canvas-bg);
+      color: #f8fafc;
+      user-select: none;
+    }
+
+    /* Figma Dot Grid Canvas - PITCH BLACK */
+    #viewport {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      cursor: grab;
+      background-color: #050505;
+      background-size: 24px 24px;
+      background-image: radial-gradient(#262c38 1.5px, transparent 1.5px);
+    }
+    #viewport.panning {
+      cursor: grabbing;
+    }
+
+    #canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+
+    /* SVG Connections Layer */
+    #connections-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6000px;
+      height: 6000px;
+      pointer-events: none;
+      z-index: 10;
+      overflow: visible;
+    }
+
+    .connector-path {
+      fill: none;
+      stroke-width: 3;
+      stroke-linecap: round;
+      transition: stroke 0.2s, stroke-width 0.2s, opacity 0.2s;
+    }
+    .connector-path.flow-primary { stroke: var(--flow-primary); }
+    .connector-path.flow-secondary { stroke: var(--flow-secondary); stroke-dasharray: 6 4; }
+    .connector-path.flow-modal { stroke: var(--flow-modal); stroke-dasharray: 5 4; }
+    .connector-path.flow-nav { stroke: var(--flow-nav); }
+
+    .connector-path.highlighted {
+      stroke-width: 5 !important;
+      opacity: 1 !important;
+    }
+    .connector-path.dimmed {
+      opacity: 0.15 !important;
+    }
+
+    .flow-label {
+      font-size: 11px;
+      font-weight: 700;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      padding: 4px 10px;
+      background: #0f172a;
+      color: #ffffff;
+      border: 1.5px solid var(--flow-primary);
+      border-radius: 4px;
+      pointer-events: auto;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+      white-space: nowrap;
+    }
+    .flow-label:hover {
+      background: #1e293b;
+      transform: scale(1.05);
+    }
+
+    /* Top Figma Bar */
+    .figma-topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #11141c;
+      border-bottom: 1px solid #232838;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    }
+    .figma-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #f8fafc;
+    }
+    .figma-brand svg {
+      stroke: #38bdf8;
+    }
+    .figma-brand .badge {
+      background: #1e2433;
+      color: #94a3b8;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: ui-monospace, monospace;
+      border: 1px solid #333d52;
+    }
+
+    .figma-tools {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-tool {
+      background: #181d2a;
+      border: 1px solid #2d3548;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #cbd5e1;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .btn-tool:hover {
+      background: #232a3d;
+      border-color: #475569;
+      color: #ffffff;
+    }
+    .btn-tool.active {
+      background: #38bdf8;
+      color: #090b10;
+      border-color: #38bdf8;
+      font-weight: 700;
+    }
+
+    /* Left Drawer / Index Menu */
+    .screens-sidebar {
+      position: fixed;
+      left: 20px;
+      top: 72px;
+      width: 250px;
+      max-height: calc(100vh - 92px);
+      background: #11141c;
+      border: 1px solid #232838;
+      border-radius: 8px;
+      padding: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+      z-index: 999;
+      overflow-y: auto;
+    }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+    .screen-nav-item {
+      padding: 8px 10px;
+      font-size: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.15s, color 0.15s;
+      margin-bottom: 4px;
+      background: #181d2a;
+      border: 1px solid transparent;
+    }
+    .screen-nav-item:hover {
+      background: #232a3d;
+      border-color: #38bdf8;
+      color: #ffffff;
+    }
+    .screen-nav-item .tag {
+      font-family: ui-monospace, monospace;
+      font-size: 10px;
+      color: #94a3b8;
+    }
+
+    /* Legend Overlay */
+    .flow-legend {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      background: #11141c;
+      border: 1px solid #232838;
+      border-radius: 8px;
+      padding: 12px 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+      z-index: 999;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #cbd5e1;
+    }
+    .legend-color {
+      width: 18px;
+      height: 3px;
+      border-radius: 2px;
+    }
+    .legend-color.primary { background: var(--flow-primary); }
+    .legend-color.secondary { background: var(--flow-secondary); border-top: 1px dashed #090b10; }
+    .legend-color.modal { background: var(--flow-modal); }
+    .legend-color.nav { background: var(--flow-nav); }
+
+    /* Zoom Controls Floating */
+    .zoom-controls {
+      position: fixed;
+      right: 20px;
+      top: 72px;
+      display: flex;
+      flex-direction: column;
+      background: #11141c;
+      border: 1px solid #232838;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+      z-index: 999;
+    }
+    .zoom-btn {
+      width: 38px;
+      height: 38px;
+      background: #181d2a;
+      border: none;
+      border-bottom: 1px solid #232838;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+      transition: background 0.15s, color 0.15s;
+    }
+    .zoom-btn:hover { background: #232a3d; color: #ffffff; }
+    .zoom-btn:last-child { border-bottom: none; }
+
+    /* ==========================================================================
+       WIREFRAME NODES & ARTBOARDS: CRISP WHITE DIVS ON BLACK CANVAS
+       ========================================================================== */
+    .wf-card {
+      position: absolute;
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border: 2px solid #0f172a !important;
+      border-radius: 8px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.15);
+      z-index: 20;
+      cursor: default;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .wf-card:hover {
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 0 2px #38bdf8;
+    }
+    .wf-card.selected {
+      border-color: #2563eb !important;
+      box-shadow: 0 0 0 4px #38bdf8, 0 20px 50px rgba(0, 0, 0, 0.95);
+    }
+
+    /* Artboard Header */
+    .wf-header {
+      padding: 10px 14px;
+      background: #f1f5f9;
+      border-bottom: 1.5px solid #cbd5e1;
+      border-radius: 6px 6px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: move;
+    }
+    .wf-header-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .wf-frame-num {
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 10px;
+      font-family: ui-monospace, monospace;
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+    .wf-header-meta {
+      font-size: 11px;
+      font-family: ui-monospace, monospace;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .wf-body {
+      padding: 16px;
+      background: #ffffff;
+      border-radius: 0 0 6px 6px;
+      overflow: hidden;
+      color: #0f172a;
+    }
+
+    /* ==========================================================================
+       STANDARD LOW-FIDELITY WIREFRAME COMPONENTS (HIGH-CONTRAST DARK ON WHITE)
+       ========================================================================== */
+
+    /* Image Placeholder Box with Wireframe "X" Diagonal Lines */
+    .wf-image-box {
+      width: 100%;
+      height: 120px;
+      background: #f8fafc;
+      border: 1.5px solid #94a3b8;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      color: #334155;
+      font-size: 11px;
+      font-family: ui-monospace, monospace;
+      margin-bottom: 10px;
+    }
+    .wf-image-box::before, .wf-image-box::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+    }
+    .wf-image-box::before {
+      background: linear-gradient(to top right, transparent calc(50% - 1px), #94a3b8 calc(50% - 1px), #94a3b8 calc(50% + 1px), transparent calc(50% + 1px));
+    }
+    .wf-image-box::after {
+      background: linear-gradient(to bottom right, transparent calc(50% - 1px), #94a3b8 calc(50% - 1px), #94a3b8 calc(50% + 1px), transparent calc(50% + 1px));
+    }
+    .wf-image-label {
+      position: relative;
+      z-index: 2;
+      background: #ffffff;
+      color: #0f172a;
+      padding: 3px 8px;
+      border: 1.5px solid #0f172a;
+      border-radius: 3px;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+    .wf-image-preview {
+      display: none;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(115%);
+      opacity: 0.85;
+      z-index: 1;
+    }
+    body.show-real-images .wf-image-preview {
+      display: block;
+    }
+    body.show-real-images .wf-image-box::before,
+    body.show-real-images .wf-image-box::after {
+      opacity: 0.25;
+    }
+
+    /* Skeleton Text Lines */
+    .wf-line {
+      height: 7px;
+      background: #cbd5e1;
+      border-radius: 3px;
+      margin-bottom: 6px;
+    }
+    .wf-line.w-full { width: 100%; }
+    .wf-line.w-4-5 { width: 80%; }
+    .wf-line.w-3-4 { width: 75%; }
+    .wf-line.w-2-3 { width: 66%; }
+    .wf-line.w-1-2 { width: 50%; }
+    .wf-line.w-1-3 { width: 33%; }
+    .wf-line.w-1-4 { width: 25%; }
+    .wf-line.title {
+      height: 12px;
+      background: #64748b;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+    .wf-line.heading {
+      height: 18px;
+      background: #1e293b;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    /* Wireframe Buttons */
+    .wf-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      padding: 0 14px;
+      background: #ffffff;
+      border: 1.5px solid #0f172a;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .wf-btn.primary {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+    .wf-btn.dashed {
+      border-style: dashed;
+      color: #475569;
+    }
+    .wf-btn.small {
+      height: 24px;
+      padding: 0 8px;
+      font-size: 10px;
+    }
+
+    /* Wireframe Input & Form Elements */
+    .wf-input {
+      height: 32px;
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #94a3b8;
+      border-radius: 4px;
+      padding: 0 10px;
+      font-size: 11px;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .wf-textarea {
+      height: 60px;
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #94a3b8;
+      border-radius: 4px;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: #475569;
+      margin-bottom: 8px;
+    }
+
+    /* Wireframe Badges / Chips */
+    .wf-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      background: #f1f5f9;
+      border: 1px solid #94a3b8;
+      border-radius: 3px;
+      font-size: 10px;
+      font-family: ui-monospace, monospace;
+      color: #1e293b;
+      font-weight: 600;
+    }
+
+    /* Grid & Flex Containers inside Wireframe */
+    .wf-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .wf-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .wf-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .wf-flex-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .wf-flex-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Wireframe Container Block */
+    .wf-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .wf-box.dashed {
+      border: 1.5px dashed #94a3b8;
+      background: #f8fafc;
+    }
+
+    /* Modal Callout */
+    .wf-modal-tag {
+      display: inline-block;
+      font-size: 9px;
+      background: #f3e8ff;
+      color: #6b21a8;
+      border: 1px solid #c084fc;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* Connection Anchor Dots */
+    .anchor-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ffffff;
+      border: 2px solid #0f172a;
+      border-radius: 50%;
+      z-index: 25;
+    }
+    .anchor-dot.top { top: -5px; left: 50%; transform: translateX(-50%); }
+    .anchor-dot.bottom { bottom: -5px; left: 50%; transform: translateX(-50%); }
+    .anchor-dot.left { left: -5px; top: 50%; transform: translateY(-50%); }
+    .anchor-dot.right { right: -5px; top: 50%; transform: translateY(-50%); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Figma Blueprint Toolbar -->
+  <header class="figma-topbar">
+    <div class="figma-brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <line x1="9" y1="3" x2="9" y2="21"/>
+        <line x1="15" y1="3" x2="15" y2="21"/>
+        <line x1="3" y1="9" x2="21" y2="9"/>
+        <line x1="3" y1="15" x2="21" y2="15"/>
+      </svg>
+      <span>Website Information Architecture Wireframe Graph</span>
+      <span class="badge">FIGMA BLUEPRINT (WHITE DIVS &bull; BLACK CANVAS)</span>
+    </div>
+
+    <div class="figma-tools">
+      <button class="btn-tool active" id="btn-toggle-all-flows" onclick="toggleFlowFilter('all')">
+        All Connectors
+      </button>
+      <button class="btn-tool" id="btn-toggle-scroll-flows" onclick="toggleFlowFilter('scroll')">
+        Scroll / Wipes
+      </button>
+      <button class="btn-tool" id="btn-toggle-nav-flows" onclick="toggleFlowFilter('nav')">
+        Nav Routes
+      </button>
+      <button class="btn-tool" id="btn-toggle-modal-flows" onclick="toggleFlowFilter('modals')">
+        Modals &amp; Chat
+      </button>
+      <button class="btn-tool" id="btn-toggle-images" onclick="toggleRealImages()">
+        <span id="img-toggle-icon">🖼️</span> Toggle Image Previews
+      </button>
+      <button class="btn-tool" onclick="resetCanvasView()">
+        Fit to Screen (100%)
+      </button>
+    </div>
+  </header>
+
+  <!-- Left Screen Index Sidebar -->
+  <aside class="screens-sidebar">
+    <div class="sidebar-title">Screens &amp; Artboards (10)</div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-navbar')">
+      <span>00. Global Navigation</span>
+      <span class="tag">HEADER</span>
+    </div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-hero')">
+      <span>01. Hero &amp; 3D Stage</span>
+      <span class="tag">/ HOME</span>
+    </div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-pixel')">
+      <span>02. Pixel Reveal Transition</span>
+      <span class="tag">SCRUB</span>
+    </div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-about')">
+      <span>03. Editorial About</span>
+      <span class="tag">BIO</span>
+    </div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-github')">
+      <span>04. GitHub Telemetry</span>
+      <span class="tag">CODE</span>
+    </div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-wipe1')">
+      <span>05. Wipe 1: Selected Works</span>
+      <span class="tag">OVERLAY</span>
+    </div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-projects')">
+      <span>06. Dedicated Works Page</span>
+      <span class="tag">/PROJECTS</span>
+    </div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-wipe2')">
+      <span>07. Wipe 2: Credentials &amp; Contact</span>
+      <span class="tag">FORM</span>
+    </div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-chat')">
+      <span>08. AI Chatbot Terminal</span>
+      <span class="tag">MODAL</span>
+    </div>
+    <div class="screen-nav-item" onclick="focusScreen('frame-admin')">
+      <span>09. Admin &amp; Resume CMS</span>
+      <span class="tag">/ADMIN</span>
+    </div>
+  </aside>
+
+  <!-- Floating Canvas Controls -->
+  <div class="zoom-controls">
+    <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">+</button>
+    <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">−</button>
+    <button class="zoom-btn" onclick="resetCanvasView()" title="Reset Zoom">⟲</button>
+  </div>
+
+  <!-- Legend Overlay -->
+  <div class="flow-legend">
+    <div style="font-weight: 700; color: #f8fafc; margin-bottom: 2px;">User Flow Connectors</div>
+    <div class="legend-item">
+      <div class="legend-color primary"></div>
+      <span>Primary Sequential Scroll &amp; GSAP Wipes</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color nav"></div>
+      <span>Navbar Anchor &amp; Direct Page Routing</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color modal"></div>
+      <span>Interactive Triggers (Modals, Overlays, Chat)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color secondary"></div>
+      <span>Secondary External / API Data Links</span>
+    </div>
+  </div>
+
+  <!-- Main Figma Infinite Viewport (Black Canvas) -->
+  <div id="viewport">
+    <div id="canvas">
+      <!-- SVG Connector Curves Layer -->
+      <svg id="connections-layer">
+        <defs>
+          <!-- Flow Primary Arrowhead -->
+          <marker id="arrow-primary" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+          </marker>
+          <!-- Flow Nav Arrowhead -->
+          <marker id="arrow-nav" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#fb923c" />
+          </marker>
+          <!-- Flow Modal Arrowhead -->
+          <marker id="arrow-modal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#c084fc" />
+          </marker>
+          <!-- Flow Secondary Arrowhead -->
+          <marker id="arrow-secondary" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#2dd4bf" />
+          </marker>
+        </defs>
+      </svg>
+
+      <!-- ======================================================================
+           FRAME 00: GLOBAL NAVIGATION
+           ====================================================================== -->
+      <div class="wf-card" id="frame-navbar" style="left: 60px; top: 120px; width: 620px;">
+        <div class="anchor-dot bottom"></div>
+        <div class="anchor-dot right"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 00</span>
+            <span>Global Navigation Bar (SwissNavbar)</span>
+          </div>
+          <div class="wf-header-meta">Fixed Top Header &bull; 1440 &times; 64</div>
+        </div>
+        <div class="wf-body">
+          <div class="wf-flex-between wf-box" style="margin-bottom: 6px;">
+            <div class="wf-flex-row">
+              <div class="wf-badge" style="font-weight: 700; background: #0f172a; color: #ffffff;">[ LC ]</div>
+              <div style="font-size: 11px; font-weight: 700; color: #0f172a;">LAWRENCE CORTES &bull; PORTFOLIO</div>
+            </div>
+            <div class="wf-flex-row" style="gap: 6px;">
+              <span class="wf-badge">About</span>
+              <span class="wf-badge">GitHub</span>
+              <span class="wf-badge">Works</span>
+              <span class="wf-badge">Credentials</span>
+              <span class="wf-badge">Contact</span>
+            </div>
+            <div class="wf-flex-row" style="gap: 6px;">
+              <div class="wf-btn small dashed">[ Resume PDF ↗ ]</div>
+              <div class="wf-btn small">[ Admin ⚙ ]</div>
+            </div>
+          </div>
+          <div style="font-size: 10px; color: #475569; display: flex; justify-content: space-between; font-weight: 500;">
+            <span>Sticky z-[60] backdrop blur overlay</span>
+            <span>Anchor routing &bull; Resume download trigger</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           FRAME 01: HERO SECTION
+           ====================================================================== -->
+      <div class="wf-card" id="frame-hero" style="left: 60px; top: 320px; width: 620px;">
+        <div class="anchor-dot top"></div>
+        <div class="anchor-dot bottom"></div>
+        <div class="anchor-dot right"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 01</span>
+            <span>Hero Screen &amp; 3D Interactive Stage</span>
+          </div>
+          <div class="wf-header-meta">Homepage / &bull; 1440 &times; 900</div>
+        </div>
+        <div class="wf-body">
+          <!-- 3D Scene / Character Placeholder -->
+          <div class="wf-image-box" style="height: 160px;">
+            <img class="wf-image-preview" src="/assets/person_clean.png" alt="3D Model">
+            <div class="wf-image-label">[ IMAGE / 3D CANVAS PLACEHOLDER: ClayHeroScene / DioramaRoom WebGL ]</div>
+            <div style="font-size: 9px; color: #475569; margin-top: 4px; z-index: 2; font-weight: 600;">Interactive Clay Character + Three.js Room</div>
+          </div>
+
+          <!-- Hero Backdrop Card -->
+          <div class="wf-box dashed" style="text-align: center; padding: 16px;">
+            <div class="wf-badge" style="margin-bottom: 8px;">ENGINEERING PORTFOLIO &mdash; 2026</div>
+            <div class="wf-line heading" style="margin: 0 auto 10px; width: 60%;"></div>
+            <div style="font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Lawrence Cortes</div>
+            <div style="font-size: 11px; color: #475569; font-weight: 500; margin-bottom: 12px;">
+              IT Student &bull; Full-Stack Developer &bull; Seeking Software Internship
+            </div>
+
+            <!-- Terminal Pill Wireframe -->
+            <div class="wf-box" style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: #0f172a; border-color: #0f172a;">
+              <span style="font-family: monospace; font-size: 10px; color: #38bdf8; font-weight: 600;">$ status: seeking internship &mdash; ready to learn, build &amp; contribute</span>
+              <span style="display: inline-block; width: 6px; height: 10px; background: #ffffff;"></span>
+            </div>
+
+            <div style="margin-top: 10px; font-size: 10px; color: #475569; font-weight: 500;">
+              &bull; Interactive Card: Click toggles translateY(70%) revealing clay character &amp; minigame
+            </div>
+          </div>
+
+          <div class="wf-flex-between" style="font-size: 10px; color: #64748b; margin-top: 8px; font-weight: 600;">
+            <span>Initial Scroll Anchor: #hero</span>
+            <span>Scroll Down Indicator &darr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           FRAME 02: PIXEL REVEAL TRANSITION
+           ====================================================================== -->
+      <div class="wf-card" id="frame-pixel" style="left: 60px; top: 780px; width: 620px;">
+        <div class="anchor-dot top"></div>
+        <div class="anchor-dot bottom"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 02</span>
+            <span>PixelTransition Mask Reveal</span>
+          </div>
+          <div class="wf-header-meta">ScrollTrigger &bull; 1440 &times; 450</div>
+        </div>
+        <div class="wf-body">
+          <div class="wf-image-box" style="height: 110px;">
+            <img class="wf-image-preview" src="/images/diorama-bg.webp" alt="Diorama background">
+            <div class="wf-image-label">[ IMAGE PLACEHOLDER: Diorama Background Reveal (/images/diorama-bg.webp) ]</div>
+            <div style="font-size: 9px; color: #475569; margin-top: 4px; z-index: 2; font-weight: 600;">Canvas Pixel Disintegration Effect on Scroll Scrub</div>
+          </div>
+
+          <div class="wf-grid-4" style="margin-bottom: 8px;">
+            <div class="wf-box" style="height: 28px; text-align: center; font-size: 10px; line-height: 10px; color: #0f172a; font-weight: 600;">Pixel 01</div>
+            <div class="wf-box" style="height: 28px; text-align: center; font-size: 10px; line-height: 10px; color: #0f172a; font-weight: 600;">Pixel 02</div>
+            <div class="wf-box" style="height: 28px; text-align: center; font-size: 10px; line-height: 10px; color: #0f172a; font-weight: 600;">Pixel 03</div>
+            <div class="wf-box" style="height: 28px; text-align: center; font-size: 10px; line-height: 10px; color: #0f172a; font-weight: 600;">Pixel 04</div>
+          </div>
+          <div style="font-size: 10px; color: #475569; font-weight: 500;">
+            Connects Hero section into About Section through smooth pixel dissolving curtain
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           FRAME 03: EDITORIAL ABOUT SECTION
+           ====================================================================== -->
+      <div class="wf-card" id="frame-about" style="left: 60px; top: 1080px; width: 620px;">
+        <div class="anchor-dot top"></div>
+        <div class="anchor-dot bottom"></div>
+        <div class="anchor-dot right"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 03</span>
+            <span>Editorial About Section (EditorialAbout)</span>
+          </div>
+          <div class="wf-header-meta">Section #about &bull; 1440 &times; 800</div>
+        </div>
+        <div class="wf-body">
+          <div class="wf-flex-between" style="border-bottom: 1.5px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">
+            <div>
+              <span class="wf-badge" style="margin-bottom: 4px; background: #0f172a; color: #ffffff;">[ 01 &mdash; ABOUT LAWRENCE CORTES ]</span>
+              <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Developer by code. Designer by eye.</div>
+            </div>
+            <div style="font-size: 10px; font-family: monospace; color: #475569; font-weight: 700;">FULL-STACK &amp; DESIGN</div>
+          </div>
+
+          <!-- Two-column: Image placeholder left, narrative right -->
+          <div class="wf-grid-2" style="grid-template-columns: 180px 1fr; align-items: start;">
+            <div>
+              <div class="wf-image-box" style="height: 180px;">
+                <img class="wf-image-preview" src="/images/lawrence-face.jpg" alt="Lawrence Face">
+                <div class="wf-image-label">[ IMAGE PLACEHOLDER: Face Portrait (lawrence-face.jpg) ]</div>
+                <div style="font-size: 9px; color: #475569; margin-top: 4px; z-index: 2; font-weight: 600;">Grayscale / Hover Color Shift</div>
+              </div>
+              <div class="wf-badge" style="width: 100%; text-align: center; justify-content: center;">Ormoc City, Leyte, PH</div>
+            </div>
+
+            <div>
+              <div class="wf-line title w-3-4"></div>
+              <div class="wf-line w-full"></div>
+              <div class="wf-line w-full"></div>
+              <div class="wf-line w-4-5"></div>
+              <div style="font-size: 11px; color: #1e293b; margin: 8px 0; line-height: 1.45; font-weight: 500;">
+                BS Information Technology student pairing modern web stacks (React, Next.js, Node.js) with government accounting office process documentation discipline.
+              </div>
+
+              <!-- Quote block -->
+              <div class="wf-box dashed" style="border-left: 3.5px solid #0f172a; padding: 6px 10px;">
+                <div style="font-size: 10px; font-style: italic; color: #334155; font-weight: 600;">
+                  &ldquo;Focused on clean code, solid fundamentals, and continuous learning. Ready to work hard and contribute to a real team.&rdquo;
+                </div>
+              </div>
+
+              <!-- Tech Badges -->
+              <div class="wf-flex-row" style="flex-wrap: wrap; gap: 4px; margin-top: 10px;">
+                <span class="wf-badge">React 19</span>
+                <span class="wf-badge">Next.js 15</span>
+                <span class="wf-badge">TypeScript</span>
+                <span class="wf-badge">TailwindCSS</span>
+                <span class="wf-badge">Node.js</span>
+                <span class="wf-badge">REST APIs</span>
+                <span class="wf-badge">Supabase</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           FRAME 04: GITHUB ACTIVITY & TELEMETRY
+           ====================================================================== -->
+      <div class="wf-card" id="frame-github" style="left: 60px; top: 1540px; width: 620px;">
+        <div class="anchor-dot top"></div>
+        <div class="anchor-dot bottom"></div>
+        <div class="anchor-dot right"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 04</span>
+            <span>GitHub Telemetry &amp; Commit Graph</span>
+          </div>
+          <div class="wf-header-meta">Section #github &bull; 1440 &times; 650</div>
+        </div>
+        <div class="wf-body">
+          <div class="wf-flex-between" style="border-bottom: 1.5px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">
+            <div>
+              <span class="wf-badge" style="margin-bottom: 4px; background: #0f172a; color: #ffffff;">[ 02 &mdash; CODE &amp; COMMIT TELEMETRY ]</span>
+              <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Active Engineering Track Record</div>
+            </div>
+            <div style="font-size: 10px; font-family: monospace; color: #475569; font-weight: 700;">@renneco27-crypto</div>
+          </div>
+
+          <!-- Live Metrics Row -->
+          <div class="wf-grid-3" style="margin-bottom: 12px;">
+            <div class="wf-box" style="text-align: center;">
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a;">384+</div>
+              <div style="font-size: 9px; color: #475569; font-weight: 600;">Contributions (Year)</div>
+            </div>
+            <div class="wf-box" style="text-align: center;">
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a;">100%</div>
+              <div style="font-size: 9px; color: #475569; font-weight: 600;">Verified Commits</div>
+            </div>
+            <div class="wf-box" style="text-align: center;">
+              <div style="font-size: 18px; font-weight: 800; color: #0f172a;">Active</div>
+              <div style="font-size: 9px; color: #475569; font-weight: 600;">Continuous Delivery</div>
+            </div>
+          </div>
+
+          <!-- Heatmap Matrix Placeholder -->
+          <div class="wf-image-box" style="height: 100px;">
+            <div class="wf-image-label">[ IMAGE PLACEHOLDER: GitHub 52-Week Contribution Heatmap Matrix ]</div>
+            <div style="font-size: 9px; color: #475569; margin-top: 4px; z-index: 2; font-weight: 600;">Live Dynamic Fetch: /api/github/contributions &bull; Interactive Cell Tooltips</div>
+          </div>
+
+          <div class="wf-flex-between" style="margin-top: 6px; font-size: 10px; color: #475569; font-weight: 600;">
+            <span>Legend: Less [ &bull; &bull; &bull; &bull; ] More</span>
+            <span>Hover reveals commit frequency &amp; date</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           FRAME 05: WIPE 1: SELECTED WORKS (MISTRAL PANEL 1)
+           ====================================================================== -->
+      <div class="wf-card" id="frame-wipe1" style="left: 780px; top: 120px; width: 680px;">
+        <div class="anchor-dot top"></div>
+        <div class="anchor-dot bottom"></div>
+        <div class="anchor-dot left"></div>
+        <div class="anchor-dot right"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 05</span>
+            <span>Wipe 1: Selected Engineering Works</span>
+          </div>
+          <div class="wf-header-meta">GSAP PowerPoint Wipe Panel &bull; 1440 &times; 900</div>
+        </div>
+        <div class="wf-body">
+          <div class="wf-flex-between" style="border-bottom: 1.5px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">
+            <div>
+              <span class="wf-badge" style="margin-bottom: 4px; background: #0f172a; color: #ffffff;">[ 03 &mdash; SELECTED ENGINEERING WORKS ]</span>
+              <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Signature Projects Showcase</div>
+            </div>
+            <div class="wf-badge" style="background: #e0f2fe; color: #0369a1; border-color: #7dd3fc; font-weight: 700;">
+              WIPE TRIGGER: #slide-trigger-master (0% - 50%)
+            </div>
+          </div>
+
+          <!-- Arc Reactor Video / Spritesheet Placeholder -->
+          <div class="wf-image-box" style="height: 110px;">
+            <img class="wf-image-preview" src="/assets/arc_reactor_sheet1.webp" alt="Arc Reactor Sheet">
+            <div class="wf-image-label">[ IMAGE PLACEHOLDER: Arc Reactor Spritesheet / 3D Canvas Asset ]</div>
+            <div style="font-size: 9px; color: #475569; margin-top: 4px; z-index: 2; font-weight: 600;">960x540 Spritesheet Canvas / Boomerang Video Background</div>
+          </div>
+
+          <!-- 4 Selected Project Cards Grid -->
+          <div class="wf-grid-2" style="gap: 12px; margin-bottom: 14px;">
+            <!-- Card 1 -->
+            <div class="wf-box" style="padding: 10px;">
+              <div class="wf-image-box" style="height: 80px; margin-bottom: 6px;">
+                <div class="wf-image-label">[ THUMB: CampusTrash4Cash ]</div>
+              </div>
+              <div style="font-size: 12px; font-weight: 800; color: #0f172a;">CampusTrash4Cash</div>
+              <div style="font-size: 10px; color: #475569; margin-bottom: 6px; font-weight: 500;">
+                Reverse vending eco-incentive web system with reward redemption.
+              </div>
+              <div class="wf-flex-between">
+                <span class="wf-badge">Next.js &bull; Supabase</span>
+                <span class="wf-btn small">[ Zoom &rarr; ]</span>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="wf-box" style="padding: 10px;">
+              <div class="wf-image-box" style="height: 80px; margin-bottom: 6px;">
+                <div class="wf-image-label">[ THUMB: AutoCertificationAi ]</div>
+              </div>
+              <div style="font-size: 12px; font-weight: 800; color: #0f172a;">AutoCertificationAi</div>
+              <div style="font-size: 10px; color: #475569; margin-bottom: 6px; font-weight: 500;">
+                Automated document &amp; certification issuance with verification.
+              </div>
+              <div class="wf-flex-between">
+                <span class="wf-badge">AI &bull; PDF Gen</span>
+                <span class="wf-btn small">[ Zoom &rarr; ]</span>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="wf-box" style="padding: 10px;">
+              <div class="wf-image-box" style="height: 80px; margin-bottom: 6px;">
+                <div class="wf-image-label">[ THUMB: Student Grading App ]</div>
+              </div>
+              <div style="font-size: 12px; font-weight: 800; color: #0f172a;">Student Grading App</div>
+              <div style="font-size: 10px; color: #475569; margin-bottom: 6px; font-weight: 500;">
+                Secure grading telemetry system with faculty authentication.
+              </div>
+              <div class="wf-flex-between">
+                <span class="wf-badge">React &bull; Node</span>
+                <span class="wf-btn small">[ Zoom &rarr; ]</span>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="wf-box" style="padding: 10px;">
+              <div class="wf-image-box" style="height: 80px; margin-bottom: 6px;">
+                <div class="wf-image-label">[ THUMB: AI Portfolio Chatbot ]</div>
+              </div>
+              <div style="font-size: 12px; font-weight: 800; color: #0f172a;">AI Portfolio Chatbot</div>
+              <div style="font-size: 10px; color: #475569; margin-bottom: 6px; font-weight: 500;">
+                Conversational RAG agent trained on resume &amp; engineering work.
+              </div>
+              <div class="wf-flex-between">
+                <span class="wf-badge">Gemini &bull; Streaming</span>
+                <span class="wf-btn small">[ Zoom &rarr; ]</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action -->
+          <div class="wf-box dashed wf-flex-between" style="padding: 10px;">
+            <div style="font-size: 11px;">
+              <strong style="color: #0f172a;">Looking for the comprehensive gallery?</strong>
+              <div style="font-size: 10px; color: #475569;">View all 8+ client &amp; university engineering projects</div>
+            </div>
+            <div class="wf-btn primary">[ BROWSE ALL PROJECTS &rarr; ]</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           FRAME 06: DEDICATED WORKS PAGE (/PROJECTS)
+           ====================================================================== -->
+      <div class="wf-card" id="frame-projects" style="left: 1560px; top: 120px; width: 680px;">
+        <div class="anchor-dot left"></div>
+        <div class="anchor-dot bottom"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 06</span>
+            <span>Dedicated Projects Page (/projects)</span>
+          </div>
+          <div class="wf-header-meta">Dedicated Route &bull; 1440 &times; 1100</div>
+        </div>
+        <div class="wf-body">
+          <div class="wf-flex-between" style="margin-bottom: 12px;">
+            <div class="wf-flex-row">
+              <span class="wf-btn small">[ &larr; Return Home ]</span>
+              <span style="font-size: 11px; color: #475569; font-weight: 600;">/ Projects Directory</span>
+            </div>
+            <div class="wf-badge">8 Projects Indexed</div>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="wf-box" style="padding: 10px; margin-bottom: 12px;">
+            <div class="wf-input" style="margin-bottom: 8px;">
+              <span style="color: #475569; font-weight: 500;">&#128269; Search projects by keyword, stack, title...</span>
+            </div>
+            <div class="wf-flex-row" style="flex-wrap: wrap; gap: 4px;">
+              <span class="wf-badge" style="background: #0f172a; color: #ffffff; font-weight: 700;">All Works (8)</span>
+              <span class="wf-badge">AI &amp; LLM</span>
+              <span class="wf-badge">EdTech</span>
+              <span class="wf-badge">Automation</span>
+              <span class="wf-badge">Web Systems</span>
+              <span class="wf-badge">Sustainability</span>
+            </div>
+          </div>
+
+          <!-- Expanded Grid of Project Cards -->
+          <div class="wf-grid-3" style="gap: 10px; margin-bottom: 14px;">
+            <div class="wf-box" style="padding: 8px;">
+              <div class="wf-image-box" style="height: 60px; margin-bottom: 4px;">
+                <div class="wf-image-label">[ Project 01 ]</div>
+              </div>
+              <div class="wf-line title w-3-4" style="height: 9px; margin-bottom: 4px;"></div>
+              <div class="wf-line w-full" style="height: 5px;"></div>
+              <div class="wf-line w-2-3" style="height: 5px;"></div>
+              <div class="wf-btn small" style="width: 100%; margin-top: 6px;">[ View Modal ]</div>
+            </div>
+
+            <div class="wf-box" style="padding: 8px;">
+              <div class="wf-image-box" style="height: 60px; margin-bottom: 4px;">
+                <div class="wf-image-label">[ Project 02 ]</div>
+              </div>
+              <div class="wf-line title w-3-4" style="height: 9px; margin-bottom: 4px;"></div>
+              <div class="wf-line w-full" style="height: 5px;"></div>
+              <div class="wf-line w-2-3" style="height: 5px;"></div>
+              <div class="wf-btn small" style="width: 100%; margin-top: 6px;">[ View Modal ]</div>
+            </div>
+
+            <div class="wf-box" style="padding: 8px;">
+              <div class="wf-image-box" style="height: 60px; margin-bottom: 4px;">
+                <div class="wf-image-label">[ Project 03 ]</div>
+              </div>
+              <div class="wf-line title w-3-4" style="height: 9px; margin-bottom: 4px;"></div>
+              <div class="wf-line w-full" style="height: 5px;"></div>
+              <div class="wf-line w-2-3" style="height: 5px;"></div>
+              <div class="wf-btn small" style="width: 100%; margin-top: 6px;">[ View Modal ]</div>
+            </div>
+          </div>
+
+          <!-- Project Detail Modal Wireframe Callout -->
+          <div class="wf-box dashed" style="background: #faf5ff; border-color: #c084fc;">
+            <div class="wf-modal-tag">MODAL STATE: Project Detail Dialog</div>
+            <div class="wf-flex-between" style="margin-bottom: 6px;">
+              <div style="font-size: 12px; font-weight: 800; color: #0f172a;">Detailed Architectural Breakdown</div>
+              <span class="wf-badge">[ &times; Close ]</span>
+            </div>
+            <div class="wf-line w-full"></div>
+            <div class="wf-line w-4-5"></div>
+            <div class="wf-flex-row" style="margin-top: 6px;">
+              <span class="wf-btn small primary">[ View Live Demo ↗ ]</span>
+              <span class="wf-btn small">[ GitHub Source ↗ ]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           FRAME 07: WIPE 2: CREDENTIALS & CONTACT (MISTRAL PANEL 2)
+           ====================================================================== -->
+      <div class="wf-card" id="frame-wipe2" style="left: 780px; top: 960px; width: 680px;">
+        <div class="anchor-dot top"></div>
+        <div class="anchor-dot bottom"></div>
+        <div class="anchor-dot left"></div>
+        <div class="anchor-dot right"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 07</span>
+            <span>Wipe 2: Credentials &amp; Initiate Contact</span>
+          </div>
+          <div class="wf-header-meta">GSAP PowerPoint Wipe Panel &bull; 1440 &times; 900</div>
+        </div>
+        <div class="wf-body">
+          <div class="wf-flex-between" style="border-bottom: 1.5px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">
+            <div>
+              <span class="wf-badge" style="margin-bottom: 4px; background: #0f172a; color: #ffffff;">[ 04 &mdash; CREDENTIALS &amp; INITIATE CONTACT ]</span>
+              <div style="font-size: 15px; font-weight: 800; color: #0f172a;">Get in Touch &bull; Verify Credentials</div>
+            </div>
+            <div class="wf-badge" style="background: #fdf2f8; color: #9d174d; border-color: #f472b6; font-weight: 700;">
+              WIPE TRIGGER: #slide-trigger-master (50% - 100%)
+            </div>
+          </div>
+
+          <div class="wf-grid-2" style="gap: 16px;">
+            <!-- Left: Credentials & Badges -->
+            <div>
+              <div style="font-size: 12px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">Technical Certifications</div>
+              <div class="wf-box" style="padding: 8px; margin-bottom: 6px;">
+                <div class="wf-flex-between">
+                  <span style="font-size: 11px; font-weight: 700; color: #0f172a;">Meta Front-End Specialization</span>
+                  <span class="wf-badge" style="background: #fff7ed; color: #c2410c; border-color: #fdba74;">In Progress</span>
+                </div>
+                <div style="font-size: 10px; color: #475569;">React, JS Algorithms, UI Principles</div>
+              </div>
+              <div class="wf-box" style="padding: 8px; margin-bottom: 6px;">
+                <div class="wf-flex-between">
+                  <span style="font-size: 11px; font-weight: 700; color: #0f172a;">Google Cloud Foundations</span>
+                  <span class="wf-badge" style="background: #fff7ed; color: #c2410c; border-color: #fdba74;">In Progress</span>
+                </div>
+                <div style="font-size: 10px; color: #475569;">Cloud compute, storage, security basics</div>
+              </div>
+
+              <!-- Resume Action Box -->
+              <div class="wf-box dashed" style="margin-top: 12px; text-align: center;">
+                <div style="font-size: 11px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Verified Resume Document</div>
+                <div class="wf-btn small primary" style="width: 100%;">
+                  [ &#128196; Download Full Resume (PDF) ]
+                </div>
+                <div style="font-size: 9px; color: #64748b; margin-top: 4px; font-weight: 600;">lawrence-cortes-resume.pdf</div>
+              </div>
+            </div>
+
+            <!-- Right: Interactive Contact Form -->
+            <div>
+              <div style="font-size: 12px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">Send Direct Message</div>
+              <div class="wf-input">Full Name / Organization</div>
+              <div class="wf-input">Email Address</div>
+              <div class="wf-textarea">Message / Project Inquiry / Internship Role details...</div>
+              <div class="wf-btn primary" style="width: 100%;">[ SUBMIT MESSAGE &rarr; ]</div>
+
+              <!-- Direct Channels -->
+              <div class="wf-flex-row" style="margin-top: 10px; justify-content: space-between; font-size: 10px; color: #475569; font-weight: 600;">
+                <span>Email: contact@lawrencecortes.dev</span>
+                <span>Ormoc City, PH</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           FRAME 08: GLOBAL AI CHATBOT TERMINAL
+           ====================================================================== -->
+      <div class="wf-card" id="frame-chat" style="left: 1560px; top: 960px; width: 440px;">
+        <div class="anchor-dot left"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 08</span>
+            <span>AI Chatbot Terminal Widget</span>
+          </div>
+          <div class="wf-header-meta">Floating Drawer &bull; 400 &times; 600</div>
+        </div>
+        <div class="wf-body">
+          <div class="wf-modal-tag">GLOBAL FLOATING OVERLAY &bull; Z-[70]</div>
+          
+          <!-- Bootloader Sequence -->
+          <div class="wf-box dashed" style="background: #0f172a; color: #cbd5e1; font-family: monospace; font-size: 10px; padding: 8px;">
+            <div>> npm run start:cortes-ai-assistant</div>
+            <div>> loading knowledgebase: resume, stack, projects... [OK]</div>
+            <div style="color: #4ade80; font-weight: 700;">> bootloader initialized. ready for prompts.</div>
+          </div>
+
+          <!-- Dialogue Stream -->
+          <div style="margin: 10px 0; display: flex; flex-direction: column; gap: 8px;">
+            <!-- Bot message -->
+            <div class="wf-box" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; font-size: 11px; color: #0f172a;">
+              <strong style="font-size: 10px; color: #2563eb; display: block; margin-bottom: 2px;">CORTES AGENT:</strong>
+              Hello! I can answer questions about Lawrence's technical skills, university background, or projects.
+            </div>
+            <!-- User message -->
+            <div class="wf-box" style="background: #ffffff; border: 1.5px solid #0f172a; align-self: flex-end; width: 85%; border-radius: 6px; padding: 8px; font-size: 11px; color: #0f172a;">
+              <strong style="font-size: 10px; color: #ea580c; display: block; margin-bottom: 2px;">VISITOR:</strong>
+              What are Lawrence's main tech proficiencies?
+            </div>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="wf-flex-row">
+            <div class="wf-input" style="margin-bottom: 0;">Type question...</div>
+            <div class="wf-btn primary small">[ Send ]</div>
+          </div>
+
+          <div style="margin-top: 8px; font-size: 10px; color: #64748b; text-align: center; font-weight: 500;">
+            Floating Launcher Bubble anchored bottom-right across all routes
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           FRAME 09: ADMIN & RESUME CMS PAGE (/ADMIN)
+           ====================================================================== -->
+      <div class="wf-card" id="frame-admin" style="left: 2060px; top: 960px; width: 520px;">
+        <div class="anchor-dot left"></div>
+        <div class="wf-header">
+          <div class="wf-header-title">
+            <span class="wf-frame-num">FRAME 09</span>
+            <span>Admin &amp; Resume CMS (/admin)</span>
+          </div>
+          <div class="wf-header-meta">Protected Route &bull; 1440 &times; 850</div>
+        </div>
+        <div class="wf-body">
+          <div class="wf-flex-between" style="margin-bottom: 10px;">
+            <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Portfolio Administration Console</div>
+            <span class="wf-btn small">[ &larr; Home ]</span>
+          </div>
+
+          <!-- Auth Box -->
+          <div class="wf-box" style="padding: 10px; margin-bottom: 10px;">
+            <div style="font-size: 11px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Authentication Gate</div>
+            <div class="wf-input">Password: &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</div>
+          </div>
+
+          <!-- Drag and Drop Upload Zone -->
+          <div class="wf-image-box" style="height: 100px; border-style: dashed; margin-bottom: 10px;">
+            <div class="wf-image-label">[ UPLOAD DROPZONE: PDF RESUME FILE ]</div>
+            <div style="font-size: 9px; color: #475569; margin-top: 4px; z-index: 2; font-weight: 600;">Drag and drop PDF or click to browse</div>
+          </div>
+
+          <div class="wf-btn primary" style="width: 100%; margin-bottom: 8px;">[ UPLOAD &amp; SYNC SUPABASE STORAGE ]</div>
+
+          <div class="wf-box dashed" style="font-size: 10px; color: #475569; font-weight: 500;">
+            <div>&bull; Endpoint: POST /api/resume</div>
+            <div>&bull; Storage: Supabase Buckets &bull; public/resume/lawrence-cortes-resume.pdf</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /#canvas -->
+  </div><!-- /#viewport -->
+
+  <!-- ==========================================================================
+       INTERACTIVE CANVAS & GRAPH ENGINE JAVASCRIPT
+       ========================================================================== -->
+  <script>
+    /* Canvas Pan & Zoom State */
+    const viewport = document.getElementById('viewport');
+    const canvas = document.getElementById('canvas');
+    const svgLayer = document.getElementById('connections-layer');
+
+    let scale = 0.85;
+    let panX = 40;
+    let panY = -20;
+    let isPanning = false;
+    let startX = 0;
+    let startY = 0;
+
+    let activeFilter = 'all';
+
+    function updateTransform() {
+      canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+    }
+    updateTransform();
+
+    /* Pan Handling */
+    viewport.addEventListener('mousedown', (e) => {
+      // Ignore if clicking on a button or draggable card header
+      if (e.target.closest('.wf-card') || e.target.closest('.figma-topbar') || 
+          e.target.closest('.screens-sidebar') || e.target.closest('.flow-legend') ||
+          e.target.closest('.zoom-controls') || e.target.closest('.flow-label')) {
+        return;
+      }
+      isPanning = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+      viewport.classList.add('panning');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      panX = e.clientX - startX;
+      panY = e.clientY - startY;
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isPanning = false;
+      viewport.classList.remove('panning');
+    });
+
+    /* Wheel Zoom */
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomFactor = 1.08;
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+
+      let newScale = e.deltaY < 0 ? scale * zoomFactor : scale / zoomFactor;
+      newScale = Math.min(Math.max(0.25, newScale), 2.5);
+
+      // Zoom towards mouse pointer
+      panX = mouseX - (mouseX - panX) * (newScale / scale);
+      panY = mouseY - (mouseY - panY) * (newScale / scale);
+      scale = newScale;
+
+      updateTransform();
+    }, { passive: false });
+
+    function zoomIn() {
+      scale = Math.min(scale * 1.2, 2.5);
+      updateTransform();
+    }
+    function zoomOut() {
+      scale = Math.max(scale / 1.2, 0.25);
+      updateTransform();
+    }
+    function resetCanvasView() {
+      scale = 0.8;
+      panX = 60;
+      panY = -10;
+      updateTransform();
+    }
+
+    /* Focus on specific screen */
+    function focusScreen(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      document.querySelectorAll('.wf-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+
+      const cardLeft = parseFloat(el.style.left);
+      const cardTop = parseFloat(el.style.top);
+      const cardWidth = el.offsetWidth;
+      const cardHeight = el.offsetHeight;
+
+      const viewW = window.innerWidth;
+      const viewH = window.innerHeight;
+
+      scale = 0.95;
+      panX = (viewW / 2) - (cardLeft + cardWidth / 2) * scale;
+      panY = (viewH / 2) - (cardTop + cardHeight / 2) * scale;
+
+      updateTransform();
+    }
+
+    /* Toggle Wireframe vs Actual Image Previews */
+    function toggleRealImages() {
+      document.body.classList.toggle('show-real-images');
+      const isReal = document.body.classList.contains('show-real-images');
+      document.getElementById('btn-toggle-images').classList.toggle('active', isReal);
+    }
+
+    /* Draggable Artboards within Canvas */
+    let draggedCard = null;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    document.querySelectorAll('.wf-header').forEach(header => {
+      header.addEventListener('mousedown', (e) => {
+        draggedCard = header.closest('.wf-card');
+        const cardRect = draggedCard.getBoundingClientRect();
+        
+        // Compute offset adjusted for canvas scale
+        dragOffsetX = (e.clientX - cardRect.left) / scale;
+        dragOffsetY = (e.clientY - cardRect.top) / scale;
+
+        draggedCard.style.zIndex = 50;
+        e.stopPropagation();
+      });
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!draggedCard) return;
+      const canvasRect = canvas.getBoundingClientRect();
+      const newLeft = (e.clientX - canvasRect.left) / scale - dragOffsetX;
+      const newTop = (e.clientY - canvasRect.top) / scale - dragOffsetY;
+
+      draggedCard.style.left = `${Math.round(newLeft)}px`;
+      draggedCard.style.top = `${Math.round(newTop)}px`;
+
+      renderAllConnectors();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (draggedCard) {
+        draggedCard.style.zIndex = 20;
+        draggedCard = null;
+        renderAllConnectors();
+      }
+    });
+
+    /* ==========================================================================
+       GRAPH CONNECTOR SPECIFICATIONS & REAL-TIME SVG ENGINE
+       ========================================================================== */
+    const CONNECTIONS = [
+      // 1. Primary Page Scroll Hierarchy
+      { from: 'frame-navbar', to: 'frame-hero', type: 'flow-primary', label: 'Scroll Top / Initial View', marker: 'arrow-primary', category: 'scroll' },
+      { from: 'frame-hero', to: 'frame-pixel', type: 'flow-primary', label: 'Scroll Scrub Transition', marker: 'arrow-primary', category: 'scroll' },
+      { from: 'frame-pixel', to: 'frame-about', type: 'flow-primary', label: 'Pixel Reveal &rarr; About', marker: 'arrow-primary', category: 'scroll' },
+      { from: 'frame-about', to: 'frame-github', type: 'flow-primary', label: 'Continuous Scroll Stream', marker: 'arrow-primary', category: 'scroll' },
+      { from: 'frame-github', to: 'frame-wipe1', type: 'flow-primary', label: 'GSAP Wipe 1: Selected Works Trigger', marker: 'arrow-primary', category: 'scroll' },
+      { from: 'frame-wipe1', to: 'frame-wipe2', type: 'flow-primary', label: 'GSAP Wipe 2: Contact Scrub Seamless Wipe', marker: 'arrow-primary', category: 'scroll' },
+
+      // 2. Navigation Routing & Direct Jumps
+      { from: 'frame-navbar', to: 'frame-about', type: 'flow-nav', label: 'Anchor #about', marker: 'arrow-nav', category: 'nav' },
+      { from: 'frame-navbar', to: 'frame-github', type: 'flow-nav', label: 'Anchor #github', marker: 'arrow-nav', category: 'nav' },
+      { from: 'frame-navbar', to: 'frame-wipe1', type: 'flow-nav', label: 'Anchor #projects', marker: 'arrow-nav', category: 'nav' },
+      { from: 'frame-navbar', to: 'frame-wipe2', type: 'flow-nav', label: 'Anchor #contact', marker: 'arrow-nav', category: 'nav' },
+      { from: 'frame-navbar', to: 'frame-admin', type: 'flow-nav', label: 'Direct Route: /admin', marker: 'arrow-nav', category: 'nav' },
+
+      // 3. Project Detail & Modal Interactive Flows
+      { from: 'frame-wipe1', to: 'frame-projects', type: 'flow-modal', label: 'Card Zoom & /projects Navigation', marker: 'arrow-modal', category: 'modals' },
+      { from: 'frame-hero', to: 'frame-chat', type: 'flow-modal', label: 'Global Chat FAB Open', marker: 'arrow-modal', category: 'modals' },
+      { from: 'frame-wipe2', to: 'frame-chat', type: 'flow-modal', label: 'Inquiry Follow-up', marker: 'arrow-modal', category: 'modals' }
+    ];
+
+    function getAnchorPoint(el, position) {
+      const left = parseFloat(el.style.left);
+      const top = parseFloat(el.style.top);
+      const width = el.offsetWidth;
+      const height = el.offsetHeight;
+
+      switch (position) {
+        case 'top': return { x: left + width / 2, y: top };
+        case 'bottom': return { x: left + width / 2, y: top + height };
+        case 'left': return { x: left, y: top + height / 2 };
+        case 'right': return { x: left + width, y: top + height / 2 };
+        default: return { x: left + width / 2, y: top + height / 2 };
+      }
+    }
+
+    function determineBestAnchors(fromEl, toEl) {
+      const fromLeft = parseFloat(fromEl.style.left);
+      const fromTop = parseFloat(fromEl.style.top);
+      const toLeft = parseFloat(toEl.style.left);
+      const toTop = parseFloat(toEl.style.top);
+
+      // If toEl is to the right
+      if (toLeft > fromLeft + fromEl.offsetWidth - 40) {
+        return { fromPos: 'right', toPos: 'left' };
+      }
+      // If toEl is directly below
+      if (toTop > fromTop + fromEl.offsetHeight - 40) {
+        return { fromPos: 'bottom', toPos: 'top' };
+      }
+      // If toEl is above
+      if (toTop < fromTop - 40) {
+        return { fromPos: 'top', toPos: 'bottom' };
+      }
+      return { fromPos: 'right', toPos: 'left' };
+    }
+
+    function renderAllConnectors() {
+      // Clear previous paths & labels
+      const existing = svgLayer.querySelectorAll('.connector-path, .flow-label-container');
+      existing.forEach(e => e.remove());
+
+      CONNECTIONS.forEach((conn, index) => {
+        const fromEl = document.getElementById(conn.from);
+        const toEl = document.getElementById(conn.to);
+        if (!fromEl || !toEl) return;
+
+        const { fromPos, toPos } = determineBestAnchors(fromEl, toEl);
+        const p1 = getAnchorPoint(fromEl, fromPos);
+        const p2 = getAnchorPoint(toEl, toPos);
+
+        // Calculate smooth cubic bezier control points
+        const dx = Math.abs(p2.x - p1.x);
+        const dy = Math.abs(p2.y - p1.y);
+
+        let cp1x = p1.x;
+        let cp1y = p1.y;
+        let cp2x = p2.x;
+        let cp2y = p2.y;
+
+        if (fromPos === 'bottom') cp1y += Math.max(dy * 0.5, 40);
+        if (fromPos === 'top') cp1y -= Math.max(dy * 0.5, 40);
+        if (fromPos === 'right') cp1x += Math.max(dx * 0.5, 40);
+        if (fromPos === 'left') cp1x -= Math.max(dx * 0.5, 40);
+
+        if (toPos === 'top') cp2y -= Math.max(dy * 0.5, 40);
+        if (toPos === 'bottom') cp2y += Math.max(dy * 0.5, 40);
+        if (toPos === 'left') cp2x -= Math.max(dx * 0.5, 40);
+        if (toPos === 'right') cp2x += Math.max(dx * 0.5, 40);
+
+        const d = `M ${p1.x} ${p1.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+
+        // Create SVG Path
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', d);
+        path.setAttribute('class', `connector-path ${conn.type}`);
+        path.setAttribute('marker-end', `url(#${conn.marker})`);
+        path.setAttribute('id', `conn-${index}`);
+        path.dataset.category = conn.category;
+
+        // Apply filtering classes
+        if (activeFilter !== 'all' && conn.category !== activeFilter) {
+          path.classList.add('dimmed');
+        }
+
+        svgLayer.appendChild(path);
+
+        // Midpoint for interactive flow label
+        const midX = (p1.x + p2.x) / 2;
+        const midY = (p1.y + p2.y) / 2;
+
+        const foreign = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+        foreign.setAttribute('x', midX - 90);
+        foreign.setAttribute('y', midY - 14);
+        foreign.setAttribute('width', '180');
+        foreign.setAttribute('height', '30');
+        foreign.setAttribute('class', 'flow-label-container');
+        foreign.style.overflow = 'visible';
+
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'flow-label';
+        labelDiv.innerHTML = conn.label;
+        labelDiv.title = `Flow from ${conn.from} to ${conn.to}`;
+        labelDiv.addEventListener('click', () => {
+          focusScreen(conn.to);
+        });
+
+        foreign.appendChild(labelDiv);
+        svgLayer.appendChild(foreign);
+      });
+    }
+
+    function toggleFlowFilter(cat) {
+      activeFilter = cat;
+      document.querySelectorAll('.figma-tools .btn-tool').forEach(b => {
+        if (b.id && b.id.includes('btn-toggle-')) {
+          b.classList.remove('active');
+        }
+      });
+
+      if (cat === 'all') document.getElementById('btn-toggle-all-flows').classList.add('active');
+      if (cat === 'scroll') document.getElementById('btn-toggle-scroll-flows').classList.add('active');
+      if (cat === 'nav') document.getElementById('btn-toggle-nav-flows').classList.add('active');
+      if (cat === 'modals') document.getElementById('btn-toggle-modal-flows').classList.add('active');
+
+      renderAllConnectors();
+    }
+
+    // Initial render
+    window.addEventListener('load', () => {
+      renderAllConnectors();
+      setTimeout(renderAllConnectors, 300);
+    });
+    window.addEventListener('resize', renderAllConnectors);
+  </script>
+</body>
+</html>
