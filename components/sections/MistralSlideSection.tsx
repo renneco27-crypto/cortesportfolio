@@ -1961,8 +1961,8 @@ export default function SectionWipeTransitions() {
         <div class="ov1-bg-video-wrap">
           <canvas
             id="ov1-bg-canvas"
-            width="480"
-            height="270"
+            width="960"
+            height="540"
           ></canvas>
         </div>
 
@@ -2077,8 +2077,8 @@ export default function SectionWipeTransitions() {
       const FRAMES_PER_SHEET = 60;
       const BOOMERANG_CYCLE = 2 * (TOTAL_FRAMES - 1); // 238 steps (0 -> 119 -> 1 -> 0 seamless loop)
       const COLS = 10;
-      const FRAME_WIDTH = 480;
-      const FRAME_HEIGHT = 270;
+      const FRAME_WIDTH = 960;
+      const FRAME_HEIGHT = 540;
 
       const canvasEl = ov1.querySelector("#ov1-bg-canvas") as HTMLCanvasElement | null;
       const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
