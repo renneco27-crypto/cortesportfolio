@@ -18,6 +18,8 @@ export default function SectionWipeTransitions() {
 
     const overlays: HTMLElement[] = [];
     const triggers: ScrollTrigger[] = [];
+    let stopVideoPlayback: (() => void) | null = null;
+    let removeVideoListeners: (() => void) | null = null;
 
     /* Global click handler for project card zoom & fade transition */
     (window as unknown as Record<string, unknown>).__handleProjectCardZoom = function (
@@ -1865,6 +1867,91 @@ export default function SectionWipeTransitions() {
             justify-content: center;
           }
 
+          /* Video Telemetry HUD capsule */
+          .ov1-video-hud {
+            position: absolute;
+            bottom: 2.2rem;
+            right: 8vw;
+            width: 280px;
+            background: rgba(12, 12, 12, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+            z-index: 25;
+            pointer-events: auto;
+            transition: border-color 0.25s ease, transform 0.25s ease;
+          }
+          .ov1-video-hud:hover {
+            border-color: rgba(230, 57, 70, 0.6);
+            transform: translateY(-2px);
+          }
+          .ov1-video-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 7px 10px;
+            background: rgba(20, 20, 20, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Courier New', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+          }
+          .ov1-video-title {
+            color: #ddd;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+          }
+          .ov1-video-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #e63946;
+            box-shadow: 0 0 8px #e63946;
+            display: inline-block;
+            animation: ov1Pulse 1.8s infinite;
+          }
+          @keyframes ov1Pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.85); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+          .ov1-video-speed {
+            color: #888;
+            font-weight: 700;
+            transition: color 0.2s ease;
+          }
+          .ov1-video-wrapper {
+            position: relative;
+            width: 100%;
+            background: #000;
+            line-height: 0;
+            overflow: hidden;
+          }
+          #ov1-telemetry-video {
+            width: 100%;
+            height: 156px;
+            object-fit: cover;
+            display: block;
+          }
+          .ov1-video-scanline {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(
+              to bottom,
+              rgba(255,255,255,0) 50%,
+              rgba(0, 0, 0, 0.25) 51%
+            );
+            background-size: 100% 4px;
+            opacity: 0.5;
+          }
+
           @media (max-width: 868px) {
             .ov1-stage {
               flex-direction: column;
@@ -1903,7 +1990,7 @@ export default function SectionWipeTransitions() {
               max-width: 100%;
               flex: none;
               gap: 8px;
-              padding-bottom: 30px;
+              padding-bottom: 8px;
             }
             .ov1-row1, .ov1-row2 {
               grid-template-columns: 1fr !important;
@@ -1913,6 +2000,18 @@ export default function SectionWipeTransitions() {
               height: auto !important;
               min-height: 85px !important;
               padding: 1rem !important;
+            }
+            .ov1-video-hud {
+              position: relative !important;
+              bottom: auto !important;
+              right: auto !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              margin-top: 0.5rem !important;
+              margin-bottom: 3.5rem !important;
+            }
+            #ov1-telemetry-video {
+              height: 180px !important;
             }
           }
         </style>
@@ -2009,6 +2108,28 @@ export default function SectionWipeTransitions() {
               </div>
             </div>
           </div>
+
+          <!-- Bottom-Right HUD: Telemetry Video Stream -->
+          <div class="ov1-video-hud">
+            <div class="ov1-video-header">
+              <span class="ov1-video-title">
+                <span class="ov1-video-dot"></span>
+                TELEMETRY STREAM
+              </span>
+              <span class="ov1-video-speed" id="ov1-speed-readout">SPEED: 0.0x (IDLE)</span>
+            </div>
+            <div class="ov1-video-wrapper">
+              <video
+                id="ov1-telemetry-video"
+                src="/assets/gemini_generated_video_2fee527f.mp4"
+                muted
+                playsinline
+                loop
+                preload="auto"
+              ></video>
+              <div class="ov1-video-scanline"></div>
+            </div>
+          </div>
         </div>
 
         <!-- Subtle grid overlay -->
@@ -2022,6 +2143,109 @@ export default function SectionWipeTransitions() {
 
       document.body.appendChild(ov1);
       overlays.push(ov1);
+
+      /* ── Video HUD Scroll Playback Controller ── */
+      const videoEl = ov1.querySelector("#ov1-telemetry-video") as HTMLVideoElement | null;
+      const speedReadout = ov1.querySelector("#ov1-speed-readout") as HTMLElement | null;
+      const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
+
+      let isOv1Active = false;
+      let scrollIdleTimer: ReturnType<typeof setTimeout> | null = null;
+
+      const stopOv1Playback = () => {
+        if (scrollIdleTimer) {
+          clearTimeout(scrollIdleTimer);
+          scrollIdleTimer = null;
+        }
+        if (videoEl && !videoEl.paused) {
+          videoEl.pause();
+        }
+        if (speedReadout) {
+          speedReadout.textContent = "SPEED: 0.0x (IDLE)";
+          speedReadout.style.color = "#888";
+        }
+      };
+
+      const handleScrollActivity = (rawVelocity: number) => {
+        if (!isOv1Active || !videoEl) return;
+
+        const vel = Math.abs(rawVelocity);
+        // Map scroll velocity smoothly: baseline 1.0x, scaling dynamically up to 4.0x
+        const speed = Math.min(4.0, Math.max(1.0, 1.0 + vel * 0.0012));
+        videoEl.playbackRate = speed;
+
+        if (speedReadout) {
+          speedReadout.textContent = `SPEED: ${speed.toFixed(1)}x`;
+          speedReadout.style.color = "#74c69d";
+        }
+
+        if (videoEl.paused) {
+          videoEl.play().catch(() => {});
+        }
+
+        if (scrollIdleTimer) clearTimeout(scrollIdleTimer);
+        scrollIdleTimer = setTimeout(() => {
+          if (videoEl && !videoEl.paused) {
+            videoEl.pause();
+          }
+          if (speedReadout) {
+            speedReadout.textContent = "SPEED: 0.0x (IDLE)";
+            speedReadout.style.color = "#888";
+          }
+        }, 130);
+      };
+
+      // Listen to scroll events on ov1-stage for mobile internal scrolling
+      let lastStageScrollTop = 0;
+      let lastStageScrollTime = performance.now();
+      const onStageScroll = () => {
+        if (!isOv1Active || !stageEl) return;
+        const now = performance.now();
+        const dt = Math.max(16, now - lastStageScrollTime);
+        const dy = Math.abs(stageEl.scrollTop - lastStageScrollTop);
+        const vel = (dy / dt) * 1000;
+        handleScrollActivity(vel);
+        lastStageScrollTop = stageEl.scrollTop;
+        lastStageScrollTime = now;
+      };
+      stageEl?.addEventListener("scroll", onStageScroll, { passive: true });
+
+      // Window wheel & touch listeners for dynamic scrub response
+      const onWindowWheel = (e: WheelEvent) => {
+        if (isOv1Active) {
+          handleScrollActivity(Math.abs(e.deltaY) * 8);
+        }
+      };
+      window.addEventListener("wheel", onWindowWheel, { passive: true });
+
+      let lastTouchY = 0;
+      let lastTouchTime = performance.now();
+      const onTouchStart = (e: TouchEvent) => {
+        if (e.touches.length > 0) {
+          lastTouchY = e.touches[0].clientY;
+          lastTouchTime = performance.now();
+        }
+      };
+      const onTouchMove = (e: TouchEvent) => {
+        if (!isOv1Active || e.touches.length === 0) return;
+        const now = performance.now();
+        const dt = Math.max(16, now - lastTouchTime);
+        const dy = Math.abs(e.touches[0].clientY - lastTouchY);
+        const vel = (dy / dt) * 1000;
+        handleScrollActivity(vel);
+        lastTouchY = e.touches[0].clientY;
+        lastTouchTime = now;
+      };
+      window.addEventListener("touchstart", onTouchStart, { passive: true });
+      window.addEventListener("touchmove", onTouchMove, { passive: true });
+
+      stopVideoPlayback = stopOv1Playback;
+      removeVideoListeners = () => {
+        stageEl?.removeEventListener("scroll", onStageScroll);
+        window.removeEventListener("wheel", onWindowWheel);
+        window.removeEventListener("touchstart", onTouchStart);
+        window.removeEventListener("touchmove", onTouchMove);
+      };
 
       /* ── 2. Create Overlay 2: Initiate Contact (PowerPoint Curtain / Responsive) ── */
       const CONTACT_FORM_ID = "wipe-cf-" + Math.random().toString(36).slice(2);
@@ -2359,7 +2583,18 @@ export default function SectionWipeTransitions() {
             gsap.set([ov1, leftOv, rightOv], { pointerEvents: "none" });
           },
           onLeaveBack: () => {
+            isOv1Active = false;
+            stopOv1Playback();
             gsap.set([certOv, ov1, leftOv, rightOv], { opacity: 0, pointerEvents: "none" });
+          },
+          onLeave: () => {
+            isOv1Active = false;
+            stopOv1Playback();
+          },
+          onUpdate: (self) => {
+            if (isOv1Active) {
+              handleScrollActivity(self.getVelocity());
+            }
           },
         },
       });
@@ -2395,7 +2630,12 @@ export default function SectionWipeTransitions() {
           ease: "power3.inOut",
           duration: 0.5,
           onStart: () => {
+            isOv1Active = true;
             gsap.set(ov1, { opacity: 1, pointerEvents: "auto" });
+          },
+          onReverseComplete: () => {
+            isOv1Active = false;
+            stopOv1Playback();
           },
         },
         0.8
@@ -2409,7 +2649,12 @@ export default function SectionWipeTransitions() {
           ease: "power3.inOut",
           duration: 0.5,
           onComplete: () => {
+            isOv1Active = false;
+            stopOv1Playback();
             gsap.set(ov1, { pointerEvents: "none" });
+          },
+          onReverseStart: () => {
+            isOv1Active = true;
           },
         },
         1.6
@@ -2494,6 +2739,8 @@ export default function SectionWipeTransitions() {
       observer?.disconnect();
       clearTimeout(idleTimer);
       window.removeEventListener("scroll", handleScrollFallback);
+      removeVideoListeners?.();
+      stopVideoPlayback?.();
       triggers.forEach((t) => t?.kill());
       overlays.forEach((el) => el.remove());
       delete (window as unknown as Record<string, unknown>).__handleProjectCardZoom;
