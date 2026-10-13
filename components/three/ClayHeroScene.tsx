@@ -113,6 +113,7 @@ function SceneController({
 }
 
 export default function ClayHeroScene() {
+  const [isMounted, setIsMounted] = useState(false);
   const mouseNDC = useRef(new THREE.Vector2(0, -0.2));
   const isUserActive = useRef(false);
   const idleTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -121,6 +122,11 @@ export default function ClayHeroScene() {
   const [isOffscreen, setIsOffscreen] = useState(false);
 
   useEffect(() => {
+    // Ensure the pixel eating animation and page elements load first before mounting 3D canvas
+    const mountTimer = setTimeout(() => {
+      setIsMounted(true);
+    }, 1200);
+
     const markActive = () => {
       isUserActive.current = true;
       if (idleTimeout.current) clearTimeout(idleTimeout.current);
@@ -179,8 +185,13 @@ export default function ClayHeroScene() {
       window.removeEventListener("click", handleClick);
       window.removeEventListener("scroll", handleScroll);
       if (idleTimeout.current) clearTimeout(idleTimeout.current);
+      clearTimeout(mountTimer);
     };
   }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div

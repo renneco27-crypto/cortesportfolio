@@ -56,31 +56,104 @@ export default function SectionWipeTransitions() {
     const masterTrigger = document.querySelector("#slide-trigger-master") as HTMLElement | null;
 
     if (masterTrigger) {
-      /* ── 0. Create Overlay 0: Verified Credentials (Defier of Limits / Gojo Design) ── */
+      /* ── 0. Create Overlay 0: Comic Arcade Achievements Console (sharp-curie) ── */
       const certOv = document.createElement("div");
       certOv.style.cssText =
         "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;" +
         "pointer-events:none;opacity:0;clip-path:inset(0 0 0 100%);" +
-        "background:rgba(8, 11, 20, 0.72);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);" +
+        "background:#070210;" +
+        "display:flex;align-items:center;justify-content:center;" +
         "overflow:hidden;";
 
       certOv.innerHTML = `
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&display=swap');
 
-          .slide-floating-arrow {
+          :root {
+            --bg-purple: #1f083d;
+            --comic-cyan: #00e5ff;
+            --comic-yellow: #ffdf00;
+            --comic-gold: #f59e0b;
+            --comic-pink: #ff2a85;
+            --comic-dark: #0f071e;
+            --comic-white: #ffffff;
+            --font-comic: 'Montserrat', sans-serif;
+          }
+
+          /* 16:9 Arcade Game Container */
+          #game-stage {
+            position: relative;
+            width: 100vw;
+            height: 56.25vw;
+            max-height: 100vh;
+            max-width: 177.78vh;
+            background: #000;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.95), 0 0 100px rgba(120, 20, 200, 0.35);
+            aspect-ratio: 16 / 9;
+            pointer-events: auto;
+          }
+
+          /* Background image layer */
+          .bg-layer {
             position: absolute;
-            width: 40px;
-            height: 40px;
-            z-index: 60;
+            inset: 0;
+            background: url('/assets/background.jpg') no-repeat center center;
+            background-size: cover;
+            transform: scale(1.002);
+            transition: transform 0.4s ease-out;
+            z-index: 1;
+          }
+
+          /* Ambient Comic Halftone */
+          .halftone-ambient {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.15) 18%, transparent 18%);
+            background-size: 8px 8px;
+            opacity: 0.35;
+            z-index: 2;
+          }
+
+          /* Center Character Layer */
+          .character-center-layer {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 94%;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            transition: transform 0.35s ease-out;
+          }
+
+          .character-img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 25px rgba(0, 0, 0, 0.7));
+            transform-origin: bottom center;
+            display: block;
+          }
+
+          /* Floating Comic Arrow */
+          .floating-menu-arrow {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            z-index: 50;
             pointer-events: none;
             filter: drop-shadow(3px 3px 0 #000) drop-shadow(0 0 12px rgba(0, 229, 255, 0.95));
             transform: translateY(-50%) skewX(-17deg);
-            transition: top 0.07s ease-out, left 0.08s ease-out, opacity 0.15s ease;
+            transition: top 0.06s ease-out, left 0.08s ease-out, opacity 0.15s ease;
             opacity: 0;
           }
 
-          .slide-floating-arrow.visible {
+          .floating-menu-arrow.visible {
             opacity: 1;
             animation: pulseArrow 0.65s infinite alternate ease-in-out;
           }
@@ -90,31 +163,260 @@ export default function SectionWipeTransitions() {
             100% { transform: translateY(-50%) skewX(-17deg) scale(1.18) translateX(6px); }
           }
 
-          .slide-floating-arrow svg {
+          .floating-menu-arrow svg {
             width: 100%;
             height: 100%;
             display: block;
           }
 
-          .slide-menu-zone {
-            position: relative;
-            width: 520px;
-            max-width: 48vw;
-            height: 72vh;
+          /* Top Bar: Profile & Currencies */
+          .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 28px;
+            right: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 30;
+            pointer-events: none;
+          }
+
+          .profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(14, 6, 27, 0.88);
+            padding: 6px 14px 6px 8px;
+            border: 2.5px solid #000;
+            border-left: 4px solid var(--comic-cyan);
+            box-shadow: 4px 4px 0 #000;
+            transform: rotate(-2.5deg) skewX(-15deg);
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 0.15s;
+          }
+
+          .profile-badge:hover {
+            transform: rotate(-2.5deg) skewX(-15deg) scale(1.04);
+          }
+
+          .avatar-frame {
+            width: 44px;
+            height: 44px;
+            background: #ffb703;
+            border: 2px solid #000;
+            overflow: hidden;
+          }
+
+          .avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          .profile-info {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .profile-name {
+            font-family: var(--font-comic);
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 #000;
+          }
+
+          .profile-lvl {
+            font-family: var(--font-comic);
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: var(--comic-pink);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 1px 1px 0 #000;
+          }
+
+          .currencies-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            pointer-events: auto;
+            transform: rotate(-2deg) skewX(-15deg);
+          }
+
+          .currency-pill {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            color: #0b071a;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0 #000;
+            padding: 2px 14px 2px 8px;
+            font-family: var(--font-comic);
+            font-weight: 900;
+            font-size: 1.25rem;
+            cursor: default;
+            transition: transform 0.15s;
+          }
+
+          .currency-pill:hover {
+            transform: scale(1.05);
+          }
+
+          .currency-icon {
+            margin-right: 6px;
+            font-size: 1.15rem;
+          }
+
+          .sound-btn {
+            background: #ffffff;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0 #000;
+            width: 42px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s, background 0.15s;
+          }
+
+          .sound-btn:hover {
+            background: var(--comic-yellow);
+            transform: scale(1.06);
+          }
+
+          .sound-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: #000;
+          }
+
+          /* Bottom Left Squad Cards */
+          .bottom-squad {
+            position: absolute;
+            bottom: 22px;
+            left: 32px;
+            display: flex;
+            gap: 16px;
+            z-index: 30;
+            pointer-events: auto;
+            transform: rotate(-3deg);
+          }
+
+          .squad-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transform: skewX(-15deg);
+            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.2s;
+          }
+
+          .squad-slot:hover {
+            transform: skewX(-15deg) translateY(-8px) scale(1.08);
+            filter: drop-shadow(0 0 10px var(--comic-cyan));
+          }
+
+          .squad-frame {
+            width: 54px;
+            height: 52px;
+            background: #ffffff;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0 #000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+          }
+
+          .squad-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+
+          .squad-name-tag {
+            margin-top: 4px;
+            background: #ffffff;
+            color: #000000;
+            font-family: var(--font-comic);
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border: 2.5px solid #000;
+            box-shadow: 3px 3px 0 #000;
+            white-space: nowrap;
+            border-radius: 2px;
+          }
+
+          /* Advance / Exit Button (Scrolls to Selected Engineering Works) */
+          .exit-btn {
+            position: absolute;
+            bottom: 24px;
+            right: 28px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            color: #0b071a;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0 #000;
+            padding: 8px 18px;
+            font-family: var(--font-comic);
+            font-size: 1.12rem;
+            font-weight: 900;
+            font-style: italic;
+            cursor: pointer;
+            z-index: 30;
+            transform: skewX(-15deg);
+            transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+            pointer-events: auto;
+          }
+
+          .exit-btn:hover {
+            background: var(--comic-pink);
+            color: #fff;
+            transform: skewX(-15deg) scale(1.06);
+            box-shadow: 6px 6px 0 #000;
+          }
+
+          .exit-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+          }
+
+          /* Right-Side 3D Slanted Action Menu Bay */
+          .menu-right-zone {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 44%;
+            height: 100%;
             perspective: 1400px;
             perspective-origin: 85% 50%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-end;
+            padding-right: 3.5%;
             z-index: 40;
             pointer-events: auto;
           }
 
-          .slide-carousel-wrapper {
+          .menu-carousel-wrapper {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 74%;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
@@ -122,7 +424,7 @@ export default function SectionWipeTransitions() {
             overflow: visible;
           }
 
-          .slide-scroller {
+          .menu-scroller {
             width: 100%;
             height: 100%;
             overflow-y: scroll;
@@ -130,22 +432,22 @@ export default function SectionWipeTransitions() {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            padding: 90px 0;
-            gap: 14px;
+            padding: 130px 0;
+            gap: 16px;
             scrollbar-width: none;
             -ms-overflow-style: none;
             mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
           }
 
-          .slide-scroller::-webkit-scrollbar {
+          .menu-scroller::-webkit-scrollbar {
             display: none;
           }
 
-          .slide-menu-slot {
+          .menu-item-slot {
             position: relative;
             width: 88%;
-            min-height: 54px;
+            min-height: 58px;
             display: flex;
             justify-content: flex-end;
             align-items: center;
@@ -156,83 +458,114 @@ export default function SectionWipeTransitions() {
             opacity: 0.82;
           }
 
-          .slide-menu-slot.active {
+          .menu-item-slot.active {
             opacity: 1;
-            transform: rotateY(-16deg) rotateX(4deg) rotateZ(-2.8deg) skewX(-17deg) scale(1.08) translateX(-16px);
+            transform: rotateY(-16deg) rotateX(4deg) rotateZ(-2.8deg) skewX(-17deg) scale(1.08) translateX(-18px);
             z-index: 50;
           }
 
-          .slide-menu-slot:hover {
+          .menu-item-slot:hover {
             opacity: 1;
-            transform: rotateY(-16deg) rotateX(4deg) rotateZ(-2.8deg) skewX(-17deg) scale(1.04) translateX(-8px);
+            transform: rotateY(-16deg) rotateX(4deg) rotateZ(-2.8deg) skewX(-17deg) scale(1.05) translateX(-10px);
           }
 
-          .slide-menu-slot.active:hover {
-            transform: rotateY(-16deg) rotateX(4deg) rotateZ(-2.8deg) skewX(-17deg) scale(1.10) translateX(-18px);
+          .menu-item-slot.active:hover {
+            transform: rotateY(-16deg) rotateX(4deg) rotateZ(-2.8deg) skewX(-17deg) scale(1.10) translateX(-20px);
           }
 
-          .slide-comic-btn-face {
+          .comic-btn-face {
             position: relative;
             width: 100%;
             height: 100%;
-            min-height: 52px;
+            min-height: 56px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 0 16px 0 20px;
             border: 3.5px solid #000;
-            box-shadow: 6px 6px 0px #000, 10px 10px 0px rgba(0, 0, 0, 0.4);
+            box-shadow: 8px 8px 0px #000, 14px 14px 0px rgba(0, 0, 0, 0.4);
             border-radius: 4px;
             overflow: hidden;
-            box-sizing: border-box;
             transition: box-shadow 0.2s, border-color 0.2s;
           }
 
-          .slide-menu-slot.active .slide-comic-btn-face {
-            box-shadow: 8px 8px 0px #000, 0 0 26px rgba(0, 229, 255, 0.85);
+          .menu-item-slot.active .comic-btn-face {
+            box-shadow: 10px 10px 0px #000, 0 0 30px rgba(0, 229, 255, 0.85);
             border-color: #ffffff;
-            outline: 2px solid #00e5ff;
+            outline: 2px solid var(--comic-cyan);
           }
 
-          .sbtn-0 { background: linear-gradient(100deg, #00d2ff 0%, #0077ff 100%); }
-          .sbtn-1 { background: linear-gradient(100deg, #00f2fe 0%, #4facfe 100%); }
-          .sbtn-2 { background: linear-gradient(100deg, #ffffff 0%, #e6edf5 100%); }
-          .sbtn-2 .slide-menu-text { color: #0b071a !important; text-shadow: 2px 2px 0px #9da9b8 !important; }
-          .sbtn-3 { background: linear-gradient(100deg, #ffc837 0%, #ff8008 100%); }
-          .sbtn-4 { background: linear-gradient(100deg, #ffe259 0%, #ffa751 100%); }
-          .sbtn-5 { background: linear-gradient(100deg, #8a2387 0%, #e94057 100%); }
-          .sbtn-6 { background: linear-gradient(100deg, #ff007f 0%, #a40606 100%); }
-          .sbtn-7 { background: linear-gradient(100deg, #eb3349 0%, #f45c43 100%); }
+          .btn-start { background: linear-gradient(100deg, #00d2ff 0%, #0077ff 100%); }
+          .btn-continue { background: linear-gradient(100deg, #00f2fe 0%, #4facfe 100%); }
+          .btn-options { background: linear-gradient(100deg, #ffffff 0%, #e6edf5 100%); }
+          .btn-options .menu-text { color: #0b071a !important; text-shadow: 2px 2px 0px #9da9b8 !important; }
+          .btn-achievements { background: linear-gradient(100deg, #ffc837 0%, #ff8008 100%); }
+          .btn-credits { background: linear-gradient(100deg, #ffe259 0%, #ffa751 100%); }
+          .btn-load { background: linear-gradient(100deg, #8a2387 0%, #e94057 100%); }
+          .btn-gallery { background: linear-gradient(100deg, #ff007f 0%, #a40606 100%); }
+          .btn-quit { background: linear-gradient(100deg, #eb3349 0%, #f45c43 100%); }
 
-          .slide-menu-text {
+          .menu-text {
             position: relative;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.18rem;
+            font-family: var(--font-comic);
+            font-size: 1.25rem;
             font-weight: 900;
             font-style: italic;
             letter-spacing: 1.5px;
             color: #ffffff;
             text-transform: uppercase;
             text-shadow: 
-              3px 3px 0px #000,
+              3.5px 3.5px 0px #000,
               -1.5px -1.5px 0px #000,
               1.5px -1.5px 0px #000,
               -1.5px 1.5px 0px #000,
-              2px 2px 4px rgba(0,0,0,0.85);
+              2px 2px 5px rgba(0,0,0,0.85);
             z-index: 2;
             transition: transform 0.2s, letter-spacing 0.2s;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
-          .slide-menu-slot.active .slide-menu-text {
-            transform: scale(1.04);
+          .menu-item-slot.active .menu-text {
+            transform: scale(1.03);
             letter-spacing: 2px;
           }
 
-          .slide-action-modal-overlay {
+          .slot-status-pill {
+            font-family: var(--font-comic);
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            padding: 3px 8px;
+            border: 2px solid #000;
+            box-shadow: 2px 2px 0 #000;
+            border-radius: 3px;
+            white-space: nowrap;
+            text-transform: uppercase;
+            z-index: 2;
+          }
+
+          .slot-status-pill.pending {
+            background: #ffb703;
+            color: #000;
+          }
+
+          .slot-status-pill.achieved {
+            background: #00e676;
+            color: #000;
+          }
+
+          .slot-status-pill.planned {
+            background: #00e5ff;
+            color: #000;
+          }
+
+          /* Modal Dialog for Credential / Actions */
+          .action-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(8, 3, 18, 0.8);
+            background: rgba(8, 3, 18, 0.82);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             display: flex;
@@ -244,51 +577,92 @@ export default function SectionWipeTransitions() {
             transition: opacity 0.25s ease;
           }
 
-          .slide-action-modal-overlay.open {
+          .action-modal-overlay.open {
             opacity: 1;
             pointer-events: auto;
           }
 
-          .slide-action-modal-box {
+          .action-modal-box {
             background: #000;
-            border: 4px solid #00e5ff;
-            box-shadow: 12px 12px 0 #ff2a85;
+            border: 4px solid var(--comic-cyan);
+            box-shadow: 12px 12px 0 var(--comic-pink);
             padding: 34px 44px;
             transform: skewX(-10deg) scale(0.9);
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-align: center;
-            max-width: 500px;
+            max-width: 520px;
+            width: 90%;
           }
 
-          .slide-action-modal-overlay.open .slide-action-modal-box {
+          .action-modal-overlay.open .action-modal-box {
             transform: skewX(-10deg) scale(1);
           }
 
-          .slide-modal-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.9rem;
+          .modal-status-badge {
+            display: inline-block;
+            font-family: var(--font-comic);
+            font-size: 0.82rem;
             font-weight: 900;
-            color: #ffdf00;
-            text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 3px 3px 0 #000;
-            margin-bottom: 10px;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border: 2.5px solid #000;
+            box-shadow: 3px 3px 0 #000;
+            margin-bottom: 14px;
+            transform: skewX(-8deg);
           }
 
-          .slide-modal-desc {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.95rem;
-            color: #e0e5eb;
-            margin-bottom: 22px;
-            letter-spacing: 0.5px;
-            line-height: 1.5;
+          .modal-status-badge.pending {
+            background: #ffb703;
+            color: #000;
           }
 
-          .slide-modal-btn {
-            font-family: 'Montserrat', sans-serif;
+          .modal-status-badge.achieved {
+            background: #00e676;
+            color: #000;
+          }
+
+          .modal-status-badge.planned {
             background: #00e5ff;
             color: #000;
-            font-size: 0.95rem;
+          }
+
+          .modal-title {
+            font-family: var(--font-comic);
+            font-size: 1.85rem;
+            font-weight: 900;
+            color: var(--comic-yellow);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 6px;
+            line-height: 1.15;
+          }
+
+          .modal-issuer {
+            font-family: var(--font-comic);
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--comic-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+          }
+
+          .modal-desc {
+            font-family: var(--font-comic);
+            font-size: 0.98rem;
+            color: #e0e5eb;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            line-height: 1.55;
+          }
+
+          .modal-btn {
+            font-family: var(--font-comic);
+            background: var(--comic-cyan);
+            color: #000;
+            font-size: 1rem;
             font-weight: 900;
             text-transform: uppercase;
             padding: 10px 24px;
@@ -301,130 +675,134 @@ export default function SectionWipeTransitions() {
             display: inline-block;
           }
 
-          .slide-modal-btn:hover {
-            background: #ffdf00;
+          .modal-btn:hover {
+            background: var(--comic-yellow);
             transform: skewX(-6deg) scale(1.05);
           }
         </style>
 
-        <div id="certOv-stage" style="
-          position:absolute;inset:0;display:flex;align-items:center;
-          padding:0 8vw;box-sizing:border-box;gap:4rem;">
+        <div id="game-stage">
+          <!-- Art Backdrop Layer -->
+          <div class="bg-layer" id="bgLayer"></div>
+          <div class="halftone-ambient"></div>
 
-          <!-- Left: Editorial Comic Header Block -->
-          <div style="flex:1;max-width:440px;padding-right:1rem;z-index:20;">
-            <div style="margin-bottom:1.4rem;">
-              <div style="
-                display:inline-block;
-                background:#ff2a85;
-                border:2.5px solid #000;
-                box-shadow:4px 4px 0 #000;
-                color:#fff;
-                font-family:'Montserrat',sans-serif;
-                font-size:0.75rem;
-                font-weight:900;
-                font-style:italic;
-                letter-spacing:2px;
-                text-transform:uppercase;
-                padding:6px 16px;
-                transform:skewX(-15deg);">
-                ★ ACHIEVEMENTS &amp; CREDENTIALS
+          <!-- Center Character Layer -->
+          <div class="character-center-layer" id="characterLayer">
+            <img src="/assets/person_new.png" alt="Character" class="character-img">
+          </div>
+
+          <!-- Floating Comic Arrow: Positioned OUTSIDE buttons, tracks mouse & scroll -->
+          <div class="floating-menu-arrow" id="floatingArrow">
+            <svg viewBox="0 0 24 24">
+              <polygon points="3,2 22,12 3,22" fill="#00e5ff" stroke="#000" stroke-width="2.5"/>
+            </svg>
+          </div>
+
+          <!-- Top Navigation Bar -->
+          <header class="top-bar">
+            <!-- Player Profile Badge -->
+            <div class="profile-badge" id="profileBadge" title="Player Dossier">
+              <div class="avatar-frame">
+                <img src="/assets/avatar.png" alt="Avatar">
+              </div>
+              <div class="profile-info">
+                <span class="profile-name">LAWRENCE CORTES</span>
+                <span class="profile-lvl">SOFTWARE &amp; CLOUD DEV</span>
               </div>
             </div>
 
-            <h2 style="
-              font-family:'Montserrat',sans-serif;
-              font-size:clamp(2.4rem,4.8vw,4.2rem);
-              font-weight:900;
-              font-style:italic;
-              letter-spacing:-0.03em;
-              line-height:0.95;
-              margin:0 0 1.25rem;
-              text-transform:uppercase;">
-              <span style="color:#ffffff;text-shadow:3px 3px 0 #000;">TECHNICAL</span><br/>
-              <span style="color:#00e5ff;text-shadow:3px 3px 0 #000;">ACHIEVEMENTS</span><br/>
-              <span style="color:#ffdf00;text-shadow:3px 3px 0 #000;">&amp; BADGES.</span>
-            </h2>
-
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
-              <div style="height:3px;width:52px;background:#00e5ff;box-shadow:0 0 10px #00e5ff;"></div>
-              <div style="flex:1;height:2px;background:linear-gradient(90deg,rgba(0,229,255,0.8) 0%,rgba(255,223,0,0.6) 65%,transparent 100%);"></div>
+            <!-- Currencies & Audio Controls -->
+            <div class="currencies-group">
+              <div class="currency-pill" title="Volcano Embers">
+                <span class="currency-icon">🔥</span>
+                <span>564</span>
+              </div>
+              <div class="currency-pill" title="Starlight Shards">
+                <span class="currency-icon">💎</span>
+                <span>12,987</span>
+              </div>
+              <button class="sound-btn" id="soundToggleBtn" title="Toggle Sound FX">
+                <svg id="soundIcon" viewBox="0 0 24 24">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+              </button>
             </div>
+          </header>
 
-            <p style="
-              color:#94a3b8;font-size:0.88rem;line-height:1.65;
-              font-weight:400;margin:0 0 1.5rem;max-width:370px;
-              border-left:3px solid #00e5ff;padding-left:1.25rem;">
-              Verified civil service eligibility, systems servicing, cloud engineering, and cybersecurity telemetry.
-            </p>
-
-            <a href="/achievements" style="
-              display:inline-flex;align-items:center;gap:10px;
-              background:#ffdf00;color:#000;
-              border:3px solid #000;box-shadow:5px 5px 0 #00e5ff;
-              font-family:'Montserrat',sans-serif;font-size:0.75rem;
-              font-weight:900;font-style:italic;letter-spacing:1.5px;
-              text-transform:uppercase;padding:12px 22px;
-              text-decoration:none;cursor:pointer;
-              transform:skewX(-12deg);
-              transition:transform 0.15s, background 0.15s, box-shadow 0.15s;"
-              onmouseover="this.style.background='#00e5ff';this.style.boxShadow='5px 5px 0 #ff2a85';this.style.transform='skewX(-12deg) scale(1.05)';"
-              onmouseout="this.style.background='#ffdf00';this.style.boxShadow='5px 5px 0 #00e5ff';this.style.transform='skewX(-12deg) scale(1)';">
-              <span>LAUNCH ARCADE CONSOLE ↗</span>
-            </a>
+          <!-- Bottom Left Squad Cards -->
+          <div class="bottom-squad">
+            <div class="squad-slot" data-squad="MEI OM">
+              <div class="squad-frame">
+                <img src="/assets/squad_mei.png" alt="MEI OM">
+              </div>
+              <div class="squad-name-tag">MEI OM</div>
+            </div>
+            <div class="squad-slot" data-squad="ZEK TIM">
+              <div class="squad-frame">
+                <img src="/assets/squad_zek.png" alt="ZEK TIM">
+              </div>
+              <div class="squad-name-tag">ZEK TIM</div>
+            </div>
+            <div class="squad-slot" data-squad="SAD PI">
+              <div class="squad-frame">
+                <img src="/assets/squad_sad.png" alt="SAD PI">
+              </div>
+              <div class="squad-name-tag">SAD PI</div>
+            </div>
           </div>
 
-          <!-- Right: 3D Slanted Action Menu Bay -->
-          <section class="slide-menu-zone" id="slideMenuZone">
-            <!-- Floating Animated Comic Arrow -->
-            <div class="slide-floating-arrow" id="slideFloatingArrow">
-              <svg viewBox="0 0 24 24">
-                <polygon points="3,2 22,12 3,22" fill="#00e5ff" stroke="#000" stroke-width="2.5"/>
-              </svg>
-            </div>
+          <!-- Bottom Right Advance Button -->
+          <button class="exit-btn" id="exitBtn" title="Advance to Selected Engineering Works">
+            <span>NEXT</span>
+            <svg viewBox="0 0 24 24">
+              <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+            </svg>
+          </button>
 
-            <div class="slide-carousel-wrapper">
-              <div class="slide-scroller" id="cert-panel-grid">
+          <!-- 3D Slanted Action Menu Bay -->
+          <section class="menu-right-zone" id="menuZone">
+            <div class="menu-carousel-wrapper">
+              <div class="menu-scroller" id="cert-panel-grid">
               </div>
             </div>
           </section>
-        </div>
 
-        <!-- Interactive Modal Dialog -->
-        <div class="slide-action-modal-overlay" id="certActionModal">
-          <div class="slide-action-modal-box">
-            <h2 class="slide-modal-title" id="certModalTitle">ACHIEVEMENT</h2>
-            <p class="slide-modal-desc" id="certModalDesc">Telemetry loading...</p>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center;">
-              <a id="certModalVerifyBtn" href="#" target="_blank" rel="noopener noreferrer" class="slide-modal-btn" style="background:#00e5ff;text-decoration:none;display:none;">OFFICIAL VERIFICATION ↗</a>
-              <button class="slide-modal-btn" id="certModalCloseBtn" style="background:#ffdf00;">CONFIRM</button>
+          <!-- Action Modal Dialog with Status Display -->
+          <div class="action-modal-overlay" id="actionModal">
+            <div class="action-modal-box">
+              <div id="modalStatusBadge" class="modal-status-badge pending">[PENDING]</div>
+              <h2 class="modal-title" id="modalTitle">CREDENTIAL</h2>
+              <div class="modal-issuer" id="modalIssuer">Issuing Body</div>
+              <p class="modal-desc" id="modalDesc">Details loading...</p>
+              <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center;">
+                <a id="modalVerifyBtn" href="#" target="_blank" rel="noopener noreferrer" class="modal-btn" style="background:#00e5ff;display:none;">OFFICIAL LINK ↗</a>
+                <button class="modal-btn" id="modalCloseBtn" style="background:#ffdf00;">CONFIRM</button>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Subtle ambient grid -->
-        <div style="
-          position:absolute;inset:0;pointer-events:none;
-          background-image:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),
-            linear-gradient(90deg,rgba(255,42,133,0.03) 1px,transparent 1px);
-          background-size:48px 48px;">
         </div>
       `;
 
       document.body.appendChild(certOv);
       overlays.push(certOv);
 
-      /* Web Audio Synthesizer for slide panel */
-      class SlideAudioEngine {
+      /* Synthesized Web Audio API Engine */
+      class ComicAudioEngine {
         ctx: AudioContext | null = null;
+        muted: boolean = false;
+
         init() {
           if (!this.ctx) {
             const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
             if (AC) this.ctx = new AC();
           }
-          if (this.ctx && this.ctx.state === "suspended") this.ctx.resume();
+          if (this.ctx && this.ctx.state === "suspended") {
+            this.ctx.resume();
+          }
         }
+
         playTick() {
+          if (this.muted) return;
           this.init();
           if (!this.ctx) return;
           const now = this.ctx.currentTime;
@@ -432,15 +810,17 @@ export default function SectionWipeTransitions() {
           const gain = this.ctx.createGain();
           osc.type = "triangle";
           osc.frequency.setValueAtTime(460, now);
-          osc.frequency.exponentialRampToValueAtTime(920, now + 0.035);
-          gain.gain.setValueAtTime(0.06, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.frequency.exponentialRampToValueAtTime(920, now + 0.038);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.042);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
           osc.start(now);
-          osc.stop(now + 0.042);
+          osc.stop(now + 0.045);
         }
+
         playSelect() {
+          if (this.muted) return;
           this.init();
           if (!this.ctx) return;
           const now = this.ctx.currentTime;
@@ -451,40 +831,77 @@ export default function SectionWipeTransitions() {
             const start = now + idx * 0.035;
             osc.type = "sawtooth";
             osc.frequency.setValueAtTime(freq, start);
-            gain.gain.setValueAtTime(0.09, start);
-            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.16);
+            gain.gain.setValueAtTime(0.12, start);
+            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.18);
             osc.connect(gain);
             gain.connect(this.ctx.destination);
             osc.start(start);
-            osc.stop(start + 0.18);
+            osc.stop(start + 0.2);
           });
+        }
+
+        playCancel() {
+          if (this.muted) return;
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(420, now);
+          osc.frequency.exponentialRampToValueAtTime(220, now + 0.12);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.15);
+        }
+
+        toggleMute() {
+          this.muted = !this.muted;
+          return this.muted;
         }
       }
 
-      const slideAudio = new SlideAudioEngine();
+      const comicAudio = new ComicAudioEngine();
 
+      /* DOM References */
       const scroller = certOv.querySelector("#cert-panel-grid") as HTMLElement | null;
-      const menuZone = certOv.querySelector("#slideMenuZone") as HTMLElement | null;
-      const floatingArrow = certOv.querySelector("#slideFloatingArrow") as HTMLElement | null;
-      const modal = certOv.querySelector("#certActionModal") as HTMLElement | null;
-      const modalTitle = certOv.querySelector("#certModalTitle") as HTMLElement | null;
-      const modalDesc = certOv.querySelector("#certModalDesc") as HTMLElement | null;
-      const modalCloseBtn = certOv.querySelector("#certModalCloseBtn") as HTMLElement | null;
-      const modalVerifyBtn = certOv.querySelector("#certModalVerifyBtn") as HTMLAnchorElement | null;
+      const menuZone = certOv.querySelector("#menuZone") as HTMLElement | null;
+      const floatingArrow = certOv.querySelector("#floatingArrow") as HTMLElement | null;
+      const stage = certOv.querySelector("#game-stage") as HTMLElement | null;
+      const actionModal = certOv.querySelector("#actionModal") as HTMLElement | null;
+      const modalStatusBadge = certOv.querySelector("#modalStatusBadge") as HTMLElement | null;
+      const modalTitle = certOv.querySelector("#modalTitle") as HTMLElement | null;
+      const modalIssuer = certOv.querySelector("#modalIssuer") as HTMLElement | null;
+      const modalDesc = certOv.querySelector("#modalDesc") as HTMLElement | null;
+      const modalCloseBtn = certOv.querySelector("#modalCloseBtn") as HTMLElement | null;
+      const modalVerifyBtn = certOv.querySelector("#modalVerifyBtn") as HTMLAnchorElement | null;
+      const soundToggleBtn = certOv.querySelector("#soundToggleBtn") as HTMLElement | null;
+      const soundIcon = certOv.querySelector("#soundIcon") as HTMLElement | null;
+      const exitBtn = certOv.querySelector("#exitBtn") as HTMLElement | null;
+      const bgLayer = certOv.querySelector("#bgLayer") as HTMLElement | null;
+      const characterLayer = certOv.querySelector("#characterLayer") as HTMLElement | null;
+      const profileBadge = certOv.querySelector("#profileBadge") as HTMLElement | null;
+      const squadSlots = Array.from(certOv.querySelectorAll(".squad-slot")) as HTMLElement[];
 
       let activeIndex = 0;
+      let autoScrollSpeed = 0;
+      let lastClientY: number | null = null;
+      let isMouseOverMenu = false;
       let slotElements: HTMLElement[] = [];
 
       function updateArrowPosition() {
-        if (!floatingArrow || !menuZone) return;
+        if (!floatingArrow || !stage || slotElements.length === 0) return;
         const activeItem = slotElements[activeIndex];
         if (!activeItem) return;
 
         const itemRect = activeItem.getBoundingClientRect();
-        const zoneRect = menuZone.getBoundingClientRect();
+        const stageRect = stage.getBoundingClientRect();
 
-        const top = itemRect.top + itemRect.height / 2 - zoneRect.top;
-        const left = itemRect.left - zoneRect.left - 42;
+        const top = itemRect.top + itemRect.height / 2 - stageRect.top;
+        const left = itemRect.left - stageRect.left - 46;
 
         floatingArrow.style.top = top + "px";
         floatingArrow.style.left = left + "px";
@@ -496,21 +913,72 @@ export default function SectionWipeTransitions() {
         if (newIndex >= slotElements.length) newIndex = slotElements.length - 1;
 
         if (newIndex !== activeIndex) {
-          if (playSound) slideAudio.playTick();
+          if (playSound) comicAudio.playTick();
           activeIndex = newIndex;
 
-          slotElements.forEach((el, idx) => {
+          slotElements.forEach((item, idx) => {
             if (idx === activeIndex) {
-              el.classList.add("active");
+              item.classList.add("active");
             } else {
-              el.classList.remove("active");
+              item.classList.remove("active");
             }
           });
+
+          // Subtle parallax shift on background and character
+          if (bgLayer) {
+            const shiftY = (activeIndex - (slotElements.length - 1) / 2) * -3;
+            bgLayer.style.transform = `scale(1.02) translateY(${shiftY}px)`;
+            if (characterLayer) {
+              characterLayer.style.transform = `translateX(-50%) translateY(${shiftY * 1.5}px)`;
+            }
+          }
         }
+
         updateArrowPosition();
       }
 
-      // Render 3D slanted arcade comic items
+      function updateItemUnderCursor() {
+        if (lastClientY === null || slotElements.length === 0) return;
+
+        let closestIdx = activeIndex;
+        let minDistance = Infinity;
+
+        slotElements.forEach((item, idx) => {
+          const rect = item.getBoundingClientRect();
+          if (lastClientY! >= rect.top && lastClientY! <= rect.bottom) {
+            closestIdx = idx;
+            minDistance = 0;
+          } else {
+            const center = rect.top + rect.height / 2;
+            const dist = Math.abs(lastClientY! - center);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestIdx = idx;
+            }
+          }
+        });
+
+        if (closestIdx !== activeIndex) {
+          setActiveIndex(closestIdx, true);
+        } else {
+          updateArrowPosition();
+        }
+      }
+
+      function autoScrollLoop() {
+        if (autoScrollSpeed !== 0 && scroller) {
+          scroller.scrollTop += autoScrollSpeed;
+          if (isMouseOverMenu && lastClientY !== null) {
+            updateItemUnderCursor();
+          } else {
+            updateArrowPosition();
+          }
+        }
+        requestAnimationFrame(autoScrollLoop);
+      }
+      requestAnimationFrame(autoScrollLoop);
+
+      // Render items inside .menu-scroller
       const renderCertCards = (
         items: Array<{
           id: string;
@@ -524,47 +992,46 @@ export default function SectionWipeTransitions() {
       ) => {
         if (!scroller) return;
 
-        const allItems = [
-          ...items,
-          {
-            id: "full-arcade-console",
-            label: "FULL ARCADE CONSOLE ↗",
-            issuing_body: "Interactive 16:9 Showcase",
-            status: "LAUNCH",
-            badge_icon: "award",
-            notes: "Launch the full 16:9 comic arcade achievements console with character diorama, sound effects, squad profiles, and currency systems.",
-            verify_url: "/achievements",
-          },
-        ];
-
-        scroller.innerHTML = allItems
+        scroller.innerHTML = items
           .map((c, idx) => {
             const isEarned = c.status === "earned";
             const isInProgress = c.status === "in-progress" || c.status === "pending";
-            const isLaunch = c.id === "full-arcade-console";
+            const isPlanned = c.status === "planned";
 
-            const statusColor = isLaunch ? "#00e5ff" : isEarned ? "#00e676" : isInProgress ? "#ff2a55" : "#facc15";
-            const statusText = isLaunch ? "ENTER ↵" : isEarned ? "EARNED" : isInProgress ? "IN PROGRESS" : "PLANNED";
-            const themeClass = `sbtn-${idx % 8}`;
+            const statusClass = isEarned ? "achieved" : isInProgress ? "pending" : "planned";
+            const statusText = isEarned ? "[ACHIEVED]" : isInProgress ? "[PENDING]" : "[PLANNED]";
+
+            const paletteClasses = [
+              "btn-start",
+              "btn-continue",
+              "btn-options",
+              "btn-achievements",
+              "btn-credits",
+              "btn-load",
+              "btn-gallery",
+              "btn-quit",
+            ];
+            const themeClass = paletteClasses[idx % paletteClasses.length];
 
             let shortLabel = c.label;
-            if (c.id === "csc-professional") shortLabel = "CSC PROFESSIONAL";
+            if (c.id === "csc-professional") shortLabel = "CIVIL SERVICE EXAM";
             else if (c.id === "tesda-css-nc2") shortLabel = "TESDA CSS NC II";
             else if (c.id === "cisco-cybersecurity") shortLabel = "CISCO CYBERSECURITY";
             else if (c.id === "pwncollege-badge") shortLabel = "PWN.COLLEGE";
             else if (c.id === "nextwork-cloud") shortLabel = "NEXTWORK AI CLOUD";
             else if (c.id === "aws-cloud-practitioner") shortLabel = "AWS CERTIFIED";
-            else if (c.id === "full-arcade-console") shortLabel = "FULL ARCADE ↗";
 
             return `
-              <div class="slide-menu-slot ${idx === 0 ? "active" : ""}"
+              <div class="menu-item-slot ${idx === 0 ? "active" : ""}"
                 data-idx="${idx}"
                 data-title="${c.label}"
+                data-issuer="${c.issuing_body}"
+                data-status="${c.status}"
                 data-desc="${c.notes || (c.label + ' — ' + c.issuing_body)}"
                 data-url="${c.verify_url || ""}">
-                <div class="slide-comic-btn-face ${themeClass}">
-                  <span class="slide-menu-text">${shortLabel}</span>
-                  <span style="font-family:'Montserrat',sans-serif;font-size:0.62rem;font-weight:900;letter-spacing:1px;background:#000;color:${statusColor};padding:3px 7px;border:2px solid ${statusColor};border-radius:3px;box-shadow:2px 2px 0 #000;white-space:nowrap;margin-left:8px;">
+                <div class="comic-btn-face ${themeClass}">
+                  <span class="menu-text">${shortLabel}</span>
+                  <span class="slot-status-pill ${statusClass}">
                     ${statusText}
                   </span>
                 </div>
@@ -573,21 +1040,31 @@ export default function SectionWipeTransitions() {
           })
           .join("");
 
-        slotElements = Array.from(scroller.querySelectorAll(".slide-menu-slot")) as HTMLElement[];
+        slotElements = Array.from(scroller.querySelectorAll(".menu-item-slot")) as HTMLElement[];
 
         slotElements.forEach((el, idx) => {
           el.addEventListener("click", () => {
-            slideAudio.playSelect();
-            if (idx !== activeIndex) {
-              setActiveIndex(idx, false);
-            }
+            comicAudio.playSelect();
+            if (floatingArrow) floatingArrow.classList.remove("visible");
+
+            const title = el.dataset.title || "CREDENTIAL";
+            const issuer = el.dataset.issuer || "";
+            const desc = el.dataset.desc || "";
+            const status = el.dataset.status || "pending";
             const url = el.dataset.url;
-            if (el.dataset.title === "FULL ARCADE CONSOLE ↗" && url) {
-              window.location.href = url;
-              return;
+
+            const isEarned = status === "earned";
+            const isInProgress = status === "in-progress" || status === "pending";
+
+            if (modalStatusBadge) {
+              modalStatusBadge.className = `modal-status-badge ${isEarned ? "achieved" : isInProgress ? "pending" : "planned"}`;
+              modalStatusBadge.textContent = isEarned ? "[ACHIEVED]" : isInProgress ? "[PENDING]" : "[PLANNED]";
             }
-            if (modalTitle) modalTitle.textContent = el.dataset.title || "ACHIEVEMENT";
-            if (modalDesc) modalDesc.textContent = el.dataset.desc || "";
+
+            if (modalTitle) modalTitle.textContent = title;
+            if (modalIssuer) modalIssuer.textContent = issuer;
+            if (modalDesc) modalDesc.textContent = desc;
+
             if (modalVerifyBtn) {
               if (url && url.startsWith("http")) {
                 modalVerifyBtn.href = url;
@@ -596,7 +1073,8 @@ export default function SectionWipeTransitions() {
                 modalVerifyBtn.style.display = "none";
               }
             }
-            if (modal) modal.classList.add("open");
+
+            if (actionModal) actionModal.classList.add("open");
           });
 
           el.addEventListener("mouseenter", () => {
@@ -607,43 +1085,135 @@ export default function SectionWipeTransitions() {
         setTimeout(updateArrowPosition, 80);
       };
 
-      modalCloseBtn?.addEventListener("click", () => {
-        if (modal) modal.classList.remove("open");
+      /* Modal Close Handlers */
+      const closeModal = () => {
+        comicAudio.playCancel();
+        if (actionModal) actionModal.classList.remove("open");
         updateArrowPosition();
+      };
+
+      modalCloseBtn?.addEventListener("click", closeModal);
+      actionModal?.addEventListener("click", (e) => {
+        if (e.target === actionModal) closeModal();
       });
 
-      modal?.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          modal.classList.remove("open");
-          updateArrowPosition();
+      /* Sound Toggle Handler */
+      soundToggleBtn?.addEventListener("click", () => {
+        const isMuted = comicAudio.toggleMute();
+        if (soundIcon) {
+          if (isMuted) {
+            soundIcon.innerHTML = `<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27l4.73 4.73H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>`;
+          } else {
+            comicAudio.playSelect();
+            soundIcon.innerHTML = `<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>`;
+          }
         }
       });
 
-      // Two-stage responsive wheel scrolling on #cert-panel-grid
-      if (scroller) {
-        scroller.addEventListener(
+      /* Profile & Squad Modal Inspection Handlers */
+      profileBadge?.addEventListener("click", () => {
+        comicAudio.playSelect();
+        if (floatingArrow) floatingArrow.classList.remove("visible");
+        if (modalStatusBadge) {
+          modalStatusBadge.className = "modal-status-badge achieved";
+          modalStatusBadge.textContent = "[DOSSIER]";
+        }
+        if (modalTitle) modalTitle.textContent = "LAWRENCE MANZO CORTES";
+        if (modalIssuer) modalIssuer.textContent = "Software Developer & Cloud Builder";
+        if (modalDesc) {
+          modalDesc.textContent =
+            "Systems development, cloud architectures, Linux security paths, and applied generative AI tooling based in Ormoc City, Leyte, Philippines.";
+        }
+        if (modalVerifyBtn) modalVerifyBtn.style.display = "none";
+        if (actionModal) actionModal.classList.add("open");
+      });
+
+      squadSlots.forEach((slot) => {
+        slot.addEventListener("click", () => {
+          comicAudio.playSelect();
+          if (floatingArrow) floatingArrow.classList.remove("visible");
+          const member = slot.dataset.squad || "SQUAD COMPANION";
+          if (modalStatusBadge) {
+            modalStatusBadge.className = "modal-status-badge achieved";
+            modalStatusBadge.textContent = "[ACTIVE]";
+          }
+          if (modalTitle) modalTitle.textContent = member;
+          if (modalIssuer) modalIssuer.textContent = "Volcano Kingdom Squad Companion";
+          if (modalDesc) modalDesc.textContent = `Squad Companion status: Operational and synchronized with tactical mission queue.`;
+          if (modalVerifyBtn) modalVerifyBtn.style.display = "none";
+          if (actionModal) actionModal.classList.add("open");
+        });
+      });
+
+      /* Exit / Advance Button to Selected Engineering Works */
+      exitBtn?.addEventListener("click", () => {
+        comicAudio.playSelect();
+        window.scrollBy({ top: window.innerHeight * 0.9, behavior: "smooth" });
+      });
+
+      /* Mouse & Menu Tracking */
+      if (menuZone) {
+        menuZone.addEventListener("mouseenter", (e) => {
+          isMouseOverMenu = true;
+          comicAudio.init();
+          lastClientY = e.clientY;
+          updateItemUnderCursor();
+        });
+
+        menuZone.addEventListener("mousemove", (e) => {
+          lastClientY = e.clientY;
+          updateItemUnderCursor();
+
+          const rect = menuZone.getBoundingClientRect();
+          const relativeY = e.clientY - rect.top;
+          const ratio = relativeY / rect.height;
+
+          if (ratio < 0.22) {
+            const intensity = (0.22 - ratio) / 0.22;
+            autoScrollSpeed = -intensity * 5.5;
+          } else if (ratio > 0.78) {
+            const intensity = (ratio - 0.78) / 0.22;
+            autoScrollSpeed = intensity * 5.5;
+          } else {
+            autoScrollSpeed = 0;
+          }
+        });
+
+        menuZone.addEventListener("mouseleave", () => {
+          isMouseOverMenu = false;
+          autoScrollSpeed = 0;
+          lastClientY = null;
+        });
+
+        // Two-stage responsive wheel scrolling on menuZone
+        menuZone.addEventListener(
           "wheel",
           (e) => {
+            if (!scroller) return;
+            comicAudio.init();
+            autoScrollSpeed = 0;
+
             const isScrollingDown = e.deltaY > 0;
             const isScrollingUp = e.deltaY < 0;
-            const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4;
+            const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 6;
             const atTop = scroller.scrollTop <= 4;
 
             if (isScrollingDown) {
               if (!atBottom) {
                 e.stopPropagation();
                 e.preventDefault();
-                scroller.scrollTop += e.deltaY * 0.95;
-                updateArrowPosition();
+                scroller.scrollBy({ top: e.deltaY * 1.1, behavior: "auto" });
+                updateItemUnderCursor();
               } else {
+                // Forward seamlessly to PowerPoint timeline wipe to Selected Engineering Works
                 window.scrollBy({ top: e.deltaY, behavior: "auto" });
               }
             } else if (isScrollingUp) {
               if (!atTop) {
                 e.stopPropagation();
                 e.preventDefault();
-                scroller.scrollTop += e.deltaY * 0.95;
-                updateArrowPosition();
+                scroller.scrollBy({ top: e.deltaY * 1.1, behavior: "auto" });
+                updateItemUnderCursor();
               } else {
                 window.scrollBy({ top: e.deltaY, behavior: "auto" });
               }
@@ -651,28 +1221,27 @@ export default function SectionWipeTransitions() {
           },
           { passive: false }
         );
-
-        scroller.addEventListener("scroll", updateArrowPosition, { passive: true });
       }
 
       certOv.addEventListener(
         "wheel",
         (e) => {
-          if (!scroller || !scroller.contains(e.target as Node)) {
+          if (!menuZone || !menuZone.contains(e.target as Node)) {
             window.scrollBy({ top: e.deltaY, behavior: "auto" });
           }
         },
         { passive: true }
       );
 
-      // Initial render with clean in-progress and planned items (no fake earned items)
+      // Default in-progress and planned credentials (NO fake earned or verified claims)
       renderCertCards([
         {
           id: "csc-professional",
           label: "Civil Service Exam — Professional Level",
-          issuing_body: "Civil Service Commission",
+          issuing_body: "Civil Service Commission (CSC), Philippines",
           status: "in-progress",
           badge_icon: "award",
+          notes: "Professional Level Eligibility (In Progress) — Civil Service Commission (CSC), Philippines. Preparing for technical government roles examination.",
           verify_url: "https://www.csc.gov.ph",
         },
         {
@@ -681,6 +1250,7 @@ export default function SectionWipeTransitions() {
           issuing_body: "TESDA",
           status: "in-progress",
           badge_icon: "check",
+          notes: "Hands-on hardware assembly, networking diagnostics, and operating system configuration assessment.",
           verify_url: "https://www.tesda.gov.ph",
         },
         {
@@ -689,6 +1259,7 @@ export default function SectionWipeTransitions() {
           issuing_body: "Cisco Networking Academy",
           status: "in-progress",
           badge_icon: "shield",
+          notes: "Enterprise network defense fundamentals, security architectures, and vulnerability countermeasures.",
           verify_url: "https://www.netacad.com",
         },
         {
@@ -697,6 +1268,7 @@ export default function SectionWipeTransitions() {
           issuing_body: "pwn.college & ASU",
           status: "in-progress",
           badge_icon: "shield",
+          notes: "Binary exploitation, memory corruption triage, reverse engineering, and low-level Linux systems security.",
           verify_url: "https://pwn.college",
         },
         {
@@ -705,14 +1277,16 @@ export default function SectionWipeTransitions() {
           issuing_body: "NextWork",
           status: "in-progress",
           badge_icon: "graduation",
+          notes: "Cloud-native generative AI architectures, model integrations, vector retrieval, and serverless engineering.",
           verify_url: "https://nextwork.org",
         },
         {
           id: "aws-cloud-practitioner",
           label: "AWS Certified Cloud Practitioner",
-          issuing_body: "Amazon Web Services",
+          issuing_body: "Amazon Web Services (AWS)",
           status: "planned",
           badge_icon: "award",
+          notes: "Cloud infrastructure foundations, IAM security compliance, billing, and core global services.",
           verify_url: "https://aws.amazon.com/certification",
         },
       ]);
@@ -726,6 +1300,7 @@ export default function SectionWipeTransitions() {
           }
         })
         .catch(() => {});
+
 
       /* ── 1. Create Overlay 1: Selected Engineering Works ── */
       const ov1 = document.createElement("div");

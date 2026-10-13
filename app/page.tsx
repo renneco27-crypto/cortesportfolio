@@ -1,12 +1,15 @@
-import React from "react";
+import dynamic from "next/dynamic";
 import SwissNavbar from "@/components/layout/SwissNavbar";
 import EditorialHero from "@/components/sections/EditorialHero";
 import EditorialAbout from "@/components/sections/EditorialAbout";
 import EditorialGitHub from "@/components/sections/EditorialGitHub";
-import ClayHeroScene from "@/components/three/ClayHeroScene";
 import PixelTransition from "@/components/ui/PixelTransition";
 import EditorialChatWidget from "@/components/ui/EditorialChatWidget";
 import SectionWipeTransitions from "@/components/sections/MistralSlideSection";
+
+const ClayHeroScene = dynamic(() => import("@/components/three/ClayHeroScene"), {
+  ssr: false,
+});
 
 export default function EditorialPage() {
   return (
