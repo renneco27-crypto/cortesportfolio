@@ -37,6 +37,10 @@ export default function SwissNavbar() {
           <span>Projects</span>
           <span className="text-[0.68rem] text-[#e63946] font-mono">[SYS]</span>
         </Link>
+        <Link href="/achievements" className="hover:text-[#00e5ff] transition-colors duration-200 flex items-center gap-1">
+          <span>Achievements</span>
+          <span className="text-[0.62rem] text-[#ffdf00] font-mono">[ARCADE]</span>
+        </Link>
         <Link href="/#contact" className="hover:text-white transition-colors duration-200">
           Contact
         </Link>
