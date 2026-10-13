@@ -60,7 +60,7 @@ export default function SectionWipeTransitions() {
       const certOv = document.createElement("div");
       certOv.style.cssText =
         "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;" +
-        "pointer-events:none;opacity:0;clip-path:inset(0 0 0 100%);" +
+        "pointer-events:none;opacity:0;clip-path:inset(100% 0 0 0);" +
         "background:#070210;" +
         "display:flex;align-items:center;justify-content:center;" +
         "overflow:hidden;";
@@ -1631,19 +1631,19 @@ export default function SectionWipeTransitions() {
         },
       });
 
-      // Phase 1: Wipe 0 (Credentials) enters from right edge
+      // Phase 1: Wipe 0 (Achievements) enters down to up (bottom edge wipes upward)
       masterTl.fromTo(
         certOv,
-        { clipPath: "inset(0 0 0 100%)", opacity: 1 },
-        { clipPath: "inset(0 0 0 0%)", opacity: 1, ease: "power3.inOut", duration: 0.5 },
+        { clipPath: "inset(100% 0 0 0)", opacity: 1 },
+        { clipPath: "inset(0% 0 0 0)", opacity: 1, ease: "power3.inOut", duration: 0.5 },
         0
       );
 
-      // Phase 2 (AT 0.8): Wipe 0 exits clipping upward WHILE Wipe 1 enters from right!
+      // Phase 2 (AT 0.8): Wipe 0 exits up to down (top edge wipes downward) WHILE Wipe 1 enters
       masterTl.to(
         certOv,
         {
-          clipPath: "inset(0% 0 100% 0)",
+          clipPath: "inset(100% 0 0 0)",
           ease: "power3.inOut",
           duration: 0.5,
           onComplete: () => {
