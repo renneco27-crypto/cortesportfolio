@@ -1283,7 +1283,36 @@ export default function SectionWipeTransitions() {
         }
       }
 
+      let masterTl: gsap.core.Timeline | null = null;
+      let isAdvancingToNext = false;
+
+      const goToNextPanel = () => {
+        if (isAdvancingToNext) return;
+        if (masterTl && masterTl.progress() > 0.42) return;
+        isAdvancingToNext = true;
+        comicAudio.playSelect();
+
+        let targetY = 0;
+        if (masterTl && masterTl.scrollTrigger) {
+          const st = masterTl.scrollTrigger;
+          const totalDist = st.end - st.start;
+          targetY = st.start + totalDist * (1.4 / 2.7);
+        } else {
+          targetY = window.scrollY + window.innerHeight * 1.1;
+        }
+
+        window.scrollTo({
+          top: targetY,
+          behavior: "smooth",
+        });
+
+        setTimeout(() => {
+          isAdvancingToNext = false;
+        }, 1200);
+      };
+
       let autoScrollRafId: number | null = null;
+      let autoScrollBottomFrames = 0;
 
       function autoScrollStep() {
         if (autoScrollSpeed !== 0 && scroller) {
@@ -1293,9 +1322,21 @@ export default function SectionWipeTransitions() {
           } else {
             updateArrowPosition();
           }
+
+          if (autoScrollSpeed > 0 && scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 6) {
+            autoScrollBottomFrames++;
+            if (autoScrollBottomFrames > 35) {
+              autoScrollBottomFrames = 0;
+              goToNextPanel();
+            }
+          } else {
+            autoScrollBottomFrames = 0;
+          }
+
           autoScrollRafId = requestAnimationFrame(autoScrollStep);
         } else {
           autoScrollRafId = null;
+          autoScrollBottomFrames = 0;
         }
       }
 
@@ -1474,8 +1515,7 @@ export default function SectionWipeTransitions() {
 
       /* Exit / Advance Button to Selected Engineering Works */
       exitBtn?.addEventListener("click", () => {
-        comicAudio.playSelect();
-        window.scrollBy({ top: window.innerHeight * 0.9, behavior: "smooth" });
+        goToNextPanel();
       });
 
       /* Mouse & Menu Tracking */
@@ -1519,23 +1559,72 @@ export default function SectionWipeTransitions() {
         });
       }
 
-      // Scrolling down anywhere on certOv directly triggers the slide wipe
+      // Mouse wheel handling on certOv:
+      // Scrolling down inside the certifications list scrolls the cards smoothly.
+      // Upon reaching AWS Certified at the end, scrolling a little bit farther automatically advances to the next panel.
+      let accumulatedWheelDelta = 0;
+      let wheelResetTimer: ReturnType<typeof setTimeout> | null = null;
+
       certOv.addEventListener(
         "wheel",
         (e) => {
           comicAudio.init();
-          window.scrollBy({ top: e.deltaY, behavior: "auto" });
+          const scroller = certOv.querySelector(".menu-scroller") as HTMLElement | null;
+          const isOverScroller = (e.target as HTMLElement)?.closest(".menu-scroller");
+
+          if (isOverScroller && scroller && scroller.scrollHeight > scroller.clientHeight + 4) {
+            const isAtBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 10;
+            const isAtTop = scroller.scrollTop <= 6;
+
+            if (e.deltaY > 0) {
+              if (isAtBottom) {
+                // Reached the end of AWS Certified! Scrolling a little bit farther automatically advances to next panel
+                accumulatedWheelDelta += e.deltaY;
+                if (wheelResetTimer) clearTimeout(wheelResetTimer);
+                wheelResetTimer = setTimeout(() => {
+                  accumulatedWheelDelta = 0;
+                }, 400);
+
+                if (accumulatedWheelDelta > 20) {
+                  accumulatedWheelDelta = 0;
+                  goToNextPanel();
+                }
+              } else {
+                accumulatedWheelDelta = 0;
+                scroller.scrollTop += e.deltaY;
+              }
+            } else if (e.deltaY < 0) {
+              accumulatedWheelDelta = 0;
+              if (isAtTop) {
+                window.scrollBy({ top: e.deltaY, behavior: "auto" });
+              } else {
+                scroller.scrollTop += e.deltaY;
+              }
+            }
+          } else {
+            // Anywhere on the background stage
+            if (e.deltaY > 40) {
+              goToNextPanel();
+            } else {
+              window.scrollBy({ top: e.deltaY, behavior: "auto" });
+            }
+          }
         },
         { passive: true }
       );
 
-      // Touch gestures on certOv: allows fluid card scrolling while advancing the master wipe when at edges or on background
+      // Touch gestures on certOv:
+      // Allows fluid card scrolling and automatically advances to next panel when swiping past AWS Certified
       let ovTouchStartY = 0;
+      let accumulatedTouchDiff = 0;
+      let touchResetTimer: ReturnType<typeof setTimeout> | null = null;
+
       certOv.addEventListener(
         "touchstart",
         (e) => {
           if (e.touches && e.touches.length > 0) {
             ovTouchStartY = e.touches[0].clientY;
+            accumulatedTouchDiff = 0;
           }
         },
         { passive: true }
@@ -1546,20 +1635,45 @@ export default function SectionWipeTransitions() {
         (e) => {
           if (!e.touches || e.touches.length === 0) return;
           const currentY = e.touches[0].clientY;
-          const diff = ovTouchStartY - currentY;
+          const diff = ovTouchStartY - currentY; // positive = swiping up = scrolling down
           ovTouchStartY = currentY;
 
           const scroller = certOv.querySelector(".menu-scroller") as HTMLElement | null;
           const isTouchingScroller = (e.target as HTMLElement)?.closest(".menu-scroller");
 
           if (isTouchingScroller && scroller && scroller.scrollHeight > scroller.clientHeight + 4) {
-            const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 6;
-            const atTop = scroller.scrollTop <= 6;
-            if ((diff > 0 && atBottom) || (diff < 0 && atTop)) {
-              window.scrollBy({ top: diff * 1.15, behavior: "auto" });
+            const isAtBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 10;
+            const isAtTop = scroller.scrollTop <= 6;
+
+            if (diff > 0) {
+              if (isAtBottom) {
+                // At the bottom of AWS Certified and swiping a little bit farther!
+                accumulatedTouchDiff += diff;
+                if (touchResetTimer) clearTimeout(touchResetTimer);
+                touchResetTimer = setTimeout(() => {
+                  accumulatedTouchDiff = 0;
+                }, 400);
+
+                if (accumulatedTouchDiff > 16) {
+                  accumulatedTouchDiff = 0;
+                  goToNextPanel();
+                }
+              } else {
+                accumulatedTouchDiff = 0;
+              }
+            } else if (diff < 0) {
+              accumulatedTouchDiff = 0;
+              if (isAtTop) {
+                window.scrollBy({ top: diff * 1.15, behavior: "auto" });
+              }
             }
           } else {
-            window.scrollBy({ top: diff * 1.15, behavior: "auto" });
+            // Swiping on background stage
+            if (diff > 30) {
+              goToNextPanel();
+            } else {
+              window.scrollBy({ top: diff * 1.15, behavior: "auto" });
+            }
           }
         },
         { passive: true }
@@ -2234,7 +2348,7 @@ export default function SectionWipeTransitions() {
       overlays.push(rightOv);
 
       /* ── 3. Single Master Timeline — Chains Certs -> Selected Works -> Contact with Zero Gap ── */
-      const masterTl = gsap.timeline({
+      masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: masterTrigger,
           start: "top 70%",
