@@ -1480,89 +1480,19 @@ export default function SectionWipeTransitions() {
             autoScrollRafId = null;
           }
         });
-
-        // Two-stage responsive wheel scrolling on menuZone
-        menuZone.addEventListener(
-          "wheel",
-          (e) => {
-            if (!scroller) return;
-            comicAudio.init();
-            autoScrollSpeed = 0;
-
-            const isScrollingDown = e.deltaY > 0;
-            const isScrollingUp = e.deltaY < 0;
-            const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 6;
-            const atTop = scroller.scrollTop <= 4;
-
-            if (isScrollingDown) {
-              if (!atBottom) {
-                e.stopPropagation();
-                e.preventDefault();
-                scroller.scrollBy({ top: e.deltaY * 1.1, behavior: "auto" });
-                updateItemUnderCursor();
-              } else {
-                // Forward seamlessly to PowerPoint timeline wipe to Selected Engineering Works
-                window.scrollBy({ top: e.deltaY, behavior: "auto" });
-              }
-            } else if (isScrollingUp) {
-              if (!atTop) {
-                e.stopPropagation();
-                e.preventDefault();
-                scroller.scrollBy({ top: e.deltaY * 1.1, behavior: "auto" });
-                updateItemUnderCursor();
-              } else {
-                window.scrollBy({ top: e.deltaY, behavior: "auto" });
-              }
-            }
-          },
-          { passive: false }
-        );
       }
 
+      // Scrolling down anywhere on certOv directly triggers the slide wipe
       certOv.addEventListener(
         "wheel",
         (e) => {
-          if (!menuZone || !menuZone.contains(e.target as Node)) {
-            window.scrollBy({ top: e.deltaY, behavior: "auto" });
-          }
+          comicAudio.init();
+          window.scrollBy({ top: e.deltaY, behavior: "auto" });
         },
         { passive: true }
       );
 
-      // Mobile touch scrolling and chaining into slide wipes
-      let scrollerTouchStartY = 0;
-      if (scroller) {
-        scroller.addEventListener(
-          "touchstart",
-          (e) => {
-            if (e.touches && e.touches.length > 0) {
-              scrollerTouchStartY = e.touches[0].clientY;
-            }
-          },
-          { passive: true }
-        );
-
-        scroller.addEventListener(
-          "touchmove",
-          (e) => {
-            if (!e.touches || e.touches.length === 0) return;
-            const currentY = e.touches[0].clientY;
-            const diff = scrollerTouchStartY - currentY;
-            const atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 6;
-            const atTop = scroller.scrollTop <= 4;
-
-            if (diff > 0 && atBottom) {
-              window.scrollBy({ top: diff * 0.9, behavior: "auto" });
-            } else if (diff < 0 && atTop) {
-              window.scrollBy({ top: diff * 0.9, behavior: "auto" });
-            }
-            scrollerTouchStartY = currentY;
-            updateArrowPosition();
-          },
-          { passive: true }
-        );
-      }
-
+      // Touch gestures anywhere on certOv directly trigger the vertical slide wipe
       let ovTouchStartY = 0;
       certOv.addEventListener(
         "touchstart",
@@ -1577,12 +1507,11 @@ export default function SectionWipeTransitions() {
       certOv.addEventListener(
         "touchmove",
         (e) => {
-          if (scroller && scroller.contains(e.target as Node)) return;
           if (!e.touches || e.touches.length === 0) return;
           const currentY = e.touches[0].clientY;
           const diff = ovTouchStartY - currentY;
           ovTouchStartY = currentY;
-          window.scrollBy({ top: diff * 1.05, behavior: "auto" });
+          window.scrollBy({ top: diff * 1.15, behavior: "auto" });
         },
         { passive: true }
       );
@@ -1660,7 +1589,7 @@ export default function SectionWipeTransitions() {
       const ov1 = document.createElement("div");
       ov1.style.cssText =
         "position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:60;" +
-        "pointer-events:none;opacity:0;clip-path:inset(0 0 0 100%);" +
+        "pointer-events:none;opacity:0;clip-path:inset(100% 0 0 0);" +
         "background:rgba(5, 5, 5, 0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);" +
         "overflow:hidden;";
 
@@ -1993,11 +1922,11 @@ export default function SectionWipeTransitions() {
         0
       );
 
-      // Phase 2 (AT 0.8): Wipe 0 exits up to down (top edge wipes downward) WHILE Wipe 1 enters
+      // Phase 2 (AT 0.8): Wipe 0 scrolls/wipes upward WHILE Wipe 1 (Selected Works) enters from bottom
       masterTl.to(
         certOv,
         {
-          clipPath: "inset(100% 0 0 0)",
+          clipPath: "inset(0% 0 100% 0)",
           ease: "power3.inOut",
           duration: 0.5,
           onComplete: () => {
@@ -2009,9 +1938,9 @@ export default function SectionWipeTransitions() {
 
       masterTl.fromTo(
         ov1,
-        { clipPath: "inset(0 0 0 100%)", opacity: 1 },
+        { clipPath: "inset(100% 0 0 0)", opacity: 1 },
         {
-          clipPath: "inset(0 0 0 0%)",
+          clipPath: "inset(0% 0 0 0)",
           opacity: 1,
           ease: "power3.inOut",
           duration: 0.5,
