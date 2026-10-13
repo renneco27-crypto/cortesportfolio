@@ -794,10 +794,19 @@ export default function SectionWipeTransitions() {
             }
 
             .character-center-layer {
-              left: 28%;
-              height: 64%;
-              opacity: 0.32;
-              filter: blur(0.5px);
+              left: 50%;
+              transform: translateX(-50%);
+              height: 56%;
+              max-height: 520px;
+              opacity: 1 !important;
+              filter: drop-shadow(0 0 24px rgba(0, 0, 0, 0.95)) !important;
+              z-index: 15;
+              pointer-events: none;
+            }
+
+            .character-img {
+              opacity: 1 !important;
+              filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.85)) !important;
             }
 
             .menu-right-zone {
