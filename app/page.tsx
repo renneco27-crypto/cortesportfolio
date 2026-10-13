@@ -37,7 +37,9 @@ export default function EditorialPage() {
           <section className="w-full h-[1px] bg-transparent pointer-events-none select-none" id="slide-trigger-gap" aria-hidden="true" />
 
           {/* Master Trigger Section — chains Credentials, Selected Works & Contact into 1 continuous scrub timeline */}
-          <section className="w-full h-[400vh] bg-transparent pointer-events-none select-none" id="slide-trigger-master" aria-hidden="true" />
+          <section className="w-full h-[400vh] bg-transparent pointer-events-none select-none relative" id="slide-trigger-master" aria-hidden="true">
+            <div id="contact" className="absolute top-[80%] left-0 w-px h-px pointer-events-none" aria-hidden="true" />
+          </section>
         </div>
       </div>
 

@@ -14,11 +14,38 @@ function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
 }
 
 export default function SwissNavbar() {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    if (typeof window === "undefined") return;
+
+    // If on homepage, smooth scroll directly to avoid broken hash jumps
+    if (window.location.pathname === "/") {
+      e.preventDefault();
+      if (targetId === "top") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      if (targetId === "contact") {
+        const trigger = document.getElementById("slide-trigger-master");
+        if (trigger) {
+          const rect = trigger.getBoundingClientRect();
+          const targetY = window.scrollY + rect.top + trigger.offsetHeight * (3.1 / 3.8);
+          window.scrollTo({ top: targetY, behavior: "smooth" });
+          return;
+        }
+      }
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
-    <header className="fixed top-0 left-0 w-full h-[60px] z-50 flex justify-between items-center px-6 md:px-10 bg-[#050505]/90 backdrop-blur-[14px] border-b border-[#1a1a1a] select-none">
+    <header className="fixed top-0 left-0 w-full h-[60px] z-[100] flex justify-between items-center px-6 md:px-10 bg-[#050505]/90 backdrop-blur-[14px] border-b border-[#1a1a1a] select-none">
       {/* Brand / Logo */}
       <Link
         href="/"
+        onClick={(e) => handleNavClick(e, "top")}
         className="font-mono text-xs md:text-sm font-bold tracking-[2px] text-white flex items-center gap-2 hover:opacity-90 transition-opacity"
       >
         <span>LAWRENCE MANZO CORTES</span>
@@ -27,17 +54,32 @@ export default function SwissNavbar() {
 
       {/* Navigation Links */}
       <nav className="hidden md:flex items-center gap-7 text-[0.8rem] uppercase tracking-[1.5px] text-[#888888]">
-        <Link href="/#about" className="hover:text-white transition-colors duration-200">
+        <Link
+          href="/#about"
+          onClick={(e) => handleNavClick(e, "about")}
+          className="hover:text-white transition-colors duration-200"
+        >
           About
         </Link>
-        <Link href="/#stack" className="hover:text-white transition-colors duration-200">
+        <Link
+          href="/#stack"
+          onClick={(e) => handleNavClick(e, "stack")}
+          className="hover:text-white transition-colors duration-200"
+        >
           Architecture
         </Link>
-        <Link href="/projects" className="text-white hover:text-[#e63946] font-medium transition-colors duration-200 flex items-center gap-1.5">
+        <Link
+          href="/projects"
+          className="text-white hover:text-[#e63946] font-medium transition-colors duration-200 flex items-center gap-1.5"
+        >
           <span>Projects</span>
           <span className="text-[0.68rem] text-[#e63946] font-mono">[SYS]</span>
         </Link>
-        <Link href="/#contact" className="hover:text-white transition-colors duration-200">
+        <Link
+          href="/#contact"
+          onClick={(e) => handleNavClick(e, "contact")}
+          className="hover:text-white transition-colors duration-200"
+        >
           Contact
         </Link>
       </nav>

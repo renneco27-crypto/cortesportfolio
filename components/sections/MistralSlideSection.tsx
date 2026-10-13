@@ -1958,8 +1958,8 @@ export default function SectionWipeTransitions() {
         <div class="ov1-bg-video-wrap">
           <canvas
             id="ov1-bg-canvas"
-            width="480"
-            height="270"
+            width="960"
+            height="540"
           ></canvas>
         </div>
 
@@ -2069,12 +2069,12 @@ export default function SectionWipeTransitions() {
       document.body.appendChild(ov1);
       overlays.push(ov1);
 
-      /* ── 100% Client-Side GPU Spritesheet Arc Reactor Engine (Zero Lag, Bidirectional Scrub) ── */
-      const TOTAL_FRAMES = 240;
-      const FRAMES_PER_SHEET = 120;
+      /* ── 100% Client-Side GPU Spritesheet Arc Reactor Engine (5-Second HD Cut, Zero Lag, Bidirectional Scrub) ── */
+      const TOTAL_FRAMES = 120;
+      const FRAMES_PER_SHEET = 60;
       const COLS = 10;
-      const FRAME_WIDTH = 480;
-      const FRAME_HEIGHT = 270;
+      const FRAME_WIDTH = 960;
+      const FRAME_HEIGHT = 540;
 
       const canvasEl = ov1.querySelector("#ov1-bg-canvas") as HTMLCanvasElement | null;
       const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
@@ -2202,8 +2202,8 @@ export default function SectionWipeTransitions() {
         const absVel = Math.abs(rawVelocity);
         if (absVel < 5) return;
         const sign = rawVelocity > 0 ? 1 : -1;
-        // Dynamically scale frame velocity based on scroll speed
-        const impulse = sign * Math.min(5.5, Math.max(0.8, Math.pow(absVel * 0.002, 0.85)));
+        // Dynamically scale frame velocity based on scroll speed (tuned for 120 frames)
+        const impulse = sign * Math.min(3.6, Math.max(0.6, Math.pow(absVel * 0.0012, 0.85)));
         addScrollImpulse(impulse);
       };
 
@@ -2227,7 +2227,7 @@ export default function SectionWipeTransitions() {
         if (isOv1InView()) {
           // e.deltaY > 0 is scroll down (forward), e.deltaY < 0 is scroll up (reverse)
           const sign = e.deltaY > 0 ? 1 : -1;
-          const mag = Math.min(5.0, Math.max(1.0, Math.abs(e.deltaY) * 0.03));
+          const mag = Math.min(3.2, Math.max(0.8, Math.abs(e.deltaY) * 0.02));
           addScrollImpulse(sign * mag);
         }
       };
