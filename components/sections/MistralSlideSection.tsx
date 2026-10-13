@@ -1878,19 +1878,16 @@ export default function SectionWipeTransitions() {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 520px;
-            height: 520px;
+            width: 580px;
             max-width: 90vw;
-            max-height: 90vh;
-            aspect-ratio: 1 / 1;
+            height: auto;
+            aspect-ratio: 16 / 9;
             display: flex;
             align-items: center;
             justify-content: center;
             pointer-events: none;
             z-index: 1;
             mix-blend-mode: screen;
-            mask-image: radial-gradient(circle at 50% 50%, black 48%, transparent 72%);
-            -webkit-mask-image: radial-gradient(circle at 50% 50%, black 48%, transparent 72%);
             filter: contrast(110%) brightness(105%);
           }
           #ov1-bg-canvas {
@@ -1950,21 +1947,20 @@ export default function SectionWipeTransitions() {
               padding: 1rem !important;
             }
             .ov1-bg-video-wrap {
-              width: 340px;
-              height: 340px;
+              width: 360px;
               max-width: 95vw;
               top: 45%;
-              opacity: 0.88;
+              opacity: 0.85;
             }
           }
         </style>
 
-        <!-- Centered Background Canvas Layer (Black background removed via screen blend & radial mask) -->
+        <!-- Centered Background Canvas Layer (Black background removed via screen blend) -->
         <div class="ov1-bg-video-wrap">
           <canvas
             id="ov1-bg-canvas"
-            width="320"
-            height="320"
+            width="480"
+            height="270"
           ></canvas>
         </div>
 
@@ -2077,8 +2073,9 @@ export default function SectionWipeTransitions() {
       /* ── 100% Client-Side GPU Spritesheet Arc Reactor Engine (Zero Lag, Bidirectional Scrub) ── */
       const TOTAL_FRAMES = 240;
       const FRAMES_PER_SHEET = 120;
-      const COLS = 12;
-      const FRAME_SIZE = 320;
+      const COLS = 10;
+      const FRAME_WIDTH = 480;
+      const FRAME_HEIGHT = 270;
 
       const canvasEl = ov1.querySelector("#ov1-bg-canvas") as HTMLCanvasElement | null;
       const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
@@ -2111,8 +2108,8 @@ export default function SectionWipeTransitions() {
             const fallbackIdx = normalized % FRAMES_PER_SHEET;
             const c = fallbackIdx % COLS;
             const r = Math.floor(fallbackIdx / COLS);
-            ctx.clearRect(0, 0, FRAME_SIZE, FRAME_SIZE);
-            ctx.drawImage(sheet1, c * FRAME_SIZE, r * FRAME_SIZE, FRAME_SIZE, FRAME_SIZE, 0, 0, FRAME_SIZE, FRAME_SIZE);
+            ctx.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+            ctx.drawImage(sheet1, c * FRAME_WIDTH, r * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
             lastDrawnFrame = normalized;
           }
           return;
@@ -2122,8 +2119,8 @@ export default function SectionWipeTransitions() {
         const col = localIdx % COLS;
         const row = Math.floor(localIdx / COLS);
 
-        ctx.clearRect(0, 0, FRAME_SIZE, FRAME_SIZE);
-        ctx.drawImage(sheetImg, col * FRAME_SIZE, row * FRAME_SIZE, FRAME_SIZE, FRAME_SIZE, 0, 0, FRAME_SIZE, FRAME_SIZE);
+        ctx.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+        ctx.drawImage(sheetImg, col * FRAME_WIDTH, row * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
         lastDrawnFrame = normalized;
       };
 
