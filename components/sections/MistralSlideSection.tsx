@@ -1772,6 +1772,7 @@ export default function SectionWipeTransitions() {
             height: 100%;
             overflow: hidden;
             z-index: 2;
+            pointer-events: auto;
           }
           .ov1-left {
             position: relative;
@@ -1831,6 +1832,7 @@ export default function SectionWipeTransitions() {
             text-decoration: none;
             font-weight: 700;
             cursor: pointer;
+            pointer-events: auto;
             transition: background 0.2s, color 0.2s, transform 0.2s;
           }
           .ov1-right {
@@ -1864,6 +1866,7 @@ export default function SectionWipeTransitions() {
             padding: 1.25rem;
             box-sizing: border-box;
             cursor: pointer;
+            pointer-events: auto;
             transition: transform 0.3s ease, border-color 0.3s, background 0.3s;
           }
           .ov1-card-center {
@@ -1958,8 +1961,8 @@ export default function SectionWipeTransitions() {
         <div class="ov1-bg-video-wrap">
           <canvas
             id="ov1-bg-canvas"
-            width="960"
-            height="540"
+            width="480"
+            height="270"
           ></canvas>
         </div>
 
@@ -2074,8 +2077,8 @@ export default function SectionWipeTransitions() {
       const FRAMES_PER_SHEET = 60;
       const BOOMERANG_CYCLE = 2 * (TOTAL_FRAMES - 1); // 238 steps (0 -> 119 -> 1 -> 0 seamless loop)
       const COLS = 10;
-      const FRAME_WIDTH = 960;
-      const FRAME_HEIGHT = 540;
+      const FRAME_WIDTH = 480;
+      const FRAME_HEIGHT = 270;
 
       const canvasEl = ov1.querySelector("#ov1-bg-canvas") as HTMLCanvasElement | null;
       const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
@@ -2226,16 +2229,15 @@ export default function SectionWipeTransitions() {
       };
       stageEl?.addEventListener("scroll", onStageScroll, { passive: true });
 
-      // Window wheel for instantaneous bidirectional scrub response
-      const onWindowWheel = (e: WheelEvent) => {
+      // Direct wheel on ov1 for smooth responsive scrub when hovering over the panel
+      const onOv1Wheel = (e: WheelEvent) => {
         if (isOv1InView()) {
-          // e.deltaY > 0 is scroll down (forward), e.deltaY < 0 is scroll up (reverse)
           const sign = e.deltaY > 0 ? 1 : -1;
           const mag = Math.min(3.2, Math.max(0.8, Math.abs(e.deltaY) * 0.02));
           addScrollImpulse(sign * mag);
         }
       };
-      window.addEventListener("wheel", onWindowWheel, { passive: true });
+      ov1.addEventListener("wheel", onOv1Wheel, { passive: true });
 
       // Touch events with mobile upward scroll-chaining
       let lastTouchY = 0;
@@ -2269,7 +2271,7 @@ export default function SectionWipeTransitions() {
       removeVideoListeners = () => {
         stopOv1Playback();
         stageEl?.removeEventListener("scroll", onStageScroll);
-        window.removeEventListener("wheel", onWindowWheel);
+        ov1.removeEventListener("wheel", onOv1Wheel);
         window.removeEventListener("touchstart", onTouchStart);
         window.removeEventListener("touchmove", onTouchMove);
       };
@@ -2617,7 +2619,18 @@ export default function SectionWipeTransitions() {
             stopOv1Playback();
           },
           onUpdate: (self) => {
-            if (isOv1InView()) {
+            const t = masterTl ? masterTl.time() : 0;
+            // Dynamic, bidirectional pointer events: guarantees active slide is clickable
+            const certActive = t >= 0.05 && t < 1.1;
+            const ov1Active = t >= 1.1 && t < 2.9;
+            const contactActive = t >= 2.9;
+
+            certOv.style.pointerEvents = certActive ? "auto" : "none";
+            ov1.style.pointerEvents = ov1Active ? "auto" : "none";
+            leftOv.style.pointerEvents = contactActive ? "auto" : "none";
+            if (rightOv) rightOv.style.pointerEvents = contactActive ? "auto" : "none";
+
+            if (ov1Active) {
               handleScrollActivity(self.getVelocity());
             } else {
               stopOv1Playback();
