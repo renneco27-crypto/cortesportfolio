@@ -2069,9 +2069,10 @@ export default function SectionWipeTransitions() {
       document.body.appendChild(ov1);
       overlays.push(ov1);
 
-      /* ── 100% Client-Side GPU Spritesheet Arc Reactor Engine (5-Second HD Cut, Zero Lag, Bidirectional Scrub) ── */
+      /* ── 100% Client-Side GPU Spritesheet Arc Reactor Engine (5-Second HD Boomerang, Zero Lag, Bidirectional Scrub) ── */
       const TOTAL_FRAMES = 120;
       const FRAMES_PER_SHEET = 60;
+      const BOOMERANG_CYCLE = 2 * (TOTAL_FRAMES - 1); // 238 steps (0 -> 119 -> 1 -> 0 seamless loop)
       const COLS = 10;
       const FRAME_WIDTH = 960;
       const FRAME_HEIGHT = 540;
@@ -2091,35 +2092,38 @@ export default function SectionWipeTransitions() {
       let targetVelocity = 0;
       let animRafId: number | null = null;
 
-      const renderFrame = (frameIdx: number, force = false) => {
+      const renderFrame = (pos: number, force = false) => {
         if (!ctx) return;
-        const normalized = ((Math.floor(frameIdx) % TOTAL_FRAMES) + TOTAL_FRAMES) % TOTAL_FRAMES;
-        if (!force && normalized === lastDrawnFrame) return;
+        const normalizedPos = ((Math.floor(pos) % BOOMERANG_CYCLE) + BOOMERANG_CYCLE) % BOOMERANG_CYCLE;
+        // Seamless boomerang ping-pong: forward 0..119, then reverse 118..1
+        const frameIdx = normalizedPos < TOTAL_FRAMES ? normalizedPos : BOOMERANG_CYCLE - normalizedPos;
 
-        const isFirst = normalized < FRAMES_PER_SHEET;
+        if (!force && frameIdx === lastDrawnFrame) return;
+
+        const isFirst = frameIdx < FRAMES_PER_SHEET;
         const sheetImg = isFirst ? sheet1 : sheet2;
         const isLoaded = isFirst ? sheet1Loaded : sheet2Loaded;
 
         if (!isLoaded) {
           if (sheet1Loaded && sheet1.naturalWidth > 0) {
-            const fallbackIdx = normalized % FRAMES_PER_SHEET;
+            const fallbackIdx = frameIdx % FRAMES_PER_SHEET;
             const c = fallbackIdx % COLS;
             const r = Math.floor(fallbackIdx / COLS);
             ctx.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
             ctx.drawImage(sheet1, c * FRAME_WIDTH, r * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-            lastDrawnFrame = normalized;
+            lastDrawnFrame = frameIdx;
           }
           return;
         }
 
         if (sheetImg.naturalWidth > 0) {
-          const localIdx = normalized % FRAMES_PER_SHEET;
+          const localIdx = frameIdx % FRAMES_PER_SHEET;
           const col = localIdx % COLS;
           const row = Math.floor(localIdx / COLS);
 
           ctx.clearRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
           ctx.drawImage(sheetImg, col * FRAME_WIDTH, row * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-          lastDrawnFrame = normalized;
+          lastDrawnFrame = frameIdx;
         }
       };
 
@@ -2157,8 +2161,8 @@ export default function SectionWipeTransitions() {
         }
 
         if (Math.abs(targetVelocity) > 0.05) {
-          currentFrameFloat = (currentFrameFloat + targetVelocity) % TOTAL_FRAMES;
-          if (currentFrameFloat < 0) currentFrameFloat += TOTAL_FRAMES;
+          currentFrameFloat = (currentFrameFloat + targetVelocity) % BOOMERANG_CYCLE;
+          if (currentFrameFloat < 0) currentFrameFloat += BOOMERANG_CYCLE;
 
           renderFrame(currentFrameFloat);
           targetVelocity *= 0.88; // Smooth momentum decay
