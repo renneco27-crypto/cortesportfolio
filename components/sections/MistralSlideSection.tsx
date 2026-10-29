@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initInteractiveArcReactor, ArcReactorController } from "@/components/three/InteractiveArcReactor";
 
 /**
  * SectionWipeTransitions
@@ -1771,16 +1772,17 @@ export default function SectionWipeTransitions() {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            z-index: 2;
-            pointer-events: auto;
+            z-index: 3;
+            pointer-events: none;
           }
           .ov1-left {
             position: relative;
-            z-index: 2;
+            z-index: 3;
             flex: 1;
             max-width: 520px;
             padding-right: 4rem;
             box-sizing: border-box;
+            pointer-events: auto;
           }
           .ov1-tag {
             font-family: 'Courier New', monospace;
@@ -1837,7 +1839,7 @@ export default function SectionWipeTransitions() {
           }
           .ov1-right {
             position: relative;
-            z-index: 2;
+            z-index: 3;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -1845,6 +1847,7 @@ export default function SectionWipeTransitions() {
             max-width: 480px;
             opacity: 0.95;
             box-sizing: border-box;
+            pointer-events: auto;
           }
           .ov1-row1 {
             display: grid;
@@ -1875,7 +1878,7 @@ export default function SectionWipeTransitions() {
             justify-content: center;
           }
 
-          /* Ambient Center Arc Reactor Spritesheet Canvas (100% Client-Side GPU, Zero Lag) */
+          /* Ambient Center Arc Reactor Canvas Layer */
           .ov1-bg-video-wrap {
             position: absolute;
             top: 50%;
@@ -1887,16 +1890,35 @@ export default function SectionWipeTransitions() {
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: none;
-            z-index: 1;
-            mix-blend-mode: screen;
-            filter: contrast(110%) brightness(105%);
+            pointer-events: auto;
+            z-index: 2;
           }
           #ov1-bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
+            height: 100%;
             aspect-ratio: 16 / 9;
             display: block;
+            z-index: 1;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            filter: contrast(110%) brightness(105%);
+            transition: opacity 0.25s ease-out;
+          }
+          #ov1-3d-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 9;
+            display: block;
+            z-index: 2;
+            pointer-events: auto;
+            cursor: grab;
+            transition: opacity 0.25s ease-out;
           }
 
           @media (max-width: 868px) {
@@ -1961,6 +1983,11 @@ export default function SectionWipeTransitions() {
         <div class="ov1-bg-video-wrap">
           <canvas
             id="ov1-bg-canvas"
+            width="960"
+            height="540"
+          ></canvas>
+          <canvas
+            id="ov1-3d-canvas"
             width="960"
             height="540"
           ></canvas>
@@ -2081,8 +2108,16 @@ export default function SectionWipeTransitions() {
       const FRAME_HEIGHT = 540;
 
       const canvasEl = ov1.querySelector("#ov1-bg-canvas") as HTMLCanvasElement | null;
+      const canvas3D = ov1.querySelector("#ov1-3d-canvas") as HTMLCanvasElement | null;
+      const wrapEl = ov1.querySelector(".ov1-bg-video-wrap") as HTMLElement | null;
       const stageEl = ov1.querySelector(".ov1-stage") as HTMLElement | null;
       const ctx = canvasEl?.getContext("2d");
+
+      // Initialize interactive 3D Arc Reactor layer (calibrated to frame 0)
+      let reactorController: ArcReactorController | null = null;
+      if (canvas3D && wrapEl) {
+        reactorController = initInteractiveArcReactor(canvas3D, wrapEl);
+      }
 
       // Preload the two optimized WebP spritesheets directly into client memory
       let sheet1Loaded = false;
@@ -2092,7 +2127,9 @@ export default function SectionWipeTransitions() {
 
       let currentFrameFloat = 0;
       let lastDrawnFrame = -1;
-      let targetVelocity = 0;
+      let targetGoalFrame = 0; // 0 (closed, 0.0s) or 96 (opened, 4.0s)
+      let iceVelocity = 0;
+      let isIceSliding = false;
       let animRafId: number | null = null;
 
       const renderFrame = (pos: number, force = false) => {
@@ -2100,6 +2137,25 @@ export default function SectionWipeTransitions() {
         const normalizedPos = ((Math.floor(pos) % BOOMERANG_CYCLE) + BOOMERANG_CYCLE) % BOOMERANG_CYCLE;
         // Seamless boomerang ping-pong: forward 0..119, then reverse 118..1
         const frameIdx = normalizedPos < TOTAL_FRAMES ? normalizedPos : BOOMERANG_CYCLE - normalizedPos;
+
+        // Transition 3D Arc Reactor canvas opacity:
+        // - Frame 0..12 (0 to 1 second): Closed 3D reactor rendered & interactive, video canvas fades out
+        // - Frame 80..96 (3 to 4 seconds, target 4.0s at frame 96): Opened 3D reactor rendered & interactive, video canvas fades out
+        // - Dynamic transformation frames (13..79): 3D hidden, video canvas 100% visible
+        if (reactorController) {
+          if (frameIdx <= 12) {
+            const closedAlpha = Math.max(0, Math.min(1, (12 - frameIdx) / 12));
+            reactorController.setOpacity(closedAlpha, "closed");
+            if (canvasEl) canvasEl.style.opacity = (1 - closedAlpha).toString();
+          } else if (frameIdx >= 80) {
+            const openAlpha = Math.max(0, Math.min(1, (frameIdx - 80) / 16));
+            reactorController.setOpacity(openAlpha, "opened");
+            if (canvasEl) canvasEl.style.opacity = (1 - openAlpha).toString();
+          } else {
+            reactorController.setOpacity(0);
+            if (canvasEl) canvasEl.style.opacity = "1";
+          }
+        }
 
         if (!force && frameIdx === lastDrawnFrame) return;
 
@@ -2158,22 +2214,42 @@ export default function SectionWipeTransitions() {
 
       const tickAnimation = () => {
         if (!isOv1InView()) {
-          targetVelocity = 0;
+          iceVelocity = 0;
+          isIceSliding = false;
           animRafId = null;
           return;
         }
 
-        if (Math.abs(targetVelocity) > 0.05) {
-          currentFrameFloat = (currentFrameFloat + targetVelocity) % BOOMERANG_CYCLE;
-          if (currentFrameFloat < 0) currentFrameFloat += BOOMERANG_CYCLE;
+        if (isIceSliding) {
+          const diff = targetGoalFrame - currentFrameFloat;
+
+          // Low-friction ice gliding physics with gentle spring latch
+          const spring = 0.08;
+          const friction = 0.92;
+          iceVelocity = iceVelocity * friction + diff * spring;
+
+          // Velocity clamp for smooth 60fps cinematic playback
+          const maxVel = 5.0;
+          iceVelocity = Math.max(-maxVel, Math.min(maxVel, iceVelocity));
+
+          currentFrameFloat += iceVelocity;
+
+          // Clean snap on arrival
+          if (Math.abs(diff) < 0.25 && Math.abs(iceVelocity) < 0.25) {
+            currentFrameFloat = targetGoalFrame;
+            iceVelocity = 0;
+            isIceSliding = false;
+            renderFrame(currentFrameFloat);
+            reactorController?.onScrollActivity(false);
+            animRafId = null;
+            return;
+          }
 
           renderFrame(currentFrameFloat);
-          targetVelocity *= 0.88; // Smooth momentum decay
-
           animRafId = requestAnimationFrame(tickAnimation);
         } else {
-          targetVelocity = 0;
           animRafId = null;
+          reactorController?.onScrollActivity(false);
         }
       };
 
@@ -2184,20 +2260,33 @@ export default function SectionWipeTransitions() {
       };
 
       const stopOv1Playback = () => {
-        targetVelocity = 0;
+        iceVelocity = 0;
+        isIceSliding = false;
         if (animRafId !== null) {
           cancelAnimationFrame(animRafId);
           animRafId = null;
         }
       };
 
-      const addScrollImpulse = (impulse: number) => {
+      // Ice sliding trigger: smoothly glides to 4.0s (frame 96) on down scroll, or back to 0.0s (frame 0) on up scroll
+      const triggerIceSlide = (direction: number) => {
         if (!isOv1InView()) {
           stopOv1Playback();
           return;
         }
-        // Clamped impulse: smooth acceleration, instant reverse when negative
-        targetVelocity = Math.max(-7.0, Math.min(7.0, targetVelocity * 0.4 + impulse));
+        if (reactorController) {
+          reactorController.onScrollActivity(true);
+        }
+
+        if (direction > 0) {
+          // Slide forward on ice to 4.0s (frame 96, opened reactor)
+          targetGoalFrame = 96;
+        } else {
+          // Slide backward on ice to 0.0s (frame 0, closed reactor)
+          targetGoalFrame = 0;
+        }
+
+        isIceSliding = true;
         startAnimIfNeeded();
       };
 
@@ -2206,12 +2295,9 @@ export default function SectionWipeTransitions() {
           stopOv1Playback();
           return;
         }
-        const absVel = Math.abs(rawVelocity);
-        if (absVel < 5) return;
-        const sign = rawVelocity > 0 ? 1 : -1;
-        // Dynamically scale frame velocity based on scroll speed (tuned for 120 frames)
-        const impulse = sign * Math.min(3.6, Math.max(0.6, Math.pow(absVel * 0.0012, 0.85)));
-        addScrollImpulse(impulse);
+        if (Math.abs(rawVelocity) < 8) return;
+        const dir = rawVelocity > 0 ? 1 : -1;
+        triggerIceSlide(dir);
       };
 
       // Listen to scroll events on ov1-stage for mobile internal scrolling
@@ -2229,12 +2315,11 @@ export default function SectionWipeTransitions() {
       };
       stageEl?.addEventListener("scroll", onStageScroll, { passive: true });
 
-      // Direct wheel on ov1 for smooth responsive scrub when hovering over the panel
+      // Direct wheel on ov1 for smooth ice slide when hovering over the panel
       const onOv1Wheel = (e: WheelEvent) => {
         if (isOv1InView()) {
-          const sign = e.deltaY > 0 ? 1 : -1;
-          const mag = Math.min(3.2, Math.max(0.8, Math.abs(e.deltaY) * 0.02));
-          addScrollImpulse(sign * mag);
+          const dir = e.deltaY > 0 ? 1 : -1;
+          triggerIceSlide(dir);
         }
       };
       ov1.addEventListener("wheel", onOv1Wheel, { passive: true });
@@ -2270,6 +2355,7 @@ export default function SectionWipeTransitions() {
       stopVideoPlayback = stopOv1Playback;
       removeVideoListeners = () => {
         stopOv1Playback();
+        reactorController?.destroy();
         stageEl?.removeEventListener("scroll", onStageScroll);
         ov1.removeEventListener("wheel", onOv1Wheel);
         window.removeEventListener("touchstart", onTouchStart);
