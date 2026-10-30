@@ -693,34 +693,34 @@ export default function ContactFooter({
                   </p>
                 </div>
 
-                {/* High-Contrast Dark Ink (#141414) & Neon Lime (#b8ff01) Bento Grid with Crisp Vertical Separator Lines */}
+                {/* High-Contrast White Background with Black Credential Divs & Crisp Vertical Separator Lines */}
                 <div
-                  className="lc-card-3d overflow-hidden rounded-2xl border border-white/15 bg-[#141414] text-white shadow-[0_32px_68px_-12px_rgba(0,0,0,0.55)]"
+                  className="lc-card-3d overflow-hidden rounded-2xl border border-black/15 bg-white text-[#141414] shadow-[0_32px_68px_-12px_rgba(0,0,0,0.28)]"
                   data-z="34"
                   data-stand="-42"
                   data-grow-wings="1"
                 >
-                  {/* 3 Columns Separated by Crisp Vertical Divider Lines (`lg:divide-x lg:divide-white/15`) */}
-                  <div className="grid grid-cols-1 divide-y divide-white/15 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+                  {/* 3 Columns Separated by Crisp Vertical Divider Lines (`lg:divide-x lg:divide-neutral-200`) */}
+                  <div className="grid grid-cols-1 divide-y divide-neutral-200 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
                     {certColumns.map((col, colIdx) => (
                       <div key={col.title} className="flex flex-col justify-between p-5 sm:p-6">
                         <div>
-                          {/* Column Header */}
-                          <div className="flex items-center justify-between border-b border-white/15 pb-4">
+                          {/* Column Header on White Background */}
+                          <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
                             <div>
-                              <span className="font-mono text-[10px] font-black uppercase tracking-widest text-lime">
+                              <span className="inline-block rounded-full bg-[#141414] px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-widest text-lime">
                                 {col.title}
                               </span>
-                              <h3 className="mt-1 text-base font-extrabold text-white">
+                              <h3 className="mt-1.5 text-base font-extrabold text-[#141414]">
                                 {col.subtitle}
                               </h3>
                             </div>
-                            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-lime/40 bg-lime/15 font-mono text-xs font-black text-lime">
+                            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#141414] font-mono text-xs font-black text-lime shadow-sm">
                               0{colIdx + 1}
                             </span>
                           </div>
 
-                          {/* Credentials List inside Column */}
+                          {/* Black Credential Divs inside White Column */}
                           <div className="mt-5 space-y-3.5">
                             {col.items.map((cert) => {
                               const isExpanded = expandedCertId === cert.id;
@@ -739,8 +739,8 @@ export default function ContactFooter({
                                   }}
                                   className={`lc-bubble-card lc-morph-container cursor-pointer rounded-2xl border p-4 text-left ${
                                     isExpanded
-                                      ? "border-lime bg-[#090909] text-white shadow-[0_20px_40px_rgba(0,0,0,0.5),0_0_24px_rgba(184,255,1,0.16)]"
-                                      : "border-white/15 bg-[#1f1f1f] text-white hover:border-lime/60 hover:bg-[#262626]"
+                                      ? "border-2 border-[#141414] bg-[#0a0a0a] text-white shadow-[0_20px_40px_rgba(0,0,0,0.28)] ring-2 ring-lime"
+                                      : "border-black/15 bg-[#141414] text-white shadow-[0_12px_28px_rgba(0,0,0,0.18)] hover:bg-[#1c1c1c]"
                                   }`}
                                 >
                                   <div className="flex items-start justify-between gap-3">
@@ -813,9 +813,11 @@ export default function ContactFooter({
                           </div>
                         </div>
 
-                        <div className="mt-6 flex items-center justify-between border-t border-white/15 pt-3 font-mono text-[10px] font-bold text-neutral-400">
+                        <div className="mt-6 flex items-center justify-between border-t border-neutral-200 pt-3 font-mono text-[10px] font-bold text-neutral-600">
                           <span>LAWRENCE CORTES</span>
-                          <span className="text-lime">VERIFIED TRACK</span>
+                          <span className="rounded-full bg-[#141414] px-2.5 py-0.5 text-[9px] font-black text-lime">
+                            VERIFIED TRACK
+                          </span>
                         </div>
                       </div>
                     ))}
