@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arc Reactor 3D Model & Video Frame 0 Alignment Tool</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0a0a0c;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #38bdf8;
+    }
+    p.subtitle {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      margin-bottom: 16px;
+    }
+
+    /* Comparison Stage */
+    .stage-wrapper {
+      position: relative;
+      width: 960px;
+      height: 540px;
+      background: #000;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      cursor: grab;
+      user-select: none;
+    }
+    .stage-wrapper.dragging {
+      cursor: grabbing !important;
+    }
+
+    /* Reference Image Layer */
+    #ref-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 960px;
+      height: 540px;
+      object-fit: contain;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Three.js Canvas Layer */
+    #three-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 960px;
+      height: 540px;
+      z-index: 2;
+      display: block;
+    }
+
+    /* Overlay Blend Mode Styles */
+    .mode-overlay #three-canvas {
+      opacity: 0.65;
+      mix-blend-mode: normal;
+    }
+    .mode-difference #three-canvas {
+      opacity: 1;
+      mix-blend-mode: difference;
+    }
+    .mode-3d-only #ref-img {
+      display: none !important;
+    }
+    .mode-ref-only #three-canvas {
+      display: none !important;
+    }
+    .mode-screen #three-canvas {
+      opacity: 1;
+      mix-blend-mode: screen;
+    }
+
+    /* Control Panel */
+    .controls-panel {
+      width: 960px;
+      margin-top: 16px;
+      background: #11141c;
+      border: 1px solid #232838;
+      border-radius: 8px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .control-group h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #38bdf8;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 4px;
+    }
+
+    .ctrl-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+    }
+    .ctrl-row label {
+      color: #cbd5e1;
+      width: 80px;
+    }
+    .ctrl-row input[type="range"] {
+      flex: 1;
+      margin: 0 8px;
+      accent-color: #38bdf8;
+    }
+    .ctrl-row span.val {
+      font-family: ui-monospace, monospace;
+      width: 44px;
+      text-align: right;
+      color: #94a3b8;
+    }
+
+    /* Bottom Action Bar */
+    .action-bar {
+      width: 960px;
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+    }
+    button {
+      background: #1e2433;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    button:hover {
+      background: #2b354a;
+      border-color: #38bdf8;
+    }
+    button.active {
+      background: #38bdf8;
+      color: #090b10;
+      font-weight: 700;
+      border-color: #38bdf8;
+    }
+
+    /* Code Output Box */
+    #code-output {
+      width: 960px;
+      margin-top: 12px;
+      background: #090b10;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 12px;
+      font-family: ui-monospace, monospace;
+      font-size: 0.75rem;
+      color: #38bdf8;
+      white-space: pre-wrap;
+      user-select: all;
+    }
+  </style>
+
+  <!-- Load Three.js & GLTFLoader via ES Modules and importmap -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <h1>Arc Reactor 3D Model &amp; Frame 0 Alignment Suite</h1>
+  <p class="subtitle">Pixel-perfect calibration between <code>arc-reactor.glb</code> and video frame at 0 seconds (<code>arc_reactor_frame0.png</code>)</p>
+
+  <!-- Top Mouse Drag Mode Switcher -->
+  <div style="display:flex; justify-content:space-between; width:960px; margin-bottom:10px; align-items:center;">
+    <div style="display:flex; gap:8px;">
+      <button id="btn-drag-3d" class="active" onclick="setMouseInteractionMode('3d')" style="padding:8px 16px; font-weight:700; background:#38bdf8; color:#090b10; border-color:#38bdf8; font-size:13px;">
+        🔄 Normal Drag: Spin 3D Model
+      </button>
+      <button id="btn-drag-img" onclick="setMouseInteractionMode('image')" style="padding:8px 16px; font-weight:700; font-size:13px; background:#1e2433; color:#f8fafc; border-color:#334155;">
+        ✋ Hold SHIFT: Grab Reference Image
+      </button>
+    </div>
+    <div id="drag-hud" style="font-size:12px; font-family:monospace; color:#a7f3d0; background:#11141c; padding:7px 14px; border-radius:4px; border:1px solid #059669;">
+      🔄 Normal Drag: Spins 3D Model | Hold SHIFT: Grabs Image
+    </div>
+  </div>
+
+  <!-- Comparison Stage -->
+  <div class="stage-wrapper mode-overlay" id="stage-wrapper">
+    <!-- Frame 0 Reference Video Still -->
+    <img id="ref-img" src="/assets/arc_reactor_frame0.png" alt="Reference Frame 0">
+    <!-- Three.js Canvas Layer -->
+    <canvas id="three-canvas" width="960" height="540"></canvas>
+  </div>
+
+  <!-- File Import / Assets Row -->
+  <div style="display:flex; justify-content:space-between; width:960px; margin-top:12px; align-items:center;">
+    <div style="display:flex; gap:8px;">
+      <input type="file" id="input-glb" accept=".glb,.gltf" style="display:none" onchange="handleGLBUpload(event)">
+      <button style="border-color:#38bdf8; color:#38bdf8; font-weight:700;" onclick="document.getElementById('input-glb').click()">
+        📁 Upload Custom GLB
+      </button>
+
+      <input type="file" id="input-img" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
+      <button style="border-color:#38bdf8; color:#38bdf8; font-weight:700;" onclick="document.getElementById('input-img').click()">
+        🖼️ Upload Reference Image
+      </button>
+
+      <input type="file" id="input-json" accept=".json" style="display:none" onchange="handleJSONUpload(event)">
+      <button style="border-color:#a7f3d0; color:#a7f3d0; font-weight:700;" onclick="document.getElementById('input-json').click()">
+        📂 Load Alignment JSON
+      </button>
+    </div>
+    <div id="file-hud" style="font-size:12px; font-family:monospace; color:#94a3b8; background:#11141c; padding:6px 12px; border-radius:4px; border:1px solid #1e293b;">
+      Assets: arc-reactor.glb &amp; arc_reactor_frame0.png
+    </div>
+  </div>
+
+  <!-- Bottom Action Bar -->
+  <div class="action-bar">
+    <div class="btn-row">
+      <button class="active" id="btn-mode-overlay" onclick="setMode('overlay')">50% Alpha Overlay</button>
+      <button id="btn-mode-diff" onclick="setMode('difference')">Difference Mode (Black = Aligned)</button>
+      <button id="btn-mode-screen" onclick="setMode('screen')">Screen Blend</button>
+      <button id="btn-mode-3d" onclick="setMode('3d-only')">3D Model Only</button>
+      <button id="btn-mode-ref" onclick="setMode('ref-only')">Reference Image Only</button>
+    </div>
+    <div class="btn-row">
+      <button onclick="resetDefaults()">Reset Defaults</button>
+      <button onclick="copyConfig()">📋 Copy JSON</button>
+      <button style="background: #38bdf8; color: #090b10; font-weight: 700;" onclick="downloadJSON()">💾 Save JSON File</button>
+    </div>
+  </div>
+
+  <!-- Interactive Sliders Panel -->
+  <div class="controls-panel" style="grid-template-columns: repeat(5, 1fr);">
+    <!-- Group 1: Rotation -->
+    <div class="control-group">
+      <h3>Rotation (Degrees)</h3>
+      <div class="ctrl-row">
+        <label>Pitch (Rot X)</label>
+        <input type="range" id="rotX" min="-180" max="180" step="0.5" value="0">
+        <span class="val" id="val-rotX">0°</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Yaw (Rot Y)</label>
+        <input type="range" id="rotY" min="-180" max="180" step="0.5" value="0">
+        <span class="val" id="val-rotY">0°</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Roll (Rot Z)</label>
+        <input type="range" id="rotZ" min="-180" max="180" step="0.5" value="0">
+        <span class="val" id="val-rotZ">0°</span>
+      </div>
+    </div>
+
+    <!-- Group 2: 3D Model Position -->
+    <div class="control-group">
+      <h3>3D Model Position</h3>
+      <div class="ctrl-row">
+        <label>Offset X</label>
+        <input type="range" id="posX" min="-2" max="2" step="0.005" value="0">
+        <span class="val" id="val-posX">0.00</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Offset Y</label>
+        <input type="range" id="posY" min="-2" max="2" step="0.005" value="0">
+        <span class="val" id="val-posY">0.00</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Offset Z</label>
+        <input type="range" id="posZ" min="-2" max="2" step="0.005" value="0">
+        <span class="val" id="val-posZ">0.00</span>
+      </div>
+      <div style="display:flex; gap:4px; margin-top:4px;">
+        <button style="padding:2px 6px; font-size:10px;" onclick="nudgeModelY(-0.1)">3D Down (-0.1)</button>
+        <button style="padding:2px 6px; font-size:10px;" onclick="nudgeModelY(0.1)">3D Up (+0.1)</button>
+      </div>
+    </div>
+
+    <!-- Group 3: Reference Image Nudge -->
+    <div class="control-group" style="background:#171d2b; padding:8px; border-radius:4px; border:1px solid #38bdf8;">
+      <h3 style="color:#38bdf8;">Image Offset (Nudge)</h3>
+      <div class="ctrl-row">
+        <label>Image Y</label>
+        <input type="range" id="imgY" min="-200" max="200" step="1" value="0">
+        <span class="val" id="val-imgY">0px</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Image X</label>
+        <input type="range" id="imgX" min="-200" max="200" step="1" value="0">
+        <span class="val" id="val-imgX">0px</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Image Zoom</label>
+        <input type="range" id="imgScale" min="0.5" max="2.0" step="0.01" value="1.0">
+        <span class="val" id="val-imgScale">1.00x</span>
+      </div>
+      <div style="display:flex; gap:4px; margin-top:4px;">
+        <button style="padding:2px 6px; font-size:10px;" onclick="nudgeImgY(-20)">Img Up (-20px)</button>
+        <button style="padding:2px 6px; font-size:10px;" onclick="nudgeImgY(20)">Img Down (+20px)</button>
+      </div>
+    </div>
+
+    <!-- Group 4: Scale & Camera -->
+    <div class="control-group">
+      <h3>Scale &amp; Camera</h3>
+      <div class="ctrl-row">
+        <label>Model Scale</label>
+        <input type="range" id="scale" min="0.1" max="5.0" step="0.005" value="1.0">
+        <span class="val" id="val-scale">1.00</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Camera FOV</label>
+        <input type="range" id="fov" min="15" max="75" step="0.5" value="45">
+        <span class="val" id="val-fov">45°</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Camera Dist</label>
+        <input type="range" id="camDist" min="0.5" max="5.0" step="0.02" value="2.0">
+        <span class="val" id="val-camDist">2.00</span>
+      </div>
+    </div>
+
+    <!-- Group 5: Lighting & Glow -->
+    <div class="control-group">
+      <h3>Lighting &amp; Glow</h3>
+      <div class="ctrl-row">
+        <label>Ambient Light</label>
+        <input type="range" id="ambient" min="0" max="3" step="0.05" value="0.8">
+        <span class="val" id="val-ambient">0.80</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Direct Light</label>
+        <input type="range" id="directional" min="0" max="5" step="0.1" value="2.0">
+        <span class="val" id="val-directional">2.0</span>
+      </div>
+      <div class="ctrl-row">
+        <label>Point (Core)</label>
+        <input type="range" id="pointLight" min="0" max="10" step="0.2" value="3.5">
+        <span class="val" id="val-pointLight">3.5</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Config Output -->
+  <div id="code-output">// Configuration will update here in real time...</div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    // --- THREE.JS SETUP ---
+    const canvas = document.getElementById('three-canvas');
+    const width = 960;
+    const height = 540;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio || 1);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    // Camera locked straight ahead (rotations applied directly to 3D model so orientation NEVER resets)
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    dirLight.position.set(2, 4, 3);
+    scene.add(dirLight);
+
+    const pointLight = new THREE.PointLight(0x00f0ff, 3.5, 10);
+    pointLight.position.set(0, 0, 0);
+    scene.add(pointLight);
+
+    // Model Container
+    let modelRoot = null;
+    const wrapper = new THREE.Group();
+    wrapper.name = 'reactorWrapper';
+    scene.add(wrapper);
+
+    const loader = new GLTFLoader();
+
+    loader.load('/models/arc-reactor.glb', (gltf) => {
+      modelRoot = gltf.scene;
+
+      // Center bounding box of raw geometry
+      const box = new THREE.Box3().setFromObject(modelRoot);
+      const center = box.getCenter(new THREE.Vector3());
+      modelRoot.position.sub(center);
+
+      wrapper.add(modelRoot);
+
+      updateTransform();
+      console.log('Arc Reactor 3D Model loaded successfully!');
+    }, undefined, (err) => {
+      console.error('Error loading arc-reactor.glb:', err);
+    });
+
+    // Inputs & Sliders
+    const inputs = {
+      rotX: document.getElementById('rotX'),
+      rotY: document.getElementById('rotY'),
+      rotZ: document.getElementById('rotZ'),
+      posX: document.getElementById('posX'),
+      posY: document.getElementById('posY'),
+      posZ: document.getElementById('posZ'),
+      scale: document.getElementById('scale'),
+      fov: document.getElementById('fov'),
+      camDist: document.getElementById('camDist'),
+      ambient: document.getElementById('ambient'),
+      directional: document.getElementById('directional'),
+      pointLight: document.getElementById('pointLight'),
+      imgY: document.getElementById('imgY'),
+      imgX: document.getElementById('imgX'),
+      imgScale: document.getElementById('imgScale')
+    };
+
+    const refImg = document.getElementById('ref-img');
+
+    function updateTransform() {
+      const rx = THREE.MathUtils.degToRad(parseFloat(inputs.rotX.value));
+      const ry = THREE.MathUtils.degToRad(parseFloat(inputs.rotY.value));
+      const rz = THREE.MathUtils.degToRad(parseFloat(inputs.rotZ.value));
+
+      const px = parseFloat(inputs.posX.value);
+      const py = parseFloat(inputs.posY.value);
+      const pz = parseFloat(inputs.posZ.value);
+
+      const s = parseFloat(inputs.scale.value);
+
+      const fovVal = parseFloat(inputs.fov.value);
+      const distVal = parseFloat(inputs.camDist.value);
+
+      const ambVal = parseFloat(inputs.ambient.value);
+      const dirVal = parseFloat(inputs.directional.value);
+      const ptVal = parseFloat(inputs.pointLight.value);
+
+      const iy = parseFloat(inputs.imgY.value);
+      const ix = parseFloat(inputs.imgX.value);
+      const is = parseFloat(inputs.imgScale.value);
+
+      // Update Labels
+      document.getElementById('val-rotX').textContent = inputs.rotX.value + '°';
+      document.getElementById('val-rotY').textContent = inputs.rotY.value + '°';
+      document.getElementById('val-rotZ').textContent = inputs.rotZ.value + '°';
+      document.getElementById('val-posX').textContent = px.toFixed(3);
+      document.getElementById('val-posY').textContent = py.toFixed(3);
+      document.getElementById('val-posZ').textContent = pz.toFixed(3);
+      document.getElementById('val-scale').textContent = s.toFixed(3);
+      document.getElementById('val-fov').textContent = fovVal.toFixed(1) + '°';
+      document.getElementById('val-camDist').textContent = distVal.toFixed(2);
+      document.getElementById('val-ambient').textContent = ambVal.toFixed(2);
+      document.getElementById('val-directional').textContent = dirVal.toFixed(1);
+      document.getElementById('val-pointLight').textContent = ptVal.toFixed(1);
+
+      document.getElementById('val-imgY').textContent = iy + 'px';
+      document.getElementById('val-imgX').textContent = ix + 'px';
+      document.getElementById('val-imgScale').textContent = is.toFixed(2) + 'x';
+
+      // Nudge reference image
+      if (refImg) {
+        refImg.style.transform = `translate(${ix}px, ${iy}px) scale(${is})`;
+      }
+
+      if (wrapper) {
+        wrapper.rotation.set(rx, ry, rz);
+        wrapper.position.set(px, py, pz);
+        wrapper.scale.setScalar(s);
+      }
+
+      camera.fov = fovVal;
+      camera.position.z = distVal;
+      camera.updateProjectionMatrix();
+
+      ambientLight.intensity = ambVal;
+      dirLight.intensity = dirVal;
+      pointLight.intensity = ptVal;
+
+      // 1 pixel to Three.js units conversion
+      const vFOV = (fovVal * Math.PI) / 180;
+      const visibleHeight = 2 * Math.tan(vFOV / 2) * distVal;
+      const unitsPerPixel = visibleHeight / 540;
+      const effectivePosY = py - (iy * unitsPerPixel);
+      const effectivePosX = px + (ix * unitsPerPixel);
+
+      // Update Code Output
+      const configObj = {
+        rotation: { x: parseFloat(inputs.rotX.value), y: parseFloat(inputs.rotY.value), z: parseFloat(inputs.rotZ.value) },
+        position: { x: px, y: py, z: pz },
+        scale: s,
+        camera: { fov: fovVal, distanceZ: distVal },
+        lighting: { ambient: ambVal, directional: dirVal, pointCore: ptVal },
+        imageNudge: { offsetX_px: ix, offsetY_px: iy, scale: is },
+        effective3DPosition: { x: parseFloat(effectivePosX.toFixed(4)), y: parseFloat(effectivePosY.toFixed(4)), z: pz }
+      };
+
+      document.getElementById('code-output').textContent = 
+`// Aligned Arc Reactor Configuration
+export const ALIGNED_ARC_REACTOR_CONFIG = ${JSON.stringify(configObj, null, 2)};`;
+    }
+
+    function nudgeModelY(delta) {
+      inputs.posY.value = (parseFloat(inputs.posY.value) + delta).toFixed(3);
+      updateTransform();
+    }
+    function nudgeImgY(delta) {
+      inputs.imgY.value = (parseFloat(inputs.imgY.value) + delta).toFixed(0);
+      updateTransform();
+    }
+    window.nudgeModelY = nudgeModelY;
+    window.nudgeImgY = nudgeImgY;
+
+    // Read URL query params if present
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('mode')) setMode(params.get('mode'));
+    ['rotX', 'rotY', 'rotZ', 'posX', 'posY', 'posZ', 'scale', 'fov', 'camDist', 'ambient', 'directional', 'pointLight', 'imgY', 'imgX', 'imgScale'].forEach(k => {
+      if (params.has(k) && inputs[k]) {
+        inputs[k].value = params.get(k);
+      }
+    });
+    updateTransform();
+
+    // Attach listeners
+    Object.values(inputs).forEach(input => {
+      input.addEventListener('input', updateTransform);
+    });
+
+    // View Modes
+    function setMode(mode) {
+      const stage = document.getElementById('stage-wrapper');
+      stage.className = 'stage-wrapper mode-' + mode;
+
+      document.querySelectorAll('.btn-row button').forEach(b => {
+        if (b.id.startsWith('btn-mode-')) b.classList.remove('active');
+      });
+      const activeBtn = document.getElementById('btn-mode-' + mode);
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    function resetDefaults() {
+      inputs.rotX.value = 0;
+      inputs.rotY.value = 0;
+      inputs.rotZ.value = 0;
+      inputs.posX.value = 0;
+      inputs.posY.value = 0;
+      inputs.posZ.value = 0;
+      inputs.scale.value = 1.0;
+      inputs.fov.value = 45;
+      inputs.camDist.value = 2.0;
+      inputs.ambient.value = 0.8;
+      inputs.directional.value = 2.0;
+      inputs.pointLight.value = 3.5;
+      updateTransform();
+    }
+
+    function copyConfig() {
+      const config = getConfigJSON();
+      navigator.clipboard.writeText(JSON.stringify(config, null, 2)).then(() => {
+        alert('Alignment JSON copied to clipboard!');
+      });
+    }
+
+    function downloadJSON() {
+      const config = getConfigJSON();
+      const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'arc-reactor-alignment.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function getConfigJSON() {
+      const px = parseFloat(inputs.posX.value);
+      const py = parseFloat(inputs.posY.value);
+      const pz = parseFloat(inputs.posZ.value);
+      const fovVal = parseFloat(inputs.fov.value);
+      const distVal = parseFloat(inputs.camDist.value);
+      const iy = parseFloat(inputs.imgY.value);
+      const ix = parseFloat(inputs.imgX.value);
+      const is = parseFloat(inputs.imgScale.value);
+
+      const vFOV = (fovVal * Math.PI) / 180;
+      const visibleHeight = 2 * Math.tan(vFOV / 2) * distVal;
+      const unitsPerPixel = visibleHeight / 540;
+      const effectivePosY = py - (iy * unitsPerPixel);
+      const effectivePosX = px + (ix * unitsPerPixel);
+
+      return {
+        rotation: {
+          x: parseFloat(inputs.rotX.value),
+          y: parseFloat(inputs.rotY.value),
+          z: parseFloat(inputs.rotZ.value)
+        },
+        position: { x: px, y: py, z: pz },
+        scale: parseFloat(inputs.scale.value),
+        camera: {
+          fov: fovVal,
+          distanceZ: distVal
+        },
+        lighting: {
+          ambient: parseFloat(inputs.ambient.value),
+          directional: parseFloat(inputs.directional.value),
+          pointCore: parseFloat(inputs.pointLight.value)
+        },
+        imageNudge: {
+          offsetX_px: ix,
+          offsetY_px: iy,
+          scale: is
+        },
+        effective3DPosition: {
+          x: parseFloat(effectivePosX.toFixed(4)),
+          y: parseFloat(effectivePosY.toFixed(4)),
+          z: pz
+        }
+      };
+    }
+
+    // Keyboard fine-tuning shortcuts
+    window.addEventListener('keydown', (e) => {
+      let changed = false;
+      const step = e.shiftKey ? 2.0 : 0.5;
+      if (e.key === 'ArrowLeft') { inputs.rotY.value = (parseFloat(inputs.rotY.value) - step).toFixed(1); changed = true; }
+      if (e.key === 'ArrowRight') { inputs.rotY.value = (parseFloat(inputs.rotY.value) + step).toFixed(1); changed = true; }
+      if (e.key === 'ArrowUp') { inputs.rotX.value = (parseFloat(inputs.rotX.value) - step).toFixed(1); changed = true; }
+      if (e.key === 'ArrowDown') { inputs.rotX.value = (parseFloat(inputs.rotX.value) + step).toFixed(1); changed = true; }
+      if (e.key === '[') { inputs.scale.value = (parseFloat(inputs.scale.value) - 0.02).toFixed(2); changed = true; }
+      if (e.key === ']') { inputs.scale.value = (parseFloat(inputs.scale.value) + 0.02).toFixed(2); changed = true; }
+      if (changed) {
+        e.preventDefault();
+        updateTransform();
+      }
+    });
+
+    // --- INTERACTIVE MOUSE DRAG ENGINE (NO RESETTING) ---
+    // Rule:
+    // 1. Normal Drag (no Shift): Grabs & spins 3D model (Yaw/Pitch)
+    // 2. Shift + Drag (or Right-Click): Grabs & drags reference image (imgX/imgY)
+    // 3. Alt / Middle-Click + Drag: Pan 3D model position (posX/posY)
+    let forcedMode = null; // null = auto (Shift switches to image), '3d', or 'image'
+    const stageWrapper = document.getElementById('stage-wrapper');
+
+    let isDraggingImg = false;
+    let isDragging3D = false;
+    let isPanning3D = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let initialImgX = 0;
+    let initialImgY = 0;
+    let initialRotX = 0;
+    let initialRotY = 0;
+    let initialPosX = 0;
+    let initialPosY = 0;
+
+    function setMouseInteractionMode(mode) {
+      if (forcedMode === mode) {
+        forcedMode = null; // toggle back to auto
+      } else {
+        forcedMode = mode;
+      }
+      updateHudHint(false);
+    }
+
+    function updateHudHint(shift = false) {
+      const btnImg = document.getElementById('btn-drag-img');
+      const btn3D = document.getElementById('btn-drag-3d');
+      const hud = document.getElementById('drag-hud');
+      if (!hud) return;
+
+      const isImage = (forcedMode === 'image') || (forcedMode !== '3d' && shift);
+
+      if (isImage) {
+        if (btnImg) { btnImg.style.background = '#38bdf8'; btnImg.style.color = '#090b10'; btnImg.style.borderColor = '#38bdf8'; }
+        if (btn3D) { btn3D.style.background = '#1e2433'; btn3D.style.color = '#f8fafc'; btn3D.style.borderColor = '#334155'; }
+        hud.innerHTML = `✋ <b>SHIFT HELD (or Image Mode):</b> Dragging grabs &amp; moves Reference Image!`;
+        hud.style.color = '#38bdf8';
+        hud.style.borderColor = '#38bdf8';
+        stageWrapper.style.cursor = 'move';
+      } else {
+        if (btn3D) { btn3D.style.background = '#38bdf8'; btn3D.style.color = '#090b10'; btn3D.style.borderColor = '#38bdf8'; }
+        if (btnImg) { btnImg.style.background = '#1e2433'; btnImg.style.color = '#f8fafc'; btnImg.style.borderColor = '#334155'; }
+        hud.innerHTML = `🔄 <b>NORMAL DRAG:</b> Grabs &amp; spins 3D Model | <b>HOLD SHIFT:</b> Grabs Image`;
+        hud.style.color = '#a7f3d0';
+        hud.style.borderColor = '#059669';
+        stageWrapper.style.cursor = 'grab';
+      }
+    }
+
+    stageWrapper.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    stageWrapper.addEventListener('mousedown', (e) => {
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      stageWrapper.classList.add('dragging');
+
+      const isImage = (forcedMode === 'image') || (forcedMode !== '3d' && (e.shiftKey || e.button === 2));
+
+      if (isImage) {
+        // Shift + Drag (or Right-Click): Grab & move reference image
+        isDraggingImg = true;
+        initialImgX = parseFloat(inputs.imgX.value) || 0;
+        initialImgY = parseFloat(inputs.imgY.value) || 0;
+      } else if (e.altKey || e.button === 1) {
+        // Alt + Drag (or Middle-Click): Pan 3D Model position
+        isPanning3D = true;
+        initialPosX = parseFloat(inputs.posX.value) || 0;
+        initialPosY = parseFloat(inputs.posY.value) || 0;
+      } else {
+        // Normal Drag (no Shift): Grab & spin 3D model!
+        isDragging3D = true;
+        initialRotX = parseFloat(inputs.rotX.value) || 0;
+        initialRotY = parseFloat(inputs.rotY.value) || 0;
+      }
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isDraggingImg) {
+        const dx = e.clientX - dragStartX;
+        const dy = e.clientY - dragStartY;
+        inputs.imgX.value = Math.round(initialImgX + dx);
+        inputs.imgY.value = Math.round(initialImgY + dy);
+        updateTransform();
+        const hud = document.getElementById('drag-hud');
+        if (hud) hud.innerHTML = `✋ <b>Image Offset:</b> X: ${inputs.imgX.value}px | Y: ${inputs.imgY.value}px`;
+      } else if (isPanning3D) {
+        const dx = e.clientX - dragStartX;
+        const dy = e.clientY - dragStartY;
+        inputs.posX.value = (initialPosX + dx * 0.003).toFixed(3);
+        inputs.posY.value = (initialPosY - dy * 0.003).toFixed(3);
+        updateTransform();
+        const hud = document.getElementById('drag-hud');
+        if (hud) hud.innerHTML = `📐 <b>3D Position Offset:</b> X: ${inputs.posX.value} | Y: ${inputs.posY.value}`;
+      } else if (isDragging3D) {
+        const dx = e.clientX - dragStartX;
+        const dy = e.clientY - dragStartY;
+        // Sensitivity: 0.35 degrees per px
+        let newRotY = (initialRotY + dx * 0.35);
+        let newRotX = (initialRotX + dy * 0.35);
+        if (newRotY > 180) newRotY -= 360;
+        if (newRotY < -180) newRotY += 360;
+        if (newRotX > 180) newRotX = 180;
+        if (newRotX < -180) newRotX = -180;
+        inputs.rotY.value = newRotY.toFixed(1);
+        inputs.rotX.value = newRotX.toFixed(1);
+        updateTransform();
+        const hud = document.getElementById('drag-hud');
+        if (hud) hud.innerHTML = `🔄 <b>3D Rotation:</b> Pitch (X): ${inputs.rotX.value}° | Yaw (Y): ${inputs.rotY.value}°`;
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDraggingImg = false;
+      isDragging3D = false;
+      isPanning3D = false;
+      stageWrapper.classList.remove('dragging');
+      updateHudHint(false);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Shift') updateHudHint(true);
+    });
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'Shift') updateHudHint(false);
+    });
+
+    // Mouse wheel inside stage: Shift+wheel zooms image, normal wheel scales 3D model
+    stageWrapper.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (e.shiftKey || forcedMode === 'image') {
+        const delta = e.deltaY < 0 ? 0.02 : -0.02;
+        const newScale = Math.max(0.5, Math.min(2.0, parseFloat(inputs.imgScale.value) + delta));
+        inputs.imgScale.value = newScale.toFixed(2);
+        updateTransform();
+      } else {
+        const delta = e.deltaY < 0 ? 0.02 : -0.02;
+        const newScale = Math.max(0.1, Math.min(5.0, parseFloat(inputs.scale.value) + delta));
+        inputs.scale.value = newScale.toFixed(3);
+        updateTransform();
+      }
+    }, { passive: false });
+
+    function handleGLBUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const contents = evt.target.result;
+        loader.parse(contents, '', (gltf) => {
+          if (modelRoot) {
+            wrapper.remove(modelRoot);
+          }
+          modelRoot = gltf.scene;
+          const box = new THREE.Box3().setFromObject(modelRoot);
+          const center = box.getCenter(new THREE.Vector3());
+          modelRoot.position.sub(center);
+          wrapper.add(modelRoot);
+          updateTransform();
+          const hud = document.getElementById('file-hud');
+          if (hud) {
+            hud.textContent = `✅ Loaded 3D Model: ${file.name}`;
+            hud.style.color = '#38bdf8';
+          }
+        }, (err) => {
+          alert('Error parsing GLB: ' + err);
+        });
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function handleImageUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      if (refImg) {
+        refImg.src = url;
+        const hud = document.getElementById('file-hud');
+        if (hud) {
+          hud.textContent = `✅ Loaded Reference Image: ${file.name}`;
+          hud.style.color = '#38bdf8';
+        }
+      }
+    }
+
+    function handleJSONUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const cfg = JSON.parse(evt.target.result);
+          if (cfg.rotation) {
+            if (cfg.rotation.x !== undefined) inputs.rotX.value = cfg.rotation.x;
+            if (cfg.rotation.y !== undefined) inputs.rotY.value = cfg.rotation.y;
+            if (cfg.rotation.z !== undefined) inputs.rotZ.value = cfg.rotation.z;
+          }
+          if (cfg.position) {
+            if (cfg.position.x !== undefined) inputs.posX.value = cfg.position.x;
+            if (cfg.position.y !== undefined) inputs.posY.value = cfg.position.y;
+            if (cfg.position.z !== undefined) inputs.posZ.value = cfg.position.z;
+          }
+          if (cfg.scale !== undefined) inputs.scale.value = cfg.scale;
+          if (cfg.camera) {
+            if (cfg.camera.fov !== undefined) inputs.fov.value = cfg.camera.fov;
+            if (cfg.camera.distanceZ !== undefined) inputs.camDist.value = cfg.camera.distanceZ;
+          }
+          if (cfg.lighting) {
+            if (cfg.lighting.ambient !== undefined) inputs.ambient.value = cfg.lighting.ambient;
+            if (cfg.lighting.directional !== undefined) inputs.directional.value = cfg.lighting.directional;
+            if (cfg.lighting.pointCore !== undefined) inputs.pointLight.value = cfg.lighting.pointCore;
+          }
+          if (cfg.imageNudge) {
+            if (cfg.imageNudge.offsetX_px !== undefined) inputs.imgX.value = cfg.imageNudge.offsetX_px;
+            if (cfg.imageNudge.offsetY_px !== undefined) inputs.imgY.value = cfg.imageNudge.offsetY_px;
+            if (cfg.imageNudge.scale !== undefined) inputs.imgScale.value = cfg.imageNudge.scale;
+          }
+          updateTransform();
+          const hud = document.getElementById('file-hud');
+          if (hud) {
+            hud.textContent = `✅ Alignment JSON imported: ${file.name}`;
+            hud.style.color = '#a7f3d0';
+          }
+        } catch (err) {
+          alert('Invalid JSON file: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    window.handleGLBUpload = handleGLBUpload;
+    window.handleImageUpload = handleImageUpload;
+    window.handleJSONUpload = handleJSONUpload;
+    window.setMouseInteractionMode = setMouseInteractionMode;
+    window.setMode = setMode;
+    window.resetDefaults = resetDefaults;
+    window.copyConfig = copyConfig;
+    window.downloadJSON = downloadJSON;
+
+    // Render Loop (Direct Three.js Render - No OrbitControls fighting)
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

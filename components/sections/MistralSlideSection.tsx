@@ -2106,6 +2106,8 @@ export default function SectionWipeTransitions() {
       const COLS = 10;
       const FRAME_WIDTH = 960;
       const FRAME_HEIGHT = 540;
+      const START_FRAME = 24; // 1.0s (frame 24): cut out 0..23 static video
+      const END_FRAME = 96;   // 4.0s (frame 96): exploded / opened reactor state
 
       const canvasEl = ov1.querySelector("#ov1-bg-canvas") as HTMLCanvasElement | null;
       const canvas3D = ov1.querySelector("#ov1-3d-canvas") as HTMLCanvasElement | null;
@@ -2125,32 +2127,37 @@ export default function SectionWipeTransitions() {
       const sheet1 = new Image();
       const sheet2 = new Image();
 
-      let currentFrameFloat = 0;
+      let currentFrameFloat = START_FRAME;
       let lastDrawnFrame = -1;
-      let targetGoalFrame = 0; // 0 (closed, 0.0s) or 96 (opened, 4.0s)
+      let targetGoalFrame = START_FRAME; // 0 (closed, 0.0s) or 96 (opened, 4.0s)
       let iceVelocity = 0;
       let isIceSliding = false;
       let animRafId: number | null = null;
 
       const renderFrame = (pos: number, force = false) => {
         if (!ctx) return;
-        const normalizedPos = ((Math.floor(pos) % BOOMERANG_CYCLE) + BOOMERANG_CYCLE) % BOOMERANG_CYCLE;
-        // Seamless boomerang ping-pong: forward 0..119, then reverse 118..1
-        const frameIdx = normalizedPos < TOTAL_FRAMES ? normalizedPos : BOOMERANG_CYCLE - normalizedPos;
+        // Strictly clamp frameIdx between START_FRAME (24) and END_FRAME (96)
+        // Frames 0..23 (first 1.0 second static video) are strictly excised from video playback!
+        const clampedPos = Math.max(START_FRAME, Math.min(END_FRAME, pos));
+        const frameIdx = Math.round(clampedPos);
 
         // Transition 3D Arc Reactor canvas opacity:
-        // Mutual Exclusivity:
-        // - When video exists (scrolling / sliding / frames 0..94): GLB disappears immediately (opacity: 0).
-        // - When video is at 4s opened rest state (frame >= 95) and GLB is loaded: video fast-fades out (opacity: 0) and GLB is there (opacity: 1)!
-        const isAt4sRestState = frameIdx >= 95 && !isIceSliding;
-        const glbReady = reactorController ? reactorController.isReady("opened") : false;
+        // - First second (frames 0..23) is cut out: At START_FRAME (24), video is hidden and closed 3D model is rendered at calibrated pose!
+        // - While video is active / boomeranging (frames 25..94): video exists (opacity: 1), 3D GLB is hidden (opacity: 0).
+        // - At END_FRAME (96, 4.0s): video fast-fades out, and opened 3D GLB is rendered!
+        const isAtClosedRest = frameIdx <= START_FRAME && !isIceSliding;
+        const isAtOpenedRest = frameIdx >= END_FRAME - 1 && !isIceSliding;
 
-        if (isAt4sRestState && glbReady) {
-          // Video doesn't exist, GLB is there!
+        if (isAtClosedRest) {
+          // Resting at calibrated closed position: video hidden, 3D closed reactor active!
+          reactorController?.setOpacity(1, "closed");
+          if (canvasEl) canvasEl.style.opacity = "0";
+        } else if (isAtOpenedRest) {
+          // Resting at opened state: video hidden, 3D opened reactor active!
           reactorController?.setOpacity(1, "opened");
           if (canvasEl) canvasEl.style.opacity = "0";
         } else {
-          // Video exists, GLB disappears!
+          // Video is active / boomeranging: video exists, 3D model hidden!
           reactorController?.setOpacity(0);
           if (canvasEl) canvasEl.style.opacity = "1";
         }
@@ -2186,7 +2193,7 @@ export default function SectionWipeTransitions() {
 
       const onSheet1Load = () => {
         sheet1Loaded = true;
-        renderFrame(0, true);
+        renderFrame(START_FRAME, true);
       };
       const onSheet2Load = () => {
         sheet2Loaded = true;
@@ -2231,9 +2238,15 @@ export default function SectionWipeTransitions() {
           iceVelocity = Math.max(-maxVel, Math.min(maxVel, iceVelocity));
 
           currentFrameFloat += iceVelocity;
+          // Strictly clamp so it NEVER dips below START_FRAME (24) or above END_FRAME (96)
+          currentFrameFloat = Math.max(START_FRAME, Math.min(END_FRAME, currentFrameFloat));
 
-          // Clean snap on arrival
-          if (Math.abs(diff) < 0.25 && Math.abs(iceVelocity) < 0.25) {
+          // Clean snap on arrival at destination or reaching START_FRAME
+          const reachedTarget = Math.abs(diff) < 0.25 && Math.abs(iceVelocity) < 0.25;
+          const hitStartBoundary = targetGoalFrame === START_FRAME && currentFrameFloat <= START_FRAME + 0.15;
+          const hitEndBoundary = targetGoalFrame === END_FRAME && currentFrameFloat >= END_FRAME - 0.15;
+
+          if (reachedTarget || hitStartBoundary || hitEndBoundary) {
             currentFrameFloat = targetGoalFrame;
             iceVelocity = 0;
             isIceSliding = false;
@@ -2260,6 +2273,7 @@ export default function SectionWipeTransitions() {
       const stopOv1Playback = () => {
         iceVelocity = 0;
         isIceSliding = false;
+        isAligningBeforeSlide = false;
         if (animRafId !== null) {
           cancelAnimationFrame(animRafId);
           animRafId = null;
@@ -2267,21 +2281,40 @@ export default function SectionWipeTransitions() {
       };
 
       // Ice sliding trigger: smoothly glides to 4.0s (frame 96) on down scroll, or back to 0.0s (frame 0) on up scroll
+      let isAligningBeforeSlide = false;
+
       const triggerIceSlide = (direction: number) => {
         if (!isOv1InView()) {
           stopOv1Playback();
           return;
         }
+
+        if (isAligningBeforeSlide) return;
+
+        // If resting at closed reactor (frame 24) and scrolling forward:
+        // 3D GLB model must boomerang back to original calibrated position FIRST before transposing into video!
+        if (direction > 0 && currentFrameFloat <= START_FRAME + 0.5 && reactorController && !reactorController.isAtBasePose()) {
+          isAligningBeforeSlide = true;
+          reactorController.onScrollActivity(true);
+          reactorController.boomerangToBase(() => {
+            isAligningBeforeSlide = false;
+            targetGoalFrame = END_FRAME;
+            isIceSliding = true;
+            startAnimIfNeeded();
+          });
+          return;
+        }
+
         if (reactorController) {
           reactorController.onScrollActivity(true);
         }
 
         if (direction > 0) {
           // Slide forward on ice to 4.0s (frame 96, opened reactor)
-          targetGoalFrame = 96;
+          targetGoalFrame = END_FRAME;
         } else {
-          // Slide backward on ice to 0.0s (frame 0, closed reactor)
-          targetGoalFrame = 0;
+          // Slide backward on ice to 1.0s (frame 24, closed reactor)
+          targetGoalFrame = START_FRAME;
         }
 
         isIceSliding = true;
