@@ -2142,22 +2142,16 @@ export default function SectionWipeTransitions() {
         const frameIdx = Math.round(clampedPos);
 
         // Transition 3D Arc Reactor canvas opacity:
-        // - First second (frames 0..23) is cut out: At START_FRAME (24), video is hidden and closed 3D model is rendered at calibrated pose!
-        // - While video is active / boomeranging (frames 25..94): video exists (opacity: 1), 3D GLB is hidden (opacity: 0).
-        // - At END_FRAME (96, 4.0s): video fast-fades out, and opened 3D GLB is rendered!
+        // - At START_FRAME (36), video is hidden and closed 3D model is rendered at calibrated pose!
+        // - While video is active / boomeranging / resting opened (frames 36..96): video exists (opacity: 1), 3D GLB is hidden (opacity: 0).
         const isAtClosedRest = frameIdx <= START_FRAME && !isIceSliding;
-        const isAtOpenedRest = frameIdx >= END_FRAME - 1 && !isIceSliding;
 
         if (isAtClosedRest) {
           // Resting at calibrated closed position: video hidden, 3D closed reactor active!
-          reactorController?.setOpacity(1, "closed");
-          if (canvasEl) canvasEl.style.opacity = "0";
-        } else if (isAtOpenedRest) {
-          // Resting at opened state: video hidden, 3D opened reactor active!
-          reactorController?.setOpacity(1, "opened");
+          reactorController?.setOpacity(1);
           if (canvasEl) canvasEl.style.opacity = "0";
         } else {
-          // Video is active / boomeranging: video exists, 3D model hidden!
+          // Video is active / boomeranging / resting at opened: video exists, 3D model hidden!
           reactorController?.setOpacity(0);
           if (canvasEl) canvasEl.style.opacity = "1";
         }

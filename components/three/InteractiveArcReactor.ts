@@ -1,31 +1,5 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-// Calibration Extension HUD tool (commented out as requested)
-// import { initArcReactorCalibrationExtension } from "./ArcReactorCalibrationExtension";
-
-export const OPENED_REACTOR_ALIGNMENT = {
-  rotation: {
-    x: 6.0,   // degrees (pitch / latitude) matching 4.0s opened video frame
-    y: -20.5, // degrees (yaw / longitude) matching 4.0s opened video frame
-    z: 12.0,  // degrees (roll)
-  },
-  position: {
-    x: -0.05, // Calibrated X center matching video optical core
-    y: 0.072, // Calibrated Y center
-    z: 0,
-  },
-  scale: 0.86,
-  camera: {
-    fov: 42,
-    distanceZ: 2.1,
-  },
-  lighting: {
-    ambient: 0.75,
-    directional: 2.2,
-    pointCore: 2.5,
-  },
-};
 
 export const CLOSED_REACTOR_ALIGNMENT = {
   rotation: {
@@ -44,21 +18,18 @@ export const CLOSED_REACTOR_ALIGNMENT = {
     distanceZ: 2.1,
   },
   lighting: {
-    ambient: 0.75,
+    ambient: 0.85,
     directional: 2.2,
-    pointCore: 2.5,
+    pointCore: 3.5,
   },
 };
 
 // Default export alias
 export const ARC_REACTOR_ALIGNMENT = CLOSED_REACTOR_ALIGNMENT;
 
-export type ReactorState = "opened" | "closed";
-
 export interface ArcReactorController {
-  isReady: (state?: ReactorState) => boolean;
-  setOpacity: (alpha: number, state?: ReactorState) => void;
-  setState: (state: ReactorState) => void;
+  isReady: () => boolean;
+  setOpacity: (alpha: number) => void;
   resetToDefaultPose: (instant?: boolean) => void;
   onScrollActivity: (isScrolling: boolean) => void;
   isAtBasePose: () => boolean;
@@ -68,124 +39,8 @@ export interface ArcReactorController {
 }
 
 /**
- * Upgrades the Tripo-generated GLB model into a balanced, photorealistic PBR material
- * that accurately matches the lighting, metallic steel colors, copper wire accents, and luminous cyan core
- * seen in the reference pictures and video (without crushing shadows to pitch black or blowing out into blinding neon).
- */
-function upgradeTripoReactorMaterials(root: THREE.Object3D) {
-  root.traverse((child) => {
-    if (!(child as THREE.Mesh).isMesh) return;
-    const mesh = child as THREE.Mesh;
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-
-    const origMat = Array.isArray(mesh.material) ? mesh.material[0] : mesh.material;
-    if (!(origMat instanceof THREE.MeshStandardMaterial)) return;
-
-    if (origMat.map) {
-      origMat.map.colorSpace = THREE.SRGBColorSpace;
-      origMat.map.anisotropy = 16;
-      origMat.map.needsUpdate = true;
-    }
-
-    // Natural PBR metalness and roughness matching real machined steel/titanium
-    origMat.metalness = 0.75;
-    origMat.roughness = 0.36;
-    origMat.envMapIntensity = 1.25;
-
-    origMat.userData.reactorUniforms = {
-      uMetalnessBase: { value: 0.75 },
-      uRoughnessMin: { value: 0.22 },
-      uRoughnessMax: { value: 0.48 },
-      uCyanThreshold: { value: 0.08 },
-      uCyanSoftness: { value: 0.20 },
-      uEmissiveBoost: { value: 1.5 }, // Balanced luminous glow matching reference picture
-      uCoreCyanColor: { value: new THREE.Color("#00e5ff") },
-      uDeepBlueColor: { value: new THREE.Color("#0077ff") },
-    };
-
-    origMat.customProgramCacheKey = () => "tripo-arc-reactor-balanced-pbr-v4";
-
-    origMat.onBeforeCompile = (shader) => {
-      Object.assign(shader.uniforms, origMat.userData.reactorUniforms);
-
-      shader.fragmentShader =
-        `
-        uniform float uMetalnessBase;
-        uniform float uRoughnessMin;
-        uniform float uRoughnessMax;
-        uniform float uCyanThreshold;
-        uniform float uCyanSoftness;
-        uniform float uEmissiveBoost;
-        uniform vec3 uCoreCyanColor;
-        uniform vec3 uDeepBlueColor;
-        float vEmissiveMask;
-        float vSurfaceLuma;
-        ` + shader.fragmentShader;
-
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <map_fragment>",
-        `
-        #include <map_fragment>
-
-        vSurfaceLuma = dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114));
-
-        // Detect cyan / electric-blue glowing core and segmented coils:
-        float coolDelta = max(diffuseColor.g, diffuseColor.b) - (diffuseColor.r * 1.10);
-        float cyanMask = smoothstep(uCyanThreshold, uCyanThreshold + uCyanSoftness, coolDelta);
-
-        // Catch bright white-cyan core centers
-        float hotWhiteCore = smoothstep(0.75, 0.96, vSurfaceLuma) *
-                             smoothstep(-0.02, 0.08, diffuseColor.b - diffuseColor.r);
-
-        vEmissiveMask = clamp(max(cyanMask, hotWhiteCore), 0.0, 1.0);
-
-        // Natural color preservation:
-        // Do NOT crush to black! Keep the crisp steel, copper coils, and metallic tones from the texture
-        vec3 naturalMetalAlbedo = pow(max(diffuseColor.rgb, vec3(0.001)), vec3(1.10)) * 1.02;
-        diffuseColor.rgb = mix(naturalMetalAlbedo, diffuseColor.rgb, vEmissiveMask);
-        `
-      );
-
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <roughnessmap_fragment>",
-        `
-        #include <roughnessmap_fragment>
-        float machinedSpecMask = smoothstep(0.18, 0.70, vSurfaceLuma);
-        float chassisRoughness = mix(uRoughnessMax, uRoughnessMin, machinedSpecMask);
-        roughnessFactor = mix(chassisRoughness, 0.14, vEmissiveMask);
-        `
-      );
-
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <metalnessmap_fragment>",
-        `
-        #include <metalnessmap_fragment>
-        metalnessFactor = mix(uMetalnessBase, 0.12, vEmissiveMask);
-        `
-      );
-
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <emissivemap_fragment>",
-        `
-        #include <emissivemap_fragment>
-        float coreHotness = smoothstep(0.35, 0.88, vSurfaceLuma);
-        vec3 plasmaGradient = mix(uDeepBlueColor, uCoreCyanColor, coreHotness);
-        vec3 whiteHotCenter = mix(plasmaGradient, vec3(0.92, 0.98, 1.0), smoothstep(0.72, 0.96, vSurfaceLuma));
-
-        totalEmissiveRadiance += whiteHotCenter * vEmissiveMask * uEmissiveBoost;
-        `
-      );
-    };
-
-    origMat.needsUpdate = true;
-  });
-}
-
-/**
- * Initializes the interactive Three.js 3D Arc Reactor inside the provided container.
- * - Perfectly calibrated to the resting frame
- * - Balanced studio lighting clearly illuminating the metallic chassis and copper coils matching the reference picture
+ * Initializes the interactive Three.js 3D Arc Reactor (closed model only).
+ * - Exact lighting & authentic PBR materials matching the calibration tool and reference picture
  * - High-speed momentum spinning with magnetic auto-adjust boomerang return
  * - Subtle hover micro-spin & tilt responsiveness
  * - Boomerang return on scroll before transposing to video
@@ -193,12 +48,12 @@ function upgradeTripoReactorMaterials(root: THREE.Object3D) {
 export function initInteractiveArcReactor(
   canvas: HTMLCanvasElement,
   container: HTMLElement,
-  onModelLoaded?: (state: ReactorState) => void
+  onModelLoaded?: () => void
 ): ArcReactorController {
   const width = canvas.width || 960;
   const height = canvas.height || 540;
 
-  // 1. Renderer Setup with Soft Shadows, IBL & ACES Tone Mapping
+  // 1. Renderer Setup with ACES Tone Mapping matching the calibration tool
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
@@ -208,18 +63,12 @@ export function initInteractiveArcReactor(
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.08;
+  renderer.toneMappingExposure = 1.2;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   // 2. Scene & Camera
   const scene = new THREE.Scene();
-
-  // Synthetic RoomEnvironment IBL for razor-sharp machined metal reflections
-  const pmremGenerator = new THREE.PMREMGenerator(renderer);
-  pmremGenerator.compileEquirectangularShader();
-  const roomEnv = new RoomEnvironment();
-  scene.environment = pmremGenerator.fromScene(roomEnv, 0.04).texture;
 
   const camera = new THREE.PerspectiveCamera(
     CLOSED_REACTOR_ALIGNMENT.camera.fov,
@@ -229,45 +78,38 @@ export function initInteractiveArcReactor(
   );
   camera.position.set(0, 0, CLOSED_REACTOR_ALIGNMENT.camera.distanceZ);
 
-  // 3. Balanced Studio Lighting Setup (Clearly illuminates metallic chassis, screws, and copper coils)
-  // (a) Clean ambient light so all metallic parts are clearly visible (not black!)
+  // 3. Clean Studio Lighting Setup (Matching calibration suite & reference picture)
+  // (a) Clean ambient light so all metallic parts, screws, and coils are clearly illuminated
   const ambientLight = new THREE.AmbientLight(0xffffff, CLOSED_REACTOR_ALIGNMENT.lighting.ambient);
   scene.add(ambientLight);
 
-  // (b) Primary Key Directional Light: Crisp specular highlight from front-right
+  // (b) Primary Key Directional Light: Crisp specular highlights from front-right
   const keyLight = new THREE.DirectionalLight(0xffffff, CLOSED_REACTOR_ALIGNMENT.lighting.directional);
-  keyLight.position.set(2.0, 2.8, 3.5);
+  keyLight.position.set(2.0, 3.8, 3.0);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.width = 2048;
   keyLight.shadow.mapSize.height = 2048;
   keyLight.shadow.camera.near = 0.5;
   keyLight.shadow.camera.far = 10;
-  keyLight.shadow.camera.left = -1.2;
-  keyLight.shadow.camera.right = 1.2;
-  keyLight.shadow.camera.top = 1.2;
-  keyLight.shadow.camera.bottom = -1.2;
   keyLight.shadow.bias = -0.00015;
-  keyLight.shadow.radius = 2.0;
   scene.add(keyLight);
 
-  // (c) Front-Left Fill Light: Softens shadows across the left half of the reactor
+  // (c) Front-Left Fill Light: Softens shadows across the left half
   const fillLight = new THREE.DirectionalLight(0xe0f2fe, 1.2);
-  fillLight.position.set(-2.0, 0.8, 2.5);
+  fillLight.position.set(-2.0, 1.0, 2.5);
   scene.add(fillLight);
 
-  // (d) Cool Cyan/Blue Rim Light for edge separation
-  const rimLight = new THREE.SpotLight(0x38bdf8, 1.8);
-  rimLight.position.set(-3.5, 2.0, -1.8);
-  rimLight.angle = 0.7;
-  rimLight.penumbra = 0.8;
+  // (d) Cool Cyan/Blue Rim Light for metallic edge separation
+  const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.4);
+  rimLight.position.set(-3.0, -1.0, 1.0);
   scene.add(rimLight);
 
-  // (e) Internal Core Palladium Reactor Light: Balanced cyan point light right at core
+  // (e) Core Palladium Reactor Light: Cyan point light right at core
   const coreLight = new THREE.PointLight(
     0x00f0ff,
     CLOSED_REACTOR_ALIGNMENT.lighting.pointCore,
-    3.5,
-    1.6
+    6.0,
+    1.5
   );
   coreLight.position.set(
     CLOSED_REACTOR_ALIGNMENT.position.x,
@@ -277,7 +119,7 @@ export function initInteractiveArcReactor(
   scene.add(coreLight);
 
   // (f) Inner High-Intensity Core Flare
-  const innerFlare = new THREE.PointLight(0x67e8f9, 1.8, 2.0, 1.8);
+  const innerFlare = new THREE.PointLight(0x67e8f9, 2.0, 3.0, 2.0);
   innerFlare.position.copy(coreLight.position);
   scene.add(innerFlare);
 
@@ -308,7 +150,6 @@ export function initInteractiveArcReactor(
   scene.add(particles);
 
   // 5. Model Container & Baseline Rotation
-  let currentState: ReactorState = "closed";
   let baseRotX = THREE.MathUtils.degToRad(CLOSED_REACTOR_ALIGNMENT.rotation.x);
   let baseRotY = THREE.MathUtils.degToRad(CLOSED_REACTOR_ALIGNMENT.rotation.y);
   let baseRotZ = THREE.MathUtils.degToRad(CLOSED_REACTOR_ALIGNMENT.rotation.z);
@@ -316,39 +157,41 @@ export function initInteractiveArcReactor(
   const wrapper = new THREE.Group();
   scene.add(wrapper);
 
-  const openedWrapper = new THREE.Group();
-  const closedWrapper = new THREE.Group();
-  wrapper.add(openedWrapper);
-  wrapper.add(closedWrapper);
-  openedWrapper.visible = false;
-  closedWrapper.visible = true;
+  wrapper.position.set(
+    CLOSED_REACTOR_ALIGNMENT.position.x,
+    CLOSED_REACTOR_ALIGNMENT.position.y,
+    CLOSED_REACTOR_ALIGNMENT.position.z
+  );
+  wrapper.scale.setScalar(CLOSED_REACTOR_ALIGNMENT.scale);
 
-  let isOpenedLoaded = false;
   let isClosedLoaded = false;
 
-  // 6. Load Both GLB Models (Opened and Closed)
+  // 6. Load ONLY the Closed Arc Reactor GLB Model
   const loader = new GLTFLoader();
 
-  // Load opened reactor (4.0s state)
-  loader.load(
-    "/models/opened-reactor.glb",
-    (gltf) => {
-      const modelRoot = gltf.scene;
-      const box = new THREE.Box3().setFromObject(modelRoot);
-      const center = box.getCenter(new THREE.Vector3());
-      modelRoot.position.sub(center);
-      upgradeTripoReactorMaterials(modelRoot);
-      openedWrapper.add(modelRoot);
-      isOpenedLoaded = true;
-      onModelLoaded?.("opened");
-    },
-    undefined,
-    (err) => {
-      console.error("[ArcReactor] Failed to load opened-reactor.glb:", err);
-    }
-  );
+  const applyMaterialSetup = (root: THREE.Object3D) => {
+    root.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
 
-  // Load closed reactor (resting state)
+        if (mesh.material) {
+          const mat = (Array.isArray(mesh.material) ? mesh.material[0] : mesh.material) as THREE.MeshStandardMaterial;
+          if (mat.map) {
+            mat.map.colorSpace = THREE.SRGBColorSpace;
+            mat.map.anisotropy = 16;
+          }
+          // Machined metallic steel & copper reflectivity without crushing darks
+          mat.metalness = 0.78;
+          mat.roughness = 0.35;
+          mat.needsUpdate = true;
+        }
+      }
+    });
+  };
+
+  // Load closed reactor
   loader.load(
     "/models/closed-reactor.glb",
     (gltf) => {
@@ -356,14 +199,14 @@ export function initInteractiveArcReactor(
       const box = new THREE.Box3().setFromObject(modelRoot);
       const center = box.getCenter(new THREE.Vector3());
       modelRoot.position.sub(center);
-      upgradeTripoReactorMaterials(modelRoot);
-      closedWrapper.add(modelRoot);
+      applyMaterialSetup(modelRoot);
+      wrapper.add(modelRoot);
       isClosedLoaded = true;
-      onModelLoaded?.("closed");
+      onModelLoaded?.();
     },
     undefined,
     () => {
-      // Fallback to /models/arc-reactor.glb if closed-reactor.glb fails
+      // Fallback to /models/arc-reactor.glb
       loader.load(
         "/models/arc-reactor.glb",
         (gltf2) => {
@@ -371,48 +214,18 @@ export function initInteractiveArcReactor(
           const box = new THREE.Box3().setFromObject(modelRoot);
           const center = box.getCenter(new THREE.Vector3());
           modelRoot.position.sub(center);
-          upgradeTripoReactorMaterials(modelRoot);
-          closedWrapper.add(modelRoot);
+          applyMaterialSetup(modelRoot);
+          wrapper.add(modelRoot);
+          isClosedLoaded = true;
+          onModelLoaded?.();
         },
         undefined,
         (err2) => {
-          console.error("[ArcReactor] Failed to load fallback closed reactor:", err2);
+          console.error("[ArcReactor] Failed to load arc reactor model:", err2);
         }
       );
     }
   );
-
-  const applyStateAlignment = (state: ReactorState) => {
-    currentState = state;
-    const cfg = state === "opened" ? OPENED_REACTOR_ALIGNMENT : CLOSED_REACTOR_ALIGNMENT;
-
-    baseRotX = THREE.MathUtils.degToRad(cfg.rotation.x);
-    baseRotY = THREE.MathUtils.degToRad(cfg.rotation.y);
-    baseRotZ = THREE.MathUtils.degToRad(cfg.rotation.z);
-
-    openedWrapper.visible = state === "opened";
-    closedWrapper.visible = state === "closed";
-
-    wrapper.position.set(cfg.position.x, cfg.position.y, cfg.position.z);
-    wrapper.scale.setScalar(cfg.scale);
-
-    camera.fov = cfg.camera.fov;
-    camera.position.z = cfg.camera.distanceZ;
-    camera.updateProjectionMatrix();
-
-    ambientLight.intensity = cfg.lighting.ambient;
-    keyLight.intensity = cfg.lighting.directional;
-    coreLight.intensity = cfg.lighting.pointCore;
-    coreLight.position.set(cfg.position.x, cfg.position.y, cfg.position.z);
-    innerFlare.position.copy(coreLight.position);
-
-    if (!isUserInteracting) {
-      currentRotX = baseRotX;
-      currentRotY = baseRotY;
-      targetRotX = baseRotX;
-      targetRotY = baseRotY;
-    }
-  };
 
   // 7. Interactive Drag & Spin Mechanics with Enhanced Spinning & Hovering
   let isPointerDown = false;
@@ -445,9 +258,6 @@ export function initInteractiveArcReactor(
   let isReturningToBase = false;
   let onBaseReturnComplete: (() => void) | null = null;
 
-  // Initialize initial state pose (calibrated closed reactor)
-  applyStateAlignment("closed");
-
   const onPointerDown = (e: PointerEvent) => {
     isPointerDown = true;
     isUserInteracting = true;
@@ -474,7 +284,6 @@ export function initInteractiveArcReactor(
     lastMoveY = e.clientY;
     lastMoveTime = now;
 
-    // Direct yaw & pitch rotation with enhanced responsiveness
     const sensitivity = 0.009;
     targetRotY += dx * sensitivity;
     targetRotX += dy * sensitivity;
@@ -482,7 +291,7 @@ export function initInteractiveArcReactor(
     // Pitch clamp to prevent unnatural upside-down flipping
     targetRotX = Math.max(baseRotX - Math.PI * 0.38, Math.min(baseRotX + Math.PI * 0.38, targetRotX));
 
-    // Calculate throw velocity based on pointer speed (gives enhanced flick/spin momentum)
+    // Throw velocity with smooth momentum
     const speedX = (dx / dt) * 16.67;
     const speedY = (dy / dt) * 16.67;
     rotVelocityY = speedX * sensitivity * 1.35;
@@ -493,7 +302,6 @@ export function initInteractiveArcReactor(
   const onPointerUp = () => {
     isPointerDown = false;
     container.style.cursor = "grab";
-    // Clamp max throw velocity so it spins beautifully without wild runaway
     const maxSpin = 0.25;
     rotVelocityY = Math.max(-maxSpin, Math.min(maxSpin, rotVelocityY));
     rotVelocityX = Math.max(-maxSpin * 0.5, Math.min(maxSpin * 0.5, rotVelocityX));
@@ -507,8 +315,6 @@ export function initInteractiveArcReactor(
       const relX = ((e.clientX - rect.left) / rect.width - 0.5) * 2; // -1 to +1
       const relY = ((e.clientY - rect.top) / rect.height - 0.5) * 2; // -1 to +1
 
-      // Responsive micro-spin & tilt on hover:
-      // Yaw spin up to ±20 degrees (±0.35 rad) and pitch tilt up to ±9 degrees (±0.16 rad)
       targetHoverY = relX * 0.35;
       targetHoverX = -relY * 0.16;
     }
@@ -554,7 +360,7 @@ export function initInteractiveArcReactor(
     // Breathing pulse for reactor core
     const pulse = Math.sin(elapsedTime * 2.8) * 0.4;
     coreLight.intensity = CLOSED_REACTOR_ALIGNMENT.lighting.pointCore + pulse + hoverSurge * 0.8;
-    innerFlare.intensity = 1.6 + pulse * 0.4 + hoverSurge * 0.4;
+    innerFlare.intensity = 2.0 + pulse * 0.4 + hoverSurge * 0.4;
 
     // Animate energy particles drifting around core
     if (particles) {
@@ -609,8 +415,6 @@ export function initInteractiveArcReactor(
       }
     } else if (!isPointerDown) {
       if (isScrollingNow) {
-        // "Boomerang ice sliding" magnetic snap when scrolling:
-        // Snaps model immediately and cleanly back to calibrated position
         const springK = 48.0;
         const dampingC = 8.5;
 
@@ -631,7 +435,7 @@ export function initInteractiveArcReactor(
         rotVelocityX = 0;
         rotVelocityY = 0;
       } else {
-        // Free spin momentum with enhanced spinning capability (0.958 friction allows multiple revolutions)
+        // Free spin momentum (0.958 friction allows multiple revolutions)
         targetRotX += rotVelocityX;
         targetRotY += rotVelocityY;
         rotVelocityX *= 0.958;
@@ -646,7 +450,6 @@ export function initInteractiveArcReactor(
           rotVelocityY = 0;
           const diffX = baseRotX - currentRotX;
           const diffY = shortestAngleDiff(currentRotY, baseRotY);
-          // Magnetic spring return towards calibrated base
           targetRotX = currentRotX + diffX * 0.08;
           targetRotY = currentRotY + diffY * 0.08;
         }
@@ -662,7 +465,6 @@ export function initInteractiveArcReactor(
     }
 
     if (wrapper) {
-      // Combine base + drag spin + subtle hover micro-spin/tilt
       wrapper.rotation.set(currentRotX + hoverOffsetY, currentRotY + hoverOffsetX, baseRotZ);
     }
 
@@ -673,14 +475,10 @@ export function initInteractiveArcReactor(
 
   // 9. Controller API
   return {
-    isReady(state?: ReactorState) {
-      const target = state || currentState;
-      return target === "opened" ? isOpenedLoaded : isClosedLoaded;
+    isReady() {
+      return isClosedLoaded;
     },
-    setOpacity(alpha: number, state?: ReactorState) {
-      if (state && state !== currentState) {
-        applyStateAlignment(state);
-      }
+    setOpacity(alpha: number) {
       const clampedAlpha = Math.max(0, Math.min(1, alpha));
       canvas.style.opacity = clampedAlpha.toString();
       if (clampedAlpha <= 0.01) {
@@ -688,9 +486,6 @@ export function initInteractiveArcReactor(
       } else {
         canvas.style.pointerEvents = "auto";
       }
-    },
-    setState(state: ReactorState) {
-      applyStateAlignment(state);
     },
     resetToDefaultPose(instant = false) {
       if (instant) {
@@ -771,8 +566,6 @@ export function initInteractiveArcReactor(
       container.removeEventListener("pointerleave", onPointerLeave);
       particleGeometry.dispose();
       particleMaterial.dispose();
-      pmremGenerator.dispose();
-      roomEnv.dispose();
       renderer.dispose();
     },
   };
