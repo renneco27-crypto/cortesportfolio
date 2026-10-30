@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-// Calibration Extension HUD tool (commented out for now as requested)
+// Calibration Extension HUD tool (commented out as requested)
 // import { initArcReactorCalibrationExtension } from "./ArcReactorCalibrationExtension";
 
 export const OPENED_REACTOR_ALIGNMENT = {
@@ -21,9 +21,9 @@ export const OPENED_REACTOR_ALIGNMENT = {
     distanceZ: 2.1,
   },
   lighting: {
-    ambient: 0.16,
-    directional: 3.2,
-    pointCore: 4.5,
+    ambient: 0.75,
+    directional: 2.2,
+    pointCore: 2.5,
   },
 };
 
@@ -44,9 +44,9 @@ export const CLOSED_REACTOR_ALIGNMENT = {
     distanceZ: 2.1,
   },
   lighting: {
-    ambient: 0.16,
-    directional: 3.2,
-    pointCore: 4.5,
+    ambient: 0.75,
+    directional: 2.2,
+    pointCore: 2.5,
   },
 };
 
@@ -68,9 +68,9 @@ export interface ArcReactorController {
 }
 
 /**
- * Upgrades a Tripo-generated GLB model (single diffuse map, metalness=0, roughness=0.9)
- * into a high-contrast machined gunmetal / stainless steel chassis with crisp specular highlights,
- * deep dark shadows, and a blazing cyan/electric-blue HDR glowing core and coil segments.
+ * Upgrades the Tripo-generated GLB model into a balanced, photorealistic PBR material
+ * that accurately matches the lighting, metallic steel colors, copper wire accents, and luminous cyan core
+ * seen in the reference pictures and video (without crushing shadows to pitch black or blowing out into blinding neon).
  */
 function upgradeTripoReactorMaterials(root: THREE.Object3D) {
   root.traverse((child) => {
@@ -82,31 +82,29 @@ function upgradeTripoReactorMaterials(root: THREE.Object3D) {
     const origMat = Array.isArray(mesh.material) ? mesh.material[0] : mesh.material;
     if (!(origMat instanceof THREE.MeshStandardMaterial)) return;
 
-    // Ensure color texture uses sRGB encoding for accurate luma and color math
     if (origMat.map) {
       origMat.map.colorSpace = THREE.SRGBColorSpace;
       origMat.map.anisotropy = 16;
       origMat.map.needsUpdate = true;
     }
 
-    origMat.metalness = 0.92;
-    origMat.roughness = 0.32;
-    origMat.envMapIntensity = 1.45;
+    // Natural PBR metalness and roughness matching real machined steel/titanium
+    origMat.metalness = 0.75;
+    origMat.roughness = 0.36;
+    origMat.envMapIntensity = 1.25;
 
     origMat.userData.reactorUniforms = {
-      uMetalnessBase: { value: 0.92 },
-      uRoughnessMin: { value: 0.15 },
-      uRoughnessMax: { value: 0.52 },
-      uGunmetalGamma: { value: 1.65 },
-      uGunmetalBrightness: { value: 0.74 },
+      uMetalnessBase: { value: 0.75 },
+      uRoughnessMin: { value: 0.22 },
+      uRoughnessMax: { value: 0.48 },
       uCyanThreshold: { value: 0.08 },
-      uCyanSoftness: { value: 0.22 },
-      uEmissiveBoost: { value: 4.5 },
-      uCoreCyanColor: { value: new THREE.Color("#00f0ff") },
-      uDeepBlueColor: { value: new THREE.Color("#0066ff") },
+      uCyanSoftness: { value: 0.20 },
+      uEmissiveBoost: { value: 1.5 }, // Balanced luminous glow matching reference picture
+      uCoreCyanColor: { value: new THREE.Color("#00e5ff") },
+      uDeepBlueColor: { value: new THREE.Color("#0077ff") },
     };
 
-    origMat.customProgramCacheKey = () => "tripo-arc-reactor-pbr-v3";
+    origMat.customProgramCacheKey = () => "tripo-arc-reactor-balanced-pbr-v4";
 
     origMat.onBeforeCompile = (shader) => {
       Object.assign(shader.uniforms, origMat.userData.reactorUniforms);
@@ -116,8 +114,6 @@ function upgradeTripoReactorMaterials(root: THREE.Object3D) {
         uniform float uMetalnessBase;
         uniform float uRoughnessMin;
         uniform float uRoughnessMax;
-        uniform float uGunmetalGamma;
-        uniform float uGunmetalBrightness;
         uniform float uCyanThreshold;
         uniform float uCyanSoftness;
         uniform float uEmissiveBoost;
@@ -134,22 +130,20 @@ function upgradeTripoReactorMaterials(root: THREE.Object3D) {
 
         vSurfaceLuma = dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114));
 
-        // Detect cyan / electric-blue glowing coil and core regions:
-        float coolDelta = max(diffuseColor.g, diffuseColor.b) - (diffuseColor.r * 1.12);
+        // Detect cyan / electric-blue glowing core and segmented coils:
+        float coolDelta = max(diffuseColor.g, diffuseColor.b) - (diffuseColor.r * 1.10);
         float cyanMask = smoothstep(uCyanThreshold, uCyanThreshold + uCyanSoftness, coolDelta);
 
-        // Catch white-hot core centers
-        float hotWhiteCore = smoothstep(0.72, 0.95, vSurfaceLuma) *
-                             smoothstep(-0.03, 0.06, diffuseColor.b - diffuseColor.r);
+        // Catch bright white-cyan core centers
+        float hotWhiteCore = smoothstep(0.75, 0.96, vSurfaceLuma) *
+                             smoothstep(-0.02, 0.08, diffuseColor.b - diffuseColor.r);
 
         vEmissiveMask = clamp(max(cyanMask, hotWhiteCore), 0.0, 1.0);
 
-        // Contrast-curve the non-emissive metallic chassis:
-        // Crushes muddy grey into deep machined gunmetal while preserving bright steel highlights
-        vec3 gunmetalAlbedo = pow(max(diffuseColor.rgb, vec3(0.001)), vec3(uGunmetalGamma)) * uGunmetalBrightness;
-        gunmetalAlbedo *= vec3(0.92, 0.96, 1.04);
-
-        diffuseColor.rgb = mix(gunmetalAlbedo, diffuseColor.rgb, vEmissiveMask);
+        // Natural color preservation:
+        // Do NOT crush to black! Keep the crisp steel, copper coils, and metallic tones from the texture
+        vec3 naturalMetalAlbedo = pow(max(diffuseColor.rgb, vec3(0.001)), vec3(1.10)) * 1.02;
+        diffuseColor.rgb = mix(naturalMetalAlbedo, diffuseColor.rgb, vEmissiveMask);
         `
       );
 
@@ -157,9 +151,9 @@ function upgradeTripoReactorMaterials(root: THREE.Object3D) {
         "#include <roughnessmap_fragment>",
         `
         #include <roughnessmap_fragment>
-        float machinedSpecMask = smoothstep(0.12, 0.72, vSurfaceLuma);
+        float machinedSpecMask = smoothstep(0.18, 0.70, vSurfaceLuma);
         float chassisRoughness = mix(uRoughnessMax, uRoughnessMin, machinedSpecMask);
-        roughnessFactor = mix(chassisRoughness, 0.10, vEmissiveMask);
+        roughnessFactor = mix(chassisRoughness, 0.14, vEmissiveMask);
         `
       );
 
@@ -167,7 +161,7 @@ function upgradeTripoReactorMaterials(root: THREE.Object3D) {
         "#include <metalnessmap_fragment>",
         `
         #include <metalnessmap_fragment>
-        metalnessFactor = mix(uMetalnessBase, 0.08, vEmissiveMask);
+        metalnessFactor = mix(uMetalnessBase, 0.12, vEmissiveMask);
         `
       );
 
@@ -175,9 +169,9 @@ function upgradeTripoReactorMaterials(root: THREE.Object3D) {
         "#include <emissivemap_fragment>",
         `
         #include <emissivemap_fragment>
-        float coreHotness = smoothstep(0.35, 0.90, vSurfaceLuma);
+        float coreHotness = smoothstep(0.35, 0.88, vSurfaceLuma);
         vec3 plasmaGradient = mix(uDeepBlueColor, uCoreCyanColor, coreHotness);
-        vec3 whiteHotCenter = mix(plasmaGradient, vec3(0.90, 0.98, 1.0), smoothstep(0.75, 0.98, vSurfaceLuma));
+        vec3 whiteHotCenter = mix(plasmaGradient, vec3(0.92, 0.98, 1.0), smoothstep(0.72, 0.96, vSurfaceLuma));
 
         totalEmissiveRadiance += whiteHotCenter * vEmissiveMask * uEmissiveBoost;
         `
@@ -191,10 +185,10 @@ function upgradeTripoReactorMaterials(root: THREE.Object3D) {
 /**
  * Initializes the interactive Three.js 3D Arc Reactor inside the provided container.
  * - Perfectly calibrated to the resting frame
- * - Cinematic lighting matching the video color scheme & metallic contrast
+ * - Balanced studio lighting clearly illuminating the metallic chassis and copper coils matching the reference picture
  * - High-speed momentum spinning with magnetic auto-adjust boomerang return
  * - Subtle hover micro-spin & tilt responsiveness
- * - Boomerang return on scroll
+ * - Boomerang return on scroll before transposing to video
  */
 export function initInteractiveArcReactor(
   canvas: HTMLCanvasElement,
@@ -214,7 +208,7 @@ export function initInteractiveArcReactor(
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMappingExposure = 1.08;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -235,14 +229,14 @@ export function initInteractiveArcReactor(
   );
   camera.position.set(0, 0, CLOSED_REACTOR_ALIGNMENT.camera.distanceZ);
 
-  // 3. Cinematic Studio Lighting Setup (Matching high-contrast video reference)
-  // (a) Low cold ambient so dark crevices stay deep anodized gunmetal (#0a1626)
-  const ambientLight = new THREE.AmbientLight(0x0a1626, CLOSED_REACTOR_ALIGNMENT.lighting.ambient);
+  // 3. Balanced Studio Lighting Setup (Clearly illuminates metallic chassis, screws, and copper coils)
+  // (a) Clean ambient light so all metallic parts are clearly visible (not black!)
+  const ambientLight = new THREE.AmbientLight(0xffffff, CLOSED_REACTOR_ALIGNMENT.lighting.ambient);
   scene.add(ambientLight);
 
-  // (b) Primary Key Directional Light: Crisp specular highlight on upper-right steel bevels
-  const keyLight = new THREE.DirectionalLight(0xeef6ff, CLOSED_REACTOR_ALIGNMENT.lighting.directional);
-  keyLight.position.set(3.5, 4.0, 4.5);
+  // (b) Primary Key Directional Light: Crisp specular highlight from front-right
+  const keyLight = new THREE.DirectionalLight(0xffffff, CLOSED_REACTOR_ALIGNMENT.lighting.directional);
+  keyLight.position.set(2.0, 2.8, 3.5);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.width = 2048;
   keyLight.shadow.mapSize.height = 2048;
@@ -256,24 +250,24 @@ export function initInteractiveArcReactor(
   keyLight.shadow.radius = 2.0;
   scene.add(keyLight);
 
-  // (c) Cool metallic fill light from bottom-right
-  const fillLight = new THREE.DirectionalLight(0x64748b, 0.85);
-  fillLight.position.set(2.5, -3.0, 2.0);
+  // (c) Front-Left Fill Light: Softens shadows across the left half of the reactor
+  const fillLight = new THREE.DirectionalLight(0xe0f2fe, 1.2);
+  fillLight.position.set(-2.0, 0.8, 2.5);
   scene.add(fillLight);
 
-  // (d) High-contrast Cyan/Blue Rim Light for left/back silhouette separation
-  const rimLight = new THREE.SpotLight(0x38bdf8, 3.8);
-  rimLight.position.set(-4.0, 2.5, -2.5);
-  rimLight.angle = 0.65;
+  // (d) Cool Cyan/Blue Rim Light for edge separation
+  const rimLight = new THREE.SpotLight(0x38bdf8, 1.8);
+  rimLight.position.set(-3.5, 2.0, -1.8);
+  rimLight.angle = 0.7;
   rimLight.penumbra = 0.8;
   scene.add(rimLight);
 
-  // (e) Internal Core Palladium Reactor Light: Vivid cyan point light right at core
+  // (e) Internal Core Palladium Reactor Light: Balanced cyan point light right at core
   const coreLight = new THREE.PointLight(
     0x00f0ff,
     CLOSED_REACTOR_ALIGNMENT.lighting.pointCore,
-    4.0,
-    1.8
+    3.5,
+    1.6
   );
   coreLight.position.set(
     CLOSED_REACTOR_ALIGNMENT.position.x,
@@ -283,7 +277,7 @@ export function initInteractiveArcReactor(
   scene.add(coreLight);
 
   // (f) Inner High-Intensity Core Flare
-  const innerFlare = new THREE.PointLight(0x67e8f9, 3.0, 2.5, 2.0);
+  const innerFlare = new THREE.PointLight(0x67e8f9, 1.8, 2.0, 1.8);
   innerFlare.position.copy(coreLight.position);
   scene.add(innerFlare);
 
@@ -560,7 +554,7 @@ export function initInteractiveArcReactor(
     // Breathing pulse for reactor core
     const pulse = Math.sin(elapsedTime * 2.8) * 0.4;
     coreLight.intensity = CLOSED_REACTOR_ALIGNMENT.lighting.pointCore + pulse + hoverSurge * 0.8;
-    innerFlare.intensity = 2.4 + pulse * 0.6 + hoverSurge * 0.5;
+    innerFlare.intensity = 1.6 + pulse * 0.4 + hoverSurge * 0.4;
 
     // Animate energy particles drifting around core
     if (particles) {
