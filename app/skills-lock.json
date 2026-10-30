@@ -48,6 +48,12 @@
       "sourceType": "github",
       "skillPath": "skills/gsap-utils/SKILL.md",
       "computedHash": "72af4a036d417d6eaef7478eca2f28e760631fb78db822ba34a9c706797aab62"
+    },
+    "ui-sound-design": {
+      "source": "dannyjpwilliams/ui-sound-design-skill",
+      "sourceType": "github",
+      "skillPath": "skills/ui-sound-design/SKILL.md",
+      "computedHash": "3c3e914c744dc5d9f212f5185cb9cce509b6083b403546882e1cd7de192df79b"
     }
   }
 }

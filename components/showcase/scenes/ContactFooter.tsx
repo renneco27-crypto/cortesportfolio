@@ -22,7 +22,7 @@ import {
   Box,
   Code2,
   Eye,
-  ShieldCheck,
+  ShieldCheck, Shield, Cog, KeyRound, Terminal, Cloud, CloudSun, Award, type LucideIcon,
 } from "lucide-react";
 import Github from "../svg/GithubMark";
 import { chapters } from "@/data/showcase";
@@ -34,6 +34,17 @@ const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_CONTACT = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CONTACT;
 const EMAILJS_TEMPLATE_AUTOREPLY = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_AUTOREPLY;
+
+// Large, colour-coded icons for each hanging certification sign
+const CERT_ICONS: Record<string, { icon: LucideIcon; color: string }> = {
+  "csc-professional": { icon: Shield, color: "#ffcf6b" },
+  "tesda-css-nc2": { icon: Cog, color: "#7cb8ff" },
+  "cisco-cybersecurity": { icon: KeyRound, color: "#ffb347" },
+  "pwncollege-badge": { icon: Terminal, color: "#8cf26a" },
+  "nextwork-cloud": { icon: Cloud, color: "#8fd3ff" },
+  "aws-cloud-practitioner": { icon: CloudSun, color: "#ffa94d" },
+  default: { icon: Award, color: "#ffcf6b" },
+};
 
 interface ContributionDay {
   date: string;
@@ -754,14 +765,14 @@ export default function ContactFooter({
                   </p>
                 </div>
 
-                {/* Unblurred Animated Pixel Scene GIF + Wooden Signage Boards from StitchCSV-pixelated-ui */}
+                {/* Hanging Wooden Signage Board over the animated pixel scene (no blur) */}
                 <div
-                  className="lc-card-3d relative overflow-hidden rounded-2xl border-4 border-[#1e0d04] bg-[#120804] text-[#fcebd0] shadow-[0_32px_68px_-12px_rgba(0,0,0,0.65)]"
+                  className="lc-card-3d lc-sign-stage relative overflow-hidden rounded-2xl border-4 border-[#1e0d04] bg-[#0d0805] shadow-[0_32px_68px_-12px_rgba(0,0,0,0.65)]"
                   data-z="34"
                   data-stand="-42"
                   data-grow-wings="1"
                 >
-                  {/* Crisp Unblurred Animated Pixel Scene Background (pxct5rdf0uh51 (1).gif) */}
+                  {/* Crisp animated pixel scene + dark wash so the signs stay readable */}
                   <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -771,275 +782,159 @@ export default function ContactFooter({
                       className="h-full w-full object-cover"
                       style={{ imageRendering: "pixelated" }}
                     />
-                    {/* Subtle warm vignette only — zero blur so the pixel scene is crystal clear */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/35" />
+                    <div className="absolute inset-0 bg-[#0b0604]/60" />
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#ff6a00]/25 to-transparent" />
                   </div>
 
-                  {/* Top Wooden Signage Header Strip (from StitchCSV-pixelated-ui/index.html) */}
-                  <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b-4 border-[#1e0d04] bg-[#2a1408]/90 px-5 py-3">
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => soundEngine.playChainDangle()}
-                        className="lc-pixel-btn-wood lc-elastic-pill group flex cursor-pointer items-center gap-2 px-3 py-1"
-                        title="Tap for Pixel Chain Dangle SFX"
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src="/pixel-ui/flame-burning.gif"
-                          alt="Active Streak Flame"
-                          className="h-6 w-6 object-contain transition-transform group-hover:scale-125"
-                          style={{ imageRendering: "pixelated" }}
-                        />
-                        <span className="lc-wood-text font-mono text-[11px] uppercase tracking-wider">
-                          ACTIVE CREDENTIAL STREAK
-                        </span>
-                      </button>
+                  {/* Hanging lanterns */}
+                  <span className="lc-lantern left-[6%]" style={{ ["--rope" as string]: "34px" }} aria-hidden="true">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/pixel-ui/flame-burning.gif" alt="" />
+                  </span>
+                  <span className="lc-lantern right-[6%]" style={{ ["--rope" as string]: "52px" }} aria-hidden="true">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/pixel-ui/flame-burning.gif" alt="" />
+                  </span>
 
-                      <button
-                        type="button"
-                        onClick={() => soundEngine.playChainDangle()}
-                        className="lc-pixel-btn-wood lc-elastic-pill group hidden cursor-pointer items-center gap-2 px-3 py-1 sm:flex"
-                        title="StudyUp Pixel Book Cutout"
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src="/pixel-ui/book-flipping.gif"
-                          alt="Flipping Study Book"
-                          className="h-6 w-7 object-contain transition-transform group-hover:scale-110"
-                          style={{ imageRendering: "pixelated" }}
-                        />
-                        <span className="lc-wood-text font-mono text-[11px]">
-                          6 VERIFIED TRACKS
-                        </span>
-                      </button>
-                    </div>
-
-                    {/* Authentic Relay Active Wooden Cutout Badge + Pulsing Pixel LED from StitchCSV-pixelated-ui */}
-                    <div className="flex items-center gap-3">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src="/pixel-ui/book-pencil.png"
-                        alt="Pixel Book and Pencil"
-                        className="hidden h-8 w-auto object-contain md:block"
-                        style={{ imageRendering: "pixelated" }}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => soundEngine.playChainDangle()}
-                        className="lc-elastic-pill relative cursor-pointer transition-transform active:scale-95"
-                        title="Relay Active Cutout Badge"
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src="/pixel-ui/relay-badge.png"
-                          alt="Relay Active"
-                          className="h-8 w-auto object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.65)]"
-                          style={{ imageRendering: "pixelated" }}
-                        />
-                        <span
-                          className="pointer-events-none absolute left-[8.8%] top-[33%] h-[32%] w-[6.2%] animate-pulse rounded-[2px] bg-[#4ade80] shadow-[0_0_8px_2px_rgba(74,222,128,0.9)]"
-                          aria-hidden="true"
-                        />
-                      </button>
-                    </div>
+                  {/* Top hanging CERTIFICATIONS sign */}
+                  <div className="relative z-10 flex justify-center pt-7">
+                    <button
+                      type="button"
+                      onClick={() => soundEngine.playChainDangle()}
+                      className="lc-plank lc-plank-hung lc-sign-swing cursor-pointer px-8 py-2.5 sm:px-12"
+                      title="Certifications"
+                    >
+                      <span className="lc-plank-moss" aria-hidden="true" />
+                      <span className="block font-ui text-2xl font-black uppercase tracking-[0.12em] text-[#f6e3c1] [text-shadow:0_3px_0_#1e0d04] sm:text-4xl">
+                        Certifications
+                      </span>
+                    </button>
                   </div>
 
-                  {/* 3 Columns of Wooden Signages over Unblurred Pixel Scene */}
-                  <div className="relative z-10 grid grid-cols-1 divide-y-4 divide-[#1e0d04]/70 lg:grid-cols-3 lg:divide-x-4 lg:divide-y-0">
-                    {certColumns.map((col, colIdx) => {
-                      const colCutoutSprite =
-                        colIdx === 0
-                          ? "/pixel-ui/side-trophy-icon.png"
-                          : colIdx === 1
-                          ? "/pixel-ui/icon-mode-code-lab.png"
-                          : "/pixel-ui/book-flipping.gif";
-                      return (
-                        <div
-                          key={col.title}
-                          className="flex flex-col justify-between p-5 sm:p-6"
-                        >
-                          <div>
-                            {/* Column Header Wooden Signage Banner (board-deck-title-sign-empty.png) */}
-                            <div className="lc-wood-sign-banner relative flex items-center justify-between px-4 py-3.5">
-                              <div>
-                                <span className="lc-wood-text-sub block font-mono text-[10px] uppercase tracking-widest text-[#ffc83b]">
-                                  {col.title}
-                                </span>
-                                <h3 className="lc-wood-text mt-0.5 text-base sm:text-[17px]">
-                                  {col.subtitle}
-                                </h3>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                {/* Recessed Wooden Icon Slot */}
-                                <div className="lc-wood-recess flex h-10 w-10 items-center justify-center p-1">
-                                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img
-                                    src={colCutoutSprite}
-                                    alt=""
-                                    className="h-6 w-6 object-contain"
-                                    style={{ imageRendering: "pixelated" }}
-                                  />
-                                </div>
-                                <span className="lc-wood-text text-sm text-[#ffc83b]">
-                                  0{colIdx + 1}
-                                </span>
-                              </div>
-                            </div>
+                  {/* 3 columns of hanging signs */}
+                  <div className="relative z-10 grid grid-cols-1 gap-8 px-5 pb-8 pt-6 sm:px-7 lg:grid-cols-3 lg:gap-6">
+                    {certColumns.map((col, colIdx) => (
+                      <div key={col.title} className="flex flex-col">
+                        {/* Column heading — plain high-contrast text, like the reference */}
+                        <div className="mb-6">
+                          <div className="flex items-center justify-between font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[#e9d6b4]">
+                            <span>{col.title}</span>
+                            <span>0{colIdx + 1}</span>
+                          </div>
+                          <h3 className="mt-1 text-xl font-extrabold leading-tight text-white [text-shadow:0_2px_0_#000] sm:text-[22px]">
+                            {col.subtitle}
+                          </h3>
+                        </div>
 
-                            {/* Wooden Signage Credential Boards (kit/plate-panel.png) */}
-                            <div className="mt-5 space-y-4">
-                              {col.items.map((cert, itemIdx) => {
-                                const isExpanded = expandedCertId === cert.id;
-                                const isPlanned = cert.status === "planned";
-                                const certPixelIcon =
-                                  cert.id === "csc-professional"
-                                    ? "/pixel-ui/side-trophy-icon.png"
-                                    : cert.id === "tesda-css-nc2"
-                                    ? "/pixel-ui/icon-mode-stats.png"
-                                    : cert.id === "cisco-cybersecurity"
-                                    ? "/pixel-ui/icon-mode-code-lab.png"
-                                    : cert.id === "pwncollege-badge"
-                                    ? "/pixel-ui/flame-burning.gif"
-                                    : cert.id === "nextwork-cloud"
-                                    ? "/pixel-ui/book-pencil.png"
-                                    : "/pixel-ui/side-green-gem.png";
-                                const progressPct =
-                                  cert.status === "earned"
-                                    ? "100%"
-                                    : cert.status === "in-progress"
-                                    ? itemIdx === 0
-                                      ? "78%"
-                                      : "64%"
-                                    : "38%";
+                        <div className="flex flex-1 flex-col gap-7">
+                          {col.items.map((cert, itemIdx) => {
+                            const isExpanded = expandedCertId === cert.id;
+                            const isPlanned = cert.status === "planned";
+                            const isEarned = cert.status === "earned";
+                            const visual = CERT_ICONS[cert.id] ?? CERT_ICONS.default;
+                            const Icon = visual.icon;
+                            const mastery = isEarned
+                              ? 100
+                              : cert.status === "in-progress"
+                              ? itemIdx === 0
+                                ? 78
+                                : 64
+                              : 20;
 
-                                return (
-                                  <div
-                                    key={cert.id}
-                                    onClick={() => {
-                                      soundEngine.playChainDangle();
-                                      setExpandedCertId(isExpanded ? null : cert.id);
-                                    }}
-                                    role="button"
-                                    tabIndex={0}
-                                    onKeyDown={(e) => {
-                                      if (e.key === "Enter" || e.key === " ") {
-                                        e.preventDefault();
-                                        soundEngine.playChainDangle();
-                                        setExpandedCertId(isExpanded ? null : cert.id);
-                                      }
-                                    }}
-                                    className={`lc-wood-sign-panel lc-bubble-card lc-morph-container relative cursor-pointer text-left ${
-                                      isExpanded ? "is-active-sign" : ""
-                                    }`}
-                                  >
-                                    <div className="flex items-start justify-between gap-2.5">
-                                      <div className="flex items-start gap-2.5">
-                                        <span className="lc-wood-recess mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center p-1">
-                                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                                          <img
-                                            src={certPixelIcon}
-                                            alt=""
-                                            className="h-6 w-6 object-contain"
-                                            style={{ imageRendering: "pixelated" }}
-                                          />
-                                        </span>
-                                        <div>
-                                          <h4 className="lc-wood-text text-sm leading-snug sm:text-[15px]">
-                                            {cert.label}
-                                          </h4>
-                                          <p className="lc-wood-text-sub mt-1 text-xs">
-                                            {cert.issuingBody}
-                                          </p>
-                                        </div>
-                                      </div>
+                            return (
+                              <div
+                                key={cert.id}
+                                onClick={() => {
+                                  soundEngine.playChainDangle();
+                                  setExpandedCertId(isExpanded ? null : cert.id);
+                                }}
+                                role="button"
+                                tabIndex={0}
+                                aria-expanded={isExpanded}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter" || e.key === " ") {
+                                    e.preventDefault();
+                                    soundEngine.playChainDangle();
+                                    setExpandedCertId(isExpanded ? null : cert.id);
+                                  }
+                                }}
+                                className={`lc-plank lc-plank-hung lc-bubble-card cursor-pointer p-4 text-left ${
+                                  isExpanded ? "is-open" : ""
+                                }`}
+                              >
+                                <span className="lc-plank-moss" aria-hidden="true" />
 
+                                <div className="flex items-start gap-3.5">
+                                  {/* Big icon slot */}
+                                  <span className="lc-icon-slot flex h-14 w-14 shrink-0 items-center justify-center">
+                                    <Icon className="h-8 w-8" style={{ color: visual.color }} strokeWidth={2.4} />
+                                  </span>
+
+                                  <div className="min-w-0 flex-1">
+                                    <div className="flex items-start justify-between gap-2">
+                                      <h4 className="text-[16px] font-extrabold leading-snug text-[#fff4de]">
+                                        {cert.label}
+                                      </h4>
                                       <span
-                                        className={`shrink-0 px-2 py-0.5 font-mono text-[9.5px] uppercase tracking-wider lc-wood-text ${
-                                          isPlanned ? "lc-pixel-btn-blue" : "lc-pixel-btn-green"
+                                        className={`mt-0.5 shrink-0 rounded-full border-2 px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wider ${
+                                          isEarned
+                                            ? "border-lime bg-lime text-black"
+                                            : isPlanned
+                                            ? "border-[#9fb6cc] bg-[#1c2530] text-[#d6e6f5]"
+                                            : "border-[#7fd94b] bg-[#16240e] text-[#b4f27c]"
                                         }`}
                                       >
-                                        {cert.status === "in-progress"
-                                          ? "IN PROGRESS"
-                                          : cert.status.toUpperCase()}
+                                        {cert.status === "in-progress" ? "In progress" : cert.status}
                                       </span>
                                     </div>
+                                    <p className="mt-1 text-[13px] font-semibold text-[#dcc6a2]">
+                                      {cert.issuingBody}
+                                    </p>
+                                  </div>
+                                </div>
 
-                                    {/* Elastic Expanded Layer inside Recessed Wooden Slot */}
-                                    {isExpanded && (
-                                      <div className="lc-wood-recess mt-3.5 space-y-2.5 p-2.5">
-                                        {/* Pixel Progress Track Cutout from StitchCSV-pixelated-ui */}
-                                        <div className="flex items-center justify-between gap-3">
-                                          <div className="relative h-4 w-32 overflow-hidden">
-                                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                                            <img
-                                              src="/pixel-ui/lib-progress-bar-empty.png"
-                                              alt=""
-                                              className="absolute inset-0 h-full w-full object-fill"
-                                              style={{ imageRendering: "pixelated" }}
-                                            />
-                                            <div
-                                              className="absolute bottom-[15%] left-[3%] top-[15%] overflow-hidden rounded-[2px]"
-                                              style={{ width: progressPct }}
-                                            >
-                                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                                              <img
-                                                src="/pixel-ui/lib-progress-bar-fill.png"
-                                                alt=""
-                                                className="h-full w-full object-fill"
-                                                style={{ imageRendering: "pixelated" }}
-                                              />
-                                            </div>
-                                          </div>
-                                          <span className="lc-wood-text font-mono text-[10px] text-[#4ade80]">
-                                            MASTERY {progressPct}
-                                          </span>
-                                        </div>
-
-                                        <div className="flex flex-wrap items-center justify-between gap-2">
-                                          <span className="lc-wood-text-sub font-mono text-[11px]">
-                                            {cert.notes ??
-                                              "Verified technical competency & structured coursework."}
-                                          </span>
-                                          {cert.verifyUrl && (
-                                            <a
-                                              href={cert.verifyUrl}
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              onClick={(e) => e.stopPropagation()}
-                                              className="lc-pixel-btn-green lc-wood-text inline-flex items-center gap-1.5 px-3 py-1 text-[10.5px]"
-                                            >
-                                              Official Portal <ExternalLink className="h-3 w-3" />
-                                            </a>
-                                          )}
-                                        </div>
+                                {isExpanded && (
+                                  <div className="mt-4 space-y-3 border-t-2 border-dashed border-[#1e0d04]/70 pt-3.5">
+                                    <div className="flex items-center gap-3">
+                                      <span className="font-mono text-[11px] font-black uppercase tracking-wider text-[#ffcf6b]">
+                                        Mastery
+                                      </span>
+                                      <div className="lc-pixel-meter flex-1">
+                                        <span style={{ width: `${mastery}%` }} />
                                       </div>
+                                      <span className="font-mono text-[11px] font-black text-[#ffcf6b]">
+                                        {mastery}%
+                                      </span>
+                                    </div>
+                                    <p className="text-[13px] font-medium leading-relaxed text-[#f1e2c8]">
+                                      {cert.notes ?? "Verified technical competency & structured coursework."}
+                                    </p>
+                                    {cert.verifyUrl && (
+                                      <a
+                                        href={cert.verifyUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="lc-plank-btn inline-flex items-center gap-1.5 px-4 py-1.5 text-[12px] font-extrabold text-[#fff4de]"
+                                      >
+                                        Official Portal <ExternalLink className="h-3.5 w-3.5" />
+                                      </a>
                                     )}
                                   </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-
-                          {/* Bottom Wooden Signage Plaque */}
-                          <div className="lc-wood-sign-banner mt-6 flex items-center justify-between px-4 py-2 font-mono text-[10px]">
-                            <span className="lc-wood-text inline-flex items-center gap-1.5">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
-                                src="/pixel-ui/green-orb.png"
-                                alt=""
-                                className="h-4 w-4 object-contain"
-                                style={{ imageRendering: "pixelated" }}
-                              />
-                              LAWRENCE CORTES
-                            </span>
-                            <span className="lc-wood-text text-[10px] text-[#4ade80]">
-                              VERIFIED TRACK
-                            </span>
-                          </div>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
-                      );
-                    })}
+
+                        {/* Bottom hanging plaque */}
+                        <div className="mt-8 flex justify-center">
+                          <span className="lc-plank lc-plank-hung px-5 py-1.5 font-mono text-[11px] font-black uppercase tracking-[0.16em] text-[#f6e3c1]">
+                            {colIdx === 0 ? "Lawrence Cortes" : "Verified Track"}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </section>
