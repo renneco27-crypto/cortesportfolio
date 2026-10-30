@@ -2,6 +2,7 @@
 // Layer 2 – full-viewport light hero that clip-shrinks into a framed window.
 // Inside the frame the Build Marker morphs into the Cursor Buddy, then the LC ribbon.
 import React from "react";
+import { motion } from "motion/react";
 import { HeroBuildMarker, CursorBuddy, LCRibbon } from "../svg/Markers";
 import { techAvatars } from "@/data/showcase";
 
@@ -31,20 +32,24 @@ export default function HeroShrink({ onHire, onSeeWork }: HeroShrinkProps) {
               </span>
             </div>
             <div className="mt-14 flex flex-wrap items-center gap-3 sm:mt-16">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 type="button"
                 onClick={onHire}
-                className="rounded-full border border-black bg-black px-7 py-3 text-xs font-semibold text-white shadow-sm transition-all duration-300 hover:bg-lime hover:text-black"
+                className="cursor-pointer rounded-full border border-black bg-black px-7 py-3 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-lime hover:text-black"
               >
                 Hire me
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 type="button"
                 onClick={onSeeWork}
-                className="rounded-full border border-neutral-400 bg-white/85 px-7 py-3 text-xs font-semibold text-neutral-900 shadow-sm transition-all duration-300 hover:border-black hover:bg-black hover:text-white"
+                className="cursor-pointer rounded-full border border-neutral-400 bg-white/85 px-7 py-3 text-xs font-semibold text-neutral-900 shadow-sm transition-colors hover:border-black hover:bg-black hover:text-white"
               >
                 See the work
-              </button>
+              </motion.button>
             </div>
           </div>
 
@@ -68,14 +73,16 @@ export default function HeroShrink({ onHire, onSeeWork }: HeroShrinkProps) {
               </p>
               <div className="flex items-center -space-x-2">
                 {techAvatars.map((t) => (
-                  <span
+                  <motion.span
                     key={t.label}
                     title={t.label}
-                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-studio text-[9px] font-black"
+                    whileHover={{ y: -4, scale: 1.15, zIndex: 10 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-studio text-[9px] font-black shadow-sm"
                     style={{ background: t.bg, color: t.fg }}
                   >
                     {t.short}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </div>

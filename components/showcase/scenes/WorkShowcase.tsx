@@ -4,7 +4,8 @@
 //   B) Toolkit anatomy: Lawrence's lime Build Marker uncaps, 6 skill callouts expand
 import React from "react";
 import Link from "next/link";
-import { ArrowUpRight, Plus, Check, ArrowUpFromLine } from "lucide-react";
+import { ArrowUpRight, Plus, Check, ArrowUpFromLine, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { ProjectMarker } from "../svg/Markers";
 import Github from "../svg/GithubMark";
 import { markerSpecs, lcMarkerSpec, toolkitCallouts, type Callout } from "@/data/showcase";
@@ -72,8 +73,15 @@ export default function WorkShowcase({ activeIndex, shortlist, onSelect, onToggl
                   type="button"
                   onClick={() => onSelect(i)}
                   aria-pressed={on}
-                  className="group flex w-fit items-center gap-3 rounded-full px-2 py-1.5 text-left transition-all"
+                  className="group relative flex w-fit items-center gap-3 rounded-full px-3 py-1.5 text-left transition-all"
                 >
+                  {on && (
+                    <motion.div
+                      layoutId="active-swatch-pill"
+                      className="absolute inset-0 -z-10 rounded-full bg-black/5 backdrop-blur-sm"
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    />
+                  )}
                   <span
                     className={`flex h-7 w-7 items-center justify-center rounded-full shadow-sm transition-transform group-hover:scale-110 ${on ? "scale-110" : ""}`}
                     style={{ background: m.aura, boxShadow: on ? `0 0 0 2px #f5f5f5, 0 0 0 4px ${m.aura}` : undefined }}
@@ -86,39 +94,92 @@ export default function WorkShowcase({ activeIndex, shortlist, onSelect, onToggl
             })}
           </div>
 
-          {/* Active project card */}
-          <div className="hidden max-w-sm rounded-2xl border border-black/5 bg-white/70 p-4 shadow-sm backdrop-blur md:block">
-            <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: active.aura }}>
-              {active.project.badge}
-            </span>
-            <p className="mt-1.5 line-clamp-3 text-xs leading-relaxed text-neutral-600">{active.project.shortDescription ?? active.project.description}</p>
-            <div className="mt-3 flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => onToggleShortlist(active.projectId)}
-                className="inline-flex items-center gap-1.5 rounded-full bg-black px-3 py-1.5 text-[11px] font-bold text-white transition-colors hover:bg-lime hover:text-black"
+          {/* Active project card with 21st.dev / UI-UX Pro Max Craft */}
+          <div className="hidden max-w-sm md:block">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active.projectId}
+                initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.06)] backdrop-blur-xl"
               >
-                {isShortlisted ? <Check className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
-                {isShortlisted ? "Shortlisted" : "Shortlist"}
-              </button>
-              <Link
-                href={`/projects#${active.project.slug}`}
-                className="inline-flex items-center gap-1 rounded-full border border-neutral-300 px-3 py-1.5 text-[11px] font-semibold text-neutral-800 transition-colors hover:border-black"
-              >
-                Case study <ArrowUpRight className="h-3.5 w-3.5" />
-              </Link>
-              {active.project.githubUrl && (
-                <a
-                  href={active.project.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`${active.shortName} on GitHub`}
-                  className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-neutral-300 text-neutral-800 transition-colors hover:border-black"
-                >
-                  <Github className="h-3.5 w-3.5" />
-                </a>
-              )}
-            </div>
+                {/* Subtle colored accent glow top line */}
+                <div
+                  className="absolute inset-x-0 top-0 h-1 transition-colors duration-500"
+                  style={{ background: active.aura }}
+                />
+
+                <div className="flex items-center justify-between gap-2">
+                  <span
+                    className="rounded-full px-2.5 py-0.5 text-[9px] font-black uppercase tracking-widest shadow-sm"
+                    style={{ background: `${active.aura}18`, color: active.aura }}
+                  >
+                    {active.project.badge}
+                  </span>
+                  <span className="font-mono text-[10px] text-neutral-400">0{activeIndex + 1} / 0{markerSpecs.length}</span>
+                </div>
+
+                <h3 className="mt-2 text-base font-bold text-neutral-900 leading-tight">
+                  {active.project.title.split("—")[0].trim()}
+                </h3>
+
+                <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-neutral-600">
+                  {active.project.shortDescription ?? active.project.description}
+                </p>
+
+                {/* Tech stack tags */}
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {active.project.techStack.slice(0, 3).map((tech) => (
+                    <span key={tech} className="rounded-md bg-neutral-100 px-2 py-0.5 text-[10px] font-medium text-neutral-600">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-neutral-100 pt-3">
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    type="button"
+                    onClick={() => onToggleShortlist(active.projectId)}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-black px-3.5 py-1.5 text-[11px] font-bold text-white shadow-sm transition-colors hover:bg-lime hover:text-black cursor-pointer"
+                  >
+                    {isShortlisted ? <Check className="h-3.5 w-3.5 text-lime" /> : <Plus className="h-3.5 w-3.5" />}
+                    {isShortlisted ? "Shortlisted" : "Shortlist"}
+                  </motion.button>
+                  <Link
+                    href={`/projects#${active.project.slug}`}
+                    className="inline-flex items-center gap-1 rounded-full border border-neutral-300 bg-white/70 px-3 py-1.5 text-[11px] font-semibold text-neutral-800 transition-colors hover:border-black hover:bg-white"
+                  >
+                    Case study <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                  {active.project.liveDemoUrl && active.project.liveDemoUrl !== "/" && (
+                    <a
+                      href={active.project.liveDemoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Live Demo"
+                      className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-neutral-300 bg-white/70 text-neutral-700 transition-colors hover:border-black hover:text-black"
+                    >
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
+                  )}
+                  {active.project.githubUrl && (
+                    <a
+                      href={active.project.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${active.shortName} on GitHub`}
+                      className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-neutral-300 bg-white/70 text-neutral-700 transition-colors hover:border-black hover:text-black"
+                    >
+                      <Github className="h-3.5 w-3.5" />
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
