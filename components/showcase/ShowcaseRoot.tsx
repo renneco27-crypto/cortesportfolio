@@ -1,7 +1,7 @@
 // components/showcase/ShowcaseRoot.tsx
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { useShowcaseChoreography } from "./engine/useShowcaseChoreography";
 import { playSignatureIntro } from "./engine/useIntro";
 import { TRACK_HEIGHT_VH } from "./engine/timeline";
@@ -16,6 +16,9 @@ import { ShowcaseNavbar, Toast, ShortlistDrawer } from "./ui/Chrome";
 
 import "./showcase.css";
 
+const PIXEL_COLS = 18;
+const PIXEL_ROWS = 12;
+
 export default function ShowcaseRoot() {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollTrackRef = useRef<HTMLDivElement>(null);
@@ -28,6 +31,41 @@ export default function ShowcaseRoot() {
   const [contactMessage, setContactMessage] = useState("");
 
   const toastTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Precompute deterministic pixel-eating thresholds (matching PixelTransition.tsx math)
+  const pixelCells = useMemo(() => {
+    const cells: {
+      key: string;
+      col: number;
+      row: number;
+      threshold: number;
+      isLimeEdge: boolean;
+    }[] = [];
+
+    for (let row = 0; row < PIXEL_ROWS; row++) {
+      for (let col = 0; col < PIXEL_COLS; col++) {
+        const distFromCenter = Math.abs(PIXEL_COLS / 2 - col);
+        const distFromBottom = PIXEL_ROWS - 1 - row;
+        // Deterministic pseudo-random jitter from row/col
+        const pseudoRand = (((row * 31 + col * 17) % 100) / 100) * 0.12 - 0.04;
+
+        let threshold = (distFromBottom / PIXEL_ROWS) * 0.52;
+        threshold += (distFromCenter / (PIXEL_COLS / 2)) * 0.28;
+        threshold += pseudoRand;
+        threshold = clamp(threshold, 0.02, 0.92);
+
+        const isLimeEdge = (row + col) % 11 === 0;
+        cells.push({
+          key: `${row}-${col}`,
+          col,
+          row,
+          threshold,
+          isLimeEdge,
+        });
+      }
+    }
+    return cells;
+  }, []);
 
   const showToast = useCallback((msg: string) => {
     if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
@@ -150,8 +188,8 @@ export default function ShowcaseRoot() {
 
         {/* Layer 2: Shrinking Hero Container */}
         <HeroShrink
-          onHire={() => jumpToProgress(1)}
-          onSeeWork={() => jumpToProgress(0.4)}
+          onHire={() => jumpToProgress(0.99)}
+          onSeeWork={() => jumpToProgress(0.38)}
         />
 
         {/* Layer 3: Light Showcase Panel (Carousel & Anatomy) */}
@@ -163,7 +201,29 @@ export default function ShowcaseRoot() {
           onCapToggle={toggleManualCapOpen}
         />
 
-        {/* Layer 4: Dark Footer Panel */}
+        {/* Layer 3.5: Pixel-Eating Dissolve Transition before "Developer by code. Designer by eye." */}
+        <div
+          className="js-pixel-overlay pointer-events-none absolute inset-0 z-[36] overflow-hidden opacity-0"
+          aria-hidden="true"
+        >
+          {pixelCells.map((cell) => (
+            <div
+              key={cell.key}
+              data-threshold={cell.threshold.toFixed(3)}
+              data-lime={cell.isLimeEdge ? "1" : "0"}
+              className="js-pixel-cell absolute box-border opacity-0"
+              style={{
+                width: `calc(${100 / PIXEL_COLS}% + 1.5px)`,
+                height: `calc(${100 / PIXEL_ROWS}% + 1.5px)`,
+                left: `${cell.col * (100 / PIXEL_COLS)}%`,
+                top: `${cell.row * (100 / PIXEL_ROWS)}%`,
+                backgroundColor: "#141414",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Layer 4: 3D Standing-to-Lying Perspective Showcase & Contact Footer */}
         <ContactFooter
           message={contactMessage}
           onMessageChange={setContactMessage}

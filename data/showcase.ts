@@ -5,6 +5,14 @@
 import { projectsData } from "@/data/projects";
 import type { Project } from "@/types";
 
+export interface CutoutElementSpec {
+  topRightLabel: string;
+  topRightSub: string;
+  bottomLeftTitle: string;
+  bottomLeftMetric: string;
+  floatingTag: string;
+}
+
 export interface MarkerSpec {
   projectId: string;
   /** Short label printed vertically on the barrel + used on swatches */
@@ -14,6 +22,7 @@ export interface MarkerSpec {
   aura: string;
   bodyStops: [string, string, string, string];
   capStops: [string, string, string];
+  cutout: CutoutElementSpec;
   project: Project;
 }
 
@@ -27,6 +36,13 @@ const RAW_SPECS: RawSpec[] = [
     aura: "#ff2a54",
     bodyStops: ["#ff8fa3", "#ff1e42", "#b80d2a", "#660414"],
     capStops: ["#ff758f", "#d90429", "#590310"],
+    cutout: {
+      topRightLabel: "Art. 1156 · Civil Code",
+      topRightSub: "Active Recall Drill",
+      bottomLeftTitle: "98.4% Retention",
+      bottomLeftMetric: "Sub-second Codal Lookup",
+      floatingTag: "BAR EXAM READY",
+    },
   },
   {
     projectId: "stylepeek-by-rence",
@@ -35,6 +51,13 @@ const RAW_SPECS: RawSpec[] = [
     aura: "#ff6b00",
     bodyStops: ["#ffbe73", "#ff6b00", "#c74300", "#702400"],
     capStops: ["#ffbe73", "#ea5800", "#6e2200"],
+    cutout: {
+      topRightLabel: "AST Token Inspector",
+      topRightSub: "1-Click Tailwind Export",
+      bottomLeftTitle: "0ms Layout Shift",
+      bottomLeftMetric: "Live Computed CSS3",
+      floatingTag: "CHROME DEVTOOLS",
+    },
   },
   {
     projectId: "naturalvoice-edgescreenreader",
@@ -43,6 +66,13 @@ const RAW_SPECS: RawSpec[] = [
     aura: "#00bbf9",
     bodyStops: ["#90e0ef", "#00bbf9", "#0077b6", "#022b47"],
     capStops: ["#72ddf7", "#0096c7", "#022b47"],
+    cutout: {
+      topRightLabel: "Edge Neural TTS",
+      topRightSub: "24kHz Natural Prosody",
+      bottomLeftTitle: "< 50ms Latency",
+      bottomLeftMetric: "Zero Robotic Artifacting",
+      floatingTag: "A11Y ENGINE",
+    },
   },
   {
     projectId: "ai-chatbot",
@@ -51,6 +81,13 @@ const RAW_SPECS: RawSpec[] = [
     aura: "#9d4edd",
     bodyStops: ["#e0aaff", "#9d4edd", "#5a189a", "#310857"],
     capStops: ["#d896ff", "#7b2cbf", "#2d064f"],
+    cutout: {
+      topRightLabel: "Vercel AI SDK",
+      topRightSub: "Multi-Turn Streaming",
+      bottomLeftTitle: "64 tok/s Stream",
+      bottomLeftMetric: "Neon Postgres Telemetry",
+      floatingTag: "LLM AGENT",
+    },
   },
   {
     projectId: "trash4cash",
@@ -59,6 +96,13 @@ const RAW_SPECS: RawSpec[] = [
     aura: "#22c55e",
     bodyStops: ["#bbf7d0", "#22c55e", "#15803d", "#0b3d1f"],
     capStops: ["#86efac", "#16a34a", "#0b3d1f"],
+    cutout: {
+      topRightLabel: "QR Verified · +250 pts",
+      topRightSub: "Canteen Ledger Sync",
+      bottomLeftTitle: "Sub-1s Scan",
+      bottomLeftMetric: "IoT Bottle Deposit",
+      floatingTag: "ECO REWARDS",
+    },
   },
 ];
 
@@ -92,7 +136,7 @@ export const toolkitCallouts: { left: Callout[]; right: Callout[] } = {
   ],
 };
 
-export const heroScriptWords = ["builds", "ships", "secures", "automates"];
+export const heroScriptWords = ["designs", "builds", "ships", "secures", "automates"];
 
 export const techAvatars = [
   { label: "Next.js", short: "N", bg: "#111111", fg: "#b8ff01" },
@@ -104,9 +148,9 @@ export const techAvatars = [
 /** Scroll progress positions for chapter jumps (must match engine/timeline.ts) */
 export const chapters = [
   { id: "home", label: "Home", p: 0 },
-  { id: "work", label: "Work", p: 0.4 },
-  { id: "toolkit", label: "Toolkit", p: 0.72 },
-  { id: "about", label: "About", p: 0.88 },
-  { id: "github", label: "GitHub", p: 0.94 },
-  { id: "contact", label: "Contact", p: 1 },
+  { id: "work", label: "Work", p: 0.35 },
+  { id: "toolkit", label: "Toolkit", p: 0.64 },
+  { id: "about", label: "About", p: 0.78 },
+  { id: "github", label: "GitHub", p: 0.85 },
+  { id: "contact", label: "Contact", p: 0.985 },
 ] as const;

@@ -3,7 +3,7 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import { PenTool, Play, Pause, X, Send } from "lucide-react";
+import { PenTool, Play, Pause, X, Send, Download } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { chapters, markerSpecs } from "@/data/showcase";
 
@@ -25,7 +25,12 @@ export const ShowcaseNavbar = forwardRef<HTMLElement, NavbarProps>(function Show
     <header ref={ref} data-theme="light" className="lc-nav fixed inset-x-0 top-0 z-[80]">
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 text-xs font-medium sm:px-10">
         <div className="flex items-center gap-4 sm:gap-6">
-          <button type="button" onClick={() => onJump(0)} className="flex items-center gap-2 text-base font-extrabold tracking-tighter" aria-label="Back to top">
+          <button
+            type="button"
+            onClick={() => onJump(0)}
+            className="lc-bubble-chip flex cursor-pointer items-center gap-2 rounded-full px-2.5 py-1 text-base font-extrabold tracking-tighter"
+            aria-label="Back to top"
+          >
             <span className="flex h-4 w-4 items-center justify-center rounded-sm bg-current">
               <span className="h-1.5 w-1.5 bg-lime" />
             </span>
@@ -34,16 +39,21 @@ export const ShowcaseNavbar = forwardRef<HTMLElement, NavbarProps>(function Show
           <button
             type="button"
             onClick={onReplay}
-            className="lc-nav-chip hidden items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider transition-all hover:bg-lime hover:text-black sm:flex"
+            className="lc-nav-chip lc-elastic-pill hidden cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider hover:bg-lime hover:text-black sm:flex"
           >
             <PenTool className="h-3 w-3" />
             Replay signature
           </button>
         </div>
 
-        <nav className="hidden items-center gap-7 text-[12px] font-medium lg:flex" aria-label="Chapters">
+        <nav className="hidden items-center gap-3 text-[12px] font-medium lg:flex" aria-label="Chapters">
           {chapters.map((c) => (
-            <button key={c.id} type="button" onClick={() => onJump(c.p)} className="opacity-70 transition-opacity hover:opacity-100">
+            <button
+              key={c.id}
+              type="button"
+              onClick={() => onJump(c.p)}
+              className="lc-bubble-chip cursor-pointer rounded-full px-3 py-1 opacity-75 hover:bg-black/5 hover:opacity-100"
+            >
               {c.label}
             </button>
           ))}
@@ -53,19 +63,29 @@ export const ShowcaseNavbar = forwardRef<HTMLElement, NavbarProps>(function Show
           <button
             type="button"
             onClick={onToggleAutoplay}
-            className="flex items-center gap-1.5 rounded-full bg-lime px-3.5 py-1.5 text-[11px] font-bold text-black shadow-sm transition-all hover:brightness-105"
+            className="lc-elastic-pill flex cursor-pointer items-center gap-1.5 rounded-full bg-lime px-3.5 py-1.5 text-[11px] font-bold text-black shadow-sm hover:brightness-105"
           >
-            {autoplay ? <Pause className="h-3.5 w-3.5 fill-current" /> : <Play className="h-3.5 w-3.5 fill-current" />}
-            <span className="hidden sm:inline">{autoplay ? "Pause motion" : "Play full motion"}</span>
+            {autoplay ? (
+              <Pause className="h-3.5 w-3.5 fill-current" />
+            ) : (
+              <Play className="h-3.5 w-3.5 fill-current" />
+            )}
+            <span className="hidden sm:inline">
+              {autoplay ? "Pause motion" : "Play full motion"}
+            </span>
           </button>
-          <button
-            type="button"
-            onClick={onOpenShortlist}
-            className="flex items-center gap-1.5 rounded-full border border-white/15 bg-black px-3.5 py-1.5 text-[11px] font-semibold text-white transition-all hover:bg-neutral-800"
+
+          {/* Replaced useless "SHORTLIST 0" button with 1-click "Download CV (PDF)" bubble-stretch pill */}
+          <a
+            href="/api/resume/download"
+            className="lc-elastic-pill flex cursor-pointer items-center gap-1.5 rounded-full border border-white/15 bg-[#141414] px-3.5 py-1.5 text-[11px] font-bold text-white shadow-sm hover:border-lime hover:bg-lime hover:text-black"
           >
-            <span>SHORTLIST</span>
-            <span className="rounded-full bg-lime px-1.5 text-[10px] font-black text-black">{shortlistCount}</span>
-          </button>
+            <Download className="h-3 w-3" />
+            <span>Download CV</span>
+            <span className="rounded-full bg-lime px-1.5 py-0.2 font-mono text-[9px] font-black text-black">
+              PDF
+            </span>
+          </a>
         </div>
       </div>
     </header>
@@ -142,7 +162,9 @@ export function ShortlistDrawer({ open, shortlist, onClose, onRemove, onSend }: 
                 <X className="h-4 w-4" />
               </motion.button>
             </div>
-            <p className="mt-1 text-xs text-neutral-400">Click any marker or card in the showcase to queue builds to discuss.</p>
+            <p className="mt-1 text-xs text-neutral-400">
+              Click any marker or card in the showcase to queue builds to discuss.
+            </p>
 
             <ul className="mt-6 flex flex-1 flex-col gap-3 overflow-y-auto pr-1">
               {items.length === 0 && (
@@ -164,7 +186,9 @@ export function ShortlistDrawer({ open, shortlist, onClose, onRemove, onSend }: 
                     <span className="h-9 w-2 rounded-full shadow-sm" style={{ background: m.aura }} />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-bold text-white">{m.shortName}</p>
-                      <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-neutral-400">{m.project.badge}</p>
+                      <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
+                        {m.project.badge}
+                      </p>
                     </div>
                     <motion.button
                       whileHover={{ scale: 1.15 }}
@@ -187,7 +211,7 @@ export function ShortlistDrawer({ open, shortlist, onClose, onRemove, onSend }: 
               type="button"
               disabled={items.length === 0}
               onClick={onSend}
-              className="mt-4 inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-lime px-6 py-3.5 text-xs font-bold text-black shadow-lg transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+              className="lc-elastic-pill mt-4 inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-lime px-6 py-3.5 text-xs font-bold text-black shadow-lg hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <Send className="h-3.5 w-3.5" /> Message Lawrence about these ({items.length})
             </motion.button>

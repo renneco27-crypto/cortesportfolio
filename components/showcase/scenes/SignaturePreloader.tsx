@@ -18,7 +18,7 @@ const MASK_SEGMENTS = [zigzag(24, 132), zigzag(132, 312), zigzag(312, 500)];
 export default function SignaturePreloader() {
   return (
     <div
-      className="js-preloader fixed inset-0 z-[90] flex flex-col items-center justify-center overflow-hidden bg-ink"
+      className="js-preloader fixed inset-0 z-[90] flex flex-col items-center justify-center overflow-hidden bg-ink border-b-2 border-lime/60 shadow-[0_32px_90px_rgba(0,0,0,0.85)]"
       aria-hidden="true"
     >
       <div className="absolute -top-28 h-[260px] w-[520px] rounded-full bg-[#4dff00]/15 blur-[110px]" />

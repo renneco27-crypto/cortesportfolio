@@ -1,5 +1,5 @@
 /* components/showcase/showcase.css */
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap");
 
 :root {
   --neon-lime: #b8ff01;
@@ -8,6 +8,9 @@
   --font-caveat: "Caveat", cursive;
   --font-inter-lc: "Inter", sans-serif;
   --font-syne: "Syne", "Inter", sans-serif;
+  --font-serif-editorial: "Instrument Serif", Georgia, serif;
+  --spring-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --morph-duration: 520ms;
 }
 
 .font-script {
@@ -20,6 +23,10 @@
 
 .font-display {
   font-family: var(--font-syne), var(--font-inter-lc), sans-serif;
+}
+
+.font-serif-editorial {
+  font-family: var(--font-serif-editorial), Georgia, serif;
 }
 
 .bg-lime {
@@ -87,4 +94,260 @@
 .lc-nav[data-theme="dark"] .lc-nav-chip {
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
+}
+
+/* =========================================================
+   ELASTIC PILL & CARD MORPHING SYSTEM (motion_study_02)
+   Includes Bubble-Stretch Hover & Tactile Press Physics
+   ========================================================= */
+:root {
+  --bubble-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --morph-spring: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lc-morph-container {
+  transition:
+    width var(--morph-duration) var(--spring-easing),
+    height var(--morph-duration) var(--spring-easing),
+    border-radius var(--morph-duration) var(--spring-easing),
+    background-color 360ms var(--spring-easing),
+    box-shadow var(--morph-duration) var(--spring-easing),
+    transform 320ms var(--bubble-spring),
+    filter 220ms ease;
+  will-change: width, height, border-radius, background-color, box-shadow, transform, filter;
+}
+
+.lc-morph-container.pressed {
+  transform: scale3d(0.955, 0.97, 1);
+}
+
+.lc-morph-container.motion-blur {
+  filter: url(#svg-motion-blur);
+}
+
+/* Signature Bubble-Stretch Hover & Press Animation (motion_study_02)
+   Applied to all buttons, pills, and interactive controls */
+.lc-elastic-pill {
+  transition:
+    transform 460ms var(--bubble-spring),
+    padding 420ms var(--morph-spring),
+    gap 420ms var(--morph-spring),
+    border-radius 420ms var(--morph-spring),
+    background-color 280ms var(--morph-spring),
+    color 240ms ease,
+    box-shadow 420ms var(--morph-spring),
+    border-color 280ms ease,
+    letter-spacing 360ms var(--morph-spring);
+  will-change: transform, padding, gap, border-radius, box-shadow;
+  transform-origin: center center;
+}
+
+.lc-elastic-pill:hover {
+  transform: translate3d(0, -2px, 0) scale3d(1.07, 1.035, 1);
+  padding-left: calc(1rem + 5px);
+  padding-right: calc(1rem + 5px);
+  letter-spacing: 0.01em;
+}
+
+.lc-elastic-pill:active {
+  transform: translate3d(0, 1px, 0) scale3d(0.93, 0.96, 1) !important;
+  transition-duration: 140ms;
+}
+
+/* Compact variant for navbar chips, filter tabs, and icon pills
+   so they stretch like a liquid bubble without overflowing tight bars */
+.lc-bubble-chip {
+  transition:
+    transform 460ms var(--bubble-spring),
+    padding-inline 380ms var(--morph-spring),
+    background-color 260ms var(--morph-spring),
+    color 220ms ease,
+    box-shadow 380ms var(--morph-spring),
+    border-color 260ms ease;
+  will-change: transform, padding-inline, box-shadow;
+  transform-origin: center center;
+}
+
+.lc-bubble-chip:hover {
+  transform: translate3d(0, -1.5px, 0) scale3d(1.085, 1.04, 1);
+}
+
+.lc-bubble-chip:active {
+  transform: scale3d(0.92, 0.95, 1) !important;
+  transition-duration: 120ms;
+}
+
+/* Interactive Card Bubble Stretch (for Cert cards, Bento items, Command rows) */
+.lc-bubble-card {
+  transition:
+    transform 480ms var(--bubble-spring),
+    border-radius 440ms var(--morph-spring),
+    background-color 320ms var(--morph-spring),
+    box-shadow 440ms var(--morph-spring),
+    border-color 280ms ease;
+  will-change: transform, border-radius, box-shadow;
+}
+
+.lc-bubble-card:hover {
+  transform: translate3d(0, -3px, 0) scale3d(1.022, 1.015, 1);
+}
+
+.lc-bubble-card:active {
+  transform: scale3d(0.975, 0.985, 1) !important;
+}
+
+/* =========================================================
+   FLOATING CUTOUT POPUPS: CENTER-OUT FLY + CONTINUOUS BOBBING
+   ========================================================= */
+@keyframes lcFloatBobLeft {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) rotate(-0.8deg);
+  }
+  50% {
+    transform: translate3d(-4px, -9px, 12px) rotate(1.1deg);
+  }
+}
+
+@keyframes lcFloatBobRight {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) rotate(0.8deg);
+  }
+  50% {
+    transform: translate3d(4px, -10px, 14px) rotate(-1.2deg);
+  }
+}
+
+.lc-cutout-origin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 35;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 10px) scale3d(0.42, 0.42, 1);
+  filter: blur(6px);
+  transition:
+    transform 680ms cubic-bezier(0.22, 1.28, 0.36, 1),
+    opacity 380ms var(--morph-spring),
+    filter 380ms ease;
+  will-change: transform, opacity, filter;
+}
+
+.lc-state-layer.active .lc-cutout-origin {
+  opacity: 1;
+  pointer-events: auto;
+  filter: blur(0px);
+  transform: translate3d(calc(-50% + var(--fly-x, 0px)), calc(-50% + var(--fly-y, 0px)), var(--fly-z, 48px)) scale3d(1, 1, 1);
+}
+
+.lc-cutout-bob-left {
+  animation: lcFloatBobLeft 3.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.lc-cutout-bob-right {
+  animation: lcFloatBobRight 4.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.lc-cutout-surface {
+  transition:
+    transform 440ms var(--bubble-spring),
+    box-shadow 400ms var(--morph-spring),
+    border-color 280ms ease;
+  will-change: transform, box-shadow;
+}
+
+.lc-cutout-surface:hover {
+  transform: scale3d(1.08, 1.05, 1) translate3d(0, -3px, 12px);
+}
+
+.lc-cutout-surface:active {
+  transform: scale3d(0.94, 0.96, 1);
+}
+
+.lc-state-layer {
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.lc-state-layer.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lc-state-layer.exit-blur {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================================================
+   3D STANDING-TO-LYING PERSPECTIVE STAGE (opus_5_5_3d)
+   ========================================================= */
+.lc-perspective-stage {
+  perspective: 1250px;
+  perspective-origin: 50% 48%;
+}
+
+.lc-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.lc-card-3d {
+  transform-style: preserve-3d;
+  transform-origin: 50% 88%;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.lc-floor-cast-shadow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 28px;
+  background: radial-gradient(
+    ellipse at 50% 75%,
+    rgba(184, 255, 1, 0.14) 0%,
+    rgba(0, 0, 0, 0.65) 45%,
+    rgba(0, 0, 0, 0) 78%
+  );
+  filter: blur(14px);
+  z-index: 0;
+  will-change: transform, opacity;
+}
+
+.lc-shadow-elevated {
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.42),
+    0 12px 24px -8px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.lc-shadow-elevated-strong {
+  box-shadow:
+    0 38px 72px -12px rgba(0, 0, 0, 0.52),
+    0 20px 36px -8px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(255, 255, 255, 0.55) inset;
+}
+
+.lc-dof-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  pointer-events: none;
+  z-index: 45;
+  background: linear-gradient(to bottom, rgba(18, 18, 18, 0.92) 0%, rgba(18, 18, 18, 0) 100%);
+}
+
+.lc-dof-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  pointer-events: none;
+  z-index: 45;
+  background: linear-gradient(to top, rgba(18, 18, 18, 0.92) 0%, rgba(18, 18, 18, 0) 100%);
 }

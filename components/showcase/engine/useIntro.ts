@@ -21,9 +21,9 @@ export function playSignatureIntro(
     return dummy;
   }
 
-  // Reset initial states
-  gsap.set(preloader, { opacity: 1, pointerEvents: "auto", display: "flex" });
-  gsap.set(heroLayer, { yPercent: 100 });
+  // Reset initial states — vertical swipe-up transition (no fade out)
+  gsap.set(preloader, { opacity: 1, yPercent: 0, pointerEvents: "auto", display: "flex" });
+  gsap.set(heroLayer, { yPercent: 22, scale: 0.985 });
   if (stack) gsap.set(stack, { opacity: 0, y: 12 });
   if (status) status.textContent = "Compiling signature…";
   if (bar) gsap.set(bar, { scaleX: 0 });
@@ -118,27 +118,29 @@ export function playSignatureIntro(
     }, 1.4);
   }
 
-  // Hero panel slides up over preloader
+  // Swipe UP transition from Signature Preloader into Hero Section (no fade-out!)
   tl.to(
-    heroLayer,
+    preloader,
     {
-      yPercent: 0,
-      duration: 0.95,
+      yPercent: -100,
+      duration: 0.92,
       ease: "power3.inOut",
-      delay: 0.3,
+      delay: 0.28,
+      onComplete: () => {
+        gsap.set(preloader, { display: "none", pointerEvents: "none" });
+      },
     }
   );
 
   tl.to(
-    preloader,
+    heroLayer,
     {
-      opacity: 0,
-      duration: 0.3,
-      onComplete: () => {
-        gsap.set(preloader, { display: "none", pointerEvents: "none" });
-      },
+      yPercent: 0,
+      scale: 1,
+      duration: 0.92,
+      ease: "power3.out",
     },
-    "-=0.2"
+    "<"
   );
 
   return tl;
