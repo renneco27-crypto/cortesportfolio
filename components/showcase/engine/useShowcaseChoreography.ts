@@ -517,8 +517,8 @@ export function useShowcaseChoreography(
         singleMorphCardEl.style.width = `${cfg.width}px`;
         singleMorphCardEl.style.height = `${cfg.height}px`;
         singleMorphCardEl.style.borderRadius = `${cfg.radius}px`;
-        singleMorphCardEl.style.backgroundColor = cfg.bg;
-        singleMorphCardEl.style.boxShadow = cfg.shadow;
+        singleMorphCardEl.style.backgroundColor = "transparent";
+        singleMorphCardEl.style.boxShadow = "none";
 
         // Toggle .active / .exit-blur on state layers inside #morph-container (motion_study_02)
         allLayers.forEach((layerEl, i) => {

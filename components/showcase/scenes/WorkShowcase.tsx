@@ -830,7 +830,7 @@ export default function WorkShowcase({
           />
 
           {/* THE SINGLE MORPHING CONTAINER STAGE (#morph-container from motion_study_02)
-              Zero overlapping cards! Morphs width, height, borderRadius, bg & shadow elastically */}
+              Cards travel from right to left, shrinking to bottom-left as they exit */}
           <div
             id="morph-container"
             aria-label={
@@ -838,13 +838,13 @@ export default function WorkShowcase({
                 ? "Lawrence Cortes Portrait Card"
                 : `Inspect ${activeSpec.shortName}`
             }
-            className="js-single-morph-card lc-morph-container lc-preserve-3d pointer-events-auto group relative"
+            className="js-single-morph-card lc-morph-container lc-preserve-3d pointer-events-none group relative"
             style={{
               width: `${cfg.width}px`,
               height: `${cfg.height}px`,
               borderRadius: `${cfg.radius}px`,
-              backgroundColor: cfg.bg,
-              boxShadow: cfg.shadow,
+              backgroundColor: "transparent",
+              boxShadow: "none",
               overflow: "visible",
             }}
           >
@@ -860,6 +860,10 @@ export default function WorkShowcase({
                   className={`js-project-layer lc-state-layer lc-preserve-3d absolute inset-0 flex flex-col rounded-[inherit] overflow-visible ${
                     i === 0 ? "active" : ""
                   }`}
+                  style={{
+                    backgroundColor: MORPH_STATE_CONFIGS[i]?.bg ?? "#101815",
+                    boxShadow: MORPH_STATE_CONFIGS[i]?.shadow,
+                  }}
                 >
                   {/* Inner clipped browser/app window */}
                   <div
