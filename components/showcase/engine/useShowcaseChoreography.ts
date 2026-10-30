@@ -545,8 +545,8 @@ export function useShowcaseChoreography(
           const offset = i - curFloat;
           const absOffset = Math.abs(offset);
 
-          // ONLY ONE CARD VISIBLE AT A TIME: any inactive adjacent card is completely GONE!
-          if (absOffset >= 0.5) {
+          // Smooth continuous ice-glide: only hide layers that have fully exited off-screen (|offset| >= 1.0)
+          if (absOffset >= 1.0) {
             layerEl.style.opacity = "0";
             layerEl.style.pointerEvents = "none";
             layerEl.style.display = "none";
@@ -555,16 +555,18 @@ export function useShowcaseChoreography(
           }
 
           layerEl.style.display = "flex";
-          if (absOffset < 0.25) {
+          if (absOffset < 0.22) {
             layerEl.classList.add("active");
           } else {
             layerEl.classList.remove("active");
           }
 
-          const xPercent = offset * 100;
+          // Smooth horizontal translation: glides like ice across without snapping
+          const xPercent = offset * 105;
           // Uniform stable card scale: eliminates zoom in/out camera shaking!
           const scale = 1.0;
-          const opacity = clamp(1 - absOffset * 2.0, 0, 1);
+          // Clean continuous fade: 1.0 at center, drops to 0 smoothly as it reaches 1.0 offscreen
+          const opacity = clamp(1 - Math.pow(absOffset, 1.8), 0, 1);
           const zIndex = Math.round(30 - offset * 8);
 
           layerEl.style.transform = `translate3d(${xPercent.toFixed(1)}%, 0px, 0px) scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, 1)`;

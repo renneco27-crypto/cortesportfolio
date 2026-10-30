@@ -230,7 +230,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "155px",
+                "--fly-x": "192px",
                 "--fly-y": "-88px",
                 "--fly-z": "52px",
                 transitionDelay: "0ms",
@@ -263,7 +263,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "-128px",
+                "--fly-x": "-188px",
                 "--fly-y": "-24px",
                 "--fly-z": "58px",
                 transitionDelay: "80ms",
@@ -296,7 +296,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "135px",
+                "--fly-x": "186px",
                 "--fly-y": "82px",
                 "--fly-z": "46px",
                 transitionDelay: "150ms",
@@ -322,7 +322,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "98px",
+                "--fly-x": "184px",
                 "--fly-y": "-68px",
                 "--fly-z": "58px",
                 transitionDelay: "0ms",
@@ -342,7 +342,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "-108px",
+                "--fly-x": "-182px",
                 "--fly-y": "-126px",
                 "--fly-z": "46px",
                 transitionDelay: "85ms",
@@ -367,7 +367,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "-86px",
+                "--fly-x": "-180px",
                 "--fly-y": "92px",
                 "--fly-z": "50px",
                 transitionDelay: "160ms",
@@ -394,7 +394,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "116px",
+                "--fly-x": "188px",
                 "--fly-y": "-32px",
                 "--fly-z": "60px",
                 transitionDelay: "0ms",
@@ -414,7 +414,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "-112px",
+                "--fly-x": "-186px",
                 "--fly-y": "68px",
                 "--fly-z": "50px",
                 transitionDelay: "85ms",
@@ -434,7 +434,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "-106px",
+                "--fly-x": "-182px",
                 "--fly-y": "-110px",
                 "--fly-z": "46px",
                 transitionDelay: "160ms",
@@ -464,7 +464,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "-116px",
+                "--fly-x": "-188px",
                 "--fly-y": "-92px",
                 "--fly-z": "52px",
                 transitionDelay: "0ms",
@@ -495,7 +495,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "118px",
+                "--fly-x": "186px",
                 "--fly-y": "24px",
                 "--fly-z": "48px",
                 transitionDelay: "85ms",
@@ -517,7 +517,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "112px",
+                "--fly-x": "182px",
                 "--fly-y": "116px",
                 "--fly-z": "58px",
                 transitionDelay: "160ms",
@@ -543,7 +543,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "104px",
+                "--fly-x": "184px",
                 "--fly-y": "-66px",
                 "--fly-z": "48px",
                 transitionDelay: "0ms",
@@ -563,7 +563,7 @@ function ProjectImageFloatingCutouts({ projectId }: { projectId: string }) {
             className="lc-cutout-origin"
             style={
               {
-                "--fly-x": "-108px",
+                "--fly-x": "-188px",
                 "--fly-y": "42px",
                 "--fly-z": "58px",
                 transitionDelay: "85ms",
@@ -857,7 +857,7 @@ export default function WorkShowcase({
                 <div
                   key={m.projectId}
                   data-state-index={i}
-                  className={`js-project-layer lc-state-layer lc-preserve-3d absolute inset-0 flex flex-col rounded-[inherit] overflow-hidden ${
+                  className={`js-project-layer lc-state-layer lc-preserve-3d absolute inset-0 flex flex-col rounded-[inherit] overflow-visible ${
                     i === 0 ? "active" : ""
                   }`}
                   style={{
