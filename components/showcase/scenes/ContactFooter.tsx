@@ -98,7 +98,7 @@ export default function ContactFooter({
           label: r.label,
           issuingBody: r.issuing_body,
           status:
-            r.status === "completed"
+            r.status === "earned"
               ? "earned"
               : r.status === "in-progress"
               ? "in-progress"
