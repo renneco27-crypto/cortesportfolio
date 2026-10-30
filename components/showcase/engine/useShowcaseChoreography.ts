@@ -613,7 +613,29 @@ export function useShowcaseChoreography(
       const stage2RotZ = Math.sin(anatomyTransitionT * Math.PI) * -3.5;
 
       const toolkitScaleTarget = isDesktop ? 1.26 : 1.14;
-      const targetDockScale = isDesktop ? 0.84 : 0.90;
+      const is3DOn = footerSlidePanel ? footerSlidePanel.getAttribute("data-3d-enabled") !== "0" : true;
+
+      // Measure exact slot destination coordinates from the actual docked card in the DOM!
+      let targetSlotX = isDesktop ? -325 : 0;
+      let targetSlotY = isDesktop ? 64 : 48;
+      let targetDockScale = isDesktop ? 0.84 : 0.90;
+
+      if (aboutPortraitCardEl && morphOverlayPanel) {
+        const tRect = aboutPortraitCardEl.getBoundingClientRect();
+        const oRect = morphOverlayPanel.getBoundingClientRect();
+        if (tRect.width > 0 && oRect.width > 0) {
+          const tCenterX = tRect.left + tRect.width * 0.5;
+          const tCenterY = tRect.top + tRect.height * 0.5;
+          const oCenterX = oRect.left + oRect.width * 0.5;
+          const oCenterY = oRect.top + oRect.height * 0.5;
+          targetSlotX = tCenterX - oCenterX;
+          targetSlotY = tCenterY - oCenterY;
+          const baseWidth = MORPH_STATE_CONFIGS[5]?.width || 360;
+          if (baseWidth > 0) {
+            targetDockScale = clamp(tRect.width / baseWidth, 0.70, 0.98);
+          }
+        }
+      }
 
       // Stage 2 -> Stage 3 (About Lawrence Cortes left-column slot)
       const glideProgress = clamp((p - 0.67) / (0.768 - 0.67), 0, 1);
@@ -652,30 +674,31 @@ export function useShowcaseChoreography(
         }
       }
 
-      // Target left-column slot coordinates
-      const aboutSlotX = isDesktop ? -276 : 0;
-      const aboutSlotY = isDesktop ? 58 : 48;
-      const finalX = lerp(stage2X, aboutSlotX, easeGlide);
-      const finalY = lerp(stage2Y, aboutSlotY, easeGlide);
+      // Smooth interpolation to exact slot position and exact 3D stand angle (-42deg)
+      const finalX = lerp(stage2X, targetSlotX, easeGlide);
+      const finalY = lerp(stage2Y, targetSlotY, easeGlide);
       const finalRotZ = lerp(stage2RotZ, 0, easeGlide);
-      const finalRotX = lerp(0, isDesktop ? 10 : 6, easeGlide);
+      const targetRotX = is3DOn ? -42 : 0;
+      const finalRotX = lerp(0, targetRotX, easeGlide);
 
-      // Dock handoff: floating overlay stays 100% visible until docked at p = 0.768,
-      // and docked card (.js-about-portrait-card) stays hidden (0) until p = 0.768!
-      // NO double cards, NO fading to size!
-      const isDocked = p >= 0.768;
+      // Seamless Landing Handoff:
+      // When glideProgress reaches 1 (p >= 0.768), both cards are at the EXACT same subpixel coordinates and 3D angle.
+      // Crossfade smoothly across the final corridor so there is ZERO snap, ZERO sudden appearance/disappearance!
+      const handoffT = clamp((p - 0.752) / (0.768 - 0.752), 0, 1);
 
       if (morphOverlayPanel) {
-        const isOverlayActive = p >= 0.275 && !isDocked;
+        const isOverlayActive = p >= 0.275 && p < 0.772;
         morphOverlayPanel.style.transform =
           p < 0.34
             ? `translate3d(0, ${(1 - slideUpShowcaseT) * 100}%, 0)`
             : "translate3d(0, 0%, 0)";
-        morphOverlayPanel.style.opacity = isOverlayActive ? "1" : "0";
+        const overlayAlpha = p >= 0.752 ? (1 - handoffT) : (isOverlayActive ? 1 : 0);
+        morphOverlayPanel.style.opacity = overlayAlpha.toFixed(2);
       }
 
       if (aboutPortraitCardEl) {
-        aboutPortraitCardEl.style.opacity = isDocked ? "1" : "0";
+        const dockedAlpha = p >= 0.752 ? handoffT : 0;
+        aboutPortraitCardEl.style.opacity = dockedAlpha.toFixed(2);
       }
 
       if (morphStageEl) {
@@ -757,7 +780,7 @@ export function useShowcaseChoreography(
 
         if (isFooterVisible && rig3DEl && slab3DEl) {
           const is3DOn = footerSlidePanel.getAttribute("data-3d-enabled") !== "0";
-          const maxTilt = parseFloat(footerSlidePanel.getAttribute("data-max-tilt") || "18");
+          const maxTilt = parseFloat(footerSlidePanel.getAttribute("data-max-tilt") || "42");
 
           // Hold slab at top (scrollY = 0) until p = 0.790 so "01 — ABOUT LAWRENCE CORTES: Developer by code. Designer by eye."
           // is 100% visible when the pixels clear and the 3D floor tilts up!

@@ -68,9 +68,9 @@ export default function ContactFooter({
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
 
-  // 3D Standing-to-Lying perspective toggle & max tilt angle (comfortable readable 18° default so text is crystal clear)
+  // 3D Standing-to-Lying perspective toggle & max tilt angle (42° standing perspective)
   const [is3DEnabled, setIs3DEnabled] = useState(true);
-  const [maxTiltDeg, setMaxTiltDeg] = useState(18);
+  const [maxTiltDeg, setMaxTiltDeg] = useState(42);
 
   // Elastic Pill Morphing interactive states (matching motion_study_02_ui_morphing_showcase.html)
   const [expandedCertId, setExpandedCertId] = useState<string | null>("csc-professional");
