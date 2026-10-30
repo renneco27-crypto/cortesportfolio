@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
-import { Sparkles, Send, X, Layers, Briefcase, Award, Code2 } from "lucide-react";
+import { Send, X } from "lucide-react";
 
 type Message = { id: string; role: "user" | "assistant"; content: string };
 
@@ -22,6 +22,8 @@ const PRESET_ANSWERS: Record<string, string> = {
 
 export default function EditorialChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMorphBlur, setIsMorphBlur] = useState(false);
+  const [ isPressed, setIsPressed ] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -29,9 +31,13 @@ export default function EditorialChatWidget() {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const blurTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setHasMounted(true);
+    return () => {
+      if (blurTimeoutRef.current) clearTimeout(blurTimeoutRef.current);
+    };
   }, []);
 
   useEffect(() => {
@@ -39,6 +45,20 @@ export default function EditorialChatWidget() {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isOpen]);
+
+  const triggerMorphState = (nextOpen: boolean) => {
+    if (nextOpen === isOpen) return;
+    setIsPressed(true);
+    setTimeout(() => setIsPressed(false), 140);
+
+    setIsMorphBlur(true);
+    if (blurTimeoutRef.current) clearTimeout(blurTimeoutRef.current);
+    blurTimeoutRef.current = setTimeout(() => {
+      setIsMorphBlur(false);
+    }, 290);
+
+    setIsOpen(nextOpen);
+  };
 
   const sendMessageText = async (textToSend: string) => {
     if (!textToSend.trim() || isLoading) return;
@@ -67,7 +87,10 @@ export default function EditorialChatWidget() {
       });
       const data = await res.json();
 
-      const replyContent = data.reply || localPreset || "I'm trained on Lawrence's full-stack architecture, 8+ shipped builds, and 2026 internship availability. Ask me about his tech stack, projects, or availability!";
+      const replyContent =
+        data.reply ||
+        localPreset ||
+        "I'm trained on Lawrence's full-stack architecture, 8+ shipped builds, and 2026 internship availability. Ask me about his tech stack, projects, or availability!";
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -81,7 +104,9 @@ export default function EditorialChatWidget() {
         {
           id: Date.now().toString(),
           role: "assistant",
-          content: localPreset || "I'm Lawrence's Studio AI Concierge. I can give you full details on his Next.js builds, Python projects, Civil Service credentials, and 2026 internship availability!",
+          content:
+            localPreset ||
+            "I'm Lawrence's Studio AI Concierge. I can give you full details on his Next.js builds, Python projects, Civil Service credentials, and 2026 internship availability!",
         },
       ]);
     } finally {
@@ -99,16 +124,71 @@ export default function EditorialChatWidget() {
   if (!hasMounted) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-[85] flex flex-col items-end sm:bottom-6 sm:right-6">
-      {/* Expanded Chat Dialog Modal (Floats Above the Persistent Trigger Pill) */}
-      {isOpen && (
+    <div className="fixed bottom-4 right-4 z-[85] sm:bottom-6 sm:right-6">
+      {/* Directional SVG Motion Blur Filter (from motion_study_02_ui_morphing_showcase.html) */}
+      <svg width="0" height="0" className="pointer-events-none absolute">
+        <defs>
+          <filter id="svg-motion-blur-chat" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2.5 0.6" />
+          </filter>
+        </defs>
+      </svg>
+
+      {/* Single Morphing Surface Container (motion_study_02_ui_morphing_showcase.html) */}
+      <div
+        role={isOpen ? "dialog" : "region"}
+        aria-label="Ask Lawrence AI Concierge"
+        className={`lc-morph-container relative overflow-hidden border ${
+          isOpen ? "border-white/20" : "border-white/15 hover:border-lime"
+        } ${isPressed ? "pressed" : ""}`}
+        style={{
+          width: isOpen ? "min(420px, calc(100vw - 32px))" : "212px",
+          height: isOpen ? "min(540px, 80vh)" : "52px",
+          borderRadius: isOpen ? "28px" : "26px",
+          backgroundColor: "#070707",
+          boxShadow: isOpen
+            ? "0 26px 52px rgba(0, 0, 0, 0.45), 0 6px 16px rgba(0, 0, 0, 0.22)"
+            : "0 22px 45px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.16)",
+          filter: isMorphBlur ? "url(#svg-motion-blur-chat)" : "none",
+        }}
+      >
+        {/* =========================================================
+            STATE 1: Compact Pill Layer (Closed State)
+            ========================================================= */}
+        <button
+          type="button"
+          onClick={() => triggerMorphState(true)}
+          aria-label="Open Ask Lawrence AI Concierge"
+          className={` group absolute inset-0 flex w-full cursor-pointer items-center justify-center gap-2.5 px-4 text-xs font-extrabold text-white transition-all duration-240 ${
+            !isOpen
+              ? "opacity-100 pointer-events-auto scale-100 blur-0"
+              : "opacity-0 pointer-events-none scale-95 blur-[6px]"
+          }`}
+        >
+          <span className="relative flex h-2.5 w-2.5 shrink-0">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime opacity-75" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-lime shadow-[0_0_10px_#b8ff01]" />
+          </span>
+          <span className="font-ui text-[13.5px] font-semibold tracking-[-0.02em] text-white group-hover:text-lime transition-colors whitespace-nowrap">
+            Ask Lawrence AI
+          </span>
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-lime/20 font-mono text-[10px] font-black text-lime">
+            ✦
+          </span>
+        </button>
+
+        {/* =========================================================
+            STATE 2: Expanded Concierge Card Layer (Open State)
+            ========================================================= */}
         <div
-          role="dialog"
-          aria-label="Ask Lawrence AI Concierge"
-          className="mb-3 flex max-h-[min(620px,82vh)] w-[min(440px,calc(100vw-32px))] flex-col overflow-hidden rounded-3xl border border-white/20 bg-[#0d0d10]/95 text-white shadow-[0_32px_90px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all duration-300 animate-in fade-in zoom-in-95 slide-in-from-bottom-4"
+          className={`absolute inset-0 flex flex-col justify-between transition-all duration-300 ${
+            isOpen
+              ? "opacity-100 pointer-events-auto scale-100 blur-0"
+              : "opacity-0 pointer-events-none scale-95 blur-[6px]"
+          }`}
         >
           {/* Header Bar */}
-          <div className="border-b border-white/10 bg-[#141418] px-5 py-4">
+          <div className="border-b border-white/10 bg-[#111115] px-5 py-4 shrink-0">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-lime shadow-[0_0_14px_rgba(184,255,1,0.5)]">
@@ -136,7 +216,7 @@ export default function EditorialChatWidget() {
 
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
+                onClick={() => triggerMorphState(false)}
                 aria-label="Close Ask Lawrence AI"
                 className="lc-bubble-chip flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/10 text-neutral-300 hover:border-lime hover:bg-lime hover:text-black transition-all"
               >
@@ -160,38 +240,8 @@ export default function EditorialChatWidget() {
             </div>
           </div>
 
-          {/* Messages Feed */}
-          <div className="flex-1 space-y-3.5 overflow-y-auto bg-[#0a0a0c] p-4 text-xs leading-relaxed text-neutral-200">
-            {/* Initial Rich Informative Greeting */}
-            <div className="rounded-2xl border border-white/15 bg-[#141418] p-4 text-neutral-100 shadow-md">
-              <div className="mb-2 flex items-center gap-1.5 font-mono text-[10px] font-black uppercase tracking-wider text-lime">
-                <Sparkles className="h-3.5 w-3.5" />
-                <span>LAWRENCE CORTES · AI CONCIERGE</span>
-              </div>
-              <h4 className="text-sm font-bold text-white mb-1.5">
-                Welcome to Lawrence&apos;s Portfolio &amp; Technical Dossier
-              </h4>
-              <p className="text-neutral-300 text-xs leading-relaxed mb-3">
-                I&apos;m trained directly on Lawrence&apos;s full-stack architecture, 8+ shipped software projects, civil service credentials, and 2026 internship availability.
-              </p>
-              
-              <div className="space-y-1.5 rounded-xl border border-white/10 bg-black/40 p-2.5 font-mono text-[11px] text-neutral-300">
-                <div className="flex items-center gap-2">
-                  <span className="text-lime font-bold">• Status:</span>
-                  <span className="text-white font-semibold">Available for 2026 Internships</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-lime font-bold">• Core:</span>
-                  <span className="text-neutral-200">Next.js 15 · TypeScript · Python · GSAP</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-lime font-bold">• College:</span>
-                  <span className="text-neutral-200">ACLC College Ormoc (BSIT)</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Conversation Messages */}
+          {/* Messages Feed (Starts completely empty as requested) */}
+          <div className="flex-1 space-y-3.5 overflow-y-auto bg-[#070707] p-4 text-xs leading-relaxed text-neutral-200">
             {messages.map((m) => (
               <div
                 key={m.id}
@@ -240,7 +290,7 @@ export default function EditorialChatWidget() {
           </div>
 
           {/* Bottom Input Area */}
-          <div className="border-t border-white/10 bg-[#121216] p-3.5">
+          <div className="border-t border-white/10 bg-[#111115] p-3.5 shrink-0">
             {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
               <div className="hidden">
                 <Turnstile
@@ -272,34 +322,7 @@ export default function EditorialChatWidget() {
             </form>
           </div>
         </div>
-      )}
-
-      {/* Persistent Floating Trigger Pill ("Ask Lawrence AI" NEVER disappears) */}
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? "Close Ask Lawrence AI" : "Open Ask Lawrence AI Concierge"}
-        className={`lc-elastic-pill group flex cursor-pointer items-center gap-2.5 rounded-full border px-4 py-2.5 text-xs font-extrabold shadow-[0_16px_36px_rgba(0,0,0,0.55)] transition-all ${
-          isOpen
-            ? "border-lime bg-black text-white hover:bg-neutral-900"
-            : "border-white/20 bg-[#121214] text-white hover:border-lime hover:bg-black"
-        }`}
-      >
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime opacity-75" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-lime shadow-[0_0_10px_#b8ff01]" />
-        </span>
-        <span className="font-ui tracking-tight text-white group-hover:text-lime transition-colors">
-          Ask Lawrence AI
-        </span>
-        <span
-          className={`flex h-5 w-5 items-center justify-center rounded-full font-mono text-[10px] font-black transition-all ${
-            isOpen ? "bg-red-500/20 text-red-400 rotate-90" : "bg-lime/20 text-lime"
-          }`}
-        >
-          {isOpen ? "✕" : "✦"}
-        </span>
-      </button>
+      </div>
     </div>
   );
 }

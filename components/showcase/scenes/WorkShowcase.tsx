@@ -830,7 +830,7 @@ export default function WorkShowcase({
           />
 
           {/* THE SINGLE MORPHING CONTAINER STAGE (#morph-container from motion_study_02)
-              Zero overlapping cards! Cards swipe from right (BIG) to left (SHRINKS SMALL) */}
+              Zero overlapping cards! Morphs width, height, borderRadius, bg & shadow elastically */}
           <div
             id="morph-container"
             aria-label={
@@ -838,13 +838,13 @@ export default function WorkShowcase({
                 ? "Lawrence Cortes Portrait Card"
                 : `Inspect ${activeSpec.shortName}`
             }
-            className="js-single-morph-card lc-morph-container lc-preserve-3d pointer-events-none group relative"
+            className="js-single-morph-card lc-morph-container lc-preserve-3d pointer-events-auto group relative"
             style={{
               width: `${cfg.width}px`,
               height: `${cfg.height}px`,
               borderRadius: `${cfg.radius}px`,
-              backgroundColor: "transparent",
-              boxShadow: "none",
+              backgroundColor: cfg.bg,
+              boxShadow: cfg.shadow,
               overflow: "visible",
             }}
           >
@@ -860,10 +860,6 @@ export default function WorkShowcase({
                   className={`js-project-layer lc-state-layer lc-preserve-3d absolute inset-0 flex flex-col rounded-[inherit] overflow-visible ${
                     i === 0 ? "active" : ""
                   }`}
-                  style={{
-                    backgroundColor: MORPH_STATE_CONFIGS[i]?.bg ?? "#101815",
-                    boxShadow: MORPH_STATE_CONFIGS[i]?.shadow,
-                  }}
                 >
                   {/* Inner clipped browser/app window */}
                   <div
@@ -945,18 +941,34 @@ export default function WorkShowcase({
                         </>
                       )}
 
-                      {/* 3D Sculpted Bottom Badge Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/15 to-transparent flex flex-col justify-end p-4">
+                      {/* motion_study_02 Morphing Pill Surface Bottom Badge Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent flex flex-col justify-end p-4">
                         <div
-                          className="w-fit rounded-xl border border-white/15 bg-black/75 px-3 py-2 shadow-[0_18px_34px_-6px_rgba(0,0,0,0.9),0_6px_14px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.28)]"
+                          className="lc-morph-container flex w-fit items-center gap-3 rounded-[22px] bg-[#070707] px-4 py-2.5 shadow-[0_22px_45px_rgba(0,0,0,0.22),0_4px_12px_rgba(0,0,0,0.10)]"
                           style={{ transform: "translateZ(18px)" }}
                         >
-                          <span className="block text-[9px] font-black uppercase tracking-widest text-lime drop-shadow-[0_2px_8px_rgba(184,255,1,0.55)]">
-                            {m.project.badge}
-                          </span>
-                          <h4 className="mt-0.5 text-sm font-extrabold leading-tight text-white">
-                            {m.shortName}
-                          </h4>
+                          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-[#070707]">
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="#070707"
+                              strokeWidth="3.2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          </div>
+                          <div className="flex flex-col justify-center">
+                            <span className="block text-[9px] font-bold uppercase tracking-[0.06em] text-[#8e8e93] leading-none">
+                              {m.project.badge}
+                            </span>
+                            <h4 className="mt-0.5 text-[15px] font-semibold tracking-[-0.02em] leading-tight text-white">
+                              {m.shortName}
+                            </h4>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -968,13 +980,14 @@ export default function WorkShowcase({
               );
             })}
 
-            {/* State 5: Exact Lawrence Cortes Portrait Card (Already item #6 in Selected work, drops without morphing into Toolkit, and glides into 01 About Lawrence Cortes!) */}
+            {/* State 5: Exact Lawrence Cortes Portrait Card (Already item #6 in Selected work, drops without morphing into Toolkit, and uses GSAP Flip midway to match .js-about-portrait-card before landing!) */}
             <div
               data-state-index={5}
+              data-card-mode="showcase"
               className="js-lc-layer lc-state-layer absolute inset-0 flex flex-col justify-between overflow-hidden rounded-2xl border border-black/10 bg-[#141414] p-4 text-white shadow-[0_24px_48px_-12px_rgba(0,0,0,0.45)]"
               style={{ borderRadius: "inherit" }}
             >
-              <div className="js-cap relative flex-1 min-h-0 w-full overflow-hidden rounded-xl bg-neutral-900 transition-transform">
+              <div className="js-cap relative flex-1 min-h-0 w-full overflow-hidden rounded-xl bg-neutral-900">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/images/lawrence-face.jpg"
@@ -984,37 +997,37 @@ export default function WorkShowcase({
                   className="h-full w-full object-cover object-top transition-transform duration-500 hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
-                <div className="absolute bottom-3 left-3.5 right-3.5 flex items-end justify-between">
+                <div className="js-lc-caption absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
                   <div>
                     <span className="inline-block rounded-full bg-lime px-2.5 py-0.5 font-mono text-[9px] font-black uppercase tracking-wider text-black">
                       ORMOC CITY · PH
                     </span>
-                    <h3 className="mt-1 text-base font-extrabold leading-tight text-white sm:text-lg">
+                    <h3 className="mt-1 text-base font-extrabold leading-tight text-white">
                       Lawrence Cortes
                     </h3>
                   </div>
-                  <span className="font-script text-xl font-bold text-lime sm:text-2xl">
+                  <span className="font-script text-xl font-bold text-lime">
                     LC &apos;26
                   </span>
                 </div>
               </div>
 
-              <div className="js-plug mt-3.5 grid shrink-0 grid-cols-3 divide-x divide-white/15 border-t border-white/15 pt-3 text-center transition-transform">
+              <div className="js-plug mt-3.5 grid shrink-0 grid-cols-3 divide-x divide-white/15 border-t border-white/15 pt-3 text-center">
                 <div>
-                  <p className="font-ui text-sm font-black text-lime sm:text-base">8+</p>
-                  <p className="text-[9px] font-bold uppercase tracking-wider text-neutral-400">
+                  <p className="font-ui text-sm font-black text-lime">8+</p>
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-neutral-300">
                     Builds
                   </p>
                 </div>
                 <div>
-                  <p className="font-ui text-sm font-black text-white sm:text-base">1356</p>
-                  <p className="text-[9px] font-bold uppercase tracking-wider text-neutral-400">
+                  <p className="font-ui text-sm font-black text-white">1356</p>
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-neutral-300">
                     Commits
                   </p>
                 </div>
                 <div>
-                  <p className="font-ui text-sm font-black text-lime sm:text-base">2026</p>
-                  <p className="text-[9px] font-bold uppercase tracking-wider text-neutral-400">
+                  <p className="font-ui text-sm font-black text-lime">2026</p>
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-neutral-300">
                     Intern
                   </p>
                 </div>

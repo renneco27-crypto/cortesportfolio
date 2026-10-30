@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { heroScriptWords, chapters } from "@/data/showcase";
 import { chapterFor, isDarkNav } from "./timeline";
+import { Flip } from "./gsap";
 import { MORPH_STATE_CONFIGS, SHOWCASE_SELECTOR_ITEMS } from "../scenes/WorkShowcase";
 
 // Mathematical Utilities
@@ -218,6 +219,7 @@ export function useShowcaseChoreography(
     let lastTheme: "light" | "dark" = "light";
     let lastActiveIdx = 0;
     let lastMorphStateIdx = -1;
+    let lastCardMode: "showcase" | "docked" = "showcase";
     let lastChap = "";
     let blurTimeout: ReturnType<typeof setTimeout> | null = null;
 
@@ -494,7 +496,19 @@ export function useShowcaseChoreography(
           anatomyTransitionT > 0.45 && p < 0.7 ? "auto" : "none";
       }
 
-      // Trigger motion_study_02 container geometry morph on active state change
+      // ===============================================================
+      // SINGLE-#MORPH-CONTAINER STATE MORPHING (motion_study_02_ui_morphing_showcase.html)
+      // - Only ONE card container (#morph-container) exists on stage.
+      // - No second card next to it!
+      // - Switching states morphs width, height, borderRadius, backgroundColor, and boxShadow
+      //   with cubic-bezier(0.22, 1, 0.36, 1) and pulses directional SVG motion blur (290ms),
+      //   while toggling .active and .exit-blur on the .lc-state-layer children.
+      // ===============================================================
+      const allLayers = [
+        ...Array.from(projectLayerEls),
+        lcLayerEl,
+      ].filter(Boolean) as HTMLElement[];
+
       if (effectiveMorphStateIdx !== lastMorphStateIdx && singleMorphCardEl) {
         const prevStateIdx = lastMorphStateIdx;
         lastMorphStateIdx = effectiveMorphStateIdx;
@@ -503,8 +517,21 @@ export function useShowcaseChoreography(
         singleMorphCardEl.style.width = `${cfg.width}px`;
         singleMorphCardEl.style.height = `${cfg.height}px`;
         singleMorphCardEl.style.borderRadius = `${cfg.radius}px`;
-        singleMorphCardEl.style.backgroundColor = "transparent";
-        singleMorphCardEl.style.boxShadow = "none";
+        singleMorphCardEl.style.backgroundColor = cfg.bg;
+        singleMorphCardEl.style.boxShadow = cfg.shadow;
+
+        // Toggle .active / .exit-blur on state layers inside #morph-container (motion_study_02)
+        allLayers.forEach((layerEl, i) => {
+          if (i === effectiveMorphStateIdx) {
+            layerEl.classList.add("active");
+            layerEl.classList.remove("exit-blur");
+          } else if (i === prevStateIdx) {
+            layerEl.classList.remove("active");
+            layerEl.classList.add("exit-blur");
+          } else {
+            layerEl.classList.remove("active", "exit-blur");
+          }
+        });
 
         // Update ambient aura & floor shadow to match the active state
         if (morphAuraEl) {
@@ -517,231 +544,21 @@ export function useShowcaseChoreography(
           morphShadowEl.style.background = `radial-gradient(ellipse at center, rgba(0,0,0,0.72) 0%, ${cfg.aura}44 55%, transparent 80%)`;
         }
 
-        // Brief directional SVG motion blur pulse during morph (180ms)
+        // Directional SVG motion blur pulse during morph (290ms matching motion_study_02)
         if (prevStateIdx !== -1) {
           singleMorphCardEl.classList.add("motion-blur", "pressed");
           if (blurTimeout) clearTimeout(blurTimeout);
           blurTimeout = setTimeout(() => {
             singleMorphCardEl.classList.remove("motion-blur", "pressed");
-          }, 180);
+          }, 290);
         }
-      }
-
-      // ===============================================================
-      // HORIZONTAL PHYSICAL SWIPE: RIGHT (BIG) -> LEFT (SHRINKS SMALL)
-      // When scrolling forward, cards swipe from right to left:
-      //   - Coming from right: BIG (scale ~1.15)
-      //   - Active center: scale 1.0
-      //   - Exiting to left: SHRINKS SMALL (scale ~0.70)
-      // ===============================================================
-      const allLayers = [
-        ...Array.from(projectLayerEls),
-        lcLayerEl,
-      ].filter(Boolean) as HTMLElement[];
-
-      if (p >= 0.28 && p < 0.565) {
-        const curFloat = currentCarouselFloatRef.current;
-        allLayers.forEach((layerEl, i) => {
-          const offset = i - curFloat;
-          const absOffset = Math.abs(offset);
-
-          // Smooth continuous ice-glide: only hide layers that have fully exited off-screen (|offset| >= 1.0)
-          if (absOffset >= 1.0) {
-            layerEl.style.opacity = "0";
-            layerEl.style.pointerEvents = "none";
-            layerEl.style.display = "none";
-            layerEl.classList.remove("active");
-            return;
-          }
-
-          layerEl.style.display = "flex";
-          if (absOffset < 0.22) {
-            layerEl.classList.add("active");
-          } else {
-            layerEl.classList.remove("active");
-          }
-
-          // Smooth horizontal translation: glides like ice across without snapping
-          const xPercent = offset * 105;
-          // Uniform stable card scale: eliminates zoom in/out camera shaking!
-          const scale = 1.0;
-          // Clean continuous fade: 1.0 at center, drops to 0 smoothly as it reaches 1.0 offscreen
-          const opacity = clamp(1 - Math.pow(absOffset, 1.8), 0, 1);
-          const zIndex = Math.round(30 - offset * 8);
-
-          layerEl.style.transform = `translate3d(${xPercent.toFixed(1)}%, 0px, 0px) scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, 1)`;
-          layerEl.style.opacity = opacity.toFixed(3);
-          layerEl.style.zIndex = zIndex.toString();
-          layerEl.style.pointerEvents = absOffset < 0.35 ? "auto" : "none";
-        });
-      } else if (p >= 0.565) {
-        // Toolkit & About: Hide layers 0..4, keep State 5 (Lawrence Cortes Portrait Card) active in center
-        projectLayerEls.forEach((layerEl) => {
-          layerEl.style.opacity = "0";
-          layerEl.style.pointerEvents = "none";
-          layerEl.style.display = "none";
-          layerEl.classList.remove("active");
-        });
-        if (lcLayerEl) {
-          lcLayerEl.style.display = "flex";
-          lcLayerEl.style.opacity = "1";
-          lcLayerEl.style.transform = "translate3d(0px, 0px, 0px) scale3d(1, 1, 1)";
-          lcLayerEl.style.zIndex = "30";
-          lcLayerEl.style.pointerEvents = "auto";
-          lcLayerEl.classList.add("active");
-        }
-      }
-
-      // ===============================================================
-      // 3-STAGE POSITION & DIMENSIONAL SHRINK MORPH:
-      // Stage 1 (Selected work, p <= 0.555): sits on the right (x = +115px)
-      // Stage 2 (Toolkit, p: 0.555 -> 0.67): glides to center & grows large (scale = 1.26)
-      // Stage 3 (Toolkit -> About Lawrence Cortes, p: 0.67 -> 0.77):
-      //   "shouldnt fade to size but shrink to size both left and right
-      //    shrinks then the top and bottom of the div to give it its animation"
-      //   - NO opacity crossfade! Remains 100% solid.
-      //   - Left & right shrinks first (scaleX: 1.26 -> 0.84)!
-      //   - Top & bottom shrinks second (scaleY: 1.26 -> 0.84)!
-      //   - Docks into .js-about-portrait-card at p = 0.768 with zero double exposure!
-      // ===============================================================
-      const isDesktop = window.innerWidth >= 1024;
-      const workX = window.innerWidth >= 768 ? 115 : 0;
-      const workY = window.innerWidth >= 768 ? 0 : 28;
-
-      // Stage 1 -> Stage 2 (Toolkit center)
-      const stage2X = lerp(workX, 0, anatomyTransitionT);
-      const gravityDipY = Math.sin(anatomyTransitionT * Math.PI) * 54;
-      const stage2Y = lerp(workY, 12, anatomyTransitionT) + gravityDipY;
-      const stage2RotZ = Math.sin(anatomyTransitionT * Math.PI) * -3.5;
-
-      const toolkitScaleTarget = isDesktop ? 1.26 : 1.14;
-      const is3DOn = footerSlidePanel ? footerSlidePanel.getAttribute("data-3d-enabled") !== "0" : true;
-
-      // Measure exact slot destination coordinates from the actual docked card in the DOM!
-      let targetSlotX = isDesktop ? -325 : 0;
-      let targetSlotY = isDesktop ? 64 : 48;
-      let targetDockScale = isDesktop ? 0.84 : 0.90;
-
-      if (aboutPortraitCardEl && morphOverlayPanel) {
-        const tRect = aboutPortraitCardEl.getBoundingClientRect();
-        const oRect = morphOverlayPanel.getBoundingClientRect();
-        if (tRect.width > 0 && oRect.width > 0) {
-          const tCenterX = tRect.left + tRect.width * 0.5;
-          const tCenterY = tRect.top + tRect.height * 0.5;
-          const oCenterX = oRect.left + oRect.width * 0.5;
-          const oCenterY = oRect.top + oRect.height * 0.5;
-          targetSlotX = tCenterX - oCenterX;
-          targetSlotY = tCenterY - oCenterY;
-          const baseWidth = MORPH_STATE_CONFIGS[5]?.width || 360;
-          if (baseWidth > 0) {
-            targetDockScale = clamp(tRect.width / baseWidth, 0.70, 0.98);
-          }
-        }
-      }
-
-      // Stage 2 -> Stage 3 (About Lawrence Cortes left-column slot)
-      const glideProgress = clamp((p - 0.67) / (0.768 - 0.67), 0, 1);
-      const easeGlide = easeInOutCubic(glideProgress);
-
-      // Robotic 4-Step Sequential Panel Shrink:
-      // "like a robot one animation at a time the left shrinks the right shrinks the top shrinks and the bottom shrinks like panels"
-      // 1. Left shrinks (0.00 -> 0.25)
-      const stepLeftT = easeInOutCubic(clamp(glideProgress / 0.25, 0, 1));
-      // 2. Right shrinks (0.25 -> 0.50)
-      const stepRightT = easeInOutCubic(clamp((glideProgress - 0.25) / 0.25, 0, 1));
-      // 3. Top shrinks (0.50 -> 0.75)
-      const stepTopT = easeInOutCubic(clamp((glideProgress - 0.50) / 0.25, 0, 1));
-      // 4. Bottom shrinks (0.75 -> 1.00)
-      const stepBottomT = easeInOutCubic(clamp((glideProgress - 0.75) / 0.25, 0, 1));
-
-      const initialScale = lerp(1.0, toolkitScaleTarget, anatomyTransitionT);
-      const halfDeltaX = (initialScale - targetDockScale) * 0.5;
-      const currentScaleX = initialScale - (stepLeftT * halfDeltaX + stepRightT * halfDeltaX);
-
-      const halfDeltaY = (initialScale - targetDockScale) * 0.5;
-      const currentScaleY = initialScale - (stepTopT * halfDeltaY + stepBottomT * halfDeltaY);
-
-      // Subtle mechanical robotic shutter panel inset
-      if (singleMorphCardEl) {
-        if (glideProgress > 0 && glideProgress < 1) {
-          const maxInsetX = isDesktop ? 14 : 8;
-          const maxInsetY = isDesktop ? 16 : 10;
-          const insetL = stepLeftT * maxInsetX;
-          const insetR = stepRightT * maxInsetX;
-          const insetT = stepTopT * maxInsetY;
-          const insetB = stepBottomT * maxInsetY;
-          singleMorphCardEl.style.clipPath = `inset(${insetT.toFixed(1)}px ${insetR.toFixed(1)}px ${insetB.toFixed(1)}px ${insetL.toFixed(1)}px round 16px)`;
-        } else {
-          singleMorphCardEl.style.clipPath = "none";
-        }
-      }
-
-      // Smooth interpolation to exact slot position and exact 3D stand angle (-42deg)
-      const finalX = lerp(stage2X, targetSlotX, easeGlide);
-      const finalY = lerp(stage2Y, targetSlotY, easeGlide);
-      const finalRotZ = lerp(stage2RotZ, 0, easeGlide);
-      const targetRotX = is3DOn ? -42 : 0;
-      const finalRotX = lerp(0, targetRotX, easeGlide);
-
-      // Seamless Landing Handoff:
-      // When glideProgress reaches 1 (p >= 0.768), both cards are at the EXACT same subpixel coordinates and 3D angle.
-      // Crossfade smoothly across the final corridor so there is ZERO snap, ZERO sudden appearance/disappearance!
-      const handoffT = clamp((p - 0.752) / (0.768 - 0.752), 0, 1);
-
-      if (morphOverlayPanel) {
-        const isOverlayActive = p >= 0.275 && p < 0.772;
-        morphOverlayPanel.style.transform =
-          p < 0.34
-            ? `translate3d(0, ${(1 - slideUpShowcaseT) * 100}%, 0)`
-            : "translate3d(0, 0%, 0)";
-        const overlayAlpha = p >= 0.752 ? (1 - handoffT) : (isOverlayActive ? 1 : 0);
-        morphOverlayPanel.style.opacity = overlayAlpha.toFixed(2);
-      }
-
-      if (aboutPortraitCardEl) {
-        const dockedAlpha = p >= 0.752 ? handoffT : 0;
-        aboutPortraitCardEl.style.opacity = dockedAlpha.toFixed(2);
-      }
-
-      if (morphStageEl) {
-        morphStageEl.style.transform = `translate3d(${finalX.toFixed(1)}px, ${finalY.toFixed(
-          1
-        )}px, 0) scale3d(${currentScaleX.toFixed(3)}, ${currentScaleY.toFixed(
-          3
-        )}, 1) rotateX(${finalRotX.toFixed(1)}deg) rotateZ(${finalRotZ.toFixed(2)}deg)`;
-      }
-
-      // Fade out ambient glow around floating card as it reaches docked section
-      if (morphAuraEl && morphAuraCoreEl) {
-        const auraAlpha = clamp(1 - glideProgress * 1.3, 0, 0.95);
-        morphAuraEl.style.opacity = auraAlpha.toFixed(2);
-        morphAuraCoreEl.style.opacity = (auraAlpha * 0.9).toFixed(2);
-      }
-
-      // Subtle internal parallax on the Lawrence Cortes card (0.635 -> 0.695)
-      const scrollCapOpenT = easeInOutCubic(mapRange(p, 0.635, 0.695, 0, 1));
-      const effectiveCapOpenT =
-        manualCapOverrideRef.current !== null
-          ? lerp(scrollCapOpenT, manualCapOverrideRef.current, 0.85)
-          : scrollCapOpenT;
-
-      if (lcOuterCapEl) {
-        const capLiftY = lerp(0, -4, effectiveCapOpenT * (1 - easeGlide));
-        lcOuterCapEl.style.transform = `translate3d(0, ${capLiftY.toFixed(1)}px, 0)`;
-      }
-      if (lcBottomPlugEl) {
-        const plugDropY = lerp(0, 4, effectiveCapOpenT * (1 - easeGlide));
-        lcBottomPlugEl.style.transform = `translate3d(0, ${plugDropY.toFixed(1)}px, 0)`;
-      }
-      if (lcTechAxisEl) {
-        lcTechAxisEl.setAttribute("opacity", (effectiveCapOpenT * 0.35).toFixed(2));
       }
 
       /* ===============================================================
          PHASE 4.5: Pixel-Eating Dissolve Transition (0.69 -> 0.755)
          Covers 100% of the screen at p = 0.722, allowing .js-footer to
-         snap cleanly to translateY(0%) with ZERO top cutoff while the
-         reused Lawrence Cortes card glides ABOVE the pixels at z-[45]!
+         be revealed cleanly with ZERO top cutoff while the reused
+         Lawrence Cortes card glides ABOVE the pixels at z-[45]!
       =============================================================== */
       if (pixelOverlay) {
         const pixelEatIn = mapRange(p, 0.69, 0.722, 0, 1);
@@ -769,18 +586,19 @@ export function useShowcaseChoreography(
 
       /* ===============================================================
          PHASE 5: Seamless 3D Standing-to-Lying Panel + Original Footer
-         (p: 0.722 -> 1.00)
-         - Left-and-Right Growing Wing-Expansion Animation (`data-grow-wings="1"`)
-           as sections stand up so HR reviewers can read them effortlessly!
+         (Evaluated BEFORE measuring .js-about-portrait-card so target
+         coordinates never jump by 100vh during the glide!)
       =============================================================== */
       if (footerSlidePanel) {
+        const isFooterPreStaged = p >= 0.665;
         const isFooterVisible = p >= 0.72;
-        footerSlidePanel.style.transform = isFooterVisible
+        footerSlidePanel.style.transform = isFooterPreStaged
           ? "translate3d(0, 0%, 0)"
           : "translate3d(0, 100%, 0)";
+        footerSlidePanel.style.opacity = isFooterVisible ? "1" : "0";
         footerSlidePanel.style.pointerEvents = isFooterVisible ? "auto" : "none";
 
-        if (isFooterVisible && rig3DEl && slab3DEl) {
+        if (isFooterPreStaged && rig3DEl && slab3DEl) {
           const is3DOn = footerSlidePanel.getAttribute("data-3d-enabled") !== "0";
           const maxTilt = parseFloat(footerSlidePanel.getAttribute("data-max-tilt") || "42");
 
@@ -790,7 +608,7 @@ export function useShowcaseChoreography(
           const maxSlabScroll = Math.max(0, slab3DEl.scrollHeight - window.innerHeight);
           const currentSlabY = slabScrollProgress * maxSlabScroll;
 
-          // Seamless 0° -> 56° -> 0° tilt curve with HR-friendly camera scale
+          // Seamless 0° -> 42° -> 0° tilt curve with HR-friendly camera scale
           const tiltInT = easeInOutCubic(mapRange(p, 0.725, 0.775, 0, 1));
           const tiltOutT = easeInOutCubic(mapRange(p, 0.895, 0.955, 0, 1));
           const tiltEnvelope = tiltInT * (1 - tiltOutT);
@@ -896,6 +714,197 @@ export function useShowcaseChoreography(
             }
           });
         }
+      }
+
+      // ===============================================================
+      // 3-STAGE POSITION, GSAP FLIP MIDWAY ADJUSTMENT & ROBOTIC LANDING:
+      // Stage 1 (Selected work, p <= 0.555): sits on the right (x = +115px)
+      // Stage 2 (Toolkit, p: 0.555 -> 0.67): glides to center & grows large (scale = 1.22)
+      // Stage 3 (Toolkit -> About Lawrence Cortes, p: 0.67 -> 0.772):
+      //   - Midway (glideProgress >= 0.38): GSAP Flip.getState + Flip.from
+      //     adjusts .js-lc-layer and its inner elements (.js-cap, .js-plug)
+      //     into the exact "docked" layout and dimensions of .js-about-portrait-card!
+      //   - 4-Step Robotic Panel Shrink (Left -> Right -> Top -> Bottom)
+      //   - Docks into .js-about-portrait-card at p = 0.768 with zero snap!
+      // ===============================================================
+      const isDesktop = window.innerWidth >= 1024;
+      const workX = window.innerWidth >= 768 ? 115 : 0;
+      const workY = window.innerWidth >= 768 ? 0 : 28;
+
+      // Stage 1 -> Stage 2 (Toolkit center)
+      const stage2X = lerp(workX, 0, anatomyTransitionT);
+      const gravityDipY = Math.sin(anatomyTransitionT * Math.PI) * 54;
+      const stage2Y = lerp(workY, 12, anatomyTransitionT) + gravityDipY;
+      const stage2RotZ = Math.sin(anatomyTransitionT * Math.PI) * -3.5;
+
+      const toolkitScaleTarget = isDesktop ? 1.22 : 1.12;
+      const glideProgress = clamp((p - 0.67) / (0.768 - 0.67), 0, 1);
+      const easeGlide = easeInOutCubic(glideProgress);
+
+      // Measure exact slot destination coordinates & dimensions from the actual docked card in the DOM
+      let targetSlotX = isDesktop ? -325 : 0;
+      let targetSlotY = isDesktop ? 64 : 48;
+      let targetDockScaleX = 1.0;
+      let targetDockScaleY = 1.0;
+
+      if (aboutPortraitCardEl && morphOverlayPanel) {
+        const tRect = aboutPortraitCardEl.getBoundingClientRect();
+        const oRect = morphOverlayPanel.getBoundingClientRect();
+        if (tRect.width > 0 && oRect.width > 0) {
+          const tCenterX = tRect.left + tRect.width * 0.5;
+          const tCenterY = tRect.top + tRect.height * 0.5;
+          const oCenterX = oRect.left + oRect.width * 0.5;
+          const oCenterY = oRect.top + oRect.height * 0.5;
+          targetSlotX = tCenterX - oCenterX;
+          targetSlotY = tCenterY - oCenterY;
+
+          // Match exact bounding box dimensions of .js-about-portrait-card at landing
+          const cardBaseW = singleMorphCardEl?.offsetWidth || MORPH_STATE_CONFIGS[5]?.width || 330;
+          const cardBaseH = singleMorphCardEl?.offsetHeight || MORPH_STATE_CONFIGS[5]?.height || 360;
+          if (cardBaseW > 0 && cardBaseH > 0) {
+            targetDockScaleX = clamp(tRect.width / cardBaseW, 0.72, 1.08);
+            targetDockScaleY = clamp(tRect.height / cardBaseH, 0.68, 1.08);
+          }
+        }
+      }
+
+      // GSAP Flip Midway Element Adjustment (at glideProgress >= 0.38, p ~= 0.707):
+      // Adjusts inner elements (.js-cap photo height -> h-44, .js-plug stats grid -> mt-3 pt-2.5,
+      // padding -> p-3.5, and outer dimensions) using GSAP Flip before the card lands!
+      const nextCardMode: "showcase" | "docked" =
+        effectiveMorphStateIdx === 5 && glideProgress >= 0.38 ? "docked" : "showcase";
+      if (nextCardMode !== lastCardMode && lcLayerEl && singleMorphCardEl) {
+        lastCardMode = nextCardMode;
+        const flipTargets = [
+          lcLayerEl,
+          lcOuterCapEl,
+          lcBottomPlugEl,
+          lcLayerEl.querySelector(".js-lc-caption"),
+        ].filter(Boolean) as Element[];
+
+        const flipState = Flip.getState(flipTargets, {
+          props: "padding,marginTop,paddingTop,borderRadius",
+        });
+
+        lcLayerEl.setAttribute("data-card-mode", nextCardMode);
+
+        if (nextCardMode === "docked" && aboutPortraitCardEl) {
+          const tRect = aboutPortraitCardEl.getBoundingClientRect();
+          if (tRect.width > 0 && tRect.height > 0) {
+            singleMorphCardEl.style.width = `${Math.round(tRect.width)}px`;
+            singleMorphCardEl.style.height = `${Math.round(tRect.height)}px`;
+            singleMorphCardEl.style.borderRadius = "16px";
+          }
+        } else if (effectiveMorphStateIdx === 5) {
+          const cfg5 = MORPH_STATE_CONFIGS[5];
+          singleMorphCardEl.style.width = `${cfg5.width}px`;
+          singleMorphCardEl.style.height = `${cfg5.height}px`;
+          singleMorphCardEl.style.borderRadius = `${cfg5.radius}px`;
+        }
+
+        Flip.from(flipState, {
+          duration: 0.42,
+          ease: "power2.inOut",
+          nested: true,
+          scale: true,
+        });
+      }
+
+      // Robotic 4-Step Sequential Panel Shrink:
+      // 1. Left shrinks (0.00 -> 0.25)
+      const stepLeftT = easeInOutCubic(clamp(glideProgress / 0.25, 0, 1));
+      // 2. Right shrinks (0.25 -> 0.50)
+      const stepRightT = easeInOutCubic(clamp((glideProgress - 0.25) / 0.25, 0, 1));
+      // 3. Top shrinks (0.50 -> 0.75)
+      const stepTopT = easeInOutCubic(clamp((glideProgress - 0.50) / 0.25, 0, 1));
+      // 4. Bottom shrinks (0.75 -> 1.00)
+      const stepBottomT = easeInOutCubic(clamp((glideProgress - 0.75) / 0.25, 0, 1));
+
+      const initialScale = lerp(1.0, toolkitScaleTarget, anatomyTransitionT);
+      const halfDeltaX = (initialScale - targetDockScaleX) * 0.5;
+      const currentScaleX = initialScale - (stepLeftT * halfDeltaX + stepRightT * halfDeltaX);
+
+      const halfDeltaY = (initialScale - targetDockScaleY) * 0.5;
+      const currentScaleY = initialScale - (stepTopT * halfDeltaY + stepBottomT * halfDeltaY);
+
+      // Subtle mechanical robotic shutter panel inset that releases cleanly before landing
+      if (singleMorphCardEl) {
+        if (glideProgress > 0 && glideProgress < 0.92) {
+          const releaseT = 1 - clamp((glideProgress - 0.65) / 0.27, 0, 1);
+          const maxInsetX = (isDesktop ? 10 : 6) * releaseT;
+          const maxInsetY = (isDesktop ? 12 : 8) * releaseT;
+          const insetL = stepLeftT * maxInsetX;
+          const insetR = stepRightT * maxInsetX;
+          const insetT = stepTopT * maxInsetY;
+          const insetB = stepBottomT * maxInsetY;
+          singleMorphCardEl.style.clipPath = `inset(${insetT.toFixed(1)}px ${insetR.toFixed(1)}px ${insetB.toFixed(1)}px ${insetL.toFixed(1)}px round 16px)`;
+        } else {
+          singleMorphCardEl.style.clipPath = "none";
+        }
+      }
+
+      // Smooth interpolation to exact slot position and screen-space upright angle:
+      // Note: .js-about-portrait-card is inside .js-3d-rig (+42deg) and counter-stands (-42deg),
+      // so its net screen-space angle is 0deg! Pitching mid-flight and settling to 0deg eliminates any angle snap!
+      const finalX = lerp(stage2X, targetSlotX, easeGlide);
+      const finalY = lerp(stage2Y, targetSlotY, easeGlide);
+      const finalRotZ = lerp(stage2RotZ, 0, easeGlide);
+      const midFlightPitchX = Math.sin(glideProgress * Math.PI) * -14;
+
+      // Seamless Landing Handoff (p: 0.760 -> 0.772)
+      const handoffT = clamp((p - 0.760) / (0.772 - 0.760), 0, 1);
+
+      if (morphOverlayPanel) {
+        const isOverlayActive = p >= 0.275 && p < 0.774;
+        morphOverlayPanel.style.transform =
+          p < 0.34
+            ? `translate3d(0, ${(1 - slideUpShowcaseT) * 100}%, 0)`
+            : "translate3d(0, 0%, 0)";
+        const overlayAlpha = p >= 0.760 ? 1 - handoffT : isOverlayActive ? 1 : 0;
+        morphOverlayPanel.style.opacity = overlayAlpha.toFixed(2);
+      }
+
+      if (aboutPortraitCardEl) {
+        const dockedAlpha = p >= 0.760 ? handoffT : 0;
+        aboutPortraitCardEl.style.opacity = dockedAlpha.toFixed(2);
+      }
+
+      if (morphStageEl) {
+        morphStageEl.style.transform = `translate3d(${finalX.toFixed(1)}px, ${finalY.toFixed(
+          1
+        )}px, 0) scale3d(${currentScaleX.toFixed(3)}, ${currentScaleY.toFixed(
+          3
+        )}, 1) rotateX(${midFlightPitchX.toFixed(1)}deg) rotateZ(${finalRotZ.toFixed(2)}deg)`;
+      }
+
+      // Fade out ambient glow & floor shadow around floating card as it lands into docked section
+      if (morphAuraEl && morphAuraCoreEl) {
+        const auraAlpha = clamp(1 - glideProgress * 1.35, 0, 0.95);
+        morphAuraEl.style.opacity = auraAlpha.toFixed(2);
+        morphAuraCoreEl.style.opacity = (auraAlpha * 0.9).toFixed(2);
+      }
+      if (morphShadowEl) {
+        const shadowAlpha = clamp(0.8 - glideProgress * 1.2, 0, 0.8);
+        morphShadowEl.style.opacity = shadowAlpha.toFixed(2);
+      }
+
+      // Subtle internal parallax on the Lawrence Cortes card (0.635 -> 0.695)
+      const scrollCapOpenT = easeInOutCubic(mapRange(p, 0.635, 0.695, 0, 1));
+      const effectiveCapOpenT =
+        manualCapOverrideRef.current !== null
+          ? lerp(scrollCapOpenT, manualCapOverrideRef.current, 0.85)
+          : scrollCapOpenT;
+
+      if (lcOuterCapEl && lastCardMode === "showcase") {
+        const capLiftY = lerp(0, -4, effectiveCapOpenT * (1 - easeGlide));
+        lcOuterCapEl.style.transform = `translate3d(0, ${capLiftY.toFixed(1)}px, 0)`;
+      }
+      if (lcBottomPlugEl && lastCardMode === "showcase") {
+        const plugDropY = lerp(0, 4, effectiveCapOpenT * (1 - easeGlide));
+        lcBottomPlugEl.style.transform = `translate3d(0, ${plugDropY.toFixed(1)}px, 0)`;
+      }
+      if (lcTechAxisEl) {
+        lcTechAxisEl.setAttribute("opacity", (effectiveCapOpenT * 0.35).toFixed(2));
       }
 
       animFrameRef.current = requestAnimationFrame(render);

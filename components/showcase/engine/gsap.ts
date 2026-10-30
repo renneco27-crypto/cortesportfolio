@@ -5,6 +5,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { Flip } from "gsap/Flip";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { SplitText } from "gsap/SplitText";
@@ -16,6 +17,7 @@ if (typeof window !== "undefined") {
     useGSAP,
     ScrollTrigger,
     ScrollToPlugin,
+    Flip,
     DrawSVGPlugin,
     MotionPathPlugin,
     SplitText,
@@ -23,4 +25,13 @@ if (typeof window !== "undefined") {
   );
 }
 
-export { gsap, ScrollTrigger, ScrollToPlugin, DrawSVGPlugin, MotionPathPlugin, SplitText, useGSAP };
+export {
+  gsap,
+  ScrollTrigger,
+  ScrollToPlugin,
+  Flip,
+  DrawSVGPlugin,
+  MotionPathPlugin,
+  SplitText,
+  useGSAP,
+};
