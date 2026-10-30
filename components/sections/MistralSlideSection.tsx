@@ -1905,7 +1905,7 @@ export default function SectionWipeTransitions() {
             pointer-events: none;
             mix-blend-mode: screen;
             filter: contrast(110%) brightness(105%);
-            transition: opacity 0.25s ease-out;
+            transition: opacity 0.12s cubic-bezier(0.4, 0, 0.2, 1);
           }
           #ov1-3d-canvas {
             position: absolute;
@@ -1918,7 +1918,7 @@ export default function SectionWipeTransitions() {
             z-index: 2;
             pointer-events: auto;
             cursor: grab;
-            transition: opacity 0.25s ease-out;
+            transition: opacity 0.12s cubic-bezier(0.4, 0, 0.2, 1);
           }
 
           @media (max-width: 868px) {
@@ -2116,7 +2116,7 @@ export default function SectionWipeTransitions() {
       // Initialize interactive 3D Arc Reactor layer (calibrated to frame 0)
       let reactorController: ArcReactorController | null = null;
       if (canvas3D && wrapEl) {
-        reactorController = initInteractiveArcReactor(canvas3D, wrapEl);
+        reactorController = initInteractiveArcReactor(canvas3D, wrapEl, () => { renderFrame(currentFrameFloat, true); });
       }
 
       // Preload the two optimized WebP spritesheets directly into client memory
@@ -2139,22 +2139,20 @@ export default function SectionWipeTransitions() {
         const frameIdx = normalizedPos < TOTAL_FRAMES ? normalizedPos : BOOMERANG_CYCLE - normalizedPos;
 
         // Transition 3D Arc Reactor canvas opacity:
-        // - Frame 0..12 (0 to 1 second): Closed 3D reactor rendered & interactive, video canvas fades out
-        // - Frame 80..96 (3 to 4 seconds, target 4.0s at frame 96): Opened 3D reactor rendered & interactive, video canvas fades out
-        // - Dynamic transformation frames (13..79): 3D hidden, video canvas 100% visible
-        if (reactorController) {
-          if (frameIdx <= 12) {
-            const closedAlpha = Math.max(0, Math.min(1, (12 - frameIdx) / 12));
-            reactorController.setOpacity(closedAlpha, "closed");
-            if (canvasEl) canvasEl.style.opacity = (1 - closedAlpha).toString();
-          } else if (frameIdx >= 80) {
-            const openAlpha = Math.max(0, Math.min(1, (frameIdx - 80) / 16));
-            reactorController.setOpacity(openAlpha, "opened");
-            if (canvasEl) canvasEl.style.opacity = (1 - openAlpha).toString();
-          } else {
-            reactorController.setOpacity(0);
-            if (canvasEl) canvasEl.style.opacity = "1";
-          }
+        // Mutual Exclusivity:
+        // - When video exists (scrolling / sliding / frames 0..94): GLB disappears immediately (opacity: 0).
+        // - When video is at 4s opened rest state (frame >= 95) and GLB is loaded: video fast-fades out (opacity: 0) and GLB is there (opacity: 1)!
+        const isAt4sRestState = frameIdx >= 95 && !isIceSliding;
+        const glbReady = reactorController ? reactorController.isReady("opened") : false;
+
+        if (isAt4sRestState && glbReady) {
+          // Video doesn't exist, GLB is there!
+          reactorController?.setOpacity(1, "opened");
+          if (canvasEl) canvasEl.style.opacity = "0";
+        } else {
+          // Video exists, GLB disappears!
+          reactorController?.setOpacity(0);
+          if (canvasEl) canvasEl.style.opacity = "1";
         }
 
         if (!force && frameIdx === lastDrawnFrame) return;

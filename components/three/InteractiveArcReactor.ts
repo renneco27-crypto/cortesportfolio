@@ -1,3 +1,4 @@
+import { initArcReactorCalibrationExtension } from "./ArcReactorCalibrationExtension";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
@@ -53,6 +54,7 @@ export const ARC_REACTOR_ALIGNMENT = OPENED_REACTOR_ALIGNMENT;
 export type ReactorState = "opened" | "closed";
 
 export interface ArcReactorController {
+  isReady: (state?: ReactorState) => boolean;
   setOpacity: (alpha: number, state?: ReactorState) => void;
   setState: (state: ReactorState) => void;
   resetToDefaultPose: (instant?: boolean) => void;
@@ -69,7 +71,8 @@ export interface ArcReactorController {
  */
 export function initInteractiveArcReactor(
   canvas: HTMLCanvasElement,
-  container: HTMLElement
+  container: HTMLElement,
+  onModelLoaded?: (state: ReactorState) => void
 ): ArcReactorController {
   const width = canvas.width || 960;
   const height = canvas.height || 540;
@@ -220,6 +223,9 @@ export function initInteractiveArcReactor(
     });
   };
 
+  let isOpenedLoaded = false;
+  let isClosedLoaded = false;
+
   // 6. Load Both GLB Models (Opened and Closed)
   const loader = new GLTFLoader();
 
@@ -233,6 +239,8 @@ export function initInteractiveArcReactor(
       modelRoot.position.sub(center);
       setupMaterials(modelRoot);
       openedWrapper.add(modelRoot);
+      isOpenedLoaded = true;
+      onModelLoaded?.("opened");
     },
     undefined,
     (err) => {
@@ -250,6 +258,8 @@ export function initInteractiveArcReactor(
       modelRoot.position.sub(center);
       setupMaterials(modelRoot);
       closedWrapper.add(modelRoot);
+      isClosedLoaded = true;
+      onModelLoaded?.("closed");
     },
     undefined,
     () => {
@@ -320,6 +330,27 @@ export function initInteractiveArcReactor(
 
   // Initialize initial state pose (matches 4.0s opened video frame)
   applyStateAlignment("opened");
+
+  // In-page 3D Calibration Extension HUD & Direct On-Canvas Drag Controls
+  const calibrationTool = initArcReactorCalibrationExtension({
+    canvas,
+    container,
+    wrapper,
+    camera,
+    openedWrapper,
+    closedWrapper,
+    onUpdate: (cfg) => {
+      baseRotX = THREE.MathUtils.degToRad(cfg.pitch);
+      baseRotY = THREE.MathUtils.degToRad(cfg.yaw);
+      baseRotZ = THREE.MathUtils.degToRad(cfg.roll);
+      if (!isPointerDown) {
+        currentRotX = baseRotX;
+        currentRotY = baseRotY;
+        targetRotX = baseRotX;
+        targetRotY = baseRotY;
+      }
+    },
+  });
 
   const onPointerDown = (e: PointerEvent) => {
     isPointerDown = true;
@@ -472,6 +503,10 @@ export function initInteractiveArcReactor(
 
   // 9. Controller API
   return {
+    isReady(state?: ReactorState) {
+      const target = state || currentState;
+      return target === "opened" ? isOpenedLoaded : isClosedLoaded;
+    },
     setOpacity(alpha: number, state?: ReactorState) {
       if (state && state !== currentState) {
         applyStateAlignment(state);
@@ -513,6 +548,7 @@ export function initInteractiveArcReactor(
     },
     destroy() {
       if (animId !== null) cancelAnimationFrame(animId);
+      calibrationTool.destroy();
       container.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
