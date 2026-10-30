@@ -25,8 +25,8 @@ export default function DarkMarquee() {
   return (
     <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center" aria-hidden="true">
       <div className="js-buddy-header absolute top-20 text-center opacity-0 sm:top-24">
-        <span className="block text-[10px] font-semibold uppercase tracking-[0.28em] text-neutral-400">The Build</span>
-        <span className="mt-0.5 block text-sm font-black uppercase tracking-[0.22em] text-white sm:text-base">Buddy</span>
+        <span className="block text-[10px] font-semibold uppercase tracking-[0.28em] text-lime">Software Developer</span>
+        <span className="mt-0.5 block text-sm font-black uppercase tracking-[0.22em] text-white sm:text-base">About Lawrence</span>
       </div>
 
       <div className="js-marquee flex w-full select-none flex-col gap-3 opacity-0">

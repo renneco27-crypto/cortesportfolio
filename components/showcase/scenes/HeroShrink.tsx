@@ -2,8 +2,9 @@
 // Layer 2 – full-viewport light hero that clip-shrinks into a framed window.
 // Inside the frame the Build Marker morphs into the Cursor Buddy, then the LC ribbon.
 import React from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
-import { HeroBuildMarker, CursorBuddy, LCRibbon } from "../svg/Markers";
+import { LCRibbon } from "../svg/Markers";
 import { techAvatars } from "@/data/showcase";
 
 interface HeroShrinkProps {
@@ -92,15 +93,36 @@ export default function HeroShrink({ onHire, onSeeWork }: HeroShrinkProps) {
           </div>
         </div>
 
-        {/* Centerpiece inside the shrinking frame */}
+        {/* Centerpiece inside the shrinking frame: Lawrence Cortes */}
         <div className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center">
-          <div className="js-hero-marker lc-gpu absolute flex h-[330px] w-[200px] items-center justify-center sm:h-[550px] sm:w-[340px]">
-            <div className="absolute bottom-10 h-52 w-52 rounded-full bg-lime/35 blur-[60px]" />
-            <HeroBuildMarker />
+          <div className="js-hero-marker lc-gpu absolute flex h-[360px] w-[280px] sm:h-[560px] sm:w-[420px] items-end justify-center">
+            {/* Ambient Backlight Aura */}
+            <div className="absolute bottom-16 h-56 w-56 rounded-full bg-lime/25 blur-[70px] pointer-events-none" />
+
+            {/* Lawrence Cortes Cutout Portrait */}
+            <div className="relative w-full h-full flex items-end justify-center filter drop-shadow-[0_25px_35px_rgba(0,0,0,0.35)]">
+              <Image
+                src="/assets/person_new.png"
+                alt="Lawrence Cortes"
+                width={720}
+                height={953}
+                priority
+                className="w-auto h-[95%] object-contain select-none pointer-events-none"
+              />
+            </div>
           </div>
 
-          <div className="js-buddy lc-gpu absolute flex h-[230px] w-[300px] items-center justify-center opacity-0">
-            <CursorBuddy />
+          {/* Lawrence's Portrait Avatar inside shrunk frame */}
+          <div className="js-buddy lc-gpu absolute flex h-[240px] w-[240px] items-center justify-center opacity-0">
+            <div className="relative w-44 h-44 rounded-full overflow-hidden border-2 border-lime shadow-[0_0_30px_rgba(184,255,1,0.35)] bg-black">
+              <Image
+                src="/images/lawrence-face.jpg"
+                alt="Lawrence Cortes"
+                fill
+                sizes="176px"
+                className="object-cover"
+              />
+            </div>
           </div>
 
           <div className="js-ribbon-stage lc-gpu absolute flex h-[240px] w-[340px] items-center justify-center opacity-0">

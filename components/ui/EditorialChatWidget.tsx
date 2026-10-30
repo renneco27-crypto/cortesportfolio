@@ -258,15 +258,24 @@ export default function EditorialChatWidget() {
         </div>
       </div>
 
-      {/* Toggle Button */}
+      {/* Redesigned Floating Chat Trigger Pill */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center gap-2 sm:gap-3 bg-[#0a0a0a] border border-[#222] hover:border-[#555] text-white px-3.5 py-2 sm:px-5 sm:py-3 rounded-none shadow-xl transition-all duration-300"
+        aria-label={isOpen ? "Close AI Chat" : "Chat with Lawrence's AI Assistant"}
+        className="group relative flex items-center gap-2.5 sm:gap-3 rounded-full border border-white/15 bg-black/85 backdrop-blur-xl px-4 py-2.5 sm:px-5 sm:py-3 text-white shadow-[0_12px_32px_rgba(0,0,0,0.6)] hover:border-lime/60 hover:bg-black/95 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] cursor-pointer"
       >
-        <span className="font-mono text-[0.7rem] sm:text-xs uppercase tracking-widest text-[#888] group-hover:text-white transition-colors">
-          [ INTERACT ]
+        <span className="relative flex h-2 w-2">
+          {!isOpen && (
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime opacity-75" />
+          )}
+          <span className={`relative inline-flex rounded-full h-2 w-2 ${isOpen ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.9)]' : 'bg-lime shadow-[0_0_8px_rgba(184,255,1,0.9)]'}`} />
         </span>
-        <div className={`w-2 h-2 rounded-full ${isOpen ? 'bg-[#e63946]' : 'bg-white'} shadow-[0_0_8px_rgba(255,255,255,0.4)]`}></div>
+        <span className="font-mono text-[0.72rem] sm:text-xs font-semibold uppercase tracking-wider text-neutral-300 group-hover:text-white transition-colors">
+          {isOpen ? "Close Terminal" : "Ask Lawrence AI"}
+        </span>
+        <span className="text-[10px] text-lime opacity-80 group-hover:opacity-100 transition-opacity font-mono">
+          {isOpen ? "✕" : "✦"}
+        </span>
       </button>
 
       <style jsx>{`

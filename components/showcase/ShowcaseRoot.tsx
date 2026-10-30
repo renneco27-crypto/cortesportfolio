@@ -12,7 +12,7 @@ import DarkMarquee from "./scenes/DarkMarquee";
 import HeroShrink from "./scenes/HeroShrink";
 import WorkShowcase from "./scenes/WorkShowcase";
 import ContactFooter from "./scenes/ContactFooter";
-import { ShowcaseNavbar, ChapterHUD, Toast, ShortlistDrawer } from "./ui/Chrome";
+import { ShowcaseNavbar, Toast, ShortlistDrawer } from "./ui/Chrome";
 
 import "./showcase.css";
 
@@ -20,7 +20,6 @@ export default function ShowcaseRoot() {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollTrackRef = useRef<HTMLDivElement>(null);
   const navbarRef = useRef<HTMLElement>(null);
-  const hudRef = useRef<HTMLDivElement>(null);
 
   const [shortlist, setShortlist] = useState<string[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -171,9 +170,6 @@ export default function ShowcaseRoot() {
           onJump={jumpToProgress}
         />
       </main>
-
-      {/* Chapter HUD Scrubber */}
-      <ChapterHUD ref={hudRef} onScrub={(p) => jumpToProgress(p, true)} onJump={jumpToProgress} />
 
       {/* Shortlist Drawer */}
       <ShortlistDrawer

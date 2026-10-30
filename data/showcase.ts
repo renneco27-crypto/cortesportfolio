@@ -103,9 +103,10 @@ export const techAvatars = [
 
 /** Scroll progress positions for chapter jumps (must match engine/timeline.ts) */
 export const chapters = [
-  { id: "sign", label: "Home", p: 0 },
-  { id: "buddy", label: "About", p: 0.24 },
+  { id: "home", label: "Home", p: 0 },
   { id: "work", label: "Work", p: 0.4 },
-  { id: "toolkit", label: "Toolkit", p: 0.84 },
+  { id: "toolkit", label: "Toolkit", p: 0.72 },
+  { id: "about", label: "About", p: 0.88 },
+  { id: "github", label: "GitHub", p: 0.94 },
   { id: "contact", label: "Contact", p: 1 },
 ] as const;

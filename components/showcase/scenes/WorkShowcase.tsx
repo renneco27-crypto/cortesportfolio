@@ -3,12 +3,12 @@
 //   A) Project carousel: 5 project markers (previous shrinks left, active grows centre)
 //   B) Toolkit anatomy: Lawrence's lime Build Marker uncaps, 6 skill callouts expand
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Plus, Check, ArrowUpFromLine, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Plus, Check, ExternalLink, ArrowUpFromLine } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { ProjectMarker } from "../svg/Markers";
 import Github from "../svg/GithubMark";
-import { markerSpecs, lcMarkerSpec, toolkitCallouts, type Callout } from "@/data/showcase";
+import { markerSpecs, toolkitCallouts, type Callout } from "@/data/showcase";
 
 interface WorkShowcaseProps {
   activeIndex: number;
@@ -220,7 +220,7 @@ export default function WorkShowcase({ activeIndex, shortlist, onSelect, onToggl
           <div className="h-4" />
         </div>
 
-        {/* ── Marker stage (positions driven by the master timeline) ── */}
+        {/* ── Real Project Cards Stage (positions driven by the choreography engine) ── */}
         <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
           {markerSpecs.map((m, i) => (
             <button
@@ -228,22 +228,83 @@ export default function WorkShowcase({ activeIndex, shortlist, onSelect, onToggl
               type="button"
               onClick={() => (i === activeIndex ? onToggleShortlist(m.projectId) : onSelect(i))}
               aria-label={i === activeIndex ? `Shortlist ${m.shortName}` : `Show ${m.shortName}`}
-              className="js-pmarker lc-gpu pointer-events-auto absolute flex h-[380px] w-[190px] cursor-pointer items-center justify-center sm:h-[580px] sm:w-[310px]"
+              className="js-pmarker lc-gpu pointer-events-auto absolute flex h-[380px] w-[260px] sm:h-[460px] sm:w-[320px] cursor-pointer items-center justify-center rounded-2xl p-2.5 transition-transform"
             >
               <span
-                className="pointer-events-none absolute h-[300px] w-[300px] rounded-full opacity-75 blur-[75px] sm:h-[460px] sm:w-[460px]"
+                className="pointer-events-none absolute h-[320px] w-[320px] rounded-full opacity-70 blur-[80px] sm:h-[420px] sm:w-[420px]"
                 style={{ background: `radial-gradient(circle, ${m.aura} 0%, rgba(255,255,255,0) 70%)` }}
               />
-              <ProjectMarker uid={`p${i}`} bodyStops={m.bodyStops} capStops={m.capStops} label={m.shortName} sublabel={`LC · Build 0${i + 1}`} />
+              <div className="relative w-full h-full rounded-2xl border border-white/40 bg-white/90 shadow-[0_25px_50px_rgba(0,0,0,0.18)] backdrop-blur-xl overflow-hidden flex flex-col">
+                {/* Browser-style Top Bar */}
+                <div className="flex items-center justify-between px-3 py-2 border-b border-black/5 bg-neutral-100/80">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+                  </div>
+                  <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-wider">{m.shortName}</span>
+                </div>
+                {/* Project Screenshot */}
+                <div className="relative flex-1 w-full overflow-hidden bg-neutral-900">
+                  <Image
+                    src={m.project.thumbnailSrc}
+                    alt={m.project.title}
+                    fill
+                    sizes="(max-width: 768px) 260px, 320px"
+                    className="object-cover object-top"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-lime">{m.project.badge}</span>
+                    <h4 className="text-sm font-bold text-white leading-tight mt-0.5">{m.shortName}</h4>
+                  </div>
+                </div>
+              </div>
             </button>
           ))}
 
-          <div className="js-lc-marker lc-gpu absolute flex h-[380px] w-[190px] items-center justify-center opacity-0 sm:h-[580px] sm:w-[310px]">
+          {/* Central Developer Architecture Card for Toolkit Stage */}
+          <div className="js-lc-marker lc-gpu absolute flex h-[380px] w-[260px] sm:h-[460px] sm:w-[320px] items-center justify-center opacity-0">
             <span
-              className="pointer-events-none absolute h-[300px] w-[300px] rounded-full opacity-60 blur-[75px] sm:h-[460px] sm:w-[460px]"
-              style={{ background: `radial-gradient(circle, ${lcMarkerSpec.aura} 0%, rgba(255,255,255,0) 70%)` }}
+              className="pointer-events-none absolute h-[320px] w-[320px] rounded-full opacity-60 blur-[80px] sm:h-[420px] sm:w-[420px]"
+              style={{ background: "radial-gradient(circle, #b8ff01 0%, rgba(255,255,255,0) 70%)" }}
             />
-            <ProjectMarker uid="lc" bodyStops={lcMarkerSpec.bodyStops} capStops={lcMarkerSpec.capStops} label="Lawrence Cortes" sublabel="Build tool · uncapped" footLabel="LC" />
+            <div className="relative w-full h-full rounded-2xl border-2 border-lime/60 bg-black/90 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl overflow-hidden flex flex-col p-6 text-white justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-lime shadow-[0_0_15px_rgba(184,255,1,0.5)]">
+                  <Image
+                    src="/images/lawrence-face.jpg"
+                    alt="Lawrence Cortes"
+                    fill
+                    sizes="56px"
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-white">Lawrence Cortes</h4>
+                  <p className="text-[10px] font-mono text-lime uppercase tracking-wider">Software Developer</p>
+                </div>
+              </div>
+
+              <div className="my-auto space-y-2 py-4 border-y border-white/10">
+                <div className="flex justify-between text-xs">
+                  <span className="text-neutral-400">Location</span>
+                  <span className="text-white font-medium">Ormoc City, PH</span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-neutral-400">Core Stack</span>
+                  <span className="text-lime font-medium">Next.js · TS · AI</span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-neutral-400">Status</span>
+                  <span className="text-emerald-400 font-semibold">Available for Internships</span>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between text-[11px] text-neutral-400">
+                <span>Architecture</span>
+                <span className="font-mono text-white text-[10px] font-bold">2026 EDITION</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -57,10 +57,10 @@ export default function SignaturePreloader() {
 
         <div className="js-sig-stack absolute -bottom-2 right-4 flex flex-col items-start opacity-0 sm:right-6">
           <span className="font-ui text-sm font-black uppercase leading-none tracking-[0.22em] text-lime drop-shadow-[0_0_12px_rgba(184,255,1,0.75)] sm:text-base">
-            Cortes
+            CORTES
           </span>
-          <span className="font-ui mt-1 text-xs font-extrabold uppercase leading-none tracking-[0.22em] text-white sm:text-sm">
-            Cortes
+          <span className="font-mono mt-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-400">
+            ENGINEERING PORTFOLIO
           </span>
         </div>
       </div>

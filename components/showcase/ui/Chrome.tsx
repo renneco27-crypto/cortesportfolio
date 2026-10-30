@@ -72,39 +72,6 @@ export const ShowcaseNavbar = forwardRef<HTMLElement, NavbarProps>(function Show
   );
 });
 
-/* ── Chapter HUD ────────────────────────────────────────────────── */
-interface HudProps {
-  onScrub: (p: number) => void;
-  onJump: (p: number) => void;
-}
-
-export const ChapterHUD = forwardRef<HTMLDivElement, HudProps>(function ChapterHUD({ onScrub, onJump }, ref) {
-  return (
-    <div
-      ref={ref}
-      className="fixed bottom-4 left-1/2 z-[85] flex max-w-[95vw] -translate-x-1/2 items-center gap-3 overflow-x-auto rounded-full border border-white/15 bg-black/85 px-4 py-2.5 text-white shadow-2xl backdrop-blur-md"
-    >
-      <span className="js-hud-label w-[74px] shrink-0 font-mono text-[11px] font-bold text-lime">01 Sign</span>
-      <input
-        className="js-hud-range w-28 shrink-0 cursor-pointer accent-[#b8ff01] sm:w-44"
-        type="range"
-        min={0}
-        max={1000}
-        defaultValue={0}
-        aria-label="Scrub through the story"
-        onInput={(e) => onScrub(Number((e.target as HTMLInputElement).value) / 1000)}
-      />
-      <div className="hidden shrink-0 items-center gap-1.5 text-[10px] font-semibold md:flex">
-        {chapters.map((c) => (
-          <button key={c.id} type="button" onClick={() => onJump(c.p)} className="rounded-full bg-white/10 px-2 py-1 transition-colors hover:bg-lime hover:text-black">
-            {c.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-});
-
 /* ── Toast ──────────────────────────────────────────────────────── */
 export function Toast({ text, visible }: { text: string; visible: boolean }) {
   return (

@@ -8,6 +8,9 @@ import { Turnstile } from "@marsidev/react-turnstile";
 import { Send, Download, ArrowUpRight } from "lucide-react";
 import Github from "../svg/GithubMark";
 import { chapters } from "@/data/showcase";
+import EditorialAbout from "@/components/sections/EditorialAbout";
+import EditorialGitHub from "@/components/sections/EditorialGitHub";
+import CertificationsSection from "@/components/sections/CertificationsSection";
 
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
@@ -66,17 +69,34 @@ export default function ContactFooter({ message, onMessageChange, onJump }: Cont
       className="js-footer lc-gpu absolute inset-0 z-40 flex flex-col overflow-y-auto bg-[#121212] px-6 pb-20 pt-20 text-white sm:px-12"
       style={{ transform: "translateY(100%)" }}
     >
-      <div className="mx-auto my-auto w-full max-w-[1440px]">
-        <div className="relative flex items-center justify-center border-b border-white/10 py-6 sm:justify-start sm:py-8">
-          <h2 className="font-ui text-[19vw] font-extrabold uppercase leading-[0.82] tracking-[-0.045em] text-white sm:text-[150px] lg:text-[210px]">
-            Lawrence
-          </h2>
-          <span className="js-footer-script font-script pointer-events-none absolute -bottom-4 right-2 -rotate-6 text-[15vw] font-bold text-lime drop-shadow-[0_6px_28px_rgba(184,255,1,0.5)] sm:-bottom-2 sm:right-10 sm:text-[110px] lg:right-16 lg:text-[160px]">
-            Cortes
-          </span>
+      <div className="mx-auto w-full max-w-[1440px] space-y-16">
+        {/* 1. Lawrence's Real Story & Portrait */}
+        <div className="border-b border-white/10 pb-12">
+          <EditorialAbout />
         </div>
 
-        <div className="grid grid-cols-1 gap-10 py-10 lg:grid-cols-12">
+        {/* 2. Live GitHub Development Activity & Contribution Graph API */}
+        <div className="border-b border-white/10 pb-12">
+          <EditorialGitHub />
+        </div>
+
+        {/* 3. Verified Technical Credentials & Certifications */}
+        <div className="border-b border-white/10 pb-12">
+          <CertificationsSection />
+        </div>
+
+        {/* 4. Brand Heading & Contact Form */}
+        <div>
+          <div className="relative flex items-center justify-center border-b border-white/10 py-6 sm:justify-start sm:py-8">
+            <h2 className="font-ui text-[19vw] font-extrabold uppercase leading-[0.82] tracking-[-0.045em] text-white sm:text-[150px] lg:text-[210px]">
+              Lawrence
+            </h2>
+            <span className="js-footer-script font-script pointer-events-none absolute -bottom-4 right-2 -rotate-6 text-[15vw] font-bold text-lime drop-shadow-[0_6px_28px_rgba(184,255,1,0.5)] sm:-bottom-2 sm:right-10 sm:text-[110px] lg:right-16 lg:text-[160px]">
+              Cortes
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 gap-10 py-10 lg:grid-cols-12">
           <form onSubmit={handleSubmit} className="flex flex-col gap-3 lg:col-span-6">
             <span className="mb-1 text-[10px] font-bold uppercase tracking-widest text-neutral-500">Start a project / internship chat</span>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -139,6 +159,7 @@ export default function ContactFooter({ message, onMessageChange, onJump }: Cont
             </div>
           </div>
         </div>
+      </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-[11px] text-neutral-500 sm:flex-row">
           <p>© {new Date().getFullYear()} Lawrence Cortes. Designed &amp; built by hand, signed in lime.</p>
