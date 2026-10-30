@@ -5,6 +5,7 @@ import React, { useRef, useState, useEffect, useCallback, useMemo } from "react"
 import { useShowcaseChoreography } from "./engine/useShowcaseChoreography";
 import { playSignatureIntro } from "./engine/useIntro";
 import { TRACK_HEIGHT_VH } from "./engine/timeline";
+import { soundEngine, attachGlobalUISoundListeners } from "./engine/sound";
 import { markerSpecs } from "@/data/showcase";
 
 import SignaturePreloader from "./scenes/SignaturePreloader";
@@ -29,6 +30,7 @@ export default function ShowcaseRoot() {
   const [toastText, setToastText] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
   const [contactMessage, setContactMessage] = useState("");
+  const [soundEnabled, setSoundEnabled] = useState(true);
 
   const toastTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -93,12 +95,24 @@ export default function ShowcaseRoot() {
     }
   }, [navTheme]);
 
-  // Run initial signature animation once on mount
+  // Run initial signature animation once on mount + attach global UI bubble sound engine
   useEffect(() => {
     if (containerRef.current) {
       playSignatureIntro(containerRef.current);
     }
+    const detachSounds = attachGlobalUISoundListeners();
+    const unsubSound = soundEngine.subscribe(setSoundEnabled);
+    return () => {
+      detachSounds();
+      unsubSound();
+    };
   }, []);
+
+  const handleToggleSound = useCallback(() => {
+    const next = soundEngine.toggleEnabled();
+    setSoundEnabled(next);
+    showToast(next ? "Tactile bubble sounds ON" : "UI sounds muted");
+  }, [showToast]);
 
   // Replay handler
   const handleReplaySignature = useCallback(() => {
@@ -174,10 +188,12 @@ export default function ShowcaseRoot() {
       <ShowcaseNavbar
         ref={navbarRef}
         autoplay={autoplay}
+        soundEnabled={soundEnabled}
         shortlistCount={shortlist.length}
         onJump={jumpToProgress}
         onReplay={handleReplaySignature}
         onToggleAutoplay={toggleAutoplay}
+        onToggleSound={handleToggleSound}
         onOpenShortlist={() => setDrawerOpen(true)}
       />
 

@@ -12,6 +12,166 @@
       "_origin": "ast"
     },
     {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "label": "analyze-sound.mjs",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_jsonflag",
+      "label": "jsonFlag",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L21",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodeaudio",
+      "label": "decodeAudio()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L39",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodewav",
+      "label": "decodeWav()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L53",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodewithffmpeg",
+      "label": "decodeWithFfmpeg()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L137",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_fft",
+      "label": "fft()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L174",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_computespectrum",
+      "label": "computeSpectrum()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L227",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzeenvelope",
+      "label": "analyzeEnvelope()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L252",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzespectrum",
+      "label": "analyzeSpectrum()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L361",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_detectpitch",
+      "label": "detectPitch()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L448",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzeharmonics",
+      "label": "analyzeHarmonics()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L513",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzetonality",
+      "label": "analyzeTonality()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L553",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzespectralevolution",
+      "label": "analyzeSpectralEvolution()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L605",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_estimatefilter",
+      "label": "estimateFilter()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L674",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_generatesynthesissuggestion",
+      "label": "generateSynthesisSuggestion()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L758",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_generatevocabularymatch",
+      "label": "generateVocabularyMatch()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L899",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_classifysound",
+      "label": "classifySound()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L957",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_tools_analyze_sound_formatoutput",
+      "label": "formatOutput()",
+      "file_type": "code",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L1064",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
       "id": "app_admin_page",
       "label": "admin/page.tsx",
       "file_type": "code",
@@ -83,7 +243,7 @@
       "label": "JAILBREAK_PATTERNS",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L133",
+      "source_location": "L147",
       "_origin": "ast"
     },
     {
@@ -91,7 +251,7 @@
       "label": "detectJailbreak()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L151",
+      "source_location": "L165",
       "_callable": true,
       "_origin": "ast"
     },
@@ -100,7 +260,7 @@
       "label": "detectMultipleQuestions()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L159",
+      "source_location": "L173",
       "_callable": true,
       "_origin": "ast"
     },
@@ -109,7 +269,7 @@
       "label": "sanitizeInput()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L201",
+      "source_location": "L215",
       "_callable": true,
       "_origin": "ast"
     },
@@ -118,7 +278,7 @@
       "label": "LAWRENCE_CONTEXT_TERMS",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L221",
+      "source_location": "L235",
       "_origin": "ast"
     },
     {
@@ -126,7 +286,7 @@
       "label": "isRelevant()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L231",
+      "source_location": "L249",
       "_callable": true,
       "_origin": "ast"
     },
@@ -135,7 +295,7 @@
       "label": "getFallbackReply()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L240",
+      "source_location": "L258",
       "_callable": true,
       "_origin": "ast"
     },
@@ -144,7 +304,7 @@
       "label": "apiError()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L270",
+      "source_location": "L288",
       "_callable": true,
       "_origin": "ast"
     },
@@ -153,7 +313,7 @@
       "label": "getClientIP()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L274",
+      "source_location": "L292",
       "_callable": true,
       "_origin": "ast"
     },
@@ -162,7 +322,7 @@
       "label": "verifyTurnstile()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L285",
+      "source_location": "L303",
       "_callable": true,
       "_origin": "ast"
     },
@@ -171,7 +331,7 @@
       "label": "GET()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L309",
+      "source_location": "L327",
       "_callable": true,
       "_origin": "ast"
     },
@@ -180,7 +340,7 @@
       "label": "POST()",
       "file_type": "code",
       "source_file": "api/chat/route.ts",
-      "source_location": "L322",
+      "source_location": "L340",
       "_callable": true,
       "_origin": "ast"
     },
@@ -275,7 +435,7 @@
       "label": "getClientIP()",
       "file_type": "code",
       "source_file": "api/contact/route.ts",
-      "source_location": "L144",
+      "source_location": "L155",
       "_callable": true,
       "_origin": "ast"
     },
@@ -284,7 +444,7 @@
       "label": "err()",
       "file_type": "code",
       "source_file": "api/contact/route.ts",
-      "source_location": "L152",
+      "source_location": "L163",
       "_callable": true,
       "_origin": "ast"
     },
@@ -293,7 +453,7 @@
       "label": "GET()",
       "file_type": "code",
       "source_file": "api/contact/route.ts",
-      "source_location": "L159",
+      "source_location": "L170",
       "_callable": true,
       "_origin": "ast"
     },
@@ -302,7 +462,7 @@
       "label": "POST()",
       "file_type": "code",
       "source_file": "api/contact/route.ts",
-      "source_location": "L169",
+      "source_location": "L180",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1094,7 +1254,7 @@
       "label": "ShowcaseRoot()",
       "file_type": "code",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1103,7 +1263,7 @@
       "label": "clamp()",
       "file_type": "code",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L249",
+      "source_location": "L265",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1113,6 +1273,158 @@
       "file_type": "code",
       "source_file": "components/showcase/engine/gsap.ts",
       "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound",
+      "label": "sound.ts",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine",
+      "label": "StudioSoundEngine",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L8",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "label": ".getContext()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L17",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_unlock",
+      "label": ".unlock()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L32",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_isenabled",
+      "label": ".isEnabled()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L37",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_setenabled",
+      "label": ".setEnabled()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L41",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_toggleenabled",
+      "label": ".toggleEnabled()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L50",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_subscribe",
+      "label": ".subscribe()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L61",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "label": ".canPlay()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L68",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_playbubblehover",
+      "label": ".playBubbleHover()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L78",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_playbubblepop",
+      "label": ".playBubblePop()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L111",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_playsoftclick",
+      "label": ".playSoftClick()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L162",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_playcardswipe",
+      "label": ".playCardSwipe()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L200",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_playtoggle",
+      "label": ".playToggle()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L260",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_studiosoundengine_playsuccesschime",
+      "label": ".playSuccessChime()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L287",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_soundengine",
+      "label": "soundEngine",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L317",
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_engine_sound_attachglobaluisoundlisteners",
+      "label": "attachGlobalUISoundListeners()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L323",
+      "_callable": true,
       "_origin": "ast"
     },
     {
@@ -1213,7 +1525,7 @@
       "label": "clamp()",
       "file_type": "code",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L10",
+      "source_location": "L12",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1222,7 +1534,7 @@
       "label": "lerp()",
       "file_type": "code",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L11",
+      "source_location": "L13",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1231,7 +1543,7 @@
       "label": "mapRange()",
       "file_type": "code",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L12",
+      "source_location": "L14",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1240,7 +1552,7 @@
       "label": "easeInOutCubic()",
       "file_type": "code",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L16",
+      "source_location": "L18",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1249,7 +1561,7 @@
       "label": "easeOutCubic()",
       "file_type": "code",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L18",
+      "source_location": "L20",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1258,7 +1570,7 @@
       "label": "ICE_GLIDE_CORRIDORS",
       "file_type": "code",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L22",
+      "source_location": "L24",
       "_origin": "ast"
     },
     {
@@ -1266,7 +1578,7 @@
       "label": "ChoreographyState",
       "file_type": "code",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L37",
+      "source_location": "L39",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast"
@@ -1276,7 +1588,7 @@
       "label": "useShowcaseChoreography()",
       "file_type": "code",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L45",
+      "source_location": "L47",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1293,7 +1605,7 @@
       "label": "ContributionDay",
       "file_type": "code",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L32",
+      "source_location": "L38",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast"
@@ -1303,7 +1615,7 @@
       "label": "ContactFooterProps",
       "file_type": "code",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L38",
+      "source_location": "L44",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast"
@@ -1313,7 +1625,7 @@
       "label": "TECH_STACK",
       "file_type": "code",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L44",
+      "source_location": "L50",
       "_origin": "ast"
     },
     {
@@ -1321,7 +1633,16 @@
       "label": "ContactFooter()",
       "file_type": "code",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L59",
+      "source_location": "L65",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "components_showcase_scenes_contactfooter_contactfooter_loadcredentials",
+      "label": "loadCredentials()",
+      "file_type": "code",
+      "source_file": "components/showcase/scenes/ContactFooter.tsx",
+      "source_location": "L90",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1330,7 +1651,7 @@
       "label": "loadGitHub()",
       "file_type": "code",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L88",
+      "source_location": "L128",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1339,7 +1660,7 @@
       "label": "handleSubmit()",
       "file_type": "code",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L182",
+      "source_location": "L222",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1610,7 +1931,7 @@
       "label": "ShowcaseNavbar",
       "file_type": "code",
       "source_file": "components/showcase/ui/Chrome.tsx",
-      "source_location": "L20",
+      "source_location": "L22",
       "_origin": "ast"
     },
     {
@@ -1618,7 +1939,7 @@
       "label": "Toast()",
       "file_type": "code",
       "source_file": "components/showcase/ui/Chrome.tsx",
-      "source_location": "L96",
+      "source_location": "L130",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1627,7 +1948,7 @@
       "label": "DrawerProps",
       "file_type": "code",
       "source_file": "components/showcase/ui/Chrome.tsx",
-      "source_location": "L118",
+      "source_location": "L152",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast"
@@ -1637,7 +1958,7 @@
       "label": "ShortlistDrawer()",
       "file_type": "code",
       "source_file": "components/showcase/ui/Chrome.tsx",
-      "source_location": "L126",
+      "source_location": "L160",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1901,7 +2222,7 @@
       "label": "Message",
       "file_type": "code",
       "source_file": "components/ui/EditorialChatWidget.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast"
@@ -1911,7 +2232,7 @@
       "label": "QUICK_PROMPTS",
       "file_type": "code",
       "source_file": "components/ui/EditorialChatWidget.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "_origin": "ast"
     },
     {
@@ -1919,7 +2240,7 @@
       "label": "PRESET_ANSWERS",
       "file_type": "code",
       "source_file": "components/ui/EditorialChatWidget.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "_origin": "ast"
     },
     {
@@ -1927,7 +2248,7 @@
       "label": "EditorialChatWidget()",
       "file_type": "code",
       "source_file": "components/ui/EditorialChatWidget.tsx",
-      "source_location": "L23",
+      "source_location": "L24",
       "_callable": true,
       "_origin": "ast"
     },
@@ -15234,9 +15555,1423 @@
       "source_file": ".agents/skills/gsap-utils/SKILL.md",
       "source_location": "L282",
       "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill",
+      "label": "ui-sound-design/SKILL.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L1",
+      "frontmatter": {
+        "name": "ui-sound-design",
+        "description": "Programmatic UI sound design using Web Audio API and Tone.js. Use when creating click sounds, notification chimes, toggle feedback, hover sounds, success/error audio, whoosh effects, or building a sound library for UI interactions. Provides an iterative describe-generate-listen-refine workflow with audio engineering knowledge translated into plain English.",
+        "license": "MIT",
+        "metadata": {
+          "author": "dannyjpwilliams",
+          "version": "1.0"
+        }
+      },
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_ui_sound_design",
+      "label": "UI Sound Design",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L31",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_workflow",
+      "label": "Workflow",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L35",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_1_describe",
+      "label": "1. Describe",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L39",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_2_generate",
+      "label": "2. Generate",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L66",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_3_listen",
+      "label": "3. Listen",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L74",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_4_refine",
+      "label": "4. Refine",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L81",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_5_review_optional",
+      "label": "5. Review (optional)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L89",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_vocabulary_bridge",
+      "label": "Vocabulary Bridge",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L102",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_sound_categories_quick_reference",
+      "label": "Sound Categories — Quick Reference",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L125",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_critical_implementation_rules",
+      "label": "Critical Implementation Rules",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L140",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_audiocontext_user_gesture_requirement",
+      "label": "AudioContext user-gesture requirement",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L142",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_never_ramp_gain_to_zero",
+      "label": "Never ramp gain to zero",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L145",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_node_cleanup",
+      "label": "Node cleanup",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L148",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_volume_safety",
+      "label": "Volume safety",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L154",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_scheduling_precision",
+      "label": "Scheduling precision",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L160",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_use_exponential_ramps_by_default",
+      "label": "Use exponential ramps by default",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L163",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_output_formats",
+      "label": "Output Formats",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L166",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_html_preview_default",
+      "label": "HTML Preview (default)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L168",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_es_module",
+      "label": "ES Module",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L171",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_react_hook",
+      "label": "React Hook",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L178",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_sound_library_class",
+      "label": "Sound Library Class",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L188",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_resources",
+      "label": "Resources",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L191",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_references",
+      "label": "references/",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L193",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_assets",
+      "label": "assets/",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L200",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_skill_tools",
+      "label": "tools/",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L203",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references",
+      "label": "audio-file-references.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "label": "Audio File References",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_what_is_a_sound_profile",
+      "label": "What Is a Sound Profile?",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_how_to_use_a_sound_profile",
+      "label": "How to Use a Sound Profile",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L15",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_field_reference",
+      "label": "Field Reference",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L25",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_envelope",
+      "label": "envelope",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L27",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_pitch",
+      "label": "pitch",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L39",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_spectrum",
+      "label": "spectrum",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L47",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_tonality",
+      "label": "tonality",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L57",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_filter_estimate",
+      "label": "filter_estimate",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L65",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_spectral_evolution",
+      "label": "spectral_evolution",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L75",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_synthesis_suggestion",
+      "label": "synthesis_suggestion",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L82",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_analysis_to_category_mapping",
+      "label": "Analysis-to-Category Mapping",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L100",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_brightness_mapping_spectral_centroid_vocabulary_bridge",
+      "label": "Brightness Mapping (Spectral Centroid → Vocabulary Bridge)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L116",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_envelope_vocabulary_bridge",
+      "label": "Envelope → Vocabulary Bridge",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L126",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_harmonic_content_synthesis_approach",
+      "label": "Harmonic Content → Synthesis Approach",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L139",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_file_references_limitations",
+      "label": "Limitations",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L149",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules",
+      "label": "audio-rules.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "label": "Audio Rules — Formal Validation Rulebook",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_priority_levels",
+      "label": "Priority Levels",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_critical_context_management",
+      "label": "Critical — Context Management",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L15",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_context_singleton",
+      "label": "`context-singleton`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L17",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_context_resume_suspended",
+      "label": "`context-resume-suspended`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L39",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_node_cleanup",
+      "label": "`node-cleanup`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L55",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_critical_envelope_safety",
+      "label": "Critical — Envelope Safety",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L90",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_gain_no_zero_target",
+      "label": "`gain-no-zero-target`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L92",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_gain_set_before_ramp",
+      "label": "`gain-set-before-ramp`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L106",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_high_envelope_scheduling",
+      "label": "High — Envelope & Scheduling",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L124",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_exponential_over_linear",
+      "label": "`exponential-over-linear`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L126",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_scheduling_capture_once",
+      "label": "`scheduling-capture-once`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L146",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_stop_after_envelope",
+      "label": "`stop-after-envelope`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L166",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_high_sound_design",
+      "label": "High — Sound Design",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L184",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_noise_for_percussion",
+      "label": "`noise-for-percussion`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L186",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_oscillator_for_tonal",
+      "label": "`oscillator-for-tonal`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L207",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_filter_for_character",
+      "label": "`filter-for-character`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L213",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_medium_parameters",
+      "label": "Medium — Parameters",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L221",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_volume_max_0_8",
+      "label": "`volume-max-0.8`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L223",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_filter_q_per_type",
+      "label": "`filter-Q-per-type`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L240",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_duration_per_type",
+      "label": "`duration-per-type`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L254",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_per_sound_type_parameter_bounds",
+      "label": "Per-Sound-Type Parameter Bounds",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L262",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_review_mode_output_format",
+      "label": "Review Mode — Output Format",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L280",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_per_finding",
+      "label": "Per-Finding",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L284",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_summary_table",
+      "label": "Summary Table",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L297",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_audio_rules_suggested_fixes",
+      "label": "Suggested Fixes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L309",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes",
+      "label": "sound-recipes.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "label": "UI Sound Recipes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_click_click",
+      "label": "Click {#click}",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L18",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_toggle_toggle",
+      "label": "Toggle {#toggle}",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L69",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_hover_hover",
+      "label": "Hover {#hover}",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L115",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_success_success",
+      "label": "Success {#success}",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L158",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_error_error",
+      "label": "Error {#error}",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L208",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_warning_warning",
+      "label": "Warning {#warning}",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L261",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_notification_notification",
+      "label": "Notification {#notification}",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L309",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_whoosh_whoosh",
+      "label": "Whoosh {#whoosh}",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L364",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_pop_pop",
+      "label": "Pop {#pop}",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L419",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_sound_recipes_complete_sound_library",
+      "label": "Complete Sound Library",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L464",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js",
+      "label": "tone-js.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_tone_js_simplified_ui_sound_patterns",
+      "label": "Tone.js — Simplified UI Sound Patterns",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_setup",
+      "label": "Setup",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_cdn_quick_prototyping",
+      "label": "CDN (quick prototyping)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_npm_production",
+      "label": "npm (production)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L12",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_user_gesture_requirement",
+      "label": "User gesture requirement",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L17",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_synth_types",
+      "label": "Synth Types",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L28",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_recipes",
+      "label": "Recipes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L38",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_click",
+      "label": "Click",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L40",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_toggle",
+      "label": "Toggle",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L58",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_success",
+      "label": "Success",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L72",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_error",
+      "label": "Error",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L98",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_notification_bell",
+      "label": "Notification (Bell)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L116",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_whoosh",
+      "label": "Whoosh",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L145",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_pop",
+      "label": "Pop",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L168",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_effects",
+      "label": "Effects",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L188",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_reverb_adds_space_depth",
+      "label": "Reverb (adds space/depth)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L192",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_delay_adds_rhythm_echo",
+      "label": "Delay (adds rhythm/echo)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L202",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_filter_shapes_tone",
+      "label": "Filter (shapes tone)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L215",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_volume_in_tone_js",
+      "label": "Volume in Tone.js",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L226",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_converting_tone_js_to_vanilla_web_audio",
+      "label": "Converting Tone.js to Vanilla Web Audio",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L242",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_tone_js_when_to_use_tone_js_vs_vanilla",
+      "label": "When to Use Tone.js vs Vanilla",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L264",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api",
+      "label": "web-audio-api.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "label": "Web Audio API — Core Building Blocks",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_audiocontext_setup",
+      "label": "AudioContext Setup",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_oscillator_types",
+      "label": "Oscillator Types",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L27",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_gain_envelopes_adsr",
+      "label": "Gain Envelopes (ADSR)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L57",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_white_noise_generation",
+      "label": "White Noise Generation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L97",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_filter_types_biquadfilternode",
+      "label": "Filter Types (BiquadFilterNode)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L130",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_frequency_sweeps",
+      "label": "Frequency Sweeps",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L169",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_layering_oscillators",
+      "label": "Layering Oscillators",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L207",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_fm_synthesis_bell_metallic_tones",
+      "label": "FM Synthesis (Bell/Metallic Tones)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L251",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_reusable_factory_pattern",
+      "label": "Reusable Factory Pattern",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L295",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_common_mistakes",
+      "label": "Common Mistakes",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L326",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_gain_click_pop_artifacts",
+      "label": "Gain click/pop artifacts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L328",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_creating_audiocontext_per_sound",
+      "label": "Creating AudioContext per sound",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L341",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_memory_leaks_from_node_accumulation",
+      "label": "Memory leaks from node accumulation",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L345",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_buffersource_cleanup_with_onended",
+      "label": "BufferSource cleanup with `onended`",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L349",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_exponentialramp_to_zero",
+      "label": "exponentialRamp to zero",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L372",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_linearramp_vs_exponentialramp",
+      "label": "linearRamp vs exponentialRamp",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L376",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_scheduling_in_the_past",
+      "label": "Scheduling in the past",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L380",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_per_sound_type_parameter_bounds",
+      "label": "Per-Sound-Type Parameter Bounds",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L384",
+      "_origin": "ast"
+    },
+    {
+      "id": "app_agents_skills_ui_sound_design_references_web_audio_api_validation_checklist",
+      "label": "Validation Checklist",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L400",
+      "_origin": "ast"
     }
   ],
   "links": [
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "ref_fs",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "ref_child_process",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "ref_path",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_jsonflag",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodeaudio",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodewav",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodewithffmpeg",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L137",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_fft",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L174",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_computespectrum",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L227",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzeenvelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L252",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzespectrum",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L361",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_detectpitch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L448",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzeharmonics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L513",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzetonality",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L553",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzespectralevolution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L605",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_estimatefilter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L674",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_generatesynthesissuggestion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L758",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_generatevocabularymatch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L899",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_classifysound",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L957",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_formatoutput",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L1064",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodeaudio",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodewav",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodeaudio",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodewithffmpeg",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodewithffmpeg",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_decodewav",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L144",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound_computespectrum",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_fft",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L237",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzespectrum",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_computespectrum",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L375",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzespectralevolution",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_computespectrum",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L621",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_tools_analyze_sound_analyzespectralevolution",
+      "target": "app_agents_skills_ui_sound_design_tools_analyze_sound_detectpitch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/tools/analyze-sound.mjs",
+      "source_location": "L633",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
     {
       "source": "app_admin_page",
       "target": "ref_react",
@@ -15391,7 +17126,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L133",
+      "source_location": "L147",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15401,7 +17136,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L151",
+      "source_location": "L165",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15411,7 +17146,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L159",
+      "source_location": "L173",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15421,7 +17156,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L201",
+      "source_location": "L215",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15431,7 +17166,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L221",
+      "source_location": "L235",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15441,7 +17176,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L231",
+      "source_location": "L249",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15451,7 +17186,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L240",
+      "source_location": "L258",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15461,7 +17196,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L270",
+      "source_location": "L288",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15471,7 +17206,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L274",
+      "source_location": "L292",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15481,7 +17216,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L285",
+      "source_location": "L303",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15491,7 +17226,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L309",
+      "source_location": "L327",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15501,7 +17236,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L322",
+      "source_location": "L340",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15512,7 +17247,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L210",
+      "source_location": "L224",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15523,7 +17258,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L213",
+      "source_location": "L227",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15534,7 +17269,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L310",
+      "source_location": "L328",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15545,7 +17280,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L311",
+      "source_location": "L329",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15556,7 +17291,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L324",
+      "source_location": "L342",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15567,7 +17302,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L331",
+      "source_location": "L349",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15578,7 +17313,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L352",
+      "source_location": "L370",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15589,24 +17324,13 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L360",
+      "source_location": "L378",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
       "source": "app_api_chat_route_post",
       "target": "app_api_chat_route_verifyturnstile",
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "api/chat/route.ts",
-      "source_location": "L401",
-      "weight": 1.0,
-      "_origin": "ast"
-    },
-    {
-      "source": "app_api_chat_route_post",
-      "target": "app_api_chat_route_incrementdailycount",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -15617,12 +17341,23 @@
     },
     {
       "source": "app_api_chat_route_post",
+      "target": "app_api_chat_route_incrementdailycount",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/chat/route.ts",
+      "source_location": "L437",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_api_chat_route_post",
       "target": "app_api_chat_route_apierror",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L424",
+      "source_location": "L442",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15633,7 +17368,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L460",
+      "source_location": "L478",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15788,7 +17523,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L144",
+      "source_location": "L155",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15798,7 +17533,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L152",
+      "source_location": "L163",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15808,7 +17543,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L159",
+      "source_location": "L170",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15818,34 +17553,12 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L169",
+      "source_location": "L180",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
       "source": "app_api_contact_route_get",
-      "target": "app_api_contact_route_getclientip",
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "api/contact/route.ts",
-      "source_location": "L160",
-      "weight": 1.0,
-      "_origin": "ast"
-    },
-    {
-      "source": "app_api_contact_route_get",
-      "target": "app_api_contact_route_getcontactcount",
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "api/contact/route.ts",
-      "source_location": "L161",
-      "weight": 1.0,
-      "_origin": "ast"
-    },
-    {
-      "source": "app_api_contact_route_post",
       "target": "app_api_contact_route_getclientip",
       "relation": "calls",
       "context": "call",
@@ -15856,13 +17569,35 @@
       "_origin": "ast"
     },
     {
+      "source": "app_api_contact_route_get",
+      "target": "app_api_contact_route_getcontactcount",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/contact/route.ts",
+      "source_location": "L172",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_api_contact_route_post",
+      "target": "app_api_contact_route_getclientip",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/contact/route.ts",
+      "source_location": "L182",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "app_api_contact_route_post",
       "target": "app_api_contact_route_err",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L177",
+      "source_location": "L188",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15873,7 +17608,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L180",
+      "source_location": "L191",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15884,7 +17619,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L193",
+      "source_location": "L204",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15895,7 +17630,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L217",
+      "source_location": "L228",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15906,7 +17641,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L226",
+      "source_location": "L237",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15917,7 +17652,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L232",
+      "source_location": "L243",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -15928,7 +17663,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L240",
+      "source_location": "L258",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17736,12 +19471,45 @@
     },
     {
       "source": "components_showcase_showcaseroot",
-      "target": "data_showcase",
+      "target": "components_showcase_engine_sound",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
       "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_showcaseroot",
+      "target": "components_showcase_engine_sound_soundengine",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/ShowcaseRoot.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_showcaseroot",
+      "target": "components_showcase_engine_sound_attachglobaluisoundlisteners",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/ShowcaseRoot.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_showcaseroot",
+      "target": "data_showcase",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/ShowcaseRoot.tsx",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17752,7 +19520,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17763,7 +19531,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17774,7 +19542,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17785,7 +19553,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17796,7 +19564,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17807,7 +19575,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17818,7 +19586,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17829,7 +19597,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17840,7 +19608,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17851,7 +19619,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17862,7 +19630,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17872,7 +19640,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17882,7 +19650,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L249",
+      "source_location": "L265",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17893,7 +19661,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L55",
+      "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -17932,7 +19700,7 @@
     },
     {
       "source": "components_showcase_engine_gsap",
-      "target": "ref_gsap_drawsvgplugin",
+      "target": "ref_gsap_flip",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -17943,7 +19711,7 @@
     },
     {
       "source": "components_showcase_engine_gsap",
-      "target": "ref_gsap_motionpathplugin",
+      "target": "ref_gsap_drawsvgplugin",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -17954,7 +19722,7 @@
     },
     {
       "source": "components_showcase_engine_gsap",
-      "target": "ref_gsap_splittext",
+      "target": "ref_gsap_motionpathplugin",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -17965,7 +19733,7 @@
     },
     {
       "source": "components_showcase_engine_gsap",
-      "target": "ref_gsap_scrambletextplugin",
+      "target": "ref_gsap_splittext",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -17976,12 +19744,436 @@
     },
     {
       "source": "components_showcase_engine_gsap",
-      "target": "ref_gsap_react",
+      "target": "ref_gsap_scrambletextplugin",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/gsap.ts",
       "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_gsap",
+      "target": "ref_gsap_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/gsap.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound",
+      "target": "components_showcase_engine_sound_studiosoundengine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_unlock",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_isenabled",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_setenabled",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_toggleenabled",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_subscribe",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_playbubblehover",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_playbubblepop",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L111",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_playsoftclick",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L162",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_playcardswipe",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L200",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_playtoggle",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L260",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_playsuccesschime",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L287",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound",
+      "target": "components_showcase_engine_sound_soundengine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L317",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound",
+      "target": "components_showcase_engine_sound_attachglobaluisoundlisteners",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L323",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_unlock",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_setenabled",
+      "target": "components_showcase_engine_sound_studiosoundengine_unlock",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_setenabled",
+      "target": "components_showcase_engine_sound_studiosoundengine_playtoggle",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_toggleenabled",
+      "target": "components_showcase_engine_sound_studiosoundengine_unlock",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_toggleenabled",
+      "target": "components_showcase_engine_sound_studiosoundengine_playtoggle",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_toggleenabled",
+      "target": "components_showcase_engine_sound_studiosoundengine_setenabled",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L70",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playbubblehover",
+      "target": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L79",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playbubblehover",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playbubblepop",
+      "target": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L112",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playbubblepop",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L117",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playsoftclick",
+      "target": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L163",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playsoftclick",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L164",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playcardswipe",
+      "target": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L201",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playcardswipe",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L206",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playtoggle",
+      "target": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L261",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playtoggle",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L262",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playsuccesschime",
+      "target": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L288",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playsuccesschime",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L289",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_attachglobaluisoundlisteners",
+      "target": "components_showcase_engine_sound_studiosoundengine_unlock",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L334",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_attachglobaluisoundlisteners",
+      "target": "components_showcase_engine_sound_studiosoundengine_playbubblehover",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L343",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_attachglobaluisoundlisteners",
+      "target": "components_showcase_engine_sound_studiosoundengine_playcardswipe",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L358",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_attachglobaluisoundlisteners",
+      "target": "components_showcase_engine_sound_studiosoundengine_playbubblepop",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L360",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18177,7 +20369,7 @@
     },
     {
       "source": "components_showcase_engine_useshowcasechoreography",
-      "target": "components_showcase_scenes_workshowcase",
+      "target": "components_showcase_engine_gsap",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -18188,12 +20380,56 @@
     },
     {
       "source": "components_showcase_engine_useshowcasechoreography",
-      "target": "components_showcase_scenes_workshowcase_morph_state_configs",
+      "target": "components_showcase_engine_gsap_flip",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
       "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_useshowcasechoreography",
+      "target": "components_showcase_engine_sound",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_useshowcasechoreography",
+      "target": "components_showcase_engine_sound_soundengine",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_useshowcasechoreography",
+      "target": "components_showcase_scenes_workshowcase",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_useshowcasechoreography",
+      "target": "components_showcase_scenes_workshowcase_morph_state_configs",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18204,33 +20440,13 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
       "source": "components_showcase_engine_useshowcasechoreography",
       "target": "components_showcase_engine_useshowcasechoreography_clamp",
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "_origin": "ast"
-    },
-    {
-      "source": "components_showcase_engine_useshowcasechoreography",
-      "target": "components_showcase_engine_useshowcasechoreography_lerp",
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L11",
-      "weight": 1.0,
-      "_origin": "ast"
-    },
-    {
-      "source": "components_showcase_engine_useshowcasechoreography",
-      "target": "components_showcase_engine_useshowcasechoreography_maprange",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
@@ -18240,17 +20456,27 @@
     },
     {
       "source": "components_showcase_engine_useshowcasechoreography",
-      "target": "components_showcase_engine_useshowcasechoreography_easeinoutcubic",
+      "target": "components_showcase_engine_useshowcasechoreography_lerp",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L16",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
       "source": "components_showcase_engine_useshowcasechoreography",
-      "target": "components_showcase_engine_useshowcasechoreography_easeoutcubic",
+      "target": "components_showcase_engine_useshowcasechoreography_maprange",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_useshowcasechoreography",
+      "target": "components_showcase_engine_useshowcasechoreography_easeinoutcubic",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
@@ -18260,11 +20486,21 @@
     },
     {
       "source": "components_showcase_engine_useshowcasechoreography",
+      "target": "components_showcase_engine_useshowcasechoreography_easeoutcubic",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_useshowcasechoreography",
       "target": "components_showcase_engine_useshowcasechoreography_ice_glide_corridors",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L22",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18274,7 +20510,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L37",
+      "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18284,7 +20520,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L45",
+      "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18295,7 +20531,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L13",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18306,7 +20542,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L14",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18317,7 +20553,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L74",
+      "source_location": "L76",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18328,7 +20564,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L108",
+      "source_location": "L110",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18339,7 +20575,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L281",
+      "source_location": "L284",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18350,7 +20586,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L338",
+      "source_location": "L341",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18361,7 +20597,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L339",
+      "source_location": "L342",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18378,7 +20614,7 @@
     },
     {
       "source": "components_showcase_scenes_contactfooter",
-      "target": "ref_marsidev_react_turnstile",
+      "target": "ref_emailjs_browser",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -18389,7 +20625,7 @@
     },
     {
       "source": "components_showcase_scenes_contactfooter",
-      "target": "ref_lucide_react",
+      "target": "ref_marsidev_react_turnstile",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -18400,12 +20636,45 @@
     },
     {
       "source": "components_showcase_scenes_contactfooter",
+      "target": "components_showcase_engine_sound",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/scenes/ContactFooter.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_scenes_contactfooter",
+      "target": "components_showcase_engine_sound_soundengine",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/scenes/ContactFooter.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_scenes_contactfooter",
+      "target": "ref_lucide_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/scenes/ContactFooter.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_scenes_contactfooter",
       "target": "components_showcase_svg_githubmark",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L25",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18416,7 +20685,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L26",
+      "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18427,7 +20696,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L26",
+      "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18438,7 +20707,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L27",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18449,7 +20718,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L27",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18460,7 +20729,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L28",
+      "source_location": "L30",
       "weight": 1.0,
       "type_only": true,
       "_origin": "ast"
@@ -18472,7 +20741,18 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L28",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_scenes_contactfooter",
+      "target": "types_index_portfoliocredential",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/scenes/ContactFooter.tsx",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18482,7 +20762,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L32",
+      "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18492,7 +20772,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L38",
+      "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18502,7 +20782,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L44",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18512,7 +20792,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L59",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_scenes_contactfooter_contactfooter",
+      "target": "components_showcase_scenes_contactfooter_contactfooter_loadcredentials",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/scenes/ContactFooter.tsx",
+      "source_location": "L90",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18522,7 +20812,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L88",
+      "source_location": "L128",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18532,7 +20822,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L182",
+      "source_location": "L222",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_scenes_contactfooter_contactfooter",
+      "target": "components_showcase_scenes_contactfooter_contactfooter_loadcredentials",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/scenes/ContactFooter.tsx",
+      "source_location": "L114",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -18543,7 +20844,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L170",
+      "source_location": "L210",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -19058,7 +21359,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ui/Chrome.tsx",
-      "source_location": "L20",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -19068,7 +21369,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ui/Chrome.tsx",
-      "source_location": "L96",
+      "source_location": "L130",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -19078,7 +21379,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ui/Chrome.tsx",
-      "source_location": "L118",
+      "source_location": "L152",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -19088,7 +21389,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ui/Chrome.tsx",
-      "source_location": "L126",
+      "source_location": "L160",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -19681,11 +21982,33 @@
     },
     {
       "source": "components_ui_editorialchatwidget",
+      "target": "components_showcase_engine_sound",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/EditorialChatWidget.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_ui_editorialchatwidget",
+      "target": "components_showcase_engine_sound_soundengine",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/EditorialChatWidget.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_ui_editorialchatwidget",
       "target": "components_ui_editorialchatwidget_message",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/ui/EditorialChatWidget.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -19695,7 +22018,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/ui/EditorialChatWidget.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -19705,7 +22028,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/ui/EditorialChatWidget.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -19715,7 +22038,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/ui/EditorialChatWidget.tsx",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59451,6 +61774,1196 @@
       "_origin": "ast"
     },
     {
+      "source": "app_agents_skills_ui_sound_design_skill",
+      "target": "app_agents_skills_ui_sound_design_skill_ui_sound_design",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_ui_sound_design",
+      "target": "app_agents_skills_ui_sound_design_skill_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_workflow",
+      "target": "app_agents_skills_ui_sound_design_skill_1_describe",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_workflow",
+      "target": "app_agents_skills_ui_sound_design_skill_2_generate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_workflow",
+      "target": "app_agents_skills_ui_sound_design_skill_3_listen",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_workflow",
+      "target": "app_agents_skills_ui_sound_design_skill_4_refine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_workflow",
+      "target": "app_agents_skills_ui_sound_design_skill_5_review_optional",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L89",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_ui_sound_design",
+      "target": "app_agents_skills_ui_sound_design_skill_vocabulary_bridge",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_ui_sound_design",
+      "target": "app_agents_skills_ui_sound_design_skill_sound_categories_quick_reference",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L125",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_ui_sound_design",
+      "target": "app_agents_skills_ui_sound_design_skill_critical_implementation_rules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L140",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_critical_implementation_rules",
+      "target": "app_agents_skills_ui_sound_design_skill_audiocontext_user_gesture_requirement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L142",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_critical_implementation_rules",
+      "target": "app_agents_skills_ui_sound_design_skill_never_ramp_gain_to_zero",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L145",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_critical_implementation_rules",
+      "target": "app_agents_skills_ui_sound_design_skill_node_cleanup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L148",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_critical_implementation_rules",
+      "target": "app_agents_skills_ui_sound_design_skill_volume_safety",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L154",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_critical_implementation_rules",
+      "target": "app_agents_skills_ui_sound_design_skill_scheduling_precision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L160",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_critical_implementation_rules",
+      "target": "app_agents_skills_ui_sound_design_skill_use_exponential_ramps_by_default",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L163",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_ui_sound_design",
+      "target": "app_agents_skills_ui_sound_design_skill_output_formats",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L166",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_output_formats",
+      "target": "app_agents_skills_ui_sound_design_skill_html_preview_default",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L168",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_output_formats",
+      "target": "app_agents_skills_ui_sound_design_skill_es_module",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L171",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_output_formats",
+      "target": "app_agents_skills_ui_sound_design_skill_react_hook",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L178",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_output_formats",
+      "target": "app_agents_skills_ui_sound_design_skill_sound_library_class",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L188",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_ui_sound_design",
+      "target": "app_agents_skills_ui_sound_design_skill_resources",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L191",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_resources",
+      "target": "app_agents_skills_ui_sound_design_skill_references",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L193",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_resources",
+      "target": "app_agents_skills_ui_sound_design_skill_assets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L200",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_skill_resources",
+      "target": "app_agents_skills_ui_sound_design_skill_tools",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/SKILL.md",
+      "source_location": "L203",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_what_is_a_sound_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_how_to_use_a_sound_profile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_field_reference",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_field_reference",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_field_reference",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_pitch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_field_reference",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_spectrum",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_field_reference",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_tonality",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_field_reference",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_filter_estimate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_field_reference",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_spectral_evolution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_field_reference",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_synthesis_suggestion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_analysis_to_category_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L100",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_brightness_mapping_spectral_centroid_vocabulary_bridge",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L116",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_envelope_vocabulary_bridge",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L126",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_harmonic_content_synthesis_approach",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L139",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_file_references_audio_file_references",
+      "target": "app_agents_skills_ui_sound_design_references_audio_file_references_limitations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-file-references.md",
+      "source_location": "L149",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_priority_levels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_critical_context_management",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_critical_context_management",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_context_singleton",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_critical_context_management",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_context_resume_suspended",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_critical_context_management",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_node_cleanup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_critical_envelope_safety",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L90",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_critical_envelope_safety",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_gain_no_zero_target",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L92",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_critical_envelope_safety",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_gain_set_before_ramp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L106",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_high_envelope_scheduling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L124",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_high_envelope_scheduling",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_exponential_over_linear",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L126",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_high_envelope_scheduling",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_scheduling_capture_once",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L146",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_high_envelope_scheduling",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_stop_after_envelope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L166",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_high_sound_design",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L184",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_high_sound_design",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_noise_for_percussion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L186",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_high_sound_design",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_oscillator_for_tonal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L207",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_high_sound_design",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_filter_for_character",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L213",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_medium_parameters",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L221",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_medium_parameters",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_volume_max_0_8",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L223",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_medium_parameters",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_filter_q_per_type",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L240",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_medium_parameters",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_duration_per_type",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L254",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_per_sound_type_parameter_bounds",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L262",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_audio_rules_formal_validation_rulebook",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_review_mode_output_format",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L280",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_review_mode_output_format",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_per_finding",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L284",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_review_mode_output_format",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_summary_table",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L297",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_audio_rules_review_mode_output_format",
+      "target": "app_agents_skills_ui_sound_design_references_audio_rules_suggested_fixes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/audio-rules.md",
+      "source_location": "L309",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_click_click",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_toggle_toggle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_hover_hover",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L115",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_success_success",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L158",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_error_error",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L208",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_warning_warning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L261",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_notification_notification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L309",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_whoosh_whoosh",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L364",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_pop_pop",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L419",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_sound_recipes_ui_sound_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_sound_recipes_complete_sound_library",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/sound-recipes.md",
+      "source_location": "L464",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_tone_js_simplified_ui_sound_patterns",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_tone_js_simplified_ui_sound_patterns",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_setup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_setup",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_cdn_quick_prototyping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_setup",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_npm_production",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_setup",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_user_gesture_requirement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_tone_js_simplified_ui_sound_patterns",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_synth_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_tone_js_simplified_ui_sound_patterns",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_recipes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_click",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_toggle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_success",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_error",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L98",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_notification_bell",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L116",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_whoosh",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L145",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_recipes",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_pop",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L168",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_tone_js_simplified_ui_sound_patterns",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_effects",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L188",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_effects",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_reverb_adds_space_depth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L192",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_effects",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_delay_adds_rhythm_echo",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L202",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_effects",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_filter_shapes_tone",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L215",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_tone_js_simplified_ui_sound_patterns",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_volume_in_tone_js",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L226",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_tone_js_simplified_ui_sound_patterns",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_converting_tone_js_to_vanilla_web_audio",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L242",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_tone_js_tone_js_simplified_ui_sound_patterns",
+      "target": "app_agents_skills_ui_sound_design_references_tone_js_when_to_use_tone_js_vs_vanilla",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/tone-js.md",
+      "source_location": "L264",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_audiocontext_setup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_oscillator_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_gain_envelopes_adsr",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_white_noise_generation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L97",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_filter_types_biquadfilternode",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L130",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_frequency_sweeps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L169",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_layering_oscillators",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L207",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_fm_synthesis_bell_metallic_tones",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L251",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_reusable_factory_pattern",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L295",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_common_mistakes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L326",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_common_mistakes",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_gain_click_pop_artifacts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L328",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_common_mistakes",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_creating_audiocontext_per_sound",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L341",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_common_mistakes",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_memory_leaks_from_node_accumulation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L345",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_common_mistakes",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_buffersource_cleanup_with_onended",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L349",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_common_mistakes",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_exponentialramp_to_zero",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L372",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_common_mistakes",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_linearramp_vs_exponentialramp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L376",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_common_mistakes",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_scheduling_in_the_past",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L380",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_per_sound_type_parameter_bounds",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L384",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "app_agents_skills_ui_sound_design_references_web_audio_api_web_audio_api_core_building_blocks",
+      "target": "app_agents_skills_ui_sound_design_references_web_audio_api_validation_checklist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/ui-sound-design/references/web-audio-api.md",
+      "source_location": "L400",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "app_layout",
       "target": "components_tiktokpixelinit_tiktokpixelinit",
       "relation": "imports",
@@ -59611,7 +63124,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59622,7 +63135,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59633,7 +63146,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59644,7 +63157,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59655,7 +63168,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59666,7 +63179,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/scenes/ContactFooter.tsx",
-      "source_location": "L25",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59710,7 +63223,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/chat/route.ts",
-      "source_location": "L204",
+      "source_location": "L218",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59721,7 +63234,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "api/contact/route.ts",
-      "source_location": "L210",
+      "source_location": "L221",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59732,7 +63245,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L87",
+      "source_location": "L89",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59743,7 +63256,18 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/ShowcaseRoot.tsx",
-      "source_location": "L99",
+      "source_location": "L101",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_showcaseroot_showcaseroot",
+      "target": "components_showcase_engine_sound_attachglobaluisoundlisteners",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/ShowcaseRoot.tsx",
+      "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59754,7 +63278,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L295",
+      "source_location": "L298",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -59765,7 +63289,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/useShowcaseChoreography.ts",
-      "source_location": "L303",
+      "source_location": "L306",
       "weight": 1.0,
       "_origin": "ast"
     },

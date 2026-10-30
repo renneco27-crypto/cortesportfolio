@@ -113,21 +113,32 @@ async function sendEmailJS(params: {
   message: string;
   templateId: string;
 }) {
-  const serviceId  = process.env.EMAILJS_SERVICE_ID!;
-  const publicKey  = process.env.EMAILJS_PUBLIC_KEY!;
+  const serviceId =
+    process.env.EMAILJS_SERVICE_ID ||
+    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ||
+    "";
+  const publicKey =
+    process.env.EMAILJS_PUBLIC_KEY ||
+    process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ||
+    "";
+  const privateKey =
+    process.env.EMAILJS_PRIVATE_KEY ||
+    process.env.NEXT_PUBLIC_EMAILJS_PRIVATE_KEY ||
+    undefined;
 
   const res = await fetch(EMAILJS_API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      service_id:  serviceId,
+      service_id: serviceId,
       template_id: params.templateId,
-      user_id:     publicKey,
+      user_id: publicKey,
+      ...(privateKey ? { accessToken: privateKey } : {}),
       template_params: {
-        name:       params.name,
+        name: params.name,
         from_email: params.email,
-        title:      params.message.slice(0, 60),
-        message:    params.message,
+        title: params.message.slice(0, 60),
+        message: params.message,
       },
     }),
   });
@@ -232,14 +243,26 @@ export async function POST(req: NextRequest) {
     await incrementContactCount(ip);
 
     // ── 6. SEND EMAILS VIA EMAILJS ──────────
-    const contactTemplateId  = process.env.EMAILJS_TEMPLATE_ID_CONTACT!;
-    const autoreplyTemplateId = process.env.EMAILJS_TEMPLATE_ID_AUTOREPLY!;
+    const contactTemplateId =
+      process.env.EMAILJS_TEMPLATE_ID_CONTACT ||
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CONTACT ||
+      "";
+    const autoreplyTemplateId =
+      process.env.EMAILJS_TEMPLATE_ID_AUTOREPLY ||
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_AUTOREPLY ||
+      "";
 
     // Send both in parallel — notification to Lawrence + autoreply to sender
-    await Promise.all([
-      sendEmailJS({ name, email, message, templateId: contactTemplateId }),
-      sendEmailJS({ name, email, message, templateId: autoreplyTemplateId }),
-    ]);
+    const emailPromises: Promise<void>[] = [];
+    if (contactTemplateId) {
+      emailPromises.push(sendEmailJS({ name, email, message, templateId: contactTemplateId }));
+    }
+    if (autoreplyTemplateId) {
+      emailPromises.push(sendEmailJS({ name, email, message, templateId: autoreplyTemplateId }));
+    }
+    if (emailPromises.length > 0) {
+      await Promise.all(emailPromises);
+    }
 
     return NextResponse.json({
       success: true,

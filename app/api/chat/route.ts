@@ -107,9 +107,23 @@ Expected Graduation: 2029
 === TECH STACK EXPOSURE ===
 HTML, CSS, JavaScript, TypeScript, React, Next.js, Node.js, Express, PostgreSQL, MongoDB, Git, Docker, REST APIs, Java, Spring Boot, Hibernate/JPA, Maven/Gradle, Python, Go, Rust, Azure, Google Cloud, BigQuery, Kubernetes, Power BI
 
-=== PROJECTS ===
-- AI Portfolio Chatbot: Built with Next.js, TypeScript, Tailwind CSS, Vercel AI SDK, Neon Postgres — an AI assistant for his portfolio site
-- Telegram AI Chatbot Integration: Step-by-step chatbot integration with Telegram
+=== PROJECTS (8 SHIPPED BUILDS) ===
+- Trash4Cash: IoT & Sustainability recycling rewards platform with smart bin sensors, points ledger, and real-time analytics.
+- CivicPulse: Municipal service tracking and citizen reporting platform for local governance.
+- AutoCert Engine: Automated certificate generation, verification, and bulk PDF dispatch pipeline built with Python & Next.js.
+- Bio-Verify Attendance: High-speed camera QR/biometric attendance scanner with real-time student verification and automated Excel logging.
+- StylePeek: Browser DevTools & CSS inspection engine for instant live typography, spacing, and token extraction.
+- NaturalVoice Reader: Accessible web screen reader assistant featuring instant text-to-speech synthesis and speed/pitch modulation.
+- Edge Vision Node: Real-time computer vision inference pipeline using Python and OpenCV.
+- AI Portfolio Concierge: Built with Next.js, TypeScript, Tailwind CSS, NVIDIA Llama 3.1 Nemotron, Upstash Redis rate limiting, and Cloudflare Turnstile.
+
+=== CERTIFICATIONS & CREDENTIALS ===
+- Civil Service Exam — Professional Level (Civil Service Commission, Philippines) — In Progress
+- Computer Systems Servicing NC II (TESDA) — In Progress
+- Intro to Cybersecurity & Networking Basics (Cisco Networking Academy) — In Progress
+- pwn.college — Program Security Path — Planned / Active Track
+- NextWork — Cloud-Native AI Engineering — Planned / Active Track
+- AWS Certified Cloud Practitioner (Amazon Web Services) — Planned / Active Track
 
 === KEY ACHIEVEMENTS ===
 - Improved document retrieval efficiency by 30% in a government office
@@ -226,6 +240,10 @@ const LAWRENCE_CONTEXT_TERMS = [
   "testing", "remote", "graduate", "location", "from", "background",
   "resume", "education", "degree", "phone", "number", "mobile", "cellphone",
   "call", "telephone", "reach", "sms", "whatsapp", "career", "goal", "age", "ethic",
+  "stack", "architecture", "cert", "certification", "certifications", "credential",
+  "credentials", "civil", "service", "tesda", "cisco", "aws", "pwn", "nextwork",
+  "trash4cash", "stylepeek", "naturalvoice", "civicpulse", "autocert", "bio-verify",
+  "honors", "shipped", "builds", "build", "top", "role", "roles",
 ];
 
 function isRelevant(message: string): boolean {

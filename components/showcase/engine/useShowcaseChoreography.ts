@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { heroScriptWords, chapters } from "@/data/showcase";
 import { chapterFor, isDarkNav } from "./timeline";
 import { Flip } from "./gsap";
+import { soundEngine } from "./sound";
 import { MORPH_STATE_CONFIGS, SHOWCASE_SELECTOR_ITEMS } from "../scenes/WorkShowcase";
 
 // Mathematical Utilities
@@ -546,6 +547,7 @@ export function useShowcaseChoreography(
 
         // Directional SVG motion blur pulse during morph (290ms matching motion_study_02)
         if (prevStateIdx !== -1) {
+          soundEngine.playCardSwipe();
           singleMorphCardEl.classList.add("motion-blur", "pressed");
           if (blurTimeout) clearTimeout(blurTimeout);
           blurTimeout = setTimeout(() => {

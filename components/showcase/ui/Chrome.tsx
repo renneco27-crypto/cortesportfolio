@@ -3,22 +3,33 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import { PenTool, Play, Pause, X, Send, Download } from "lucide-react";
+import { PenTool, Play, Pause, X, Send, Download, Volume2, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { chapters, markerSpecs } from "@/data/showcase";
 
 /* ── Navbar ─────────────────────────────────────────────────────── */
 interface NavbarProps {
   autoplay: boolean;
+  soundEnabled?: boolean;
   shortlistCount: number;
   onJump: (p: number) => void;
   onReplay: () => void;
   onToggleAutoplay: () => void;
+  onToggleSound?: () => void;
   onOpenShortlist: () => void;
 }
 
 export const ShowcaseNavbar = forwardRef<HTMLElement, NavbarProps>(function ShowcaseNavbar(
-  { autoplay, shortlistCount, onJump, onReplay, onToggleAutoplay, onOpenShortlist },
+  {
+    autoplay,
+    soundEnabled = true,
+    shortlistCount,
+    onJump,
+    onReplay,
+    onToggleAutoplay,
+    onToggleSound,
+    onOpenShortlist,
+  },
   ref
 ) {
   return (
@@ -60,6 +71,29 @@ export const ShowcaseNavbar = forwardRef<HTMLElement, NavbarProps>(function Show
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          {onToggleSound && (
+            <button
+              type="button"
+              onClick={onToggleSound}
+              aria-label={soundEnabled ? "Mute UI sounds" : "Enable UI sounds"}
+              title={soundEnabled ? "Tactile bubble sounds ON (click to mute)" : "UI sounds muted (click to enable)"}
+              className={`lc-bubble-chip flex cursor-pointer items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-[11px] font-bold transition-colors ${
+                soundEnabled
+                  ? "border-lime/50 bg-[#141414] text-lime hover:bg-lime hover:text-black"
+                  : "border-white/15 bg-black/20 text-neutral-400 hover:text-white"
+              }`}
+            >
+              {soundEnabled ? (
+                <Volume2 className="h-3.5 w-3.5" />
+              ) : (
+                <VolumeX className="h-3.5 w-3.5" />
+              )}
+              <span className="hidden md:inline font-mono text-[10px] uppercase tracking-wider">
+                {soundEnabled ? "SFX" : "MUTE"}
+              </span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={onToggleAutoplay}

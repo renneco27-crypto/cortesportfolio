@@ -7,7 +7,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { soundEngine } from "../engine/sound";
 import {
   Send,
   Download,
@@ -25,9 +27,13 @@ import {
 import Github from "../svg/GithubMark";
 import { chapters } from "@/data/showcase";
 import { certificationsData } from "@/data/certifications";
-import type { Certification } from "@/types";
+import type { Certification, PortfolioCredential } from "@/types";
 
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_CONTACT = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CONTACT;
+const EMAILJS_TEMPLATE_AUTOREPLY = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_AUTOREPLY;
 
 interface ContributionDay {
   date: string;
@@ -74,8 +80,42 @@ export default function ContactFooter({
 
   // Elastic Pill Morphing interactive states (matching motion_study_02_ui_morphing_showcase.html)
   const [expandedCertId, setExpandedCertId] = useState<string | null>("csc-professional");
+  const [liveCertifications, setLiveCertifications] = useState<Certification[]>(certificationsData);
   const [githubFilter, setGithubFilter] = useState<"all" | "fullstack" | "ai">("all");
   const [isGithubMorphing, setIsGithubMorphing] = useState(false);
+
+  // Sync live credentials from Supabase (/api/credentials -> NEXT_PUBLIC_SUPABASE_URL)
+  useEffect(() => {
+    let cancelled = false;
+    async function loadCredentials() {
+      try {
+        const res = await fetch("/api/credentials");
+        if (!res.ok) return;
+        const rows: PortfolioCredential[] = await res.json();
+        if (cancelled || !Array.isArray(rows) || rows.length === 0) return;
+        const mapped: Certification[] = rows.map((r) => ({
+          id: r.id,
+          label: r.label,
+          issuingBody: r.issuing_body,
+          status:
+            r.status === "completed"
+              ? "earned"
+              : r.status === "in-progress"
+              ? "in-progress"
+              : "planned",
+          notes: r.notes,
+          verifyUrl: r.verify_url,
+        }));
+        setLiveCertifications(mapped);
+      } catch {
+        // Fallback to static certificationsData
+      }
+    }
+    loadCredentials();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Live GitHub contributions state
   const [weeks, setWeeks] = useState<ContributionDay[][]>([]);
@@ -196,12 +236,48 @@ export default function ContactFooter({
       });
       const data = await res.json();
       if (!res.ok || !data.success) {
+        // If server-side EmailJS returned 500 (e.g. EmailJS browser-only key mode) and NEXT_PUBLIC_EMAILJS_PUBLIC_KEY is set, send via @emailjs/browser
+        if (
+          res.status === 500 &&
+          EMAILJS_PUBLIC_KEY &&
+          EMAILJS_SERVICE_ID &&
+          EMAILJS_TEMPLATE_CONTACT
+        ) {
+          const templateParams = {
+            name,
+            from_email: email,
+            title: message.slice(0, 60),
+            message,
+          };
+          await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_CONTACT,
+            templateParams,
+            EMAILJS_PUBLIC_KEY
+          );
+          if (EMAILJS_TEMPLATE_AUTOREPLY) {
+            await emailjs.send(
+              EMAILJS_SERVICE_ID,
+              EMAILJS_TEMPLATE_AUTOREPLY,
+              templateParams,
+              EMAILJS_PUBLIC_KEY
+            );
+          }
+          setStatus("success");
+          setFeedback("Message sent! Lawrence will get back to you soon. 🙌");
+          soundEngine.playSuccessChime();
+          setName("");
+          setEmail("");
+          onMessageChange("");
+          return;
+        }
         setStatus("error");
         setFeedback(data.message ?? data.error ?? "Failed to send message.");
         return;
       }
       setStatus("success");
       setFeedback(data.message ?? "Message sent. Talk soon!");
+      soundEngine.playSuccessChime();
       setName("");
       setEmail("");
       onMessageChange("");
@@ -232,21 +308,21 @@ export default function ContactFooter({
     {
       title: "01 / Civil & National",
       subtitle: "Public Service & Systems",
-      items: certificationsData.filter((c) =>
+      items: liveCertifications.filter((c) =>
         ["csc-professional", "tesda-css-nc2"].includes(c.id)
       ),
     },
     {
       title: "02 / Security & Network",
       subtitle: "Offensive & Defensive Systems",
-      items: certificationsData.filter((c) =>
+      items: liveCertifications.filter((c) =>
         ["pwncollege-badge", "cisco-cybersecurity"].includes(c.id)
       ),
     },
     {
       title: "03 / Cloud & AI Track",
       subtitle: "Infrastructure Roadmap",
-      items: certificationsData.filter((c) =>
+      items: liveCertifications.filter((c) =>
         ["nextwork-cloud", "aws-cloud-practitioner"].includes(c.id)
       ),
     },

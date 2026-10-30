@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { Send, X } from "lucide-react";
+import { soundEngine } from "@/components/showcase/engine/sound";
 
 type Message = { id: string; role: "user" | "assistant"; content: string };
 
@@ -28,6 +29,7 @@ export default function EditorialChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [messagesLeft, setMessagesLeft] = useState<number | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -41,6 +43,19 @@ export default function EditorialChatWidget() {
   }, []);
 
   useEffect(() => {
+    if (isOpen && messagesLeft === null) {
+      fetch("/api/chat")
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+          if (d && typeof d.messagesLeft === "number") {
+            setMessagesLeft(d.messagesLeft);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [isOpen, messagesLeft]);
+
+  useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
@@ -48,6 +63,8 @@ export default function EditorialChatWidget() {
 
   const triggerMorphState = (nextOpen: boolean) => {
     if (nextOpen === isOpen) return;
+    soundEngine.unlock();
+    soundEngine.playToggle(nextOpen);
     setIsPressed(true);
     setTimeout(() => setIsPressed(false), 140);
 
@@ -86,9 +103,13 @@ export default function EditorialChatWidget() {
         body: JSON.stringify({ message: userMessage.content, turnstileToken }),
       });
       const data = await res.json();
+      if (typeof data.messagesLeft === "number") {
+        setMessagesLeft(data.messagesLeft);
+      }
 
       const replyContent =
         data.reply ||
+        data.message ||
         localPreset ||
         "I'm trained on Lawrence's full-stack architecture, 8+ shipped builds, and 2026 internship availability. Ask me about his tech stack, projects, or availability!";
 
@@ -98,6 +119,7 @@ export default function EditorialChatWidget() {
         content: replyContent,
       };
       setMessages((prev) => [...prev, assistantMessage]);
+      soundEngine.playSuccessChime();
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -109,6 +131,7 @@ export default function EditorialChatWidget() {
             "I'm Lawrence's Studio AI Concierge. I can give you full details on his Next.js builds, Python projects, Civil Service credentials, and 2026 internship availability!",
         },
       ]);
+      soundEngine.playSuccessChime();
     } finally {
       setIsLoading(false);
       setTurnstileToken(null);
@@ -207,6 +230,11 @@ export default function EditorialChatWidget() {
                     <span className="inline-flex items-center gap-1 rounded-full bg-lime px-2 py-0.5 font-mono text-[9px] font-black uppercase tracking-wider text-black">
                       ONLINE
                     </span>
+                    {messagesLeft !== null && (
+                      <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2 py-0.5 font-mono text-[9px] font-bold text-neutral-300">
+                        {messagesLeft}/10 LEFT
+                      </span>
+                    )}
                   </div>
                   <p className="mt-0.5 font-mono text-[11px] font-medium text-neutral-300">
                     Studio Concierge · Instant HR &amp; Tech Q&amp;A
