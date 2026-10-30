@@ -1,0 +1,90 @@
+/* components/showcase/showcase.css */
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap");
+
+:root {
+  --neon-lime: #b8ff01;
+  --studio-bg: #f4f4f4;
+  --ink-black: #141414;
+  --font-caveat: "Caveat", cursive;
+  --font-inter-lc: "Inter", sans-serif;
+  --font-syne: "Syne", "Inter", sans-serif;
+}
+
+.font-script {
+  font-family: var(--font-caveat), cursive;
+}
+
+.font-ui {
+  font-family: var(--font-inter-lc), sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-syne), var(--font-inter-lc), sans-serif;
+}
+
+.bg-lime {
+  background-color: #b8ff01;
+}
+
+.text-lime {
+  color: #b8ff01;
+}
+
+.bg-studio {
+  background-color: #f4f4f4;
+}
+
+.bg-ink {
+  background-color: #141414;
+}
+
+/* Subtle Studio Grain */
+.lc-noise {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+/* Hardware Acceleration Hints */
+.lc-gpu {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Outline Script Effect for Dark Marquee */
+.lc-script-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.88);
+}
+
+/* 3D Drop Shadow for Markers */
+.lc-marker-shadow {
+  filter: drop-shadow(0 30px 35px rgba(0, 0, 0, 0.22));
+}
+
+/* Fixed morph target frame (matches urban_markers_showcase 430px x 270px) */
+.lc-frame-size {
+  width: min(88vw, 430px);
+  height: min(46vh, 270px);
+  border: 5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.75);
+}
+
+/* Navbar Theme Modes */
+.lc-nav[data-theme="light"] {
+  color: #141414;
+}
+
+.lc-nav[data-theme="light"] .lc-nav-chip {
+  background: rgba(0, 0, 0, 0.05);
+  color: #141414;
+}
+
+.lc-nav[data-theme="dark"] {
+  color: #ffffff;
+}
+
+.lc-nav[data-theme="dark"] .lc-nav-chip {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
