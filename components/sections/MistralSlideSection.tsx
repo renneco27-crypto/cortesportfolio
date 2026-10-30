@@ -2106,7 +2106,7 @@ export default function SectionWipeTransitions() {
       const COLS = 10;
       const FRAME_WIDTH = 960;
       const FRAME_HEIGHT = 540;
-      const START_FRAME = 36; // 1.5s (frame 36): cut out 0..35 static closed video
+      const START_FRAME = 65; // 2.7s into full video: cuts out first 2.7 seconds!
       const END_FRAME = 96;   // 4.0s (frame 96): exploded / opened reactor state
 
       const canvasEl = ov1.querySelector("#ov1-bg-canvas") as HTMLCanvasElement | null;

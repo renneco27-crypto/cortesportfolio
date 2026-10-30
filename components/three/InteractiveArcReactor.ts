@@ -18,7 +18,7 @@ export const CLOSED_REACTOR_ALIGNMENT = {
     distanceZ: 2.1,
   },
   lighting: {
-    ambient: 0.85,
+    ambient: 0.95,
     directional: 2.2,
     pointCore: 3.5,
   },
