@@ -399,3 +399,93 @@
   z-index: 45;
   background: linear-gradient(to top, rgba(18, 18, 18, 0.92) 0%, rgba(18, 18, 18, 0) 100%);
 }
+
+/* ============================================================================
+   PIXEL-ART WOODEN SIGNAGE KIT (from StitchCSV-pixelated-ui/index.html)
+   ============================================================================ */
+.lc-wood-sign-panel {
+  border: 20px solid transparent;
+  border-image: url("/pixel-ui/kit/plate-panel.png") 48 fill / 20px stretch;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.65));
+  transition:
+    transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.16s ease;
+}
+
+.lc-wood-sign-panel:hover {
+  transform: translateY(-3px) scale(1.015);
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.78)) brightness(1.05);
+}
+
+.lc-wood-sign-panel.is-active-sign {
+  filter:
+    drop-shadow(0 0 10px rgba(56, 189, 248, 0.95))
+    drop-shadow(0 18px 32px rgba(0, 0, 0, 0.8));
+}
+
+.lc-wood-sign-banner {
+  background-image: url("/pixel-ui/board-deck-title-sign-empty.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.65));
+}
+
+.lc-wood-recess {
+  border: 12px solid transparent;
+  border-image: url("/pixel-ui/kit/plate-recess.png") 24 fill / 12px stretch;
+  image-rendering: pixelated;
+}
+
+.lc-pixel-btn-green {
+  border: 10px solid transparent;
+  border-image: url("/pixel-ui/kit/plate-btn-green.png") 26 fill / 10px stretch;
+  background: transparent;
+  image-rendering: pixelated;
+  transition: transform 0.08s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.1s ease;
+}
+
+.lc-pixel-btn-green:hover {
+  filter: brightness(1.1);
+}
+
+.lc-pixel-btn-green:active {
+  transform: translateY(2px) scale(0.95);
+}
+
+.lc-pixel-btn-blue {
+  border: 10px solid transparent;
+  border-image: url("/pixel-ui/kit/plate-btn-blue.png") 26 fill / 10px stretch;
+  background: transparent;
+  image-rendering: pixelated;
+}
+
+.lc-pixel-btn-wood {
+  border: 10px solid transparent;
+  border-image: url("/pixel-ui/kit/plate-btn-wood.png") 22 fill / 10px stretch;
+  background: transparent;
+  image-rendering: pixelated;
+}
+
+.lc-wood-text {
+  color: #fcebd0;
+  font-weight: 800;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 3.5px #1e0d04;
+  text-shadow:
+    0 2px 0 #1e0d04,
+    1.5px 1.5px 0 #1e0d04,
+    -1.5px 1.5px 0 #1e0d04;
+  line-height: 1.15;
+}
+
+.lc-wood-text-sub {
+  color: #f7dfc0;
+  font-weight: 700;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 2.5px #1e0d04;
+  text-shadow: 0 1.5px 0 #1e0d04;
+  line-height: 1.2;
+}
+

@@ -754,32 +754,34 @@ export default function ContactFooter({
                   </p>
                 </div>
 
-                {/* High-Contrast White & Black Bento with Blurred Animated Pixel Scene GIF + StitchCSV Cutouts */}
+                {/* Unblurred Animated Pixel Scene GIF + Wooden Signage Boards from StitchCSV-pixelated-ui */}
                 <div
-                  className="lc-card-3d relative overflow-hidden rounded-2xl border-2 border-black/20 bg-white text-[#141414] shadow-[0_32px_68px_-12px_rgba(0,0,0,0.34)]"
+                  className="lc-card-3d relative overflow-hidden rounded-2xl border-4 border-[#1e0d04] bg-[#120804] text-[#fcebd0] shadow-[0_32px_68px_-12px_rgba(0,0,0,0.65)]"
                   data-z="34"
                   data-stand="-42"
                   data-grow-wings="1"
                 >
-                  {/* Blurred Animated Pixel Scene Background (pxct5rdf0uh51 (1).gif) */}
+                  {/* Crisp Unblurred Animated Pixel Scene Background (pxct5rdf0uh51 (1).gif) */}
                   <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/pixel-ui/bg-pixel-scene.gif"
                       alt=""
                       aria-hidden="true"
-                      className="h-full w-full scale-110 object-cover blur-[5px] saturate-150 opacity-55"
+                      className="h-full w-full object-cover"
+                      style={{ imageRendering: "pixelated" }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/68 to-white/78 backdrop-blur-[2px]" />
+                    {/* Subtle warm vignette only — zero blur so the pixel scene is crystal clear */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/35" />
                   </div>
 
-                  {/* Interactive Pixel Cutouts Header Strip (from StitchCSV-pixelated-ui/index.html) */}
-                  <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b-2 border-black/15 bg-[#141414]/95 px-5 py-3 text-white backdrop-blur-md">
+                  {/* Top Wooden Signage Header Strip (from StitchCSV-pixelated-ui/index.html) */}
+                  <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b-4 border-[#1e0d04] bg-[#2a1408]/90 px-5 py-3">
                     <div className="flex items-center gap-3">
                       <button
                         type="button"
                         onClick={() => soundEngine.playChainDangle()}
-                        className="lc-elastic-pill group flex cursor-pointer items-center gap-2 rounded-xl border border-white/15 bg-black/60 px-3 py-1.5"
+                        className="lc-pixel-btn-wood lc-elastic-pill group flex cursor-pointer items-center gap-2 px-3 py-1"
                         title="Tap for Pixel Chain Dangle SFX"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -789,7 +791,7 @@ export default function ContactFooter({
                           className="h-6 w-6 object-contain transition-transform group-hover:scale-125"
                           style={{ imageRendering: "pixelated" }}
                         />
-                        <span className="font-mono text-[10px] font-black uppercase tracking-wider text-lime">
+                        <span className="lc-wood-text font-mono text-[11px] uppercase tracking-wider">
                           ACTIVE CREDENTIAL STREAK
                         </span>
                       </button>
@@ -797,7 +799,7 @@ export default function ContactFooter({
                       <button
                         type="button"
                         onClick={() => soundEngine.playChainDangle()}
-                        className="lc-elastic-pill group hidden cursor-pointer items-center gap-2 rounded-xl border border-white/15 bg-black/60 px-3 py-1.5 sm:flex"
+                        className="lc-pixel-btn-wood lc-elastic-pill group hidden cursor-pointer items-center gap-2 px-3 py-1 sm:flex"
                         title="StudyUp Pixel Book Cutout"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -807,7 +809,7 @@ export default function ContactFooter({
                           className="h-6 w-7 object-contain transition-transform group-hover:scale-110"
                           style={{ imageRendering: "pixelated" }}
                         />
-                        <span className="font-mono text-[10px] font-bold text-neutral-200">
+                        <span className="lc-wood-text font-mono text-[11px]">
                           6 VERIFIED TRACKS
                         </span>
                       </button>
@@ -819,7 +821,7 @@ export default function ContactFooter({
                       <img
                         src="/pixel-ui/book-pencil.png"
                         alt="Pixel Book and Pencil"
-                        className="hidden h-7 w-auto object-contain md:block"
+                        className="hidden h-8 w-auto object-contain md:block"
                         style={{ imageRendering: "pixelated" }}
                       />
                       <button
@@ -832,7 +834,7 @@ export default function ContactFooter({
                         <img
                           src="/pixel-ui/relay-badge.png"
                           alt="Relay Active"
-                          className="h-7 w-auto object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]"
+                          className="h-8 w-auto object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.65)]"
                           style={{ imageRendering: "pixelated" }}
                         />
                         <span
@@ -843,8 +845,8 @@ export default function ContactFooter({
                     </div>
                   </div>
 
-                  {/* 3 Columns Separated by Crisp Vertical Divider Lines (`lg:divide-x-2 lg:divide-black/15`) */}
-                  <div className="relative z-10 grid grid-cols-1 divide-y-2 divide-black/15 lg:grid-cols-3 lg:divide-x-2 lg:divide-y-0">
+                  {/* 3 Columns of Wooden Signages over Unblurred Pixel Scene */}
+                  <div className="relative z-10 grid grid-cols-1 divide-y-4 divide-[#1e0d04]/70 lg:grid-cols-3 lg:divide-x-4 lg:divide-y-0">
                     {certColumns.map((col, colIdx) => {
                       const colCutoutSprite =
                         colIdx === 0
@@ -858,35 +860,35 @@ export default function ContactFooter({
                           className="flex flex-col justify-between p-5 sm:p-6"
                         >
                           <div>
-                            {/* Column Header on Blurred Pixel Scene + White Glass Background */}
-                            <div className="flex items-center justify-between border-b-2 border-black/15 pb-4">
+                            {/* Column Header Wooden Signage Banner (board-deck-title-sign-empty.png) */}
+                            <div className="lc-wood-sign-banner relative flex items-center justify-between px-4 py-3.5">
                               <div>
-                                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#141414] px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-widest text-lime shadow-sm">
+                                <span className="lc-wood-text-sub block font-mono text-[10px] uppercase tracking-widest text-[#ffc83b]">
                                   {col.title}
                                 </span>
-                                <h3 className="mt-1.5 text-base font-extrabold text-[#141414] drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">
+                                <h3 className="lc-wood-text mt-0.5 text-base sm:text-[17px]">
                                   {col.subtitle}
                                 </h3>
                               </div>
                               <div className="flex items-center gap-2">
-                                {/* Pixel Cutout Badge per Column */}
-                                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-black/15 bg-[#141414] p-1.5 shadow-md">
+                                {/* Recessed Wooden Icon Slot */}
+                                <div className="lc-wood-recess flex h-10 w-10 items-center justify-center p-1">
                                   {/* eslint-disable-next-line @next/next/no-img-element */}
                                   <img
                                     src={colCutoutSprite}
                                     alt=""
-                                    className="h-full w-full object-contain"
+                                    className="h-6 w-6 object-contain"
                                     style={{ imageRendering: "pixelated" }}
                                   />
                                 </div>
-                                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#141414] font-mono text-xs font-black text-lime shadow-sm">
+                                <span className="lc-wood-text text-sm text-[#ffc83b]">
                                   0{colIdx + 1}
                                 </span>
                               </div>
                             </div>
 
-                            {/* Black Credential Divs inside White/Pixel-Blurred Column */}
-                            <div className="mt-5 space-y-3.5">
+                            {/* Wooden Signage Credential Boards (kit/plate-panel.png) */}
+                            <div className="mt-5 space-y-4">
                               {col.items.map((cert, itemIdx) => {
                                 const isExpanded = expandedCertId === cert.id;
                                 const isPlanned = cert.status === "planned";
@@ -927,48 +929,34 @@ export default function ContactFooter({
                                         setExpandedCertId(isExpanded ? null : cert.id);
                                       }
                                     }}
-                                    className={`lc-bubble-card lc-morph-container relative cursor-pointer overflow-hidden rounded-2xl border p-4 text-left ${
-                                      isExpanded
-                                        ? "border-2 border-[#141414] bg-[#0a0a0a] text-white shadow-[0_22px_44px_rgba(0,0,0,0.42)] ring-2 ring-lime"
-                                        : "border-black/20 bg-[#141414] text-white shadow-[0_14px_30px_rgba(0,0,0,0.28)] hover:bg-[#1b1b1b]"
+                                    className={`lc-wood-sign-panel lc-bubble-card lc-morph-container relative cursor-pointer text-left ${
+                                      isExpanded ? "is-active-sign" : ""
                                     }`}
                                   >
-                                    <div className="flex items-start justify-between gap-3">
-                                      <div className="flex items-start gap-3">
-                                        <span
-                                          className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl p-1.5 ${
-                                            cert.status === "earned"
-                                              ? "bg-lime text-black shadow-[0_0_12px_rgba(184,255,1,0.35)]"
-                                              : isPlanned
-                                              ? "border border-white/25 bg-white/10 text-white"
-                                              : "border border-lime/50 bg-lime/15 text-lime"
-                                          }`}
-                                        >
+                                    <div className="flex items-start justify-between gap-2.5">
+                                      <div className="flex items-start gap-2.5">
+                                        <span className="lc-wood-recess mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center p-1">
                                           {/* eslint-disable-next-line @next/next/no-img-element */}
                                           <img
                                             src={certPixelIcon}
                                             alt=""
-                                            className="h-full w-full object-contain"
+                                            className="h-6 w-6 object-contain"
                                             style={{ imageRendering: "pixelated" }}
                                           />
                                         </span>
                                         <div>
-                                          <h4 className="text-sm font-extrabold leading-snug text-white sm:text-[15px]">
+                                          <h4 className="lc-wood-text text-sm leading-snug sm:text-[15px]">
                                             {cert.label}
                                           </h4>
-                                          <p className="mt-1 text-xs font-semibold text-neutral-300">
+                                          <p className="lc-wood-text-sub mt-1 text-xs">
                                             {cert.issuingBody}
                                           </p>
                                         </div>
                                       </div>
 
                                       <span
-                                        className={`shrink-0 rounded-full px-2.5 py-1 font-mono text-[9.5px] font-black uppercase tracking-wider ${
-                                          cert.status === "earned"
-                                            ? "bg-lime text-black shadow-sm"
-                                            : isPlanned
-                                            ? "border border-white/30 bg-white/10 text-white"
-                                            : "border border-lime bg-lime/15 text-lime"
+                                        className={`shrink-0 px-2 py-0.5 font-mono text-[9.5px] uppercase tracking-wider lc-wood-text ${
+                                          isPlanned ? "lc-pixel-btn-blue" : "lc-pixel-btn-green"
                                         }`}
                                       >
                                         {cert.status === "in-progress"
@@ -977,12 +965,12 @@ export default function ContactFooter({
                                       </span>
                                     </div>
 
-                                    {/* Elastic Expanded Layer with StitchCSV Pixel Progress Bar */}
+                                    {/* Elastic Expanded Layer inside Recessed Wooden Slot */}
                                     {isExpanded && (
-                                      <div className="mt-4 space-y-3 border-t border-white/15 pt-3">
+                                      <div className="lc-wood-recess mt-3.5 space-y-2.5 p-2.5">
                                         {/* Pixel Progress Track Cutout from StitchCSV-pixelated-ui */}
                                         <div className="flex items-center justify-between gap-3">
-                                          <div className="relative h-3.5 w-32 overflow-hidden">
+                                          <div className="relative h-4 w-32 overflow-hidden">
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img
                                               src="/pixel-ui/lib-progress-bar-empty.png"
@@ -1003,13 +991,13 @@ export default function ContactFooter({
                                               />
                                             </div>
                                           </div>
-                                          <span className="font-mono text-[10px] font-black text-lime">
+                                          <span className="lc-wood-text font-mono text-[10px] text-[#4ade80]">
                                             MASTERY {progressPct}
                                           </span>
                                         </div>
 
                                         <div className="flex flex-wrap items-center justify-between gap-2">
-                                          <span className="font-mono text-[11px] font-medium text-neutral-200">
+                                          <span className="lc-wood-text-sub font-mono text-[11px]">
                                             {cert.notes ??
                                               "Verified technical competency & structured coursework."}
                                           </span>
@@ -1019,7 +1007,7 @@ export default function ContactFooter({
                                               target="_blank"
                                               rel="noopener noreferrer"
                                               onClick={(e) => e.stopPropagation()}
-                                              className="lc-elastic-pill inline-flex items-center gap-1.5 rounded-full bg-lime px-3.5 py-1.5 text-[10.5px] font-extrabold text-black hover:brightness-110"
+                                              className="lc-pixel-btn-green lc-wood-text inline-flex items-center gap-1.5 px-3 py-1 text-[10.5px]"
                                             >
                                               Official Portal <ExternalLink className="h-3 w-3" />
                                             </a>
@@ -1033,18 +1021,19 @@ export default function ContactFooter({
                             </div>
                           </div>
 
-                          <div className="mt-6 flex items-center justify-between border-t-2 border-black/15 pt-3 font-mono text-[10px] font-bold text-neutral-800">
-                            <span className="inline-flex items-center gap-1.5">
+                          {/* Bottom Wooden Signage Plaque */}
+                          <div className="lc-wood-sign-banner mt-6 flex items-center justify-between px-4 py-2 font-mono text-[10px]">
+                            <span className="lc-wood-text inline-flex items-center gap-1.5">
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
                                 src="/pixel-ui/green-orb.png"
                                 alt=""
-                                className="h-3.5 w-3.5 object-contain"
+                                className="h-4 w-4 object-contain"
                                 style={{ imageRendering: "pixelated" }}
                               />
                               LAWRENCE CORTES
                             </span>
-                            <span className="rounded-full bg-[#141414] px-2.5 py-0.5 text-[9px] font-black text-lime shadow-sm">
+                            <span className="lc-wood-text text-[10px] text-[#4ade80]">
                               VERIFIED TRACK
                             </span>
                           </div>

@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "components/showcase/scenes/ContactFooter.tsx": {
-    "mtime": 1793356018.0892704,
-    "seen": 1793356199.311668,
-    "ast_hash": "e15a363d2549643a7301a62a477e1348",
+    "mtime": 1793356531.4474118,
+    "seen": 1793356857.1686113,
+    "ast_hash": "5a40156973082da93c28c76fb60932a7",
     "semantic_hash": ""
   },
   "components/showcase/scenes/DarkMarquee.tsx": {
