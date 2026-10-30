@@ -312,6 +312,31 @@ class StudioSoundEngine {
       osc.stop(startTime + noteDuration + 0.01);
     });
   }
+
+  /**
+   * Chain Dangle Sound (from StitchCSV-pixelated-ui/index.html):
+   * Plays a metallic/wooden 4-tap chain swing when interacting with hanging sign / pixel cutouts.
+   */
+  public playChainDangle(): void {
+    if (!this.canPlay()) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+    const t0 = ctx.currentTime;
+    [0, 0.07, 0.21, 0.42].forEach((offset, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      const baseF = 1320 - i * 160;
+      osc.frequency.setValueAtTime(baseF, t0 + offset);
+      osc.frequency.exponentialRampToValueAtTime(baseF * 0.45, t0 + offset + 0.09);
+      gain.gain.setValueAtTime(0.11 / (i + 1), t0 + offset);
+      gain.gain.exponentialRampToValueAtTime(0.001, t0 + offset + 0.09);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(t0 + offset);
+      osc.stop(t0 + offset + 0.095);
+    });
+  }
 }
 
 export const soundEngine = new StudioSoundEngine();

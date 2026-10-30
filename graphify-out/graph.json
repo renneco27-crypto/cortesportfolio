@@ -1411,11 +1411,20 @@
       "_origin": "ast"
     },
     {
+      "id": "components_showcase_engine_sound_studiosoundengine_playchaindangle",
+      "label": ".playChainDangle()",
+      "file_type": "code",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L320",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
       "id": "components_showcase_engine_sound_soundengine",
       "label": "soundEngine",
       "file_type": "code",
       "source_file": "components/showcase/engine/sound.ts",
-      "source_location": "L317",
+      "source_location": "L342",
       "_origin": "ast"
     },
     {
@@ -1423,7 +1432,7 @@
       "label": "attachGlobalUISoundListeners()",
       "file_type": "code",
       "source_file": "components/showcase/engine/sound.ts",
-      "source_location": "L323",
+      "source_location": "L348",
       "_callable": true,
       "_origin": "ast"
     },
@@ -19905,12 +19914,22 @@
       "_origin": "ast"
     },
     {
+      "source": "components_showcase_engine_sound_studiosoundengine",
+      "target": "components_showcase_engine_sound_studiosoundengine_playchaindangle",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L320",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "components_showcase_engine_sound",
       "target": "components_showcase_engine_sound_soundengine",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/sound.ts",
-      "source_location": "L317",
+      "source_location": "L342",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -19920,7 +19939,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/sound.ts",
-      "source_location": "L323",
+      "source_location": "L348",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -20134,13 +20153,35 @@
       "_origin": "ast"
     },
     {
+      "source": "components_showcase_engine_sound_studiosoundengine_playchaindangle",
+      "target": "components_showcase_engine_sound_studiosoundengine_canplay",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L321",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "components_showcase_engine_sound_studiosoundengine_playchaindangle",
+      "target": "components_showcase_engine_sound_studiosoundengine_getcontext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/showcase/engine/sound.ts",
+      "source_location": "L322",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "components_showcase_engine_sound_attachglobaluisoundlisteners",
       "target": "components_showcase_engine_sound_studiosoundengine_unlock",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/sound.ts",
-      "source_location": "L334",
+      "source_location": "L359",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -20151,7 +20192,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/sound.ts",
-      "source_location": "L343",
+      "source_location": "L368",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -20162,7 +20203,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/sound.ts",
-      "source_location": "L358",
+      "source_location": "L383",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -20173,7 +20214,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "components/showcase/engine/sound.ts",
-      "source_location": "L360",
+      "source_location": "L385",
       "weight": 1.0,
       "_origin": "ast"
     },

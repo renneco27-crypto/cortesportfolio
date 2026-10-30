@@ -355,21 +355,6 @@ export default function ContactFooter({
           <Box className="h-3 w-3" />
           <span>{is3DEnabled ? "3D Standing View: ON" : "Flat Editorial View"}</span>
         </button>
-        {is3DEnabled && (
-          <div className="hidden items-center gap-2 pl-2 text-[10px] text-neutral-400 sm:flex">
-            <span>Max Tilt</span>
-            <input
-              type="range"
-              min={0}
-              max={56}
-              value={maxTiltDeg}
-              onChange={(e) => setMaxTiltDeg(Number(e.target.value))}
-              className="h-1 w-16 cursor-pointer accent-[#b8ff01]"
-              aria-label="3D Floor Tilt Angle"
-            />
-            <span className="js-tilt-readout font-mono text-lime">{maxTiltDeg}°</span>
-          </div>
-        )}
       </div>
 
       {/* ===================================================================
@@ -769,134 +754,303 @@ export default function ContactFooter({
                   </p>
                 </div>
 
-                {/* High-Contrast White Background with Black Credential Divs & Crisp Vertical Separator Lines */}
+                {/* High-Contrast White & Black Bento with Blurred Animated Pixel Scene GIF + StitchCSV Cutouts */}
                 <div
-                  className="lc-card-3d overflow-hidden rounded-2xl border border-black/15 bg-white text-[#141414] shadow-[0_32px_68px_-12px_rgba(0,0,0,0.28)]"
+                  className="lc-card-3d relative overflow-hidden rounded-2xl border-2 border-black/20 bg-white text-[#141414] shadow-[0_32px_68px_-12px_rgba(0,0,0,0.34)]"
                   data-z="34"
                   data-stand="-42"
                   data-grow-wings="1"
                 >
-                  {/* 3 Columns Separated by Crisp Vertical Divider Lines (`lg:divide-x lg:divide-neutral-200`) */}
-                  <div className="grid grid-cols-1 divide-y divide-neutral-200 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
-                    {certColumns.map((col, colIdx) => (
-                      <div key={col.title} className="flex flex-col justify-between p-5 sm:p-6">
-                        <div>
-                          {/* Column Header on White Background */}
-                          <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
-                            <div>
-                              <span className="inline-block rounded-full bg-[#141414] px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-widest text-lime">
-                                {col.title}
-                              </span>
-                              <h3 className="mt-1.5 text-base font-extrabold text-[#141414]">
-                                {col.subtitle}
-                              </h3>
-                            </div>
-                            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#141414] font-mono text-xs font-black text-lime shadow-sm">
-                              0{colIdx + 1}
-                            </span>
-                          </div>
+                  {/* Blurred Animated Pixel Scene Background (pxct5rdf0uh51 (1).gif) */}
+                  <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/pixel-ui/bg-pixel-scene.gif"
+                      alt=""
+                      aria-hidden="true"
+                      className="h-full w-full scale-110 object-cover blur-[5px] saturate-150 opacity-55"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/68 to-white/78 backdrop-blur-[2px]" />
+                  </div>
 
-                          {/* Black Credential Divs inside White Column */}
-                          <div className="mt-5 space-y-3.5">
-                            {col.items.map((cert) => {
-                              const isExpanded = expandedCertId === cert.id;
-                              const isPlanned = cert.status === "planned";
-                              return (
-                                <div
-                                  key={cert.id}
-                                  onClick={() => setExpandedCertId(isExpanded ? null : cert.id)}
-                                  role="button"
-                                  tabIndex={0}
-                                  onKeyDown={(e) => {
-                                    if (e.key === "Enter" || e.key === " ") {
-                                      e.preventDefault();
+                  {/* Interactive Pixel Cutouts Header Strip (from StitchCSV-pixelated-ui/index.html) */}
+                  <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b-2 border-black/15 bg-[#141414]/95 px-5 py-3 text-white backdrop-blur-md">
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => soundEngine.playChainDangle()}
+                        className="lc-elastic-pill group flex cursor-pointer items-center gap-2 rounded-xl border border-white/15 bg-black/60 px-3 py-1.5"
+                        title="Tap for Pixel Chain Dangle SFX"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/pixel-ui/flame-burning.gif"
+                          alt="Active Streak Flame"
+                          className="h-6 w-6 object-contain transition-transform group-hover:scale-125"
+                          style={{ imageRendering: "pixelated" }}
+                        />
+                        <span className="font-mono text-[10px] font-black uppercase tracking-wider text-lime">
+                          ACTIVE CREDENTIAL STREAK
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => soundEngine.playChainDangle()}
+                        className="lc-elastic-pill group hidden cursor-pointer items-center gap-2 rounded-xl border border-white/15 bg-black/60 px-3 py-1.5 sm:flex"
+                        title="StudyUp Pixel Book Cutout"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/pixel-ui/book-flipping.gif"
+                          alt="Flipping Study Book"
+                          className="h-6 w-7 object-contain transition-transform group-hover:scale-110"
+                          style={{ imageRendering: "pixelated" }}
+                        />
+                        <span className="font-mono text-[10px] font-bold text-neutral-200">
+                          6 VERIFIED TRACKS
+                        </span>
+                      </button>
+                    </div>
+
+                    {/* Authentic Relay Active Wooden Cutout Badge + Pulsing Pixel LED from StitchCSV-pixelated-ui */}
+                    <div className="flex items-center gap-3">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src="/pixel-ui/book-pencil.png"
+                        alt="Pixel Book and Pencil"
+                        className="hidden h-7 w-auto object-contain md:block"
+                        style={{ imageRendering: "pixelated" }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => soundEngine.playChainDangle()}
+                        className="lc-elastic-pill relative cursor-pointer transition-transform active:scale-95"
+                        title="Relay Active Cutout Badge"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/pixel-ui/relay-badge.png"
+                          alt="Relay Active"
+                          className="h-7 w-auto object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]"
+                          style={{ imageRendering: "pixelated" }}
+                        />
+                        <span
+                          className="pointer-events-none absolute left-[8.8%] top-[33%] h-[32%] w-[6.2%] animate-pulse rounded-[2px] bg-[#4ade80] shadow-[0_0_8px_2px_rgba(74,222,128,0.9)]"
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* 3 Columns Separated by Crisp Vertical Divider Lines (`lg:divide-x-2 lg:divide-black/15`) */}
+                  <div className="relative z-10 grid grid-cols-1 divide-y-2 divide-black/15 lg:grid-cols-3 lg:divide-x-2 lg:divide-y-0">
+                    {certColumns.map((col, colIdx) => {
+                      const colCutoutSprite =
+                        colIdx === 0
+                          ? "/pixel-ui/side-trophy-icon.png"
+                          : colIdx === 1
+                          ? "/pixel-ui/icon-mode-code-lab.png"
+                          : "/pixel-ui/book-flipping.gif";
+                      return (
+                        <div
+                          key={col.title}
+                          className="flex flex-col justify-between p-5 sm:p-6"
+                        >
+                          <div>
+                            {/* Column Header on Blurred Pixel Scene + White Glass Background */}
+                            <div className="flex items-center justify-between border-b-2 border-black/15 pb-4">
+                              <div>
+                                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#141414] px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-widest text-lime shadow-sm">
+                                  {col.title}
+                                </span>
+                                <h3 className="mt-1.5 text-base font-extrabold text-[#141414] drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">
+                                  {col.subtitle}
+                                </h3>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                {/* Pixel Cutout Badge per Column */}
+                                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-black/15 bg-[#141414] p-1.5 shadow-md">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img
+                                    src={colCutoutSprite}
+                                    alt=""
+                                    className="h-full w-full object-contain"
+                                    style={{ imageRendering: "pixelated" }}
+                                  />
+                                </div>
+                                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#141414] font-mono text-xs font-black text-lime shadow-sm">
+                                  0{colIdx + 1}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Black Credential Divs inside White/Pixel-Blurred Column */}
+                            <div className="mt-5 space-y-3.5">
+                              {col.items.map((cert, itemIdx) => {
+                                const isExpanded = expandedCertId === cert.id;
+                                const isPlanned = cert.status === "planned";
+                                const certPixelIcon =
+                                  cert.id === "csc-professional"
+                                    ? "/pixel-ui/side-trophy-icon.png"
+                                    : cert.id === "tesda-css-nc2"
+                                    ? "/pixel-ui/icon-mode-stats.png"
+                                    : cert.id === "cisco-cybersecurity"
+                                    ? "/pixel-ui/icon-mode-code-lab.png"
+                                    : cert.id === "pwncollege-badge"
+                                    ? "/pixel-ui/flame-burning.gif"
+                                    : cert.id === "nextwork-cloud"
+                                    ? "/pixel-ui/book-pencil.png"
+                                    : "/pixel-ui/side-green-gem.png";
+                                const progressPct =
+                                  cert.status === "earned"
+                                    ? "100%"
+                                    : cert.status === "in-progress"
+                                    ? itemIdx === 0
+                                      ? "78%"
+                                      : "64%"
+                                    : "38%";
+
+                                return (
+                                  <div
+                                    key={cert.id}
+                                    onClick={() => {
+                                      soundEngine.playChainDangle();
                                       setExpandedCertId(isExpanded ? null : cert.id);
-                                    }
-                                  }}
-                                  className={`lc-bubble-card lc-morph-container cursor-pointer rounded-2xl border p-4 text-left ${
-                                    isExpanded
-                                      ? "border-2 border-[#141414] bg-[#0a0a0a] text-white shadow-[0_20px_40px_rgba(0,0,0,0.28)] ring-2 ring-lime"
-                                      : "border-black/15 bg-[#141414] text-white shadow-[0_12px_28px_rgba(0,0,0,0.18)] hover:bg-[#1c1c1c]"
-                                  }`}
-                                >
-                                  <div className="flex items-start justify-between gap-3">
-                                    <div className="flex items-start gap-3">
+                                    }}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter" || e.key === " ") {
+                                        e.preventDefault();
+                                        soundEngine.playChainDangle();
+                                        setExpandedCertId(isExpanded ? null : cert.id);
+                                      }
+                                    }}
+                                    className={`lc-bubble-card lc-morph-container relative cursor-pointer overflow-hidden rounded-2xl border p-4 text-left ${
+                                      isExpanded
+                                        ? "border-2 border-[#141414] bg-[#0a0a0a] text-white shadow-[0_22px_44px_rgba(0,0,0,0.42)] ring-2 ring-lime"
+                                        : "border-black/20 bg-[#141414] text-white shadow-[0_14px_30px_rgba(0,0,0,0.28)] hover:bg-[#1b1b1b]"
+                                    }`}
+                                  >
+                                    <div className="flex items-start justify-between gap-3">
+                                      <div className="flex items-start gap-3">
+                                        <span
+                                          className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl p-1.5 ${
+                                            cert.status === "earned"
+                                              ? "bg-lime text-black shadow-[0_0_12px_rgba(184,255,1,0.35)]"
+                                              : isPlanned
+                                              ? "border border-white/25 bg-white/10 text-white"
+                                              : "border border-lime/50 bg-lime/15 text-lime"
+                                          }`}
+                                        >
+                                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                                          <img
+                                            src={certPixelIcon}
+                                            alt=""
+                                            className="h-full w-full object-contain"
+                                            style={{ imageRendering: "pixelated" }}
+                                          />
+                                        </span>
+                                        <div>
+                                          <h4 className="text-sm font-extrabold leading-snug text-white sm:text-[15px]">
+                                            {cert.label}
+                                          </h4>
+                                          <p className="mt-1 text-xs font-semibold text-neutral-300">
+                                            {cert.issuingBody}
+                                          </p>
+                                        </div>
+                                      </div>
+
                                       <span
-                                        className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-bold ${
+                                        className={`shrink-0 rounded-full px-2.5 py-1 font-mono text-[9.5px] font-black uppercase tracking-wider ${
                                           cert.status === "earned"
-                                            ? "bg-lime text-black shadow-[0_0_12px_rgba(184,255,1,0.35)]"
+                                            ? "bg-lime text-black shadow-sm"
                                             : isPlanned
-                                            ? "border border-white/25 bg-white/10 text-white"
-                                            : "border border-lime/50 bg-lime/15 text-lime"
+                                            ? "border border-white/30 bg-white/10 text-white"
+                                            : "border border-lime bg-lime/15 text-lime"
                                         }`}
                                       >
-                                        {cert.status === "earned" ? (
-                                          <CheckCircle2 className="h-4 w-4" />
-                                        ) : isPlanned ? (
-                                          <Compass className="h-4 w-4" />
-                                        ) : (
-                                          <Clock className="h-4 w-4" />
-                                        )}
+                                        {cert.status === "in-progress"
+                                          ? "IN PROGRESS"
+                                          : cert.status.toUpperCase()}
                                       </span>
-                                      <div>
-                                        <h4 className="text-sm font-extrabold leading-snug text-white sm:text-[15px]">
-                                          {cert.label}
-                                        </h4>
-                                        <p className="mt-1 text-xs font-semibold text-neutral-300">
-                                          {cert.issuingBody}
-                                        </p>
+                                    </div>
+
+                                    {/* Elastic Expanded Layer with StitchCSV Pixel Progress Bar */}
+                                    {isExpanded && (
+                                      <div className="mt-4 space-y-3 border-t border-white/15 pt-3">
+                                        {/* Pixel Progress Track Cutout from StitchCSV-pixelated-ui */}
+                                        <div className="flex items-center justify-between gap-3">
+                                          <div className="relative h-3.5 w-32 overflow-hidden">
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                              src="/pixel-ui/lib-progress-bar-empty.png"
+                                              alt=""
+                                              className="absolute inset-0 h-full w-full object-fill"
+                                              style={{ imageRendering: "pixelated" }}
+                                            />
+                                            <div
+                                              className="absolute bottom-[15%] left-[3%] top-[15%] overflow-hidden rounded-[2px]"
+                                              style={{ width: progressPct }}
+                                            >
+                                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                                              <img
+                                                src="/pixel-ui/lib-progress-bar-fill.png"
+                                                alt=""
+                                                className="h-full w-full object-fill"
+                                                style={{ imageRendering: "pixelated" }}
+                                              />
+                                            </div>
+                                          </div>
+                                          <span className="font-mono text-[10px] font-black text-lime">
+                                            MASTERY {progressPct}
+                                          </span>
+                                        </div>
+
+                                        <div className="flex flex-wrap items-center justify-between gap-2">
+                                          <span className="font-mono text-[11px] font-medium text-neutral-200">
+                                            {cert.notes ??
+                                              "Verified technical competency & structured coursework."}
+                                          </span>
+                                          {cert.verifyUrl && (
+                                            <a
+                                              href={cert.verifyUrl}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              onClick={(e) => e.stopPropagation()}
+                                              className="lc-elastic-pill inline-flex items-center gap-1.5 rounded-full bg-lime px-3.5 py-1.5 text-[10.5px] font-extrabold text-black hover:brightness-110"
+                                            >
+                                              Official Portal <ExternalLink className="h-3 w-3" />
+                                            </a>
+                                          )}
+                                        </div>
                                       </div>
-                                    </div>
-
-                                    <span
-                                      className={`shrink-0 rounded-full px-2.5 py-1 font-mono text-[9.5px] font-black uppercase tracking-wider ${
-                                        cert.status === "earned"
-                                          ? "bg-lime text-black shadow-sm"
-                                          : isPlanned
-                                          ? "border border-white/30 bg-white/10 text-white"
-                                          : "border border-lime bg-lime/15 text-lime"
-                                      }`}
-                                    >
-                                      {cert.status === "in-progress"
-                                        ? "IN PROGRESS"
-                                        : cert.status.toUpperCase()}
-                                    </span>
+                                    )}
                                   </div>
+                                );
+                              })}
+                            </div>
+                          </div>
 
-                                  {/* Elastic Expanded Layer */}
-                                  {isExpanded && (
-                                    <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-white/15 pt-3">
-                                      <span className="font-mono text-[11px] font-medium text-neutral-200">
-                                        {cert.notes ??
-                                          "Verified technical competency & structured coursework."}
-                                      </span>
-                                      {cert.verifyUrl && (
-                                        <a
-                                          href={cert.verifyUrl}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          onClick={(e) => e.stopPropagation()}
-                                          className="lc-elastic-pill inline-flex items-center gap-1.5 rounded-full bg-lime px-3.5 py-1.5 text-[10.5px] font-extrabold text-black hover:brightness-110"
-                                        >
-                                          Official Portal <ExternalLink className="h-3 w-3" />
-                                        </a>
-                                      )}
-                                    </div>
-                                  )}
-                                </div>
-                              );
-                            })}
+                          <div className="mt-6 flex items-center justify-between border-t-2 border-black/15 pt-3 font-mono text-[10px] font-bold text-neutral-800">
+                            <span className="inline-flex items-center gap-1.5">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src="/pixel-ui/green-orb.png"
+                                alt=""
+                                className="h-3.5 w-3.5 object-contain"
+                                style={{ imageRendering: "pixelated" }}
+                              />
+                              LAWRENCE CORTES
+                            </span>
+                            <span className="rounded-full bg-[#141414] px-2.5 py-0.5 text-[9px] font-black text-lime shadow-sm">
+                              VERIFIED TRACK
+                            </span>
                           </div>
                         </div>
-
-                        <div className="mt-6 flex items-center justify-between border-t border-neutral-200 pt-3 font-mono text-[10px] font-bold text-neutral-600">
-                          <span>LAWRENCE CORTES</span>
-                          <span className="rounded-full bg-[#141414] px-2.5 py-0.5 text-[9px] font-black text-lime">
-                            VERIFIED TRACK
-                          </span>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </section>

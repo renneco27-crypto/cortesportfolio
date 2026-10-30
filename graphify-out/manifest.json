@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "components/showcase/scenes/ContactFooter.tsx": {
-    "mtime": 1793355532.0227144,
-    "seen": 1793355627.2835073,
-    "ast_hash": "e6b4894bcb37c83e5ca0a66990d80f7b",
+    "mtime": 1793356018.0892704,
+    "seen": 1793356199.311668,
+    "ast_hash": "e15a363d2549643a7301a62a477e1348",
     "semantic_hash": ""
   },
   "components/showcase/scenes/DarkMarquee.tsx": {
@@ -1152,9 +1152,9 @@
     "semantic_hash": ""
   },
   "components/showcase/engine/sound.ts": {
-    "mtime": 1793354772.6832957,
-    "seen": 1793355149.9737866,
-    "ast_hash": "b32d72682f3d8f929366c10205f0920f",
+    "mtime": 1793355933.6419232,
+    "seen": 1793356199.3070362,
+    "ast_hash": "2b516d7dc28f80f182bc93c3cfb3bb27",
     "semantic_hash": ""
   },
   "app/.agents/skills/ui-sound-design/SKILL.md": {
@@ -1197,6 +1197,1050 @@
     "mtime": 1793354565.5380056,
     "seen": 1793355150.050828,
     "ast_hash": "d5bb830ad672369362a241ea07d26815",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/android-nav.png": {
+    "mtime": 1793010869.6333363,
+    "seen": 1793356199.6117043,
+    "ast_hash": "d2112ab9e482a3f6e3162a5f5d957310",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/arrow-back-btn.png": {
+    "mtime": 1793015657.0002294,
+    "seen": 1793356199.6117043,
+    "ast_hash": "3bd451b08aaafeb6dfba2c9e0c58c0f5",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/avatar-inner.png": {
+    "mtime": 1793010516.7335565,
+    "seen": 1793356199.6117043,
+    "ast_hash": "ae4616985eadd2ea0e4fb4edbfe3db4d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/bg-pixel-scene.gif": {
+    "mtime": 1793355686.3340082,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c2d32fa8c07003abf592a9310554c701",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-daystreak.png": {
+    "mtime": 1793018883.501278,
+    "seen": 1793356199.6117043,
+    "ast_hash": "1f07ed5989129fc8d8c1289a1e34e8d1",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-deck-title-sign-empty.png": {
+    "mtime": 1793026845.6402252,
+    "seen": 1793356199.6117043,
+    "ast_hash": "ece517b8327bedd1efa27737418c9414",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-deck-title-sign.png": {
+    "mtime": 1793026845.2691915,
+    "seen": 1793356199.6117043,
+    "ast_hash": "d8526371befe078ee840cb1851d54161",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-leaderboard-sign.png": {
+    "mtime": 1793019217.9604,
+    "seen": 1793356199.6117043,
+    "ast_hash": "a01c98df241d3e092adee8833e2aba08",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-lib-deckcard-clean.png": {
+    "mtime": 1793026682.9857383,
+    "seen": 1793356199.6117043,
+    "ast_hash": "066f9f000a2591ceee6b07260a449901",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-lib-deckcard.png": {
+    "mtime": 1793026682.9208362,
+    "seen": 1793356199.6117043,
+    "ast_hash": "156c5237b894ec5e93367b10c4f4c8ea",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-mylibrary-sign.png": {
+    "mtime": 1793019218.0543053,
+    "seen": 1793356199.6117043,
+    "ast_hash": "12eddd81237102ae0834eab3a6109999",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-nodecks.png": {
+    "mtime": 1793018883.769283,
+    "seen": 1793356199.6117043,
+    "ast_hash": "9a5afa74ca86ba7e0c62043f965a98cc",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-pf-deckcard.png": {
+    "mtime": 1793022731.3530772,
+    "seen": 1793356199.6117043,
+    "ast_hash": "9c28decd5ccfa0121efc0b8f1c9b208a",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-pf-pill-1.png": {
+    "mtime": 1793022731.146604,
+    "seen": 1793356199.6117043,
+    "ast_hash": "0cdc47e7c98bf22bdb2204511efbb201",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-pf-pill-2.png": {
+    "mtime": 1793022731.1735165,
+    "seen": 1793356199.6117043,
+    "ast_hash": "610ae8bbbb62872e4f85ba0f195223a6",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-pf-pill-3.png": {
+    "mtime": 1793022731.2078702,
+    "seen": 1793356199.6117043,
+    "ast_hash": "99c0bf5f09bf8856f73b34f9eff4cb51",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-pf-pill-4.png": {
+    "mtime": 1793022731.2473462,
+    "seen": 1793356199.6117043,
+    "ast_hash": "17e5386893bf41f0f1e8637444151a45",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-pf-search.png": {
+    "mtime": 1793022731.0930982,
+    "seen": 1793356199.6117043,
+    "ast_hash": "6e1aa54488a0d737c1fde9ab5c05231b",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-pf-sign.png": {
+    "mtime": 1793022731.0237482,
+    "seen": 1793356199.6117043,
+    "ast_hash": "5f6466bfc6f7691b2659fed986ba9b86",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-podium-1.png": {
+    "mtime": 1793019310.7186959,
+    "seen": 1793356199.6117043,
+    "ast_hash": "a1a2d9b7d93ac7878cdb313b72ae8afa",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-podium-2.png": {
+    "mtime": 1793018883.9678385,
+    "seen": 1793356199.6117043,
+    "ast_hash": "8ff0ad829289f880172a02620d8a144d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-podium-3.png": {
+    "mtime": 1793018884.0248165,
+    "seen": 1793356199.6117043,
+    "ast_hash": "79c7361a9b4f11933a5d7490f0e31138",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-studiedtoday.png": {
+    "mtime": 1793018883.5838678,
+    "seen": 1793356199.6117043,
+    "ast_hash": "4db6de8befbf5a1ddd9ed53b02e4ba4c",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/board-yourrank.png": {
+    "mtime": 1793027436.8007085,
+    "seen": 1793356199.6117043,
+    "ast_hash": "47ff51bfb49c8ab615b7c747f094e3ae",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/book-flip-1.png": {
+    "mtime": 1793012027.9888103,
+    "seen": 1793356199.6117043,
+    "ast_hash": "280c9faaaa9f0191146e1d485fa05b8a",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/book-flip-2.png": {
+    "mtime": 1793012027.9970255,
+    "seen": 1793356199.6117043,
+    "ast_hash": "9c60b3186c020024aa7e9958dbf07c0c",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/book-flip-3.png": {
+    "mtime": 1793012028.0060408,
+    "seen": 1793356199.6117043,
+    "ast_hash": "e3e412ab48f2f6cbe50b601239a0e3cb",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/book-flip-4.png": {
+    "mtime": 1793012028.0127523,
+    "seen": 1793356199.6117043,
+    "ast_hash": "6ec49ca13feecff286eed40836184aa9",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/book-flip-spritesheet.png": {
+    "mtime": 1793011838.0408576,
+    "seen": 1793356199.6117043,
+    "ast_hash": "7d3c0ecea03fcb05c87c6ba8c1831b11",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/book-flipping.gif": {
+    "mtime": 1793012028.1463282,
+    "seen": 1793356199.6117043,
+    "ast_hash": "917dd56ce30d279d49731e74e581f2c7",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/book-pencil.png": {
+    "mtime": 1793011760.4941032,
+    "seen": 1793356199.6117043,
+    "ast_hash": "e2f822d22ae6911074d931692dc5497e",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/deck-btn-back.png": {
+    "mtime": 1793026845.1893525,
+    "seen": 1793356199.6117043,
+    "ast_hash": "88bb670eba1684bf20fec6155abfcb83",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/deck-top-shelf.png": {
+    "mtime": 1793026845.1376011,
+    "seen": 1793356199.6117043,
+    "ast_hash": "f867fc84898066110d4fd7abf56ea06a",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/empty-deck-text.png": {
+    "mtime": 1793010592.0323186,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c228b75a99f809569383d100dc6271ea",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/flame-burning.gif": {
+    "mtime": 1793011761.468226,
+    "seen": 1793356199.6117043,
+    "ast_hash": "1ff5b96246d50322a516b8d9a4b97cf8",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/flame-frame-1.png": {
+    "mtime": 1793011760.891577,
+    "seen": 1793356199.6117043,
+    "ast_hash": "876ffdb61ebea1a8d0aeef0bde3a92d9",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/flame-frame-2.png": {
+    "mtime": 1793011760.9956577,
+    "seen": 1793356199.6117043,
+    "ast_hash": "e8f4ef365c86d5eca95a2800a4fafc3d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/flame-frame-3.png": {
+    "mtime": 1793011761.0944397,
+    "seen": 1793356199.6117043,
+    "ast_hash": "476a25c270016adbab1bfa99883060fb",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/flame-frame-4.png": {
+    "mtime": 1793011761.2148788,
+    "seen": 1793356199.6117043,
+    "ast_hash": "45a7261012fd7dac13508eb04ee83fac",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/flame-icon.png": {
+    "mtime": 1793010516.784397,
+    "seen": 1793356199.6117043,
+    "ast_hash": "e4d9d50d75a0348392bc289046ec1271",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-daystreak.png": {
+    "mtime": 1793013565.4819598,
+    "seen": 1793356199.6117043,
+    "ast_hash": "d42cc28034304b8ba00590ec96f7da41",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-deck-title-sign.png": {
+    "mtime": 1793026845.6018667,
+    "seen": 1793356199.6117043,
+    "ast_hash": "bdbb0737464c5b96db7cd86b695059b8",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-leaderboard-mid.png": {
+    "mtime": 1793015708.7338412,
+    "seen": 1793356199.6117043,
+    "ast_hash": "6e74307dd7b1511275178a243a5b3351",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-leaderboard-top.png": {
+    "mtime": 1793015794.5482483,
+    "seen": 1793356199.6117043,
+    "ast_hash": "33c116ceb3c32b4ffa90448f2f88ed88",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-lib-deckcard.png": {
+    "mtime": 1793026683.0047991,
+    "seen": 1793356199.6117043,
+    "ast_hash": "67a4bf98a05909cada471c23f42f1e78",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-code-lab.png": {
+    "mtime": 1793027254.0073926,
+    "seen": 1793356199.6117043,
+    "ast_hash": "d7c20b833329622d6d1450de47a3de7b",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-empty.png": {
+    "mtime": 1793027254.6258566,
+    "seen": 1793356199.6117043,
+    "ast_hash": "0ec99353123349b0ed199483ff763418",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-enumeration-sub.png": {
+    "mtime": 1793027252.8337219,
+    "seen": 1793356199.6117043,
+    "ast_hash": "8980d435cb58fc5f388cfa3072fff926",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-enumeration.png": {
+    "mtime": 1793027251.3452952,
+    "seen": 1793356199.6117043,
+    "ast_hash": "88d2cd6d024c22072591eb1098a4e8cf",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-fill-blanks.png": {
+    "mtime": 1793027251.721407,
+    "seen": 1793356199.6117043,
+    "ast_hash": "675b8685bedc641147b205c9ec0dd97e",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-flashcards.png": {
+    "mtime": 1793027250.8112862,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c96d935ac2df50eeafcd25f0972c0295",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-gallery-sub.png": {
+    "mtime": 1793027253.4802742,
+    "seen": 1793356199.6117043,
+    "ast_hash": "6d459fa24c531614e36b5eaff97b0c5e",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-gallery.png": {
+    "mtime": 1793027252.1490006,
+    "seen": 1793356199.6117043,
+    "ast_hash": "babd0f480fa131399c239cc608e92a63",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-math-lab.png": {
+    "mtime": 1793027252.3640084,
+    "seen": 1793356199.6117043,
+    "ast_hash": "b2becb2c8aceefd925a08d7055fd5d25",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-multiple-choice.png": {
+    "mtime": 1793027250.942876,
+    "seen": 1793356199.6117043,
+    "ast_hash": "32340ac1070ed6f8d460db0c0e95acdd",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-notes-sub.png": {
+    "mtime": 1793027253.0748596,
+    "seen": 1793356199.6117043,
+    "ast_hash": "da33d61167ccc90ca9b6bf036ce78131",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-notes.png": {
+    "mtime": 1793027251.9123125,
+    "seen": 1793356199.6117043,
+    "ast_hash": "6a9c583110e48a077b35ee8c20c049cd",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-stats.png": {
+    "mtime": 1793027254.3886535,
+    "seen": 1793356199.6117043,
+    "ast_hash": "7d1b3cf270fc72ca00c6e175602ae255",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-true-false-sub.png": {
+    "mtime": 1793027252.6240318,
+    "seen": 1793356199.6117043,
+    "ast_hash": "e96774a56b96c78f7d195ab2020fb298",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mode-card-true-false.png": {
+    "mtime": 1793027251.073627,
+    "seen": 1793356199.6117043,
+    "ast_hash": "60724ec53b9e9f5e82beffcb37d45026",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-mylibrary.png": {
+    "mtime": 1793013565.3243003,
+    "seen": 1793356199.6117043,
+    "ast_hash": "547762fd0601161f7449177e14fd6d99",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-nodecks.png": {
+    "mtime": 1793013670.5314808,
+    "seen": 1793356199.6117043,
+    "ast_hash": "ac5f97fb723646621d1ce48d46bfc701",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-pf-deckcard.png": {
+    "mtime": 1793022731.503981,
+    "seen": 1793356199.6117043,
+    "ast_hash": "692c68c04de51c0d6838791e257c93e0",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-pf-pill-1.png": {
+    "mtime": 1793022731.1660736,
+    "seen": 1793356199.6117043,
+    "ast_hash": "fc79e62d1dfa61dfba67e5f4f696913b",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-pf-pill-2.png": {
+    "mtime": 1793022731.1975877,
+    "seen": 1793356199.6117043,
+    "ast_hash": "fd3e22cc047654f32c7efb66ca2f01d3",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-pf-pill-3.png": {
+    "mtime": 1793022731.235667,
+    "seen": 1793356199.6117043,
+    "ast_hash": "d473c6f6a3ea9b724046c59e0757a047",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-pf-pill-4.png": {
+    "mtime": 1793022731.274594,
+    "seen": 1793356199.6117043,
+    "ast_hash": "04f70c7d127bca39edad680b30879347",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-pf-search.png": {
+    "mtime": 1793022731.139788,
+    "seen": 1793356199.6117043,
+    "ast_hash": "7c179fc9cf2b8ac9017846eee4de02d2",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-pf-sign.png": {
+    "mtime": 1793022731.068089,
+    "seen": 1793356199.6117043,
+    "ast_hash": "bf652b7f5def6946caedd1f855fdf1f6",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-podium-1.png": {
+    "mtime": 1793015708.8887818,
+    "seen": 1793356199.6117043,
+    "ast_hash": "3b52c5f9a336b258fa6d6d882f86c11a",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-podium-2.png": {
+    "mtime": 1793015708.821241,
+    "seen": 1793356199.6117043,
+    "ast_hash": "df51582117d8dc57036ebaa5845d0599",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-podium-3.png": {
+    "mtime": 1793015708.946138,
+    "seen": 1793356199.6117043,
+    "ast_hash": "8f41ab40183a9be2c5add4617724a24b",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/glow-studiedtoday.png": {
+    "mtime": 1793013565.642216,
+    "seen": 1793356199.6117043,
+    "ast_hash": "489bbb3885eda76b2c922ab74a29043e",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/green-orb.png": {
+    "mtime": 1793010516.7909064,
+    "seen": 1793356199.6117043,
+    "ast_hash": "96472ed0429f33f7419e2f7b28199026",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/hamburger-bottom.png": {
+    "mtime": 1793010516.8582006,
+    "seen": 1793356199.6117043,
+    "ast_hash": "1f0bbbad761de1e4bbfa90ec22020311",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/hamburger-top.png": {
+    "mtime": 1793010516.7504852,
+    "seen": 1793356199.6117043,
+    "ast_hash": "1931381d0c464609f6c0f4a0ce90d275",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-code-lab.png": {
+    "mtime": 1793027253.5300345,
+    "seen": 1793356199.6117043,
+    "ast_hash": "b643b5aed7476879bf2c324044715cb7",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-enumeration-sub.png": {
+    "mtime": 1793027252.6452699,
+    "seen": 1793356199.6117043,
+    "ast_hash": "50ada5bb13f871ecaafcd3918a2c3ffa",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-enumeration.png": {
+    "mtime": 1793027251.0985878,
+    "seen": 1793356199.6117043,
+    "ast_hash": "6d7f8eeec1c774dca151ecde32c8e4ca",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-fill-blanks.png": {
+    "mtime": 1793027251.3928351,
+    "seen": 1793356199.6117043,
+    "ast_hash": "8ba0244103f4304f46362728527810ab",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-flashcards.png": {
+    "mtime": 1793027250.6175628,
+    "seen": 1793356199.6117043,
+    "ast_hash": "2fc23d3648b19c561ef9c03d8536d7c1",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-gallery-sub.png": {
+    "mtime": 1793027253.1215675,
+    "seen": 1793356199.6117043,
+    "ast_hash": "83e01dea2eac52cbf09ee1887b7d5be2",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-gallery.png": {
+    "mtime": 1793027251.949959,
+    "seen": 1793356199.6117043,
+    "ast_hash": "318ad25b1b1fac696e0f9825b0f37c2e",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-math-lab.png": {
+    "mtime": 1793027252.172571,
+    "seen": 1793356199.6117043,
+    "ast_hash": "1ddf09c141fd5aa86c272fb1c0042615",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-multiple-choice.png": {
+    "mtime": 1793027250.830974,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c683625c7ed1a96e5d4a49b4c38babf9",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-notes-sub.png": {
+    "mtime": 1793027252.859675,
+    "seen": 1793356199.6117043,
+    "ast_hash": "ee401d6f6b52b654cef0a9cc26e8be97",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-notes.png": {
+    "mtime": 1793027251.7446592,
+    "seen": 1793356199.6117043,
+    "ast_hash": "8f6fec172ad6b9472ad85257e6575984",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-stats.png": {
+    "mtime": 1793027254.0592687,
+    "seen": 1793356199.6117043,
+    "ast_hash": "9e890d8d18b04553e04d12173855606a",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-true-false-sub.png": {
+    "mtime": 1793027252.4025087,
+    "seen": 1793356199.6117043,
+    "ast_hash": "0fa0ffa6b763da88820287fda15711a7",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/icon-mode-true-false.png": {
+    "mtime": 1793027250.9602177,
+    "seen": 1793356199.6117043,
+    "ast_hash": "1a67cc42e5bfa7b0afe59d6cf3fc6d78",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/icon-android.png": {
+    "mtime": 1793050865.1569257,
+    "seen": 1793356199.6117043,
+    "ast_hash": "03008d84890efd60e198a7ff45d5930e",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/icon-check.png": {
+    "mtime": 1793050829.2387316,
+    "seen": 1793356199.6117043,
+    "ast_hash": "cbcfec80952ba4433061ce3cc2049909",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/icon-cross.png": {
+    "mtime": 1793050829.2445638,
+    "seen": 1793356199.6117043,
+    "ast_hash": "2bdae33f5f1b09a2464a9bae846a7593",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/icon-offline.png": {
+    "mtime": 1793050865.077635,
+    "seen": 1793356199.6117043,
+    "ast_hash": "d10cd3fc4e236b15ae1a69a3eb0b7fa4",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/icon-search.png": {
+    "mtime": 1793050829.910307,
+    "seen": 1793356199.6117043,
+    "ast_hash": "4d05a67eafb888d55975c3d995816a76",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/icon-sound.png": {
+    "mtime": 1793050865.129424,
+    "seen": 1793356199.6117043,
+    "ast_hash": "9b1e917f3be4354d2d210dc551cef60e",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/icon-star.png": {
+    "mtime": 1793050829.2493434,
+    "seen": 1793356199.6117043,
+    "ast_hash": "9c07f43c87546faa1fa899b996dcaaf8",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/icon-upload.png": {
+    "mtime": 1793050865.1075792,
+    "seen": 1793356199.6117043,
+    "ast_hash": "85aba4fc056156da32451032c4012798",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/plate-btn-blue.png": {
+    "mtime": 1793050717.7572618,
+    "seen": 1793356199.6117043,
+    "ast_hash": "fb28aacedc8a004f6e5866f7833d2a46",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/plate-btn-green.png": {
+    "mtime": 1793050717.7453985,
+    "seen": 1793356199.6117043,
+    "ast_hash": "3c8456c5ef9c6fddb4dc95dc8c382f1b",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/plate-btn-red.png": {
+    "mtime": 1793050717.748492,
+    "seen": 1793356199.6117043,
+    "ast_hash": "5bd53f75b464251d7ac3bb36999bcbee",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/plate-btn-wood.png": {
+    "mtime": 1793050717.7531033,
+    "seen": 1793356199.6117043,
+    "ast_hash": "6ec8dac289c809a22a4c2363626703f8",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/plate-panel.png": {
+    "mtime": 1793050829.1920798,
+    "seen": 1793356199.6117043,
+    "ast_hash": "afe593da0127c2be371666750dd51602",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/plate-pill-green.png": {
+    "mtime": 1793050717.7694533,
+    "seen": 1793356199.6117043,
+    "ast_hash": "b136216b5241c793a805f209fc4ac96f",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/kit/plate-recess.png": {
+    "mtime": 1793050717.7635179,
+    "seen": 1793356199.6117043,
+    "ast_hash": "32482bdded51374adee89eb718b0b6b4",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lawrence-suffix.png": {
+    "mtime": 1793010364.4125335,
+    "seen": 1793356199.6117043,
+    "ast_hash": "2e2e9273734ce9e87b0fc009fb1f087d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lawrence-text.png": {
+    "mtime": 1793010591.9012349,
+    "seen": 1793356199.6117043,
+    "ast_hash": "38dc2354a1a8bbf0ab5f6d5ac32ed163",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/leaderboard-bg.jpg": {
+    "mtime": 1793015656.9845243,
+    "seen": 1793356199.6117043,
+    "ast_hash": "9f3c371f70cbe6a0d1d024f451883061",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/left-labels.png": {
+    "mtime": 1793010591.9324236,
+    "seen": 1793356199.6117043,
+    "ast_hash": "ba528340f2587bcc1119d58b4fc53700",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/left-zero.png": {
+    "mtime": 1793010591.9068527,
+    "seen": 1793356199.6117043,
+    "ast_hash": "406f4e527e440807b9785bd6830305cf",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lib-btn-delete.png": {
+    "mtime": 1793026844.9392762,
+    "seen": 1793356199.6117043,
+    "ast_hash": "b8b093bc062de9e39449ad827b9857e8",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lib-btn-download.png": {
+    "mtime": 1793026844.8335054,
+    "seen": 1793356199.6117043,
+    "ast_hash": "619b7ebbd1f532d8a1ffcd69e49b7592",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lib-btn-resume-empty.png": {
+    "mtime": 1793026683.0905468,
+    "seen": 1793356199.6117043,
+    "ast_hash": "3c8456c5ef9c6fddb4dc95dc8c382f1b",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lib-btn-resume.png": {
+    "mtime": 1793026844.985136,
+    "seen": 1793356199.6117043,
+    "ast_hash": "5766eb20ec3534f937f24a13829741fd",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lib-category-pill-green-filled.png": {
+    "mtime": 1793026683.0295148,
+    "seen": 1793356199.6117043,
+    "ast_hash": "dd0337c72204441b749cbffd10dd74ed",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lib-category-pill-green.png": {
+    "mtime": 1793026683.012829,
+    "seen": 1793356199.6117043,
+    "ast_hash": "b136216b5241c793a805f209fc4ac96f",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lib-progress-bar-empty.png": {
+    "mtime": 1793026683.0400712,
+    "seen": 1793356199.6117043,
+    "ast_hash": "80e0752963d30fb53ce9fef759d54b45",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lib-progress-bar-fill.png": {
+    "mtime": 1793026683.043492,
+    "seen": 1793356199.6117043,
+    "ast_hash": "d2464566acc48bdafe14e55a25b70e98",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/lib-progress-bar.png": {
+    "mtime": 1793026683.035673,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c986d5c034068b7daf1faa476569bd0b",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/library-bg.jpg": {
+    "mtime": 1793008836.4816906,
+    "seen": 1793356199.6117043,
+    "ast_hash": "142ee99a2bc95210ad1f99f77fd63188",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mid-avatar-badge.png": {
+    "mtime": 1793015657.2460847,
+    "seen": 1793356199.6117043,
+    "ast_hash": "2849e3e1e1ac8e8de8bb0c1634d30062",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mid-avatar-only.png": {
+    "mtime": 1793026214.9492776,
+    "seen": 1793356199.6117043,
+    "ast_hash": "7619bd7d75bef61d9455198b3f833071",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mid-you-badge.png": {
+    "mtime": 1793026278.422109,
+    "seen": 1793356199.6117043,
+    "ast_hash": "cfc6f4e9ae064d2bc17a107e3709f6df",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-code-lab.png": {
+    "mtime": 1793053240.7901938,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c9bbe0d8c0d43daccf5fcb1438219c0e",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-enumeration-sub.png": {
+    "mtime": 1793027252.7995174,
+    "seen": 1793356199.6117043,
+    "ast_hash": "90d75c1684478fdaf1307e5de8817fd4",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-enumeration.png": {
+    "mtime": 1793027251.2905016,
+    "seen": 1793356199.6117043,
+    "ast_hash": "177367923c2b9234567cb4aa4701f6bf",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-fill-blanks.png": {
+    "mtime": 1793027251.6638763,
+    "seen": 1793356199.6117043,
+    "ast_hash": "318e76e7245c8463e01c9e9f2b2fa176",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-flashcards.png": {
+    "mtime": 1793027250.7743745,
+    "seen": 1793356199.6117043,
+    "ast_hash": "f59b86ed0081dc21c697c18743b4f7c4",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-gallery-sub.png": {
+    "mtime": 1793027253.4073439,
+    "seen": 1793356199.6117043,
+    "ast_hash": "f299e1dd4725517e46e73d4fee1b0073",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-gallery.png": {
+    "mtime": 1793027252.1027856,
+    "seen": 1793356199.6117043,
+    "ast_hash": "ed613848d69e07143835a9d48b196a74",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-math-lab.png": {
+    "mtime": 1793027252.3267322,
+    "seen": 1793356199.6117043,
+    "ast_hash": "746581bb68dca60f46f8a25dae1aad5d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-multiple-choice.png": {
+    "mtime": 1793027250.919372,
+    "seen": 1793356199.6117043,
+    "ast_hash": "ee101f9cb141acbd74513514edac149b",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-notes-sub.png": {
+    "mtime": 1793027253.0260274,
+    "seen": 1793356199.6117043,
+    "ast_hash": "84fea156db6743a88c1ee9cfaed16d22",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-notes.png": {
+    "mtime": 1793027251.8726764,
+    "seen": 1793356199.6117043,
+    "ast_hash": "b8de9bf4de0859b841678594bf89f650",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-stats.png": {
+    "mtime": 1793053240.798707,
+    "seen": 1793356199.6117043,
+    "ast_hash": "56dc8f79d78a0a87c1c38905f2a43b21",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-true-false-sub.png": {
+    "mtime": 1793027252.5747993,
+    "seen": 1793356199.6117043,
+    "ast_hash": "b7d9786f430804de38f0a0a147a17f4f",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-true-false.png": {
+    "mtime": 1793027251.0484385,
+    "seen": 1793356199.6117043,
+    "ast_hash": "b4319a6827f9a75950bbb055bfa09abe",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/mode-card-wood-empty.png": {
+    "mtime": 1793027254.60371,
+    "seen": 1793356199.6117043,
+    "ast_hash": "3fb8959d39728e163621fea38d32d5e4",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/open-book-center.png": {
+    "mtime": 1793011838.0290666,
+    "seen": 1793356199.6117043,
+    "ast_hash": "280c9faaaa9f0191146e1d485fa05b8a",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/pf-btn-categorize.png": {
+    "mtime": 1793022731.5355194,
+    "seen": 1793356199.6117043,
+    "ast_hash": "4921e406f29d3ccdfebf2300823eed3a",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/pf-btn-delete.png": {
+    "mtime": 1793022731.5407288,
+    "seen": 1793356199.6117043,
+    "ast_hash": "7ddef00ee304c9a8ad129bca9e3bce23",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/pf-btn-merge.png": {
+    "mtime": 1793022731.5232234,
+    "seen": 1793356199.6117043,
+    "ast_hash": "cad6bf8a701b5ff9c0c5e18858ce4054",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/pf-btn-open.png": {
+    "mtime": 1793022731.550324,
+    "seen": 1793356199.6117043,
+    "ast_hash": "7c7e2288d7e4e52167fddc2781ea5e1d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/pf-category-badge.png": {
+    "mtime": 1793022330.452744,
+    "seen": 1793356199.6117043,
+    "ast_hash": "23f2ff63503143a7329cb406a5ca803f",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/pf-category-pill-bg.png": {
+    "mtime": 1793022330.454645,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c8c51f4f24b2652c0e320d9317c6019c",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/publicfeed-bg.jpg": {
+    "mtime": 1793021991.902149,
+    "seen": 1793356199.6117043,
+    "ast_hash": "088217ecba8dedee29c48b9d4341fcf4",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/relay-badge.png": {
+    "mtime": 1793010516.7723367,
+    "seen": 1793356199.6117043,
+    "ast_hash": "599e07e457dcf4059a3b1a80a1cbb799",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/right-labels.png": {
+    "mtime": 1793010591.9701579,
+    "seen": 1793356199.6117043,
+    "ast_hash": "6d0823f0b393fc4926da44dc748f6d46",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/right-zero.png": {
+    "mtime": 1793010591.9390535,
+    "seen": 1793356199.6117043,
+    "ast_hash": "97ad3e8d1647328c2146c51880ea3c02",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/room-bg-all.jpg": {
+    "mtime": 1793021991.888104,
+    "seen": 1793356199.6117043,
+    "ast_hash": "e0edf5235f242c1e0882a20a4d29384d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/room-bg-clean.jpg": {
+    "mtime": 1793053279.0860908,
+    "seen": 1793356199.6117043,
+    "ast_hash": "a98b4e63c9cb1a590264f9bedbe2573f",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/room-bg-leaderboard.jpg": {
+    "mtime": 1793021992.0057676,
+    "seen": 1793356199.6117043,
+    "ast_hash": "243f2fc6a791b85c5c30887b9766020c",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/room-bg-library.jpg": {
+    "mtime": 1793021991.99008,
+    "seen": 1793356199.6117043,
+    "ast_hash": "9ea7ec0bd0421d9e81bde22ac5743108",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/room-bg-publicfeed.jpg": {
+    "mtime": 1793021992.0272126,
+    "seen": 1793356199.6117043,
+    "ast_hash": "0d77e320558276573724e115a226739d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-active-box.png": {
+    "mtime": 1793012668.767549,
+    "seen": 1793356199.6117043,
+    "ast_hash": "32482bdded51374adee89eb718b0b6b4",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-active-row.png": {
+    "mtime": 1793012618.2080882,
+    "seen": 1793356199.6117043,
+    "ast_hash": "7d90598cdb9f4c6af443e79f79f58d95",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-bg.jpg": {
+    "mtime": 1793012618.110658,
+    "seen": 1793356199.6117043,
+    "ast_hash": "d16cade16bf5f70e311bc8aa9d925289",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-close-btn.png": {
+    "mtime": 1793012618.172084,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c981448a0b0dc5529a61ac5e3010ca7e",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-create-deck-btn.png": {
+    "mtime": 1793012618.3119316,
+    "seen": 1793356199.6117043,
+    "ast_hash": "614c13f57f4a3136e55a048bb69ed395",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-globe-icon.png": {
+    "mtime": 1793012884.0512762,
+    "seen": 1793356199.6117043,
+    "ast_hash": "af467b067e241ca2d7c4f79542bbceab",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-green-gem.png": {
+    "mtime": 1793012786.1194046,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c0aee70e9682042d1da3e99079ac21ec",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-home-icon.png": {
+    "mtime": 1793012884.045133,
+    "seen": 1793356199.6117043,
+    "ast_hash": "f896f6b9f094a8e494fe12de2138ea2c",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-phone-icon.png": {
+    "mtime": 1793012884.0639827,
+    "seen": 1793356199.6117043,
+    "ast_hash": "a68d46b183eea1679fb839d781fe5e09",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-signout-btn.png": {
+    "mtime": 1793012618.3587315,
+    "seen": 1793356199.6117043,
+    "ast_hash": "103790fd3fa8f5519ce09cbcf6ce1fde",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/side-trophy-icon.png": {
+    "mtime": 1793012884.0580595,
+    "seen": 1793356199.6117043,
+    "ast_hash": "9ea6c4ac3291a680960db07268c99580",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/speaker-bottom.png": {
+    "mtime": 1793010516.8474796,
+    "seen": 1793356199.6117043,
+    "ast_hash": "4f8041be533ade5f26a070e5ef0111b0",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/tab-mastery-active.png": {
+    "mtime": 1793026278.4075584,
+    "seen": 1793356199.6117043,
+    "ast_hash": "c0441f789df3d1dd1777a7fbd10dc991",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/tab-mastery.png": {
+    "mtime": 1793015657.0852408,
+    "seen": 1793356199.6117043,
+    "ast_hash": "d9242631e68d52153a74849e8a1b8f96",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/tab-plate-blue-empty.png": {
+    "mtime": 1793026214.848248,
+    "seen": 1793356199.6117043,
+    "ast_hash": "fb28aacedc8a004f6e5866f7833d2a46",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/tab-plate-wood-empty.png": {
+    "mtime": 1793026214.852346,
+    "seen": 1793356199.6117043,
+    "ast_hash": "6ec8dac289c809a22a4c2363626703f8",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/tab-score-active.png": {
+    "mtime": 1793026278.416112,
+    "seen": 1793356199.6117043,
+    "ast_hash": "f88dd543eb052ebd06e4189413f55762",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/tab-score.png": {
+    "mtime": 1793015657.0993857,
+    "seen": 1793356199.6117043,
+    "ast_hash": "460f82e1ef8e677b1344154cd27f887d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/tab-streak-inactive.png": {
+    "mtime": 1793027436.7107992,
+    "seen": 1793356199.6117043,
+    "ast_hash": "a900e53ad5e3d08ce8f0745b915c8a4d",
+    "semantic_hash": ""
+  },
+  "public/pixel-ui/tab-streak.png": {
+    "mtime": 1793015657.0227008,
+    "seen": 1793356199.6117043,
+    "ast_hash": "431226797e6976f8e272db8113366c52",
     "semantic_hash": ""
   }
 }
